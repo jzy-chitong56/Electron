@@ -51,8 +51,8 @@ jobs:
     - name: Install Dependencies
       run: npm install -g @angular/cli
 
-      # - name: Check lint
-      #   run: npm run lint
+    - name: Check lint
+      run: npm run lint
 
    #    - name: Run headless unit test
       #   run: npm run test
