@@ -66,12 +66,12 @@ jobs:
       run: npm run electron:build
 
     - name: 压缩附件
-      uses: TheDoctor0/zip-release@0.7.6
+      uses: darshitsri/zip-release@v3
       with:
-        type: zip
         filename: amai.zip
-        directory: ./release/win-unpacked/
         path: ./release/win-unpacked/
+        directory: ./release/win-unpacked/
+ 
 
     - name: 上传附件
       uses: actions/upload-artifact@v3
