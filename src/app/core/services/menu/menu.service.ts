@@ -101,15 +101,15 @@ export class MenuService {
     {
       label: '查看',
       submenu: [
-        { role: '重载壁纸' },
-        { role: '强制重载壁纸' },
-        { role: '打开浏览器控制台' },
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
         { type: 'separator' },
-        { role: '还原壁纸尺寸' },
-        { role: '缩小壁纸' },
-        { role: '放大壁纸' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
         { type: 'separator' },
-        { role: '全屏' }
+        { role: 'togglefullscreen' }
       ]
     },
   ]
