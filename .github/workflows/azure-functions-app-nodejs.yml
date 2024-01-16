@@ -64,3 +64,10 @@ jobs:
     - name: Build the app
      # run: npm run electron:local
       run: npm run electron:build
+  
+    - uses: actions/upload-artifact@v3
+      with:
+        path: ./
+    - uses: actions/download-artifact@v4
+      with:
+        path: ./
