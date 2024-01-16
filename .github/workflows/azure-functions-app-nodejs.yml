@@ -67,7 +67,7 @@ jobs:
   
     - uses: actions/upload-artifact@v3
       with:
-        path: ./
+        path: ./release/win-unpacked/
     - uses: actions/download-artifact@v4
       with:
-        path: ./
+        path: ./release/win-unpacked/
