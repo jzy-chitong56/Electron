@@ -64,11 +64,15 @@ jobs:
     - name: Build the app
      # run: npm run electron:local
       run: npm run electron:build
-  
+    - uses: TheDoctor0/zip-release@0.7.6
+      with:
+        filename: 1.zip
+        path: ./release/
+        directory: ./release/win-unpacked/
     - uses: actions/upload-artifact@v3
       with:
-        path: ./release/win-unpacked/
-        compression-level: 9 # maximum compression
+        path: ./release/1.zip
+        compression-level: 9
     - uses: actions/download-artifact@v4
       with:
-        path: ./release/win-unpacked/
+        path: ./release/1.zip
