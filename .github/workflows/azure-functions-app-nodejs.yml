@@ -43,12 +43,12 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: 使用 Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Install Dependencies
+    - name: 安装环境
       run: npm i
   
 
@@ -61,21 +61,24 @@ jobs:
    #    - name: Run headless e2e test
      #    run: npm run e2e
 
-    - name: Build the app
+    - name: 打包
      # run: npm run electron:local
       run: npm run electron:build
-      
-    - uses: TheDoctor0/zip-release@0.7.6
+
+    - name: 压缩附件
+      uses: TheDoctor0/zip-release@0.7.6
       with:
-        type: 'zip'
-        filename: 'amai.zip'
-        directory: './release/win-unpacked/'
-        path: './release/'
-        
-    - uses: actions/upload-artifact@v3
+        type: zip
+        filename: amai.zip
+        directory: ./release/win-unpacked/
+        path: ./release/win-unpacked/
+
+    - name: 上传附件
+      uses: actions/upload-artifact@v3
       with:
-        path: ./release/amai.zip
-        
-    - uses: actions/download-artifact@v4
+        path: ./release/win-unpacked/amai.zip
+
+    - name: 下载附件
+      uses: actions/download-artifact@v4
       with:
-        path: ./release/amai.zip
+        path: ./release/win-unpacked/amai.zip
