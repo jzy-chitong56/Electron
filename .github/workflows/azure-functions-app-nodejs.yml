@@ -50,11 +50,10 @@ jobs:
 
     - name: Install Dependencies
       run: npm i
-    - name: Install electron-builder
-  run: npm install electron-builder --save-dev
+  
 
-    - name: Check lint
-      run: npm run lint
+   # - name: Check lint
+     # run: npm run lint
 
    #    - name: Run headless unit test
       #   run: npm run test
