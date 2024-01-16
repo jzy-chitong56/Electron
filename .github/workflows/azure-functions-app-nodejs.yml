@@ -64,15 +64,18 @@ jobs:
     - name: Build the app
      # run: npm run electron:local
       run: npm run electron:build
+      
     - uses: TheDoctor0/zip-release@0.7.6
       with:
-        filename: 1.zip
-        path: ./release/
-        directory: ./release/win-unpacked/
+        type: 'zip'
+        filename: 'amai.zip'
+        directory: './release/win-unpacked/'
+        path: './release/'
+        
     - uses: actions/upload-artifact@v3
       with:
-        path: ./release/1.zip
-        compression-level: 9
+        path: ./release/amai.zip
+        
     - uses: actions/download-artifact@v4
       with:
-        path: ./release/1.zip
+        path: ./release/amai.zip
