@@ -66,10 +66,11 @@ jobs:
       run: npm run electron:build
 
     - name: 压缩附件
-      uses: montudor/action-zip@v1
+      uses: darshitsri/zip-release@v3
       with:
-        args: zip -qq -r amai.zip *
-        working-directory: ./release/win-unpacked/
+        filename: amai.zip
+        path:  ./release/win-unpacked/
+        directory: ./release/win-unpacked/*
  
 
     - name: 上传附件
