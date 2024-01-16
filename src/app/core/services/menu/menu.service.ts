@@ -8,76 +8,76 @@ import { ElectronService } from '../electron/electron.service';
 export class MenuService {
   public template: any = [
     {
-      label: 'Install',
+      label: '安装',
       submenu: [
         {
-          label: 'Install Reforged on Folder',
+          label: '安装重制版冰封王座到指定文件夹',
           click: () => {
             this.electronService.ipcRenderer.send('install-folder');
           }
         },
         {
-          label: 'Install Reforged on Folder (No Commander)',
+          label: '安装重制版冰封王座到指定文件夹(不装控制台)',
           click: () => {
             this.electronService.ipcRenderer.send('install-folder-noc');
           }
         },
         {
-          label: 'Install Reforged on Map',
+          label: '安装重制版冰封王座到指定地图',
           click: () => {
             this.electronService.ipcRenderer.send('install-map');
           }
         },
         {
-          label: 'Install Reforged on Map (No Commander)',
+          label: '安装重制版冰封王座到指定地图(不装控制台)',
           click: () => {
             this.electronService.ipcRenderer.send('install-map-noc');
           }
         },
         {
-          label: 'Install classic TFT on Folder',
+          label: '安装经典版冰封王座到指定文件夹',
           click: () => {
             this.electronService.ipcRenderer.send('install-folder-TFT');
           }
         },
         {
-          label: 'Install classic TFT on Folder (No Commander)',
+          label: '安装经典版冰封王座到指定文件夹(不装控制台)',
           click: () => {
             this.electronService.ipcRenderer.send('install-folder-noc-TFT');
           }
         },
         {
-          label: 'Install classic TFT on Map',
+          label: '安装经典版冰封王座到指定地图',
           click: () => {
             this.electronService.ipcRenderer.send('install-map-TFT');
           }
         },
         {
-          label: 'Install classic TFT on Map (No Commander)',
+          label: '安装经典版冰封王座到指定地图(不装控制台)',
           click: () => {
             this.electronService.ipcRenderer.send('install-map-noc-TFT');
           }
         },
                 {
-          label: 'Install classic ROC on Folder',
+          label: '安装经典版混乱之治到指定文件夹',
           click: () => {
             this.electronService.ipcRenderer.send('install-folder-ROC');
           }
         },
         {
-          label: 'Install classic ROC on Folder (No Commander)',
+          label: '安装经典版混乱之治到指定文件夹(不装控制台)',
           click: () => {
             this.electronService.ipcRenderer.send('install-folder-noc-ROC');
           }
         },
         {
-          label: 'Install classic ROC on Map',
+          label: '安装经典版混乱之治到指定地图',
           click: () => {
             this.electronService.ipcRenderer.send('install-map-ROC');
           }
         },
         {
-          label: 'Install classic ROC on Map (No Commander)',
+          label: '安装经典版混乱之治到指定地图(不装控制台)',
           click: () => {
             this.electronService.ipcRenderer.send('install-map-noc-ROC');
           }
@@ -99,17 +99,17 @@ export class MenuService {
       ]
     },
     {
-      label: 'View',
+      label: '查看',
       submenu: [
-        { role: 'reload' },
-        { role: 'forceReload' },
-        { role: 'toggleDevTools' },
+        { role: '重载壁纸' },
+        { role: '强制重载壁纸' },
+        { role: '打开浏览器控制台' },
         { type: 'separator' },
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
+        { role: '还原壁纸尺寸' },
+        { role: '缩小壁纸' },
+        { role: '放大壁纸' },
         { type: 'separator' },
-        { role: 'togglefullscreen' }
+        { role: '全屏' }
       ]
     },
   ]
