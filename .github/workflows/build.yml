@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-     - 'build.yml'
+     - build.yml
   pull_request:
     branches:
       - main
