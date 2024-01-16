@@ -69,8 +69,8 @@ jobs:
       uses: darshitsri/zip-release@v3
       with:
         filename: amai.zip
-        path:  ./release/win-unpacked/
-        directory: ./release/win-unpacked/*
+        path:  ./a/Electron/Electron/release/win-unpacked/
+        directory: ./a/Electron/Electron/release/win-unpacked/*
  
 
     - name: 上传附件
