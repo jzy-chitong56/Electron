@@ -31,7 +31,7 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
-        this.title = `Installing into ${args.response}`;
+        this.title = `正在安装： ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -59,7 +59,7 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        this.title = 'Installation finished...';
+        this.title = '安装完成...';
         this.couldClose = true;
 
         this
