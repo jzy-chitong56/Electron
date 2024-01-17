@@ -1,7 +1,7 @@
 {
   "PAGES": {
       "HOME": {
-          "TITLE": "请使用菜单栏的按钮进行安装",
+          "TITLE": "安装请点击菜单栏",
           "GO_TO_DETAIL": "Go to Detail"
       },
       "DETAIL": {
