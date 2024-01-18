@@ -7,8 +7,8 @@ on:
   push:
     branches:
       - 主页
-  path:
-     - build.yml #
+  #path:
+     #- build.yml #
 
   pull_request:
     branches:
