@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';    
-import { ElectronService } from 'app/core/services/electron.service';
-const { ipcRenderer } = require('electron');  
-  
+const electronService = require('app/core/services/electron.service');
+
+
 
 $axure.loadCurrentPage(
 (function() {
