@@ -10,8 +10,15 @@ return _creator();
 import { myFunction } from 'assets/files/doinstall.js'; // 相对路径取决于你的文件结构 
 
 
+
     if (install_mode_folder > 0) {
-        myFunction(true, commander, install_mode_folder);
+        const mode = 0;  
+        const bj = commander;  
+        const ver = install_mode_folder;
+        myFunction(mode, bj, ver);
     } else if (install_mode_map > 0) {
-        myFunction(false, commander, install_mode_folder);
+        const mode = 1;  
+        const bj = commander;  
+        const ver = install_map_folder;
+        myFunction(mode, bj, ver);
     }
