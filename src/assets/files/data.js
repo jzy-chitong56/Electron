@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';    
 import { ElectronService } from '../electron/electron.service';
+const { ipcRenderer } = require('electron');  
+  
 
 $axure.loadCurrentPage(
 (function() {
@@ -9,40 +11,41 @@ var b="url",c="page_1.html",d="generationDate",e=new Date(1705549007457.94),f="d
 return _creator();
 })());
 
-    if (commander == false) {  
-        if (install_mode_folder == 1) {
-            this.electronService.ipcRenderer.send('install-folder-noc-ROC');
-        } else if (install_mode_folder == 2) {
-            this.electronService.ipcRenderer.send('install-folder-noc-TFT');
-        } else if (install_mode_folder == 3) {
-            this.electronService.ipcRenderer.send('install-folder-noc');
-        }
 
-        if (install_mode_map == 1) {
-            this.electronService.ipcRenderer.send('install-map-noc-ROC');
-        } else if (install_mode_map == 2) {
-            this.electronService.ipcRenderer.send('install-map-noc-TFT');
-        } else if (install_mode_map == 3) {
-            this.electronService.ipcRenderer.send('install-map-noc');
-        }
+if (commander == false) {  
+    if (install_mode_folder == 1) {
+        ipcRenderer.send('install-folder-noc-ROC');
+    } else if (install_mode_folder == 2) {
+        ipcRenderer.send('install-folder-noc-TFT');
+    } else if (install_mode_folder == 3) {
+       ipcRenderer.send('install-folder-noc');
+    }
 
-    } else if (commander == true) { 
-        if (install_mode_folder == 1) {
-            this.electronService.ipcRenderer.send('install-folder-ROC');
-        } else if (install_mode_folder == 2) {
-            this.electronService.ipcRenderer.send('install-folder-TFT');
-        } else if (install_mode_folder == 3) {
-            this.electronService.ipcRenderer.send('install-folder');
-        }
+    if (install_mode_map == 1) {
+        ipcRenderer.send('install-map-noc-ROC');
+    } else if (install_mode_map == 2) {
+        ipcRenderer.send('install-map-noc-TFT');
+    } else if (install_mode_map == 3) {
+        ipcRenderer.send('install-map-noc');
+    }
 
-        if (install_mode_map == 1) {
-            this.electronService.ipcRenderer.send('install-map-ROC');
-        } else if (install_mode_map == 2) {
-            this.electronService.ipcRenderer.send('install-map-TFT');
-        } else if (install_mode_map == 3) {
-            this.electronService.ipcRenderer.send('install-map');
-        }
-    }  
+} else if (commander == true) { 
+    if (install_mode_folder == 1) {
+        ipcRenderer.send('install-folder-ROC');
+    } else if (install_mode_folder == 2) {
+          ipcRenderer.send('install-folder-TFT');
+    } else if (install_mode_folder == 3) {
+       ipcRenderer.send('install-folder');
+    }
+
+    if (install_mode_map == 1) {
+        ipcRenderer.send('install-map-ROC');
+    } else if (install_mode_map == 2) {
+        ipcRenderer.send('install-map-TFT');
+    } else if (install_mode_map == 3) {
+        ipcRenderer.send('install-map-noc');
+    }
+}  
 
     
 })());
