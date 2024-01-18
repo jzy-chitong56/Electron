@@ -1,4 +1,4 @@
-﻿.ax_default {
+.ax_default {
   font-family:'Arial Normal', 'Arial', sans-serif;
   font-weight:400;
   font-style:normal;
@@ -13,6 +13,8 @@
 .box_1 {
 }
 ._图片_ {
+}
+.button {
 }
 .primary_button {
   color:#FFFFFF;
@@ -66,6 +68,9 @@
   text-align:left;
 }
 .checkbox {
+  text-align:left;
+}
+.radio_button {
   text-align:left;
 }
 ._表单提示 {
