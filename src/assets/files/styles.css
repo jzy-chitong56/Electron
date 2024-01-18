@@ -3,7 +3,7 @@
   background-image:none;
   position:static;
   left:auto;
-  width:auto;
+  width:100%;
   margin-left:0;
   margin-right:0;
   text-align:left;
@@ -21,16 +21,16 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:586px;
-  height:398px;
+  width:30vw;
+  height:36vh;
 }
 #u0 {
   border-width:0px;
   position:absolute;
-  left:667px;
-  top:146px;
-  width:586px;
-  height:398px;
+  left:34vw;
+  top:13vh;
+  width:30vw;
+  height:36vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -55,16 +55,16 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:586px;
-  height:399px;
+  width:30vw;
+  height:36vh;
 }
 #u1 {
   border-width:0px;
   position:absolute;
-  left:78px;
-  top:145px;
-  width:586px;
-  height:399px;
+  left:4vw;
+  top:13vh;
+  width:30vw;
+  height:36vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -89,8 +89,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:587px;
-  height:64px;
+  width:30vw;
+  height:5wh;
   background:inherit;
   background-color:rgba(255, 255, 255, 0);
   border:none;
@@ -107,10 +107,10 @@
 #u2 {
   border-width:0px;
   position:absolute;
-  left:667px;
-  top:60px;
-  width:587px;
-  height:64px;
+  left:34vw;
+  top:5vh;
+  width:30vw;
+  height:5vh;
   display:flex;
   font-family:'微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑', sans-serif;
   font-weight:700;
@@ -139,16 +139,16 @@
   position:absolute;
   left:0px;
   top:4px;
-  width:40px;
-  height:40px;
+  width:2vw;
+  height:3vh;
 }
 #u3 {
   border-width:0px;
   position:absolute;
-  left:721px;
-  top:600px;
-  width:479px;
-  height:47px;
+  left:37vw;
+  top:55vh;
+  width:25vw;
+  height:4wh;
   display:flex;
   font-family:'微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑', sans-serif;
   font-weight:700;
@@ -168,9 +168,9 @@
 #u3_text {
   border-width:0px;
   position:absolute;
-  left:42px;
+  left:3vw;
   top:0px;
-  width:435px;
+  width:22vw;
   word-wrap:break-word;
   text-transform:none;
 }
@@ -188,8 +188,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:523px;
-  height:134px;
+  width:27vw;
+  height:12vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 1);
   box-sizing:border-box;
@@ -209,10 +209,10 @@
 #u4 {
   border-width:0px;
   position:absolute;
-  left:396px;
-  top:756px;
-  width:523px;
-  height:134px;
+  left:20vw;
+  top:7vh;
+  width:27vw;
+  height:12vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -232,8 +232,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:523px;
-  height:134px;
+  width:27vw;
+  height:12vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 1);
   box-sizing:border-box;
@@ -262,8 +262,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:523px;
-  height:134px;
+  width:27vw;
+  height:12vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 1);
   box-sizing:border-box;
@@ -283,10 +283,10 @@
 #u5 {
   border-width:0px;
   position:absolute;
-  left:1002px;
-  top:756px;
-  width:523px;
-  height:134px;
+  left:50vw;
+  top:7vh;
+  width:27vw;
+  height:12vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -306,8 +306,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:523px;
-  height:134px;
+  width:27vw;
+  height:12vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 1);
   box-sizing:border-box;
@@ -336,8 +336,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:225px;
-  height:31px;
+  width:11vw;
+  height:2vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 0);
   border:none;
@@ -354,10 +354,10 @@
 #u6 {
   border-width:0px;
   position:absolute;
-  left:259px;
-  top:475px;
-  width:225px;
-  height:31px;
+  left:13vw;
+  top:44vh;
+  width:11vw;
+  height:2vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -382,8 +382,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:177px;
-  height:31px;
+  width:9vw;
+  height:2vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 0);
   border:none;
@@ -401,10 +401,10 @@
 #u7 {
   border-width:0px;
   position:absolute;
-  left:872px;
-  top:475px;
-  width:177px;
-  height:31px;
+  left:45vw;
+  top:43vh;
+  width:9vw;
+  height:2vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -430,16 +430,16 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:586px;
-  height:398px;
+  width:30vw;
+  height:36vh;
 }
 #u8 {
   border-width:0px;
   position:absolute;
-  left:1257px;
-  top:146px;
-  width:586px;
-  height:398px;
+  left:65vw;
+  top:13vh;
+  width:1vw;
+  height:3vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -464,8 +464,8 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:163px;
-  height:31px;
+  width:8vw;
+  height:2vh;
   background:inherit;
   background-color:rgba(255, 255, 255, 0);
   border:none;
@@ -483,10 +483,10 @@
 #u9 {
   border-width:0px;
   position:absolute;
-  left:1469px;
-  top:475px;
-  width:163px;
-  height:31px;
+  left:76vw;
+  top:44vh;
+  width:8vw;
+  height:2vh;
   display:flex;
   font-family:'微软雅黑', sans-serif;
   font-weight:400;
@@ -512,16 +512,16 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:512px;
-  height:256px;
+  width:26vw;
+  height:23vh;
 }
 #u10 {
   border-width:0px;
   position:absolute;
-  left:115px;
-  top:188px;
-  width:512px;
-  height:256px;
+  left:5vw;
+  top:17vh;
+  width:26vw;
+  height:23vh;
   display:flex;
 }
 #u10 .text {
@@ -550,16 +550,16 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:512px;
-  height:256px;
+  width:26vw;
+  height:23vh;
 }
 #u11 {
   border-width:0px;
   position:absolute;
-  left:704px;
-  top:188px;
-  width:512px;
-  height:256px;
+  left:36vw;
+  top:17vh;
+  width:26vw;
+  height:23vh;
   display:flex;
 }
 #u11 .text {
@@ -588,16 +588,16 @@
   position:absolute;
   left:0px;
   top:0px;
-  width:512px;
-  height:254px;
+  width:26vw;
+  height:23vh;
 }
 #u12 {
   border-width:0px;
   position:absolute;
-  left:1294px;
-  top:188px;
-  width:512px;
-  height:254px;
+  left:65vw;
+  top:17vh;
+  width:26vw;
+  height:23vh;
   display:flex;
 }
 #u12 .text {
