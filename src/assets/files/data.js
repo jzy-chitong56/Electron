@@ -7,43 +7,11 @@ var b="url",c="assets/index.html",d="generationDate",e=new Date(1705552919062.46
 return _creator();
 })());
 
-import { myFunction } from './tsFile.js'; // 相对路径取决于你的文件结构 
+import { myFunction } from 'assets/files/doinstall.js'; // 相对路径取决于你的文件结构 
 
-myFunction(param1, param2);
-    if (commander == false) {  
-    if (install_mode_folder == 1) {
-        ipcRenderer.send('install-folder-noc-ROC');
-    } else if (install_mode_folder == 2) {
-        ipcRenderer.send('install-folder-noc-TFT');
-    } else if (install_mode_folder == 3) {
-       ipcRenderer.send('install-folder-noc');
+
+    if (install_mode_folder > 0) {
+        myFunction(true, commander, install_mode_folder);
+    } else if (install_mode_map > 0) {
+        myFunction(false, commander, install_mode_folder);
     }
-
-    if (install_mode_map == 1) {
-        ipcRenderer.send('install-map-noc-ROC');
-    } else if (install_mode_map == 2) {
-        ipcRenderer.send('install-map-noc-TFT');
-    } else if (install_mode_map == 3) {
-        ipcRenderer.send('install-map-noc');
-    }
-
-} else if (commander == true) { 
-    if (install_mode_folder == 1) {
-        ipcRenderer.send('install-folder-ROC');
-    } else if (install_mode_folder == 2) {
-          ipcRenderer.send('install-folder-TFT');
-    } else if (install_mode_folder == 3) {
-       ipcRenderer.send('install-folder');
-    }
-
-    if (install_mode_map == 1) {
-        ipcRenderer.send('install-map-ROC');
-    } else if (install_mode_map == 2) {
-        ipcRenderer.send('install-map-TFT');
-    } else if (install_mode_map == 3) {
-        ipcRenderer.send('install-map-noc');
-    }
-}  
-}
-
-
