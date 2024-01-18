@@ -1,6 +1,6 @@
 const electronService = require('app/core/services/electron.service');
 
-function executeFunction(mode, bj, ver) {  
+export function myFunction(mode, bj, ver) {  
 // 在这里实现你的逻辑  
 
 if (bj == false) {  
