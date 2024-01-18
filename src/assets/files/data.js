@@ -1,6 +1,3 @@
-const electronService = require('app/core/services/electron.service');
-
-
 
 $axure.loadCurrentPage(
 (function() {
