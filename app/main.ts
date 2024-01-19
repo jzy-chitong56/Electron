@@ -76,12 +76,12 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
-    title : isMap ? "Open WC3 Map File": "Open AMAI Maps Directory",
+    title : isMap ? "打开地图": "打开地图目录",
     // TODO: Change to let multiples selections when is map
-    properties: isMap ? ['openFile'] : ['openDirectory'],
+    properties: isMap ? ['打开地图'] : ['打开地图目录'],
     // TODO: add i18n here
     filters: isMap ? [
-      { name: 'WC3 Map File', extensions: ['w3x', 'w3m'] },
+      { name: '地图文件', extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
