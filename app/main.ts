@@ -78,7 +78,7 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
     // TODO: add i18n here
     title : isMap ? "打开地图": "打开地图目录",
     // TODO: Change to let multiples selections when is map
-    properties: isMap ? ['打开地图'] : ['打开地图目录'],
+    properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
       { name: '地图文件', extensions: ['w3x', 'w3m'] },
