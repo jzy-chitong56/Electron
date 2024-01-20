@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AMAI 安装器</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <script src="./src/index.js"></script>
-    <style>
+  <meta charset="utf-8">
+  <title>AMAI 安装器</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+
+  <script src="index.js"></script>
+  <style>
     :root {
       --switch-width: 300px; /* 最大宽度 */
     }
@@ -30,14 +33,14 @@
       font-weight: bold;
     }
 
-    /* 当屏幕宽度小于等于600px时，减小字体大小 */
+    /* 当屏幕宽度小于等于800px时，减小字体大小 */
     @media (max-width: 800px) {
       .center-heading, .center-text {
         font-size: 1rem;
       }
     }
 
-    /* 当屏幕宽度大于600px时，增大字体大小 */
+    /* 当屏幕宽度大于800px时，增大字体大小 */
     @media (min-width: 801px) {
       .center-heading, .center-text {
         font-size: 3remx;
@@ -65,7 +68,7 @@
       height: auto;
     }
 
-    /* 当屏幕宽度小于或等于600px时，图片容器将占据100%宽度 */
+    /* 当屏幕宽度小于或等于1600px时，图片容器将占据100%宽度 */
     @media (max-width: 1600px) {
       .image-row img {
         width: 100%;
@@ -74,7 +77,7 @@
 
     .container.setting {
       display: flex;
-      justify-content: space-between; /* 平均分配空间，也可以根据需求选择其他布局方式 */
+      justify-content: space-between; /* 平均分配空间 */
       align-items: center;
       gap: 10px;
     }
@@ -135,14 +138,14 @@
     }
 
     input:checked + .slider:before {
-      content: "按文件安装";
+      content: "按地图安装";
       -webkit-transform: translateX(100%);
       -ms-transform: translateX(100%);
        transform: translateX(100%);
        margin-left: -3px;
     }
 
-    </style>
+  </style>
   </head>
 
   <body>
@@ -152,16 +155,16 @@
 
       <div  class="image-row">
         <div id="imageContainer.ROC">
-          <img id="Images.ROC.Enable" src="./src/assets/ROC.Enable.png" style="display: none;">
-          <img id="Images.ROC.Disable" src="./src/assets/ROC.Disable.png">
+          <img id="Images.ROC.Enable" src="assets/ROC.Enable.png" style="display: none;">
+          <img id="Images.ROC.Disable" src="assets/ROC.Disable.png">
         </div>
         <div id="imageContainer.TFT">
-          <img id="Images.TFT.Enable" src="./src/assets/TFT.Enable.png" style="display: none;">
-          <img id="Images.TFT.Disable" src="./src/assets/TFT.Disable.png">
+          <img id="Images.TFT.Enable" src="assets/TFT.Enable.png" style="display: none;">
+          <img id="Images.TFT.Disable" src="assets/TFT.Disable.png">
         </div>
         <div id="imageContainer.REF">
-          <img id="Images.REF.Enable" src="./src/assets/REF.Enable.png" style="display: none;">
-          <img id="Images.REF.Disable" src="./src/assets/REF.Disable.png">
+          <img id="Images.REF.Enable" src="assets/REF.Enable.png" style="display: none;">
+          <img id="Images.REF.Disable" src="assets/REF.Disable.png">
         </div>
       </div>
 
