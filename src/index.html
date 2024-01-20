@@ -4,171 +4,305 @@
     <title>AMAI</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <link href="assets/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
-    <link href="assets/data/styles.css" type="text/css" rel="stylesheet"/>
-    <link href="styles.css" type="text/css" rel="stylesheet"/>
-    <script src="assets/resources/scripts/jquery-3.2.1.min.js"></script>
-    <script src="assets/resources/scripts/axure/axQuery.js"></script>
-    <script src="assets/resources/scripts/axure/globals.js"></script>
-    <script src="assets/resources/scripts/axutils.js"></script>
-    <script src="assets/resources/scripts/axure/annotation.js"></script>
-    <script src="assets/resources/scripts/axure/axQuery.std.js"></script>
-    <script src="assets/resources/scripts/axure/doc.js"></script>
-    <script src="assets/resources/scripts/messagecenter.js"></script>
-    <script src="assets/resources/scripts/axure/events.js"></script>
-    <script src="assets/resources/scripts/axure/recording.js"></script>
-    <script src="assets/resources/scripts/axure/action.js"></script>
-    <script src="assets/resources/scripts/axure/expr.js"></script>
-    <script src="assets/resources/scripts/axure/geometry.js"></script>
-    <script src="assets/resources/scripts/axure/flyout.js"></script>
-    <script src="assets/resources/scripts/axure/model.js"></script>
-    <script src="assets/resources/scripts/axure/repeater.js"></script>
-    <script src="assets/resources/scripts/axure/sto.js"></script>
-    <script src="assets/resources/scripts/axure/utils.temp.js"></script>
-    <script src="assets/resources/scripts/axure/variables.js"></script>
-    <script src="assets/resources/scripts/axure/drag.js"></script>
-    <script src="assets/resources/scripts/axure/move.js"></script>
-    <script src="assets/resources/scripts/axure/visibility.js"></script>
-    <script src="assets/resources/scripts/axure/style.js"></script>
-    <script src="assets/resources/scripts/axure/adaptive.js"></script>
-    <script src="assets/resources/scripts/axure/tree.js"></script>
-    <script src="assets/resources/scripts/axure/init.temp.js"></script>
-    <script src="assets/resources/scripts/axure/legacy.js"></script>
-    <script src="assets/resources/scripts/axure/viewer.js"></script>
-    <script src="assets/resources/scripts/axure/math.js"></script>
-    <script src="assets/resources/scripts/axure/jquery.nicescroll.min.js"></script>
-    <script src="assets/data/document.js"></script>
-    <script src="assets/files/data.js"></script>
-    <script type="text/javascript">
-      $axure.utils.getTransparentGifPath = function() { return 'assets/resources/images/transparent.gif'; };
-      $axure.utils.getOtherPath = function() { return 'assets/resources/Other.html'; };
-      $axure.utils.getReloadPath = function() { return 'assets/resources/reload.html'; };
-    </script>
+    <style>
+    :root {
+      --switch-width: 300px; /* 最大宽度 */
+    }
+
+    .center-container {
+      text-align: center;  
+      justify-content: center;
+      align-items: center;
+      margin: auto;  
+      max-width: 100%;
+    }
+
+    .center-heading {
+      text-align: center;
+      font-size: 3rem; /* 自定义字号大小 */
+      font-weight: bold; /* 文字加粗 */
+    }
+
+    .center-text {
+      text-align: center;
+      font-size: 2rem; /* 自定义字号大小，这里设置为24像素 */
+      font-weight: bold; /* 文字加粗 */
+    }
+
+    /* 当屏幕宽度小于等于600px时，减小字体大小 */
+    @media (max-width: 800px) {
+      .center-heading, .center-text {
+        font-size: 1rem; /* 小屏幕下的字体大小 */
+      }
+    }
+
+    /* 当屏幕宽度大于600px时，增大字体大小 */
+    @media (min-width: 801px) {
+      .center-heading, .center-text {
+        font-size: 3remx; /* 大于600px时的字体大小 */
+      }
+    }
+
+    .image-row {
+      display: flex;
+      text-align: center;  
+      justify-content: center;
+      align-items: center; /* 使图片垂直居中 */
+      max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
+      width: 100%; /* or any other suitable width */
+      gap: 10px;
+    }
+    图片容器的默认宽度设置
+    #imageContainer.ROC,
+    #imageContainer.TFT,
+    #imageContainer.REF {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 512px;
+      width: 50%; /* or any other suitable width */
+      height: auto; /* 保持宽高比 */
+    }
+
+    /* 当屏幕宽度小于或等于600px时，图片容器将占据100%宽度 */
+    @media (max-width: 1600px) {
+      .image-row img {
+        width: 70%; /* 或其他百分比值，根据需要调整 */  
+      }  
+    }
+
+    .container.setting {
+      display: flex;
+      justify-content: space-between; /* 平均分配空间，也可以根据需求选择其他布局方式 */
+      align-items: center; /* 使图片垂直居中 */
+      gap: 10px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      top: 60px;
+      max-width: var(--switch-width);
+      width: 50%; 
+      height: 32px;
+      border: 3px solid #5c5c5c; /* 添加边框，这里使用黑色作为示例，您可以替换为您需要的颜色 */
+      box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
+      border-radius: 26px;
+    }
+    .checkboxbj {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      top: 60px;
+      padding-left: 120px;
+      font-size: 20px;
+      line-height: 3; 
+      transform: scale(1.5);
+    }
+
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #3dc874;
+      border-radius: 26px; /* 修改为倒圆角 */  
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    .slider:before {
+      position: absolute;
+      display: flex; /* 将其转换为弹性布局容器 */
+      align-items: center; /* 垂直居中 */
+      justify-content: center; /* 水平居中 */
+      content: "按文件夹安装";
+      white-space: nowrap;
+      left: 1px;
+      height: 100%;
+      width: 50%; /* 减去两边的空白以适应内容区域 */
+      background-color: #ffffff;
+      border-radius: 26px; /* 修改为倒圆角 */  
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: rgb(33, 4, 251);
+    }
+
+    input:checked + .slider:before {
+      content: "按文件安装";
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+       transform: translateX(100%);
+       margin-left: -3px; /* 设置右侧边距为2px */
+    }
+
+    </style>
   </head>
+
   <body>
-    <div id="base" class="">
 
-      <!-- TFT frame (矩形) -->
-      <div id="u0" class="ax_default box_1 ax_default_hidden" data-label="TFT frame" style="display:none; visibility: hidden">
-        <img id="u0_img" class="img " src="assets/images/tft_frame_u0.svg"/>
-        <div id="u0_text" class="text " style="display:none; visibility: hidden">
-          <p></p>
+    <div class="center-container">
+      <div class="center-heading">选择游戏版本</div>
+
+      <div  class="image-row">
+        <div id="imageContainer.ROC">
+          <img id="Images.ROC.Enable" src="images/ROC.Enable.png" style="display: none;">
+          <img id="Images.ROC.Disable" src="images/ROC.Disable.png">
+        </div>
+        <div id="imageContainer.TFT">
+          <img id="Images.TFT.Enable" src="images/TFT.Enable.png" style="display: none;">
+          <img id="Images.TFT.Disable" src="images/TFT.Disable.png">
+        </div>
+        <div id="imageContainer.REF">
+          <img id="Images.REF.Enable" src="images/REF.Enable.png" style="display: none;">
+          <img id="Images.REF.Disable" src="images/REF.Disable.png">
         </div>
       </div>
 
-      <!-- ROC frame (矩形) -->
-      <div id="u1" class="ax_default box_1 ax_default_hidden" data-label="ROC frame" style="display:none; visibility: hidden">
-        <img id="u1_img" class="img " src="assets/images/roc_frame_u1.svg"/>
-        <div id="u1_text" class="text " style="display:none; visibility: hidden">
-          <p></p>
-        </div>
-      </div>
+      <div class="center-text">安装设置</div>
 
-      <!-- Unnamed (矩形) -->
-      <div id="u2" class="ax_default _一级标题">
-        <div id="u2_div" class=""></div>
-        <div id="u2_text" class="text ">
-          <p><span>- CHOICE WAR3 VERSION -</span></p>
-        </div>
-      </div>
-
-      <!-- Includ Commander (复选框) -->
-      <div id="u3" class="ax_default checkbox" data-label="Includ Commander">
-        <label id="u3_input_label" for="u3_input" style="position: absolute; left: 0px;">
-          <img id="u3_img" class="img " src="assets/images/includ_commander_u3.svg"/>
-          <div id="u3_text" class="text ">
-            <p><span>Includ Commander</span></p>
-          </div>
+      <div class="container.setting">
+        <label class="switch">
+          <input type="checkbox" id="Mode.Switch" class="hidden-checkbox">
+          <span class="slider"></span>
         </label>
-        <input id="u3_input" type="checkbox" value="checkbox"/>
-      </div>
-
-      <!-- ROC TIES (矩形) -->
-      <div id="u4" class="ax_default label" data-label="ROC TIES">
-        <div id="u4_div" class=""></div>
-        <div id="u4_text" class="text ">
-          <p><span>support 1.24e~1.31</span></p>
-        </div>
-      </div>
-
-      <!-- TFT TIES (矩形) -->
-      <div id="u5" class="ax_default label" data-label="TFT TIES">
-        <div id="u5_div" class=""></div>
-        <div id="u5_text" class="text ">
-          <p><span>support 1.24e+</span></p>
-        </div>
-      </div>
-
-      <!-- REF frame (矩形) -->
-      <div id="u6" class="ax_default box_1 ax_default_hidden" data-label="REF frame" style="display:none; visibility: hidden">
-        <img id="u6_img" class="img " src="assets/images/ref_frame_u6.svg"/>
-        <div id="u6_text" class="text " style="display:none; visibility: hidden">
-          <p></p>
-        </div>
-      </div>
-
-      <!-- REF TIES (矩形) -->
-      <div id="u7" class="ax_default label" data-label="REF TIES">
-        <div id="u7_div" class=""></div>
-        <div id="u7_text" class="text ">
-          <p><span>support 1.33+</span></p>
-        </div>
-      </div>
-
-      <!-- roc logo (图片 ) -->
-      <div id="u8" class="ax_default _图片_" data-label="roc logo" selectiongroup="XX">
-        <img id="u8_img" class="img " src="assets/images/roc_logo_u8.png"/>
-        <div id="u8_text" class="text " style="display:none; visibility: hidden">
-          <p></p>
-        </div>
-      </div>
-
-      <!-- tft logo (图片 ) -->
-      <div id="u9" class="ax_default _图片_" data-label="tft logo" selectiongroup="XX">
-        <img id="u9_img" class="img " src="assets/images/tft_logo_u9.png"/>
-        <div id="u9_text" class="text " style="display:none; visibility: hidden">
-          <p></p>
-        </div>
-      </div>
-
-      <!-- ref logo (图片 ) -->
-      <div id="u10" class="ax_default _图片_" data-label="ref logo" selectiongroup="XX">
-        <img id="u10_img" class="img " src="assets/images/ref_logo_u10.png"/>
-        <div id="u10_text" class="text " style="display:none; visibility: hidden">
-          <p></p>
-        </div>
-      </div>
-
-      <!-- Unnamed (矩形) -->
-      <div id="u11" class="ax_default _一级标题">
-        <div id="u11_div" class=""></div>
-        <div id="u11_text" class="text ">
-          <p><span>- SETTING -</span></p>
-        </div>
-      </div>
-
-      <!-- Install On Folder (单选按钮) -->
-      <div id="u12" class="ax_default radio_button selected" data-label="Install On Folder" selectiongroup="X1">
-        <label id="u12_input_label" for="u12_input" style="position: absolute; left: 0px;">
-          <img id="u12_img" class="img " src="assets/images/install_on_folder_u12_selected.svg"/>
-          <div id="u12_text" class="text ">
-            <p><span>Install On Folder</span></p>
-          </div>
+        <label class="checkboxbj">
+          <input type="checkbox" id="BJ.Switch" checked>
+          <label for="BJ.Switch">安装控制台(B.J)</label>
         </label>
-        <input id="u12_input" type="radio" value="radio" name="X1" checked/>
       </div>
 
-      <!-- Install On Map (单选按钮) -->
-      <div id="u13" class="ax_default radio_button" data-label="Install On Map" selectiongroup="X1">
-        <label id="u13_input_label" for="u13_input" style="position: absolute; left: 0px;">
-          <img id="u13_img" class="img " src="assets/images/install_on_map_u13.svg"/>
-          <div id="u13_text" class="text ">
-            <p><span>Install On Map</span></p>
-          </div>
-        </label>
-        <input id="u13_input" type="radio" value="radio" name="X1"/>
-      </div>
     </div>
-    <script src="assets/resources/scripts/axure/ios.js"></script>
+
+    <script>
+      var Mode_Switch = true;
+      var BJ_Switch = true;
+      var Images_ROC_Enable = document.getElementById('Images.ROC.Enable');
+      var Images_ROC_Disable = document.getElementById('Images.ROC.Disable');
+      var image_Container_ROC = document.getElementById('imageContainer.ROC');
+      var ROCShown = false;
+      var Images_TFT_Enable = document.getElementById('Images.TFT.Enable');
+      var Images_TFT_Disable = document.getElementById('Images.TFT.Disable');
+      var image_Container_TFT = document.getElementById('imageContainer.TFT');
+      var TFTShown = false;
+      var Images_REF_Enable = document.getElementById('Images.REF.Enable');
+      var Images_REF_Disable = document.getElementById('Images.REF.Disable');
+      var image_Container_REF = document.getElementById('imageContainer.REF');
+      var REFShown = false;
+
+      // 为图片容器添加鼠标悬停和点击事件监听器
+      image_Container_ROC.addEventListener('mouseover', function() {
+        if (!ROCShown) {
+        Images_ROC_Enable.style.display = 'block';
+        Images_ROC_Disable.style.display = 'none';
+        }
+      });
+      image_Container_ROC.addEventListener('mouseout', function() {
+        if (!ROCShown) {
+        Images_ROC_Enable.style.display = 'none';
+        Images_ROC_Disable.style.display = 'block';
+        }
+      });
+
+      image_Container_ROC.addEventListener('click', function() {
+        // 点击时切换图片显示
+        if (!ROCShown) {
+          Images_ROC_Enable.style.display = 'block';
+          Images_ROC_Disable.style.display = 'none';
+          Images_TFT_Enable.style.display = 'none';
+          Images_TFT_Disable.style.display = 'block';
+          Images_REF_Enable.style.display = 'none';
+          Images_REF_Disable.style.display = 'block';
+          TFTShown = false
+          REFShown = false
+        } else {
+          Images_ROC_Enable.style.display = 'none';
+          Images_ROC_Disable.style.display = 'block';
+        }
+        ROCShown = !ROCShown;
+      });
+
+
+
+      // 为图片容器添加鼠标悬停和点击事件监听器
+      image_Container_TFT.addEventListener('mouseover', function() {
+        if (!TFTShown) {
+        Images_TFT_Enable.style.display = 'block';
+        Images_TFT_Disable.style.display = 'none';
+        }
+      });
+      
+      image_Container_TFT.addEventListener('mouseout', function() {
+        if (!TFTShown) {
+        Images_TFT_Enable.style.display = 'none';
+        Images_TFT_Disable.style.display = 'block';
+        }
+      });
+
+      image_Container_TFT.addEventListener('click', function() {
+        // 点击时切换图片显示
+        if (!TFTShown) {
+          Images_TFT_Enable.style.display = 'block';
+          Images_TFT_Disable.style.display = 'none';
+          Images_ROC_Enable.style.display = 'none';
+          Images_ROC_Disable.style.display = 'block';
+          Images_REF_Enable.style.display = 'none';
+          Images_REF_Disable.style.display = 'block';
+          ROCShown = false
+          REFShown = false
+        } else {
+          Images_TFT_Enable.style.display = 'none';
+          Images_TFT_Disable.style.display = 'block';
+        }
+        TFTShown = !TFTShown;
+      });
+
+      // 为图片容器添加鼠标悬停和点击事件监听器
+      image_Container_REF.addEventListener('mouseover', function() {
+        if (!REFShown) {
+        Images_REF_Enable.style.display = 'block';
+        Images_REF_Disable.style.display = 'none';
+        }
+      });
+
+      image_Container_REF.addEventListener('mouseout', function() {
+        if (!REFShown) {
+        Images_REF_Enable.style.display = 'none';
+        Images_REF_Disable.style.display = 'block';
+        }
+      });
+
+      image_Container_REF.addEventListener('click', function() {
+        // 点击时切换图片显示
+        if (!REFShown) {
+          Images_REF_Enable.style.display = 'block';
+          Images_REF_Disable.style.display = 'none';
+          Images_ROC_Enable.style.display = 'none';
+          Images_ROC_Disable.style.display = 'block';
+          Images_TFT_Enable.style.display = 'none';
+          Images_TFT_Disable.style.display = 'block';
+          ROCShown = false
+          TFTShown = false
+        } else {
+          Images_REF_Enable.style.display = 'none';
+          Images_REF_Disable.style.display = 'block';
+        }
+        REFShown = !REFShown;
+      });
+
+
+      Mode.Switch .addEventListener('click', function() {
+      var Mode_Switch = !Mode_Switch; 
+      });
+      BJ.Switch .addEventListener('click', function() {
+      var BJ_Switch = !BJ_Switch; 
+      });
+  
+    </script>
   </body>
 </html>
