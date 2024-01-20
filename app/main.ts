@@ -2,21 +2,13 @@ import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from '@electron/remote/main';
-import { ipcRenderer, webFrame } from 'electron';
 import { InstallModel } from '../commons/models';
 const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
-export class ElectronService{
-    ipcRenderer: typeof ipcRenderer;
-    webFrame: typeof webFrame;
-    constructor() {
-      this.ipcRenderer = window.require('electron').ipcRenderer;
-      this.webFrame = window.require('electron').webFrame;
-    }}
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
-serve = args.some(val => val === '--serve');
+  serve = args.some(val => val === '--serve');
 
 // needed to call remote inside app
 remote.initialize();
@@ -28,7 +20,7 @@ const isDev = () => {
   return require.main.filename.indexOf('app.asar') === -1;
 }
 
-  const createWindow = (): BrowserWindow => {
+const createWindow = (): BrowserWindow => {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
 
@@ -80,61 +72,16 @@ const isDev = () => {
   return win;
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    let Button_ROC = document.getElementById('imageContainer.ROC');
-    let Button_TFT = document.getElementById('imageContainer.TFT');
-    let Button_REF = document.getElementById('imageContainer.REF');
-    if (Button_ROC) {
-        button.addEventListener('click', () => {
-            if (Mode_Switch && BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-folder-ROC');
-            } else if (Mode_Switch && !BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-folder-noc-ROC');
-            } else if (!Mode_Switch && BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-map-ROC');
-            } else if (!Mode_Switch && !BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-map-noc-ROC');
-            }
-        }
-    )}
-    if (Button_TFT) {
-        button.addEventListener('click', () => {
-            if (Mode_Switch && BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-folder-TFT');
-            } else if (Mode_Switch && !BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-folder-noc-TFT');
-            } else if (!Mode_Switch && BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-map-TFT');
-            } else if (!Mode_Switch && !BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-map-noc-TFT');
-            }
-        }
-    )}
-    if (Button_REF) {
-        button.addEventListener('click', () => {
-            if (Mode_Switch && BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-folder');
-            } else if (Mode_Switch && !BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-folder-noc');
-            } else if (!Mode_Switch && BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-map');
-            } else if (!Mode_Switch && !BJ_Switch) {
-                this.electronService.ipcRenderer.send('install-map-noc');
-            }
-        }
-    )}
-});
-
-  const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
+const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
-    title : isMap ? "打开地图": "打开地图目录",
+    title : isMap ? "选择地图": "选择地图目录",
     // TODO: Change to let multiples selections when is map
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-      { name: '打开地图文件', extensions: ['w3x', 'w3m'] },
+      { name: '地图文件', extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
