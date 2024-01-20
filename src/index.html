@@ -4,7 +4,7 @@
     <title>AMAI 安装器</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <script src="./src/index.install.js"></script>
+    <script src="./src/index.js"></script>
     <style>
     :root {
       --switch-width: 300px; /* 最大宽度 */
@@ -27,20 +27,20 @@
     .center-text {
       text-align: center;
       font-size: 2rem;
-      font-weight: bold; /* 文字加粗 */
+      font-weight: bold;
     }
 
     /* 当屏幕宽度小于等于600px时，减小字体大小 */
     @media (max-width: 800px) {
       .center-heading, .center-text {
-        font-size: 1rem; /* 小屏幕下的字体大小 */
+        font-size: 1rem;
       }
     }
 
     /* 当屏幕宽度大于600px时，增大字体大小 */
     @media (min-width: 801px) {
       .center-heading, .center-text {
-        font-size: 3remx; /* 大于600px时的字体大小 */
+        font-size: 3remx;
       }
     }
 
@@ -68,7 +68,7 @@
     /* 当屏幕宽度小于或等于600px时，图片容器将占据100%宽度 */
     @media (max-width: 1600px) {
       .image-row img {
-        width: 100%; /* 或其他百分比值，根据需要调整 */  
+        width: 100%;
       }  
     }
 
@@ -86,7 +86,7 @@
       max-width: var(--switch-width);
       width: 50%; 
       height: 32px;
-      border: 3px solid #5c5c5c; /* 添加边框，这里使用黑色作为示例，可替换为需要的颜色 */
+      border: 3px solid #5c5c5c; /* 添加边框 */
       box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
       border-radius: 26px;
     }
@@ -123,7 +123,7 @@
       white-space: nowrap;
       left: 1px;
       height: 100%;
-      width: 50%; /* 减去两边的空白以适应内容区域 */
+      width: 50%;
       background-color: #ffffff;
       border-radius: 26px;
       -webkit-transition: .4s;
@@ -296,10 +296,10 @@
         REFShown = !REFShown;
       });
 
-      Mode_Switch .addEventListener('click', function() {
+      Mode_Switch.addEventListener('click', function() {
       var Mode_Switch_State = !Mode_Switch_State; 
       });
-      BJ_Switch .addEventListener('click', function() {
+      BJ_Switch.addEventListener('click', function() {
       var BJ_Switch_State = !BJ_Switch_State; 
       });
   
