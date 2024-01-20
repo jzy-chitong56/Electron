@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AMAI</title>
+    <title>AMAI 安装器</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <script src="./src/index.js"></script>
     <style>
     :root {
       --switch-width: 300px; /* 最大宽度 */
@@ -19,13 +20,13 @@
 
     .center-heading {
       text-align: center;
-      font-size: 3rem; /* 自定义字号大小 */
-      font-weight: bold; /* 文字加粗 */
+      font-size: 3rem;
+      font-weight: bold;
     }
 
     .center-text {
       text-align: center;
-      font-size: 2rem; /* 自定义字号大小，这里设置为24像素 */
+      font-size: 2rem;
       font-weight: bold; /* 文字加粗 */
     }
 
@@ -47,12 +48,12 @@
       display: flex;
       text-align: center;  
       justify-content: center;
-      align-items: center; /* 使图片垂直居中 */
+      align-items: center;
       max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
-      width: 100%; /* or any other suitable width */
+      width: 100%;
       gap: 10px;
     }
-    图片容器的默认宽度设置
+
     #imageContainer.ROC,
     #imageContainer.TFT,
     #imageContainer.REF {
@@ -60,8 +61,8 @@
       align-items: center;
       justify-content: center;
       max-width: 512px;
-      width: 50%; /* or any other suitable width */
-      height: auto; /* 保持宽高比 */
+      width: 50%;
+      height: auto;
     }
 
     /* 当屏幕宽度小于或等于600px时，图片容器将占据100%宽度 */
@@ -74,7 +75,7 @@
     .container.setting {
       display: flex;
       justify-content: space-between; /* 平均分配空间，也可以根据需求选择其他布局方式 */
-      align-items: center; /* 使图片垂直居中 */
+      align-items: center;
       gap: 10px;
     }
 
@@ -85,7 +86,7 @@
       max-width: var(--switch-width);
       width: 50%; 
       height: 32px;
-      border: 3px solid #5c5c5c; /* 添加边框，这里使用黑色作为示例，您可以替换为您需要的颜色 */
+      border: 3px solid #5c5c5c; /* 添加边框，这里使用黑色作为示例，可替换为需要的颜色 */
       box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
       border-radius: 26px;
     }
@@ -109,22 +110,22 @@
       right: 0;
       bottom: 0;
       background-color: #3dc874;
-      border-radius: 26px; /* 修改为倒圆角 */  
+      border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
     }
     .slider:before {
       position: absolute;
       display: flex; /* 将其转换为弹性布局容器 */
-      align-items: center; /* 垂直居中 */
-      justify-content: center; /* 水平居中 */
+      align-items: center;
+      justify-content: center;
       content: "按文件夹安装";
       white-space: nowrap;
       left: 1px;
       height: 100%;
       width: 50%; /* 减去两边的空白以适应内容区域 */
       background-color: #ffffff;
-      border-radius: 26px; /* 修改为倒圆角 */  
+      border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
     }
@@ -138,7 +139,7 @@
       -webkit-transform: translateX(100%);
       -ms-transform: translateX(100%);
        transform: translateX(100%);
-       margin-left: -3px; /* 设置右侧边距为2px */
+       margin-left: -3px;
     }
 
     </style>
@@ -147,24 +148,24 @@
   <body>
 
     <div class="center-container">
-      <div class="center-heading">选择游戏版本</div>
+      <div class="center-heading">--游戏版本设置--</div>
 
       <div  class="image-row">
         <div id="imageContainer.ROC">
-          <img id="Images.ROC.Enable" src="src/assets/ROC.Enable.png" style="display: none;">
-          <img id="Images.ROC.Disable" src="src/assets/ROC.Disable.png">
+          <img id="Images.ROC.Enable" src="./src/assets/ROC.Enable.png" style="display: none;">
+          <img id="Images.ROC.Disable" src="./src/assets/ROC.Disable.png">
         </div>
         <div id="imageContainer.TFT">
-          <img id="Images.TFT.Enable" src="src/assets/TFT.Enable.png" style="display: none;">
-          <img id="Images.TFT.Disable" src="src/assets/TFT.Disable.png">
+          <img id="Images.TFT.Enable" src="./src/assets/TFT.Enable.png" style="display: none;">
+          <img id="Images.TFT.Disable" src="./src/assets/TFT.Disable.png">
         </div>
         <div id="imageContainer.REF">
-          <img id="Images.REF.Enable" src="src/assets/REF.Enable.png" style="display: none;">
-          <img id="Images.REF.Disable" src="src/assets/REF.Disable.png">
+          <img id="Images.REF.Enable" src="./src/assets/REF.Enable.png" style="display: none;">
+          <img id="Images.REF.Disable" src="./src/assets/REF.Disable.png">
         </div>
       </div>
 
-      <div class="center-text">安装设置</div>
+      <div class="center-text">--高级设置--</div>
 
       <div class="container.setting">
         <label class="switch">
@@ -228,8 +229,6 @@
         }
         ROCShown = !ROCShown;
       });
-
-
 
       // 为图片容器添加鼠标悬停和点击事件监听器
       image_Container_TFT.addEventListener('mouseover', function() {
@@ -297,16 +296,13 @@
         REFShown = !REFShown;
       });
 
-
-      Mode.Switch .addEventListener('click', function() {
+      Mode_Switch .addEventListener('click', function() {
       var Mode_Switch_State = !Mode_Switch_State; 
       });
-      BJ.Switch .addEventListener('click', function() {
+      BJ_Switch .addEventListener('click', function() {
       var BJ_Switch_State = !BJ_Switch_State; 
       });
   
     </script>
-    <script src="index.js"></script>
-
   </body>
 </html>
