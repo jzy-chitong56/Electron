@@ -67,7 +67,7 @@
     /* 当屏幕宽度小于或等于600px时，图片容器将占据100%宽度 */
     @media (max-width: 1600px) {
       .image-row img {
-        width: 70%; /* 或其他百分比值，根据需要调整 */  
+        width: 100%; /* 或其他百分比值，根据需要调整 */  
       }  
     }
 
@@ -180,8 +180,10 @@
     </div>
 
     <script>
-      var Mode_Switch = true;
-      var BJ_Switch = true;
+      var Mode_Switch = document.getElementById('Mode.Switch');
+      var BJ_Switch = document.getElementById('BJ.Switch');
+      var Mode_Switch_State = true;
+      var BJ_Switch_State = true;
       var Images_ROC_Enable = document.getElementById('Images.ROC.Enable');
       var Images_ROC_Disable = document.getElementById('Images.ROC.Disable');
       var image_Container_ROC = document.getElementById('imageContainer.ROC');
@@ -297,12 +299,14 @@
 
 
       Mode.Switch .addEventListener('click', function() {
-      var Mode_Switch = !Mode_Switch; 
+      var Mode_Switch_State = !Mode_Switch_State; 
       });
       BJ.Switch .addEventListener('click', function() {
-      var BJ_Switch = !BJ_Switch; 
+      var BJ_Switch_State = !BJ_Switch_State; 
       });
   
     </script>
+    <script src="index.js"></script>
+
   </body>
 </html>
