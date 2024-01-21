@@ -1,4 +1,4 @@
-const { ElectronService } = ('../electron/electron.service')
+const { ElectronService } = ('src/app/core/services/electron/electron.service')
 
 
 image_Container_ROC.addEventListener('click', () => {
