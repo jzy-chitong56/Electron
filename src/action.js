@@ -1,5 +1,5 @@
 const { Injectable } = require('@angular/core');
-const { ipcRenderer } = ('src/app/core/services/electron/electron.service');
+const { ipcRenderer } = require('electron');
 
 image_Container_ROC.addEventListener('click', () => {
     if (Mode_Switch_State && BJ_Switch_State) {
