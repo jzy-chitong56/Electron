@@ -2,9 +2,9 @@ import { ipcRenderer } from 'electron';
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    const Button_ROC = document.getElementById('imageContainer.ROC');
-    const Button_TFT = document.getElementById('imageContainer.TFT');
-    const Button_REF = document.getElementById('imageContainer.REF');
+    const Button_ROC = document.getElementById('imageContainerROC');
+    const Button_TFT = document.getElementById('imageContainerTFT');
+    const Button_REF = document.getElementById('imageContainerREF');
     if (Button_ROC) {
         button.addEventListener('click', () => {
             if (Mode_Switch_State && BJ_Switch_State) {
