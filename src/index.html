@@ -6,8 +6,8 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
-
   <script src="action.js"></script>
+
   <style>
     :root {
       --switch-width: 300px; /* 最大宽度 */
@@ -25,12 +25,14 @@
       text-align: center;
       font-size: 3rem;
       font-weight: bold;
+      margin-top: 4rem;
     }
 
     .center-text {
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
+      margin-top: 6rem;
     }
 
     /* 当屏幕宽度小于等于800px时，减小字体大小 */
@@ -55,11 +57,12 @@
       max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
       width: 100%;
       gap: 10px;
+      margin-top: 2rem;
     }
 
-    #imageContainer.ROC,
-    #imageContainer.TFT,
-    #imageContainer.REF {
+    #imageContainerROC,
+    #imageContainerTFT,
+    #imageContainerREF {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -85,7 +88,7 @@
     .switch {
       position: relative;
       display: inline-block;
-      top: 60px;
+      top: 30px;
       max-width: var(--switch-width);
       width: 50%; 
       height: 32px;
@@ -97,9 +100,9 @@
       position: relative;
       display: inline-block;
       cursor: pointer;
-      top: 60px;
+      top: 30px;
       padding-left: 120px;
-      font-size: 20px;
+      font-size: 1rem;
       line-height: 3; 
       transform: scale(1.5);
     }
@@ -154,17 +157,17 @@
       <div class="center-heading">--游戏版本设置--</div>
 
       <div  class="image-row">
-        <div id="imageContainer.ROC">
-          <img id="Images.ROC.Enable" src="assets/ROC.Enable.png" style="display: none;">
-          <img id="Images.ROC.Disable" src="assets/ROC.Disable.png">
+        <div id="imageContainerROC">
+          <img id="ImagesROCEnable" src="assets/ROC.Enable.png" style="display: none;">
+          <img id="ImagesROCDisable" src="assets/ROC.Disable.png">
         </div>
-        <div id="imageContainer.TFT">
-          <img id="Images.TFT.Enable" src="assets/TFT.Enable.png" style="display: none;">
-          <img id="Images.TFT.Disable" src="assets/TFT.Disable.png">
+        <div id="imageContainerTFT">
+          <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" style="display: none;">
+          <img id="ImagesTFTDisable" src="assets/TFT.Disable.png">
         </div>
-        <div id="imageContainer.REF">
-          <img id="Images.REF.Enable" src="assets/REF.Enable.png" style="display: none;">
-          <img id="Images.REF.Disable" src="assets/REF.Disable.png">
+        <div id="imageContainerREF">
+          <img id="ImagesREFEnable" src="assets/REF.Enable.png" style="display: none;">
+          <img id="ImagesREFDisable" src="assets/REF.Disable.png">
         </div>
       </div>
 
@@ -172,33 +175,33 @@
 
       <div class="container.setting">
         <label class="switch">
-          <input type="checkbox" id="Mode.Switch" class="hidden-checkbox">
+          <input type="checkbox" id="ModeSwitch" class="hidden-checkbox">
           <span class="slider"></span>
         </label>
         <label class="checkboxbj">
-          <input type="checkbox" id="BJ.Switch" checked>
-          <label for="BJ.Switch">安装控制台(B.J)</label>
+          <input type="checkbox" id="BJSwitch" checked>
+          <label for="BJSwitch">安装控制台(B.J)</label>
         </label>
       </div>
 
     </div>
 
     <script>
-      var Mode_Switch = document.getElementById('Mode.Switch');
-      var BJ_Switch = document.getElementById('BJ.Switch');
+      var Mode_Switch = document.getElementById('ModeSwitch');
+      var BJ_Switch = document.getElementById('BJSwitch');
       var Mode_Switch_State = true;
       var BJ_Switch_State = true;
-      var Images_ROC_Enable = document.getElementById('Images.ROC.Enable');
-      var Images_ROC_Disable = document.getElementById('Images.ROC.Disable');
-      var image_Container_ROC = document.getElementById('imageContainer.ROC');
+      var Images_ROC_Enable = document.getElementById('ImagesROCEnable');
+      var Images_ROC_Disable = document.getElementById('ImagesROCDisable');
+      var image_Container_ROC = document.getElementById('imageContainerROC');
       var ROCShown = false;
-      var Images_TFT_Enable = document.getElementById('Images.TFT.Enable');
-      var Images_TFT_Disable = document.getElementById('Images.TFT.Disable');
-      var image_Container_TFT = document.getElementById('imageContainer.TFT');
+      var Images_TFT_Enable = document.getElementById('ImagesTFTEnable');
+      var Images_TFT_Disable = document.getElementById('ImagesTFTDisable');
+      var image_Container_TFT = document.getElementById('imageContainerTFT');
       var TFTShown = false;
-      var Images_REF_Enable = document.getElementById('Images.REF.Enable');
-      var Images_REF_Disable = document.getElementById('Images.REF.Disable');
-      var image_Container_REF = document.getElementById('imageContainer.REF');
+      var Images_REF_Enable = document.getElementById('ImagesREFEnable');
+      var Images_REF_Disable = document.getElementById('ImagesREFDisable');
+      var image_Container_REF = document.getElementById('imageContainerREF');
       var REFShown = false;
 
       // 为图片容器添加鼠标悬停和点击事件监听器
