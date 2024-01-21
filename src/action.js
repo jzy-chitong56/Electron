@@ -1,4 +1,3 @@
-const { Injectable } = require('@angular/core');
 const { ipcRenderer } = require('electron');
 
 image_Container_ROC.addEventListener('click', () => {
