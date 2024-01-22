@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer } = require('src/app/core/services/electron/electron.service');
 const modeState = Mode_Switch_State ? '-folder' : '-map';
 const bjState = BJ_Switch_State ? '' : '-noc';
 
