@@ -3,7 +3,7 @@ const { ipcRenderer } = require('src/app/core/services/electron/electron.service
 function sendInstallationMessage(ver) {
   let modeState = Mode_Switch_State ? '-folder' : '-map';
   let bjState = BJ_Switch_State ? '' : '-noc';
-  const message = `install${modeState}${bjState}${ver}`;
+  ipcRenderer.send(`install${modeState}${bjState}${ver}`);
 }
 
 image_Container_ROC.addEventListener('click', () => {
