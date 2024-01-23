@@ -13,6 +13,13 @@ class ElectronService {
 
 module.exports = new ElectronService();
 
+// function inallstAction(ver, mode, com) {
+//   if ver == 
+//        ElectronService.sendInstallationMessage('-ROC');
+
+
+// }
+
 
 image_Container_ROC.addEventListener('click', () => {
     ElectronService.sendInstallationMessage('-ROC');
