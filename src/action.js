@@ -1,4 +1,5 @@
-const { ipcRenderer } = require('electron');
+//const { ipcRenderer } = require('electron');
+window.electron = require('electron');
 
 function installAction(ver, Mode_Switch_State, BJ_Switch_State) {
   let modeState = Mode_Switch_State ? '-folder' : '-map';
