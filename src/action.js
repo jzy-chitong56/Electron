@@ -11,29 +11,23 @@ const { ipcRenderer } = require('electron');
 //   }
 // }
 
-//module.exports = new ElectronService();
-
-function inallstAction(ver, mode, com) {
-    let modeState = mode ? '-folder' : '-map';
-    let bjState = com ? '' : '-noc';
-    ipcRenderer.send(`install${modeState}${bjState}${ver}`);
-}
+// module.exports = new ElectronService();
 
 
-// image_Container_ROC.addEventListener('click', () => {
-//     let modeState = Mode_Switch_State ? '-folder' : '-map';
-//     let bjState = BJ_Switch_State ? '' : '-noc';
-//     ElectronService.ipcRenderer.send('install${modeState}${bjState}-ROC');
-// });
+image_Container_ROC.addEventListener('click', () => {
+    let modeState = Mode_Switch_State ? '-folder' : '-map';
+    let bjState = BJ_Switch_State ? '' : '-noc';
+    ElectronService.ipcRenderer.send('install${modeState}${bjState}-ROC');
+});
 
-// image_Container_TFT.addEventListener('click', () => {
-//     let modeState = Mode_Switch_State ? '-folder' : '-map';
-//     let bjState = BJ_Switch_State ? '' : '-noc';
-//     ipcRenderer.send('install${modeState}${bjState}-TFT');
-// });
+image_Container_TFT.addEventListener('click', () => {
+    let modeState = Mode_Switch_State ? '-folder' : '-map';
+    let bjState = BJ_Switch_State ? '' : '-noc';
+    ipcRenderer.send('install${modeState}${bjState}-TFT');
+});
 
-// image_Container_REF.addEventListener('click', () => {
-//     let modeState = Mode_Switch_State ? '-folder' : '-map';
-//     let bjState = BJ_Switch_State ? '' : '-noc';
-//     this.electronService.ipcRenderer.send('install${modeState}${bjState}');
-// });
+image_Container_REF.addEventListener('click', () => {
+    let modeState = Mode_Switch_State ? '-folder' : '-map';
+    let bjState = BJ_Switch_State ? '' : '-noc';
+    this.electronService.ipcRenderer.send('install${modeState}${bjState}');
+});
