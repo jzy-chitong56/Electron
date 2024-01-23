@@ -4,7 +4,7 @@ const { ipcRenderer } = require('electron');
 function installAction(ver, Mode_Switch_State, BJ_Switch_State) {
   let modeState = Mode_Switch_State ? '-folder' : '-map';
   let bjState = BJ_Switch_State ? '' : '-noc';
-  ipcRenderer.send('install${modeState}${bjState}ver');
+  electron.ipcRenderer.send('install${modeState}${bjState}ver');
   //     this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
   //     ElectronService.ipcRenderer.send('install${modeState}${bjState}ver');
 }
