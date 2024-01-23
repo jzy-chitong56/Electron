@@ -1,20 +1,22 @@
 const { ipcRenderer } = require('electron');
 
 
-class ElectronService {
-  constructor() {}
-  sendInstallationMessage(ver) {
-    let modeState = mode ? '-folder' : '-map';
-    let bjState = com ? '' : '-noc';
-    const message = `install${modeState}${bjState}${ver}`;
-    ipcRenderer.send(message);
-  }
-}
+// class ElectronService {
+//   constructor() {}
+//   sendInstallationMessage(ver, mode, com) {
+//     let modeState = mode ? '-folder' : '-map';
+//     let bjState = com ? '' : '-noc';
+//     const message = `install${modeState}${bjState}${ver}`;
+//     ipcRenderer.send(message);
+//   }
+// }
 
-module.exports = new ElectronService();
+//module.exports = new ElectronService();
 
 function inallstAction(ver, mode, com) {
-       ElectronService.sendInstallationMessage(-ver, mode, com);
+    let modeState = mode ? '-folder' : '-map';
+    let bjState = com ? '' : '-noc';
+    ipcRenderer.send(`install${modeState}${bjState}${ver}`);
 }
 
 
