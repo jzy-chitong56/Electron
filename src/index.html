@@ -183,6 +183,11 @@
         </label>
       </div>
 
+       <div id="test">
+          <img id="testico" src="assets/icons/favicon.ico" style="display: none;">
+       </div>
+
+      
     </div>
 
     <script>
@@ -202,6 +207,8 @@
       var Images_REF_Disable = document.getElementById('ImagesREFDisable');
       var image_Container_REF = document.getElementById('imageContainerREF');
       var REFShown = false;
+      var image_test = document.getElementById('testico');
+      
 
       // 为图片容器添加鼠标悬停和点击事件监听器
       image_Container_ROC.addEventListener('mouseover', function() {
@@ -228,7 +235,6 @@
           Images_REF_Disable.style.display = 'block';
           TFTShown = false
           REFShown = false
-          installAction('-ROC', Mode_Switch_State, BJ_Switch_State);
         } else {
           Images_ROC_Enable.style.display = 'none';
           Images_ROC_Disable.style.display = 'block';
@@ -295,7 +301,6 @@
           Images_TFT_Disable.style.display = 'block';
           ROCShown = false
           TFTShown = false
-          installAction('', Mode_Switch_State, BJ_Switch_State);
         } else {
           Images_REF_Enable.style.display = 'none';
           Images_REF_Disable.style.display = 'block';
