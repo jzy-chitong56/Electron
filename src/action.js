@@ -18,16 +18,19 @@ image_Container_ROC.addEventListener('click', () => {
     let modeState = Mode_Switch_State ? '-folder' : '-map';
     let bjState = BJ_Switch_State ? '' : '-noc';
     ElectronService.ipcRenderer.send('install${modeState}${bjState}-ROC');
+    image_test.style.display = 'block';
 });
 
 image_Container_TFT.addEventListener('click', () => {
     let modeState = Mode_Switch_State ? '-folder' : '-map';
     let bjState = BJ_Switch_State ? '' : '-noc';
     ipcRenderer.send('install${modeState}${bjState}-TFT');
+        image_test.style.display = 'none';
 });
 
 image_Container_REF.addEventListener('click', () => {
     let modeState = Mode_Switch_State ? '-folder' : '-map';
     let bjState = BJ_Switch_State ? '' : '-noc';
     this.electronService.ipcRenderer.send('install${modeState}${bjState}');
+     image_test.style.display = 'none';
 });
