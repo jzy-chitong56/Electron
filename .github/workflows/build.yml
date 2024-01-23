@@ -26,17 +26,17 @@ jobs:
   build:
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [21]
 
     # The type of runner that the job will run on
     runs-on: windows-2022
 
     steps:
     - name: 调用checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: 设置 node 缓存模组
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-node-modules
       with:
@@ -49,7 +49,7 @@ jobs:
           ${{ runner.os }}-
 
     - name: 调用 Node.js ver：${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
 
@@ -79,7 +79,7 @@ jobs:
  
 
     - name: 上传附件
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         path: ./release/win-unpacked/amai.zip
 
