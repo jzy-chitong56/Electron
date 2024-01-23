@@ -1,11 +1,11 @@
-const { ipcRenderer } = require('src/app/core/services/electron/electron.service');
+const { ipcRenderer } = require('electron');
 
 
 class ElectronService {
   constructor() {}
   sendInstallationMessage(ver) {
-    let modeState = Mode_Switch_State ? '-folder' : '-map';
-    let bjState = BJ_Switch_State ? '' : '-noc';
+    let modeState = mode ? '-folder' : '-map';
+    let bjState = com ? '' : '-noc';
     const message = `install${modeState}${bjState}${ver}`;
     ipcRenderer.send(message);
   }
@@ -13,23 +13,10 @@ class ElectronService {
 
 module.exports = new ElectronService();
 
-// function inallstAction(ver, mode, com) {
-//   if ver == 
-//        ElectronService.sendInstallationMessage('-ROC');
+function inallstAction(ver, mode, com) {
+       ElectronService.sendInstallationMessage(-ver, mode, com);
+}
 
-
-// }
-
-
-image_Container_ROC.addEventListener('click', () => {
-    ElectronService.sendInstallationMessage('-ROC');
-});
-image_Container_TFT.addEventListener('click', () => {
-    ElectronService.sendInstallationMessage('-TFT');
-});
-image_Container_REF.addEventListener('click', () => {
-    ElectronService.sendInstallationMessage('');
-});
 
 // image_Container_ROC.addEventListener('click', () => {
 //     let modeState = Mode_Switch_State ? '-folder' : '-map';
