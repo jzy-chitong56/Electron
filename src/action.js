@@ -4,20 +4,20 @@ const { ipcRenderer } = require('electron');
  
     var Mode_Switch = document.getElementById('ModeSwitch');
     var BJ_Switch = document.getElementById('BJSwitch');
-    var Mode_Switch_State = true;
-    var BJ_Switch_State = true;
+    let Mode_Switch_State = true;
+    let BJ_Switch_State = true;
     var Images_ROC_Enable = document.getElementById('ImagesROCEnable');
     var Images_ROC_Disable = document.getElementById('ImagesROCDisable');
-    var image_Container_ROC = document.getElementById('imageContainerROC');
-    var ROCShown = false;
+    var image_Container_ROC = document.getElementById('imageROC');
+    let ROCShown = false;
     var Images_TFT_Enable = document.getElementById('ImagesTFTEnable');
     var Images_TFT_Disable = document.getElementById('ImagesTFTDisable');
-    var image_Container_TFT = document.getElementById('imageContainerTFT');
-    var TFTShown = false;
+    var image_Container_TFT = document.getElementById('imageTFT');
+    let TFTShown = false;
     var Images_REF_Enable = document.getElementById('ImagesREFEnable');
     var Images_REF_Disable = document.getElementById('ImagesREFDisable');
-    var image_Container_REF = document.getElementById('imageContainerREF');
-    var REFShown = false;
+    var image_Container_REF = document.getElementById('imageREF');
+    let REFShown = false;
     var image_test = document.getElementById('testico');
     
 
