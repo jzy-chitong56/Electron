@@ -13,6 +13,7 @@
   ],
   "include": [
     "**/*.d.ts"
+    "./action.js"
   ],
   "exclude": [
     "**/*.spec.ts"
