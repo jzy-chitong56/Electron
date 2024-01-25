@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('app/core/services/electron/electron.service');
+const { ipcRenderer } = require('electron');
 //window.electron = require('electron');
 
  
