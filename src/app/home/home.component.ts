@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     const action = (event.target as HTMLElement).dataset.action;
     console.log('0 action:', action);
     switch (action) {
-      case 'ROC':
+      case 'ROC' || 'image_Container_ROC':
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'none';
           this.Images_ROC_Enable.nativeElement.style.display = 'block';
