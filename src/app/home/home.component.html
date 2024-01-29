@@ -10,16 +10,16 @@
 
       <div  class="image-row">
         <div id="ROCContainer" class="imageContainerROC" #imageROC (click)="onClick()" (mouseover)="onMouseEnter()" (mouseout)="onMouseLeave()">
-          <img id="ROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnabled [style.display]="isROCState ? 'none' : 'block'">
-          <img id="ROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable [style.display]="!isROCState ? 'none' : 'block'">
+          <img id="ROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnabled [style.display]='none'>
+          <img id="ROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable [style.display]='block'>
         </div>
         <div id="TFTContainer" class="imageContainerTFT" #imageTFT (click)="onClick()" (mouseover)="onMouseEnter()" (mouseout)="onMouseLeave()">
-          <img id="TFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnabled [style.display]="isTFTState ? 'none' : 'block'">
-          <img id="TFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable [style.display]="!isTFTState ? 'none' : 'block'">
+          <img id="TFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnabled [style.display]='none'>
+          <img id="TFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable [style.display]='block'>
         </div>
         <div id="REFContainer" class="imageContainerREF" #imageREF (click)="onClick()" (mouseover)="onMouseEnter()" (mouseout)="onMouseLeave()">
-          <img id="REFEnable" src="assets/REF.Enable.png" #ImagesREFEnabled [style.display]="isREFState ? 'none' : 'block'">
-          <img id="REFDisable" src="assets/REF.Disable.png" #ImagesREFDisable [style.display]="!isREFState ? 'none' : 'block'">
+          <img id="REFEnable" src="assets/REF.Enable.png" #ImagesREFEnabled [style.display]='none'>
+          <img id="REFDisable" src="assets/REF.Disable.png" #ImagesREFDisable [style.display]='block'>
         </div>
       </div>
 
