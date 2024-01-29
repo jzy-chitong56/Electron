@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
         break;
       default:
         console.log('Mouse entered an element');
+         console.log('x action:', action);
         break;
     }
   }
