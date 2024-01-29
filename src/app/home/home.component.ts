@@ -47,18 +47,21 @@ export class HomeComponent implements OnInit {
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'none';
           this.Images_ROC_Enable.nativeElement.style.display = 'block';
+          console.log('in roc');
         }
         break;
       case 'image_Container_TFT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'none';
           this.Images_TFT_Enable.nativeElement.style.display = 'block';
+          console.log('in tft');
         }
         break;
       case 'image_Container_REF':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'none';
           this.Images_REF_Enable.nativeElement.style.display = 'block';
+          console.log('in ref');
         }
         break;
       default:
@@ -75,18 +78,21 @@ export class HomeComponent implements OnInit {
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'block';
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          console.log('out roc');
         }
       break;
       case 'image_Container_TFT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          console.log('out tft');
         }
       break;
       case 'image_Container_REF':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
+          console.log('out ref');
         }
       default:
         console.log('Mouse out an element');
@@ -109,9 +115,11 @@ export class HomeComponent implements OnInit {
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
           this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
+          console.log('c roc');
         } else {
           this.Images_ROC_Disable.nativeElement.style.display = 'block';
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          console.log('c roc-at');
         }
         this.ROCShown = !this.ROCShown;
         break;
@@ -125,9 +133,11 @@ export class HomeComponent implements OnInit {
           this.Images_TFT_Enable.nativeElement.style.display = 'block';
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
+          console.log('c tft');
         } else {
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          console.log('c tft-at');
         }
         this.TFTShown = !this.TFTShown;
         break;
@@ -141,15 +151,19 @@ export class HomeComponent implements OnInit {
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
           this.Images_REF_Disable.nativeElement.style.display = 'none';
           this.Images_REF_Enable.nativeElement.style.display = 'block';
+          console.log('c ref');
         } else {
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
+          console.log('c ref-at');
         }
         this.REFShown = !this.REFShown;
       case 'Mode_Switch':
         this.Mode_Switch_State = !this.Mode_Switch_State; 
+        console.log('c mode');
       case 'BJ_Switch':
         this.BJ_Switch_State = !this.BJ_Switch_State; 
+        console.log('c bj');
       default:
         console.log('Mouse click an element');
         break;
