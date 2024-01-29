@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from './../../core/services/electron/electron.service';
+import { ElectronService } from '../core/services/electron/electron.service';
 @Injectable({
   providedIn: 'root'
 })
