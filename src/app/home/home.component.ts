@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from './core/services';
+import { ElectronService } from './../../core/services/electron/electron.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -154,12 +154,10 @@ export class HomeComponent implements OnInit {
         console.log('Mouse click an element');
         break;
     }
-
-    constructor(
-      private router: Router,
-      private electronService: ElectronService,
-    ) { }
   }
-
+  constructor(
+    private router: Router,
+    private electronService: ElectronService,
+  ) { }
 
 }
