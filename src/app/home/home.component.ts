@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('imageREF', { static: false }) image_Container_REF: ElementRef;
   @ViewChild('Mode_Switch_State', { static: false }) ModeSwitch: ElementRef;
   @ViewChild('BJ_Switch_State', { static: false }) BJSwitch: ElementRef;
-  ROCShown: boolean = false;  
-  TFTShown: boolean = false;  
-  REFShown: boolean = false;  
+  ROCShown: boolean = false; 
+  TFTShown: boolean = false; 
+  REFShown: boolean = false; 
   Mode_Switch_State: boolean = true;
   BJ_Switch_State: boolean = true;
 
