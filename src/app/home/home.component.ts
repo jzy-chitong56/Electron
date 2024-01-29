@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
 @Injectable({
@@ -36,10 +36,10 @@ export class HomeComponent implements OnInit {
     this.Images_TFT_Enable.nativeElement.style.display = 'none';
     this.Images_REF_Disable.nativeElement.style.display = 'block';
     this.Images_REF_Enable.nativeElement.style.display = 'none';
-    
   }
 
-
+  // 鼠标移入事件处理函数
+  @HostListener('mouseover', ['$event'])
   onMouseEnter(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
     switch (action) {
@@ -66,12 +66,13 @@ export class HomeComponent implements OnInit {
         break;
       default:
         console.log('Mouse entered an element');
-         console.log('x action:', action);
+        console.log('x action:', action);
         break;
     }
   }
 
   // 鼠标移出事件处理函数
+  @HostListener('mouseout', ['$event'])
   onMouseLeave(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
     switch (action) {
@@ -81,20 +82,21 @@ export class HomeComponent implements OnInit {
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
           console.log('out roc');
         }
-      break;
+        break;
       case 'TFT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
           console.log('out tft');
         }
-      break;
+        break;
       case 'REF':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
           console.log('out ref');
         }
+        break;
       default:
         console.log('Mouse out an element');
         break;
@@ -102,6 +104,7 @@ export class HomeComponent implements OnInit {
   }
 
   // 点击事件处理函数
+  @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
     switch (action) {
@@ -159,12 +162,15 @@ export class HomeComponent implements OnInit {
           console.log('c ref-at');
         }
         this.REFShown = !this.REFShown;
+        break;
       case 'Mode':
         this.Mode_Switch_State = !this.Mode_Switch_State; 
         console.log('c mode');
+        break;
       case 'BJ':
         this.BJ_Switch_State = !this.BJ_Switch_State; 
         console.log('c bj');
+        break;
       default:
         console.log('Mouse click an element');
         break;
