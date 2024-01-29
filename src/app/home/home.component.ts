@@ -43,21 +43,21 @@ export class HomeComponent implements OnInit {
   onMouseEnter(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
     switch (action) {
-      case 'image_Container_ROC':
+      case 'ROC':
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'none';
           this.Images_ROC_Enable.nativeElement.style.display = 'block';
           console.log('in roc');
         }
         break;
-      case 'image_Container_TFT':
+      case 'TFT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'none';
           this.Images_TFT_Enable.nativeElement.style.display = 'block';
           console.log('in tft');
         }
         break;
-      case 'image_Container_REF':
+      case 'REF':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'none';
           this.Images_REF_Enable.nativeElement.style.display = 'block';
@@ -74,21 +74,21 @@ export class HomeComponent implements OnInit {
   onMouseLeave(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
     switch (action) {
-      case 'image_Container_ROC':
+      case 'ROC':
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'block';
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
           console.log('out roc');
         }
       break;
-      case 'image_Container_TFT':
+      case 'TFT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
           console.log('out tft');
         }
       break;
-      case 'image_Container_REF':
+      case 'REF':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
   onClick(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
     switch (action) {
-      case 'image_Container_ROC':
+      case 'ROC':
         if (!this.ROCShown) {  
           let modeState = this.Mode_Switch_State ? '-folder' : '-map';
           let bjState = this.BJ_Switch_State ? '' : '-noc';
@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
         }
         this.ROCShown = !this.ROCShown;
         break;
-      case 'image_Container_TFT':
+      case 'TFT':
         if (!this.TFTShown) {  
           let modeState = this.Mode_Switch_State ? '-folder' : '-map';
           let bjState = this.BJ_Switch_State ? '' : '-noc';
@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit {
         }
         this.TFTShown = !this.TFTShown;
         break;
-      case 'image_Container_REF':
+      case 'REF':
         if (!this.REFShown) {  
           let modeState = this.Mode_Switch_State ? '-folder' : '-map';
           let bjState = this.BJ_Switch_State ? '' : '-noc';
@@ -158,10 +158,10 @@ export class HomeComponent implements OnInit {
           console.log('c ref-at');
         }
         this.REFShown = !this.REFShown;
-      case 'Mode_Switch':
+      case 'Mode':
         this.Mode_Switch_State = !this.Mode_Switch_State; 
         console.log('c mode');
-      case 'BJ_Switch':
+      case 'BJ':
         this.BJ_Switch_State = !this.BJ_Switch_State; 
         console.log('c bj');
       default:
