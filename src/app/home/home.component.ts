@@ -4,24 +4,25 @@ import { ElectronService } from '../core/services/electron/electron.service';
 @Injectable({
   providedIn: 'root'
 })
-
+ 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('ImagesROCEnable', { static: true }) Images_ROC_Enable: ElementRef;
-  @ViewChild('ImagesROCDisable', { static: true }) Images_ROC_Disable: ElementRef;
-  @ViewChild('imageROC', { static: true }) image_Container_ROC: ElementRef;
-  @ViewChild('ImagesTFTEnable', { static: true }) Images_TFT_Enable: ElementRef;
+  
+  @ViewChild('ImagesROCEnable', { static: true }) Images_ROC_EnableRef: ElementRef;
+  @ViewChild('ImagesROCDisable', { static: true }) Images_ROC_DisableRef: ElementRef;
+  @ViewChild('imageROC', { static: true }) image_Container_ROCRef: ElementRef;
+  @ViewChild('ImagesTFTEnable', { static: true }) Images_TFT_EnableRef: ElementRef;
   @ViewChild('ImagesTFTDisable', { static: true }) Images_TFT_Disable: ElementRef;
-  @ViewChild('imageTFT', { static: true }) image_Container_TFT: ElementRef;
-  @ViewChild('ImagesREFEnable', { static: true }) Images_REF_Enable: ElementRef;
-  @ViewChild('ImagesREFDisable', { static: true }) Images_REF_Disable: ElementRef;
-  @ViewChild('imageREF', { static: true }) image_Container_REF: ElementRef;
-  @ViewChild('Mode_Switch_State', { static: true }) ModeSwitch: ElementRef;
-  @ViewChild('BJ_Switch_State', { static: true }) BJSwitch: ElementRef;
+  @ViewChild('imageTFT', { static: true }) image_Container_TFTRef: ElementRef;
+  @ViewChild('ImagesREFEnable', { static: true }) Images_REF_EnableRef: ElementRef;
+  @ViewChild('ImagesREFDisable', { static: true }) Images_REF_DisableRef: ElementRef;
+  @ViewChild('imageREF', { static: true }) image_Container_REFRef: ElementRef;
+  @ViewChild('ModeSwitch', { static: true }) Mode_Switch_StateRef: ElementRef;
+  @ViewChild('BJSwitch', { static: true }) BJ_Switch_StateRef: ElementRef;
   ROCShown: boolean = false; 
   TFTShown: boolean = false; 
   REFShown: boolean = false; 
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
   @HostListener('mouseover', ['$event'])
   onMouseEnter(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
+    console.log('0 action:', action);
     switch (action) {
       case 'ROC':
         if (!this.ROCShown) {  
@@ -65,7 +67,6 @@ export class HomeComponent implements OnInit {
         }
         break;
       default:
-        console.log('Mouse entered an element');
         console.log('x action:', action);
         break;
     }
@@ -75,6 +76,7 @@ export class HomeComponent implements OnInit {
   @HostListener('mouseout', ['$event'])
   onMouseLeave(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
+            console.log('0 action:', action);
     switch (action) {
       case 'ROC':
         if (!this.ROCShown) {  
@@ -98,7 +100,7 @@ export class HomeComponent implements OnInit {
         }
         break;
       default:
-        console.log('Mouse out an element');
+        console.log('x action:', action);
         break;
     }
   }
@@ -107,6 +109,7 @@ export class HomeComponent implements OnInit {
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
+            console.log('0 action:', action);
     switch (action) {
       case 'ROC':
         if (!this.ROCShown) {  
@@ -172,7 +175,7 @@ export class HomeComponent implements OnInit {
         console.log('c bj');
         break;
       default:
-        console.log('Mouse click an element');
+        console.log('x action:', action);
         break;
     }
   }
