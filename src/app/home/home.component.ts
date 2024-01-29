@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from '../electron/electron.service';
+import { ElectronService } from 'electron';
 
 
 @Component({
@@ -10,150 +9,156 @@ import { ElectronService } from '../electron/electron.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('ImagesROCEnable', { static: false }) Images_ROC_Enable: ElementRef;
+  @ViewChild('ImagesROCDisable', { static: false }) Images_ROC_Disable: ElementRef;
+  @ViewChild('imageROC', { static: false }) image_Container_ROC: ElementRef;
+  @ViewChild('ImagesTFTEnable', { static: false }) Images_TFT_Enable: ElementRef;
+  @ViewChild('ImagesTFTDisable', { static: false }) Images_TFT_Disable: ElementRef;
+  @ViewChild('imageTFT', { static: false }) image_Container_TFT: ElementRef;
+  @ViewChild('ImagesREFEnable', { static: false }) Images_REF_Enable: ElementRef;
+  @ViewChild('ImagesREFDisable', { static: false }) Images_REF_Disable: ElementRef;
+  @ViewChild('imageREF', { static: false }) image_Container_REF: ElementRef;
+  @ViewChild('Mode_Switch_State', { static: false }) ModeSwitch: ElementRef;
+  @ViewChild('BJ_Switch_State', { static: false }) BJSwitch: ElementRef;
+  ROCShown: boolean = false;  
+  TFTShown: boolean = false;  
+  REFShown: boolean = false;  
+  Mode_Switch_State: boolean = true;
+  BJ_Switch_State: boolean = true;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private electronService: ElectronService
+    ) { }
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
+    this.Images_ROC_Disable.nativeElement.style.display = 'block';
+    this.Images_ROC_Enable.nativeElement.style.display = 'none';
+    this.Images_TFT_Disable.nativeElement.style.display = 'block';
+    this.Images_TFT_Enable.nativeElement.style.display = 'none';
+    this.Images_REF_Disable.nativeElement.style.display = 'block';
+    this.Images_REF_Enable.nativeElement.style.display = 'none';
+    
   }
 
-    var Mode_Switch = document.getElementById('ModeSwitch');
-    var BJ_Switch = document.getElementById('BJSwitch');
-    let Mode_Switch_State = true;
-    let BJ_Switch_State = true;
-    var Images_ROC_Enable = document.getElementById('ImagesROCEnable');
-    var Images_ROC_Disable = document.getElementById('ImagesROCDisable');
-    var image_Container_ROC = document.getElementById('imageROC');
-    let ROCShown = false;
-    var Images_TFT_Enable = document.getElementById('ImagesTFTEnable');
-    var Images_TFT_Disable = document.getElementById('ImagesTFTDisable');
-    var image_Container_TFT = document.getElementById('imageTFT');
-    let TFTShown = false;
-    var Images_REF_Enable = document.getElementById('ImagesREFEnable');
-    var Images_REF_Disable = document.getElementById('ImagesREFDisable');
-    var image_Container_REF = document.getElementById('imageREF');
-    let REFShown = false;
-    var image_test = document.getElementById('testico');
-  
-    // 为图片容器添加鼠标悬停和点击事件监听器
-    image_Container_ROC.addEventListener('mouseover', function() {
-      if (!ROCShown) {
-      Images_ROC_Enable.style.display = 'block';
-      Images_ROC_Disable.style.display = 'none';
-      }
-    });
-    image_Container_ROC.addEventListener('mouseout', function() {
-      if (!ROCShown) {
-      Images_ROC_Enable.style.display = 'none';
-      Images_ROC_Disable.style.display = 'block';
-      }
-    });
 
-    image_Container_ROC.addEventListener('click', function() {
-      // 点击时切换图片显示
-      if (!ROCShown) {
-        Images_ROC_Enable.style.display = 'block';
-        Images_ROC_Disable.style.display = 'none';
-        Images_TFT_Enable.style.display = 'none';
-        Images_TFT_Disable.style.display = 'block';
-        Images_REF_Enable.style.display = 'none';
-        Images_REF_Disable.style.display = 'block';
-        TFTShown = false
-        REFShown = false
-        installAction('-ROC', Mode_Switch_State, BJ_Switch_State); 
-      } else {
-        Images_ROC_Enable.style.display = 'none';
-        Images_ROC_Disable.style.display = 'block';
-      }
-      ROCShown = !ROCShown;
-    });
-
-    // 为图片容器添加鼠标悬停和点击事件监听器
-    image_Container_TFT.addEventListener('mouseover', function() {
-      if (!TFTShown) {
-      Images_TFT_Enable.style.display = 'block';
-      Images_TFT_Disable.style.display = 'none';
-      }
-    });
-    
-    image_Container_TFT.addEventListener('mouseout', function() {
-      if (!TFTShown) {
-      Images_TFT_Enable.style.display = 'none';
-      Images_TFT_Disable.style.display = 'block';
-      }
-    });
-
-    image_Container_TFT.addEventListener('click', function() {
-      // 点击时切换图片显示
-      if (!TFTShown) {
-        Images_TFT_Enable.style.display = 'block';
-        Images_TFT_Disable.style.display = 'none';
-        Images_ROC_Enable.style.display = 'none';
-        Images_ROC_Disable.style.display = 'block';
-        Images_REF_Enable.style.display = 'none';
-        Images_REF_Disable.style.display = 'block';
-        ROCShown = false
-        REFShown = false
-        installAction('-TFT', Mode_Switch_State, BJ_Switch_State); 
-      } else {
-        Images_TFT_Enable.style.display = 'none';
-        Images_TFT_Disable.style.display = 'block';
-      }
-      TFTShown = !TFTShown;
-    });
-
-    // 为图片容器添加鼠标悬停和点击事件监听器
-    image_Container_REF.addEventListener('mouseover', function() {
-      if (!REFShown) {
-      Images_REF_Enable.style.display = 'block';
-      Images_REF_Disable.style.display = 'none';
-      }
-    });
-
-    image_Container_REF.addEventListener('mouseout', function() {
-      if (!REFShown) {
-      Images_REF_Enable.style.display = 'none';
-      Images_REF_Disable.style.display = 'block';
-      }
-    });
-
-    image_Container_REF.addEventListener('click', function() {
-      // 点击时切换图片显示
-      if (!REFShown) {
-        Images_REF_Enable.style.display = 'block';
-        Images_REF_Disable.style.display = 'none';
-        Images_ROC_Enable.style.display = 'none';
-        Images_ROC_Disable.style.display = 'block';
-        Images_TFT_Enable.style.display = 'none';
-        Images_TFT_Disable.style.display = 'block';
-        ROCShown = false
-        TFTShown = false
-        installAction('-REF', Mode_Switch_State, BJ_Switch_State); 
-      } else {
-        Images_REF_Enable.style.display = 'none';
-        Images_REF_Disable.style.display = 'block';
-      }
-      REFShown = !REFShown;
-    });
-
-    Mode_Switch.addEventListener('click', function() {
-      Mode_Switch_State = !Mode_Switch_State; 
-    });
-    BJ_Switch.addEventListener('click', function() {
-      BJ_Switch_State = !BJ_Switch_State; 
-    });
-
-    function installAction(ver, Mode_Switch_State, BJ_Switch_State) {
-      let modeState = Mode_Switch_State ? '-folder' : '-map';
-      let bjState = BJ_Switch_State ? '' : '-noc';
-      this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
-      //     this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
-      //     ElectronService.ipcRenderer.send('install${modeState}${bjState}ver');
+  onMouseEnter(event: MouseEvent) {
+    const action = (event.target as HTMLElement).dataset.action;
+    switch (action) {
+      case 'image_Container_ROC':
+        if (!this.ROCShown) {  
+          this.Images_ROC_Disable.nativeElement.style.display = 'none';
+          this.Images_ROC_Enable.nativeElement.style.display = 'block';
+        }
+        break;
+      case 'image_Container_TFT':
+        if (!this.TFTShown) {  
+          this.Images_TFT_Disable.nativeElement.style.display = 'none';
+          this.Images_TFT_Enable.nativeElement.style.display = 'block';
+        }
+        break;
+      case 'image_Container_REF':
+        if (!this.REFShown) {  
+          this.Images_REF_Disable.nativeElement.style.display = 'none';
+          this.Images_REF_Enable.nativeElement.style.display = 'block';
+        }
+        break;
+      default:
+        console.log('Mouse entered an element');
+        break;
     }
+  }
 
-    constructor(
-      private electronService: ElectronService
-      ) { }
+  // 鼠标移出事件处理函数
+  onMouseLeave(event: MouseEvent) {
+    const action = (event.target as HTMLElement).dataset.action;
+    switch (action) {
+      case 'image_Container_ROC':
+        if (!this.ROCShown) {  
+          this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          this.Images_ROC_Enable.nativeElement.style.display = 'none';
+        }
+      break;
+      case 'image_Container_TFT':
+        if (!this.TFTShown) {  
+          this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          this.Images_TFT_Enable.nativeElement.style.display = 'none';
+        }
+      break;
+      case 'image_Container_REF':
+        if (!this.REFShown) {  
+          this.Images_REF_Disable.nativeElement.style.display = 'block';
+          this.Images_REF_Enable.nativeElement.style.display = 'none';
+        }
+      default:
+        console.log('Mouse out an element');
+        break;
+  }
+  }
+
+  // 点击事件处理函数
+  onClick(event: MouseEvent) {
+    const action = (event.target as HTMLElement).dataset.action;
+    switch (action) {
+      case 'image_Container_ROC':
+        if (!this.ROCShown) {  
+          let modeState = this.Mode_Switch_State ? '-folder' : '-map';
+          let bjState = this.BJ_Switch_State ? '' : '-noc';
+          this.Images_ROC_Disable.nativeElement.style.display = 'none';
+          this.Images_ROC_Enable.nativeElement.style.display = 'block';
+          this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          this.Images_REF_Disable.nativeElement.style.display = 'block';
+          this.Images_REF_Enable.nativeElement.style.display = 'none';
+          this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
+        } else {
+          this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          this.Images_ROC_Enable.nativeElement.style.display = 'none';
+        }
+        this.ROCShown = !this.ROCShown;
+        break;
+      case 'image_Container_TFT':
+        if (!this.TFTShown) {  
+          let modeState = this.Mode_Switch_State ? '-folder' : '-map';
+          let bjState = this.BJ_Switch_State ? '' : '-noc';
+          this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          this.Images_TFT_Disable.nativeElement.style.display = 'none';
+          this.Images_TFT_Enable.nativeElement.style.display = 'block';
+          this.Images_REF_Disable.nativeElement.style.display = 'block';
+          this.Images_REF_Enable.nativeElement.style.display = 'none';
+        } else {
+          this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          this.Images_TFT_Enable.nativeElement.style.display = 'none';
+        }
+        this.TFTShown = !this.TFTShown;
+        break;
+      case 'image_Container_REF':
+        if (!this.REFShown) {  
+          let modeState = this.Mode_Switch_State ? '-folder' : '-map';
+          let bjState = this.BJ_Switch_State ? '' : '-noc';
+          this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          this.Images_REF_Disable.nativeElement.style.display = 'none';
+          this.Images_REF_Enable.nativeElement.style.display = 'block';
+        } else {
+          this.Images_REF_Disable.nativeElement.style.display = 'block';
+          this.Images_REF_Enable.nativeElement.style.display = 'none';
+        }
+        this.REFShown = !this.REFShown;
+      case 'Mode_Switch':
+        this.Mode_Switch_State = !this.Mode_Switch_State; 
+      case 'BJ_Switch':
+        this.BJ_Switch_State = !this.BJ_Switch_State; 
+      default:
+        console.log('Mouse click an element');
+        break;
+  }
+  }
+
 
 }
 
