@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from 'electron';
+import { ElectronService } from 'src/app/core/services/electron/electron.service';
 
 
 @Component({
@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
   BJ_Switch_State: boolean = true;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private electronService: ElectronService
     ) { }
 
   ngOnInit(): void {
