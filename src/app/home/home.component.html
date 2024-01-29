@@ -9,23 +9,17 @@
       <div class="center-heading">--游戏版本设置--</div>
 
       <div  class="image-row">
-        <div id="imageROC" class="imageContainerROC" data-action="image_Container_ROC" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-          <img id="ImagesROCEnable" src="assets/ROC.Enable.png">
-          [style.display]="isROCEnabled ? 'none' : 'inline-block'" />
-          <img id="ImagesROCDisable" src="assets/ROC.Disable.png">
-          [style.display]="!isROCEnabled ? 'none' : 'inline-block'" />
+        <div id="ROCContainer" class="imageContainerROC" #imageROC (click)="onClick()" (mouseover)="onMouseEnter()" (mouseout)="onMouseLeave()">
+          <img id="ROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnabled [style.display]="isROCState ? 'none' : 'inline-block'">
+          <img id="ROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable [style.display]="!isROCState ? 'none' : 'inline-block'">
         </div>
-        <div id="imageTFT" class="imageContainerTFT" data-action="image_Container_TFT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-          <img id="ImagesTFTEnable" src="assets/TFT.Enable.png">
-          [style.display]="isTFTEnabled ? 'none' : 'inline-block'" />
-          <img id="ImagesTFTDisable" src="assets/TFT.Disable.png">
-         [style.display]="!isTFTEnabled ? 'none' : 'inline-block'" />
+        <div id="TFTContainer" class="imageContainerTFT" #imageTFT (click)="onClick()" (mouseover)="onMouseEnter()" (mouseout)="onMouseLeave()">
+          <img id="TFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnabled [style.display]="isTFTState ? 'none' : 'inline-block'">
+          <img id="TFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable [style.display]="!isTFTState ? 'none' : 'inline-block'">
         </div>
-        <div id="imageREF" class="imageContainerREF" data-action="image_Container_REF" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-          <img id="ImagesREFEnable" src="assets/REF.Enable.png">
-          [style.display]="isREFEnabled ? 'none' : 'inline-block'" />
-          <img id="ImagesREFDisable" src="assets/REF.Disable.png">
-          [style.display]="isREFEnabled ? 'none' : 'inline-block'" />
+        <div id="REFContainer" class="imageContainerREF" #imageREF (click)="onClick()" (mouseover)="onMouseEnter()" (mouseout)="onMouseLeave()">
+          <img id="REFEnable" src="assets/REF.Enable.png" #ImagesREFEnabled [style.display]="isREFState ? 'none' : 'inline-block'">
+          <img id="REFDisable" src="assets/REF.Disable.png" #ImagesREFDisable [style.display]="!isREFState ? 'none' : 'inline-block'">
         </div>
       </div>
 
@@ -33,18 +27,16 @@
 
       <div class="container.setting">
         <label class="switch">
-          <input type="checkbox" id="ModeSwitch" class="hidden-checkbox">
+          <input type="checkbox" id="ModeSwitchSet" class="hidden-checkbox" #ModeSwitch (click)="onClick()">
           <span class="slider"></span>
         </label>
         <label class="checkboxbj">
-          <input type="checkbox" id="BJSwitch" checked>
+          <input type="checkbox" id="BJSwitchSet" checked #BJSwitch (click)="onClick()">
           <label for="BJSwitch">安装控制台(B.J)</label>
         </label>
       </div>
 
-       <div id="test">
-          <img id="testico" src="assets/icons/favicon.ico" style="display: none;">
-       </div>
+
 
       
     </div>
