@@ -9,17 +9,23 @@
       <div class="center-heading">--游戏版本设置--</div>
 
       <div  class="image-row">
-        <div id="imageROC" class="imageContainerROC">
-          <img id="ImagesROCEnable" src="assets/ROC.Enable.png" style="display: none;">
+        <div id="imageROC" class="imageContainerROC" data-action="image_Container_ROC" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
+          <img id="ImagesROCEnable" src="assets/ROC.Enable.png">
+          [style.display]="isROCEnabled ? 'none' : 'inline-block'" />
           <img id="ImagesROCDisable" src="assets/ROC.Disable.png">
+          [style.display]="!isROCEnabled ? 'none' : 'inline-block'" />
         </div>
-        <div id="imageTFT" class="imageContainerTFT">
-          <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" style="display: none;">
+        <div id="imageTFT" class="imageContainerTFT" data-action="image_Container_TFT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
+          <img id="ImagesTFTEnable" src="assets/TFT.Enable.png">
+          [style.display]="isTFTEnabled ? 'none' : 'inline-block'" />
           <img id="ImagesTFTDisable" src="assets/TFT.Disable.png">
+         [style.display]="!isTFTEnabled ? 'none' : 'inline-block'" />
         </div>
-        <div id="imageREF" class="imageContainerREF">
-          <img id="ImagesREFEnable" src="assets/REF.Enable.png" style="display: none;">
+        <div id="imageREF" class="imageContainerREF" data-action="image_Container_REF" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
+          <img id="ImagesREFEnable" src="assets/REF.Enable.png">
+          [style.display]="isREFEnabled ? 'none' : 'inline-block'" />
           <img id="ImagesREFDisable" src="assets/REF.Disable.png">
+          [style.display]="isREFEnabled ? 'none' : 'inline-block'" />
         </div>
       </div>
 
