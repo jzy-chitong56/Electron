@@ -27,8 +27,7 @@ export class HomeComponent implements OnInit {
   BJ_Switch_State: boolean = true;
 
   constructor(
-    private router: Router,
-    private electronService: ElectronService
+    private router: Router
     ) { }
 
   ngOnInit(): void {
