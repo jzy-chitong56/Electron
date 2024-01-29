@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from '..src/app/core/services/electron/electron.service';
+import { ElectronService } from './core/services';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,10 +28,6 @@ export class HomeComponent implements OnInit {
   Mode_Switch_State: boolean = true;
   BJ_Switch_State: boolean = true;
   
-  constructor(
-    private router: Router,
-    ) { }
-
   ngOnInit(): void {
     console.log('HomeComponent INIT');
     this.Images_ROC_Disable.nativeElement.style.display = 'block';
@@ -158,6 +154,11 @@ export class HomeComponent implements OnInit {
         console.log('Mouse click an element');
         break;
     }
+
+    constructor(
+      private router: Router,
+      private electronService: ElectronService,
+    ) { }
   }
 
 
