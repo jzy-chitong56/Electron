@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from './src/app/core/services/electron/electron.service';
+import { ElectronService } from '..src/app/core/services/electron/electron.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,10 +27,9 @@ export class HomeComponent implements OnInit {
   REFShown: boolean = false; 
   Mode_Switch_State: boolean = true;
   BJ_Switch_State: boolean = true;
-
+  
   constructor(
     private router: Router,
-    private electronService: ElectronService
     ) { }
 
   ngOnInit(): void {
