@@ -37,7 +37,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": ["src/action.js"],
+            "scripts": [""],
             "customWebpackConfig": {
               "path": "./angular.webpack.js",
               "replaceDuplicatePlugins": true
