@@ -40,35 +40,32 @@ export class HomeComponent implements OnInit {
   }
 
   // 鼠标移入事件处理函数
-  @HostListener('mouseover', ['$event'])
+  // @HostListener('mouseover', ['$event'])
+
   onMouseEnter(event: MouseEvent) {
-    const action = (event.target as HTMLElement).dataset.action;
-    console.log('0 action:', action);
-    switch (action) {
-      case 'ROCEVENT':
+    // const action = (event.target as HTMLElement).dataset.action;
+    const element = event.target as HTMLElement;
+    console.log('0 :', element);
+    if (element.id === 'imageROC') {
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'none';
           this.Images_ROC_Enable.nativeElement.style.display = 'block';
           console.log('in roc');
         }
-        break;
-      case 'TFTEVENT':
+    }
+    if (element.id === 'imageTFT') {
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'none';
           this.Images_TFT_Enable.nativeElement.style.display = 'block';
           console.log('in tft');
         }
-        break;
-      case 'REFEVENT':
+    }
+    if (element.id === 'imageREF') {
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'none';
           this.Images_REF_Enable.nativeElement.style.display = 'block';
           console.log('in ref');
         }
-        break;
-      default:
-        console.log('x action:', action);
-        break;
     }
   }
 
