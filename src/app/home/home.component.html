@@ -7,16 +7,16 @@
 
   <div class="image-row">
     <div id="imageROC" class="imageContainerROC" #imageROC data-action="ROCEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-      <img id="ImagesROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnable>
-      <img id="ImagesROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable>
+      <img id="ImagesROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnable [ngClass]="{'display-none': Images_ROC_Enable}">
+      <img id="ImagesROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable [ngClass]="{'display-none': Images_ROC_Disable}">
     </div>
     <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="TFTEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-      <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnable>
-      <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable>
+      <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnable [ngClass]="{'display-none': Images_TFT_Enable}">
+      <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable [ngClass]="{'display-none': Images_TFT_Disable}">
     </div>
     <div id="imageREF" class="imageContainerREF" #imageREF data-action="REFEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-      <img id="ImagesREFEnable" src="assets/REF.Enable.png" #ImagesREFEnable>
-      <img id="ImagesREFDisable" src="assets/REF.Disable.png" #ImagesREFDisable>
+      <img id="ImagesREFEnable" src="assets/REF.Enable.png" #ImagesREFEnable [ngClass]="{'display-none': Images_REF_Enable}">
+      <img id="ImagesREFDisable" src="assets/REF.Disable.png" #ImagesREFDisable [ngClass]="{'display-none': Images_REF_Disable}">
     </div>
   </div>
 
@@ -25,10 +25,10 @@
   <div class="container.setting">
     <label class="switch">
       <input type="checkbox" [ngClass]="{'checked-state': Mode_State}" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
-      <div class="slider">按文件夹安装</div>  
-      <div class="slider-before">按地图安装</div>  
-      <!--<div class="slider">{{ 'INSTALL.ON.MAP' | translate }}</div>-->
-      <!-- <div class="slider-before">{{ 'INSTALL.ON.FOLDER' | translate }}</div>-->
+      <div class="slider" [ngClass]="{'display-none': !Mode_State}">按文件夹安装</div>  
+      <div class="slider-before" [ngClass]="{'display-none': Mode_State}">按地图安装</div>  
+      <!--<div class="slider" [ngClass]="{'display-none': !Mode_State}">{{ 'INSTALL.ON.MAP' | translate }}</div>-->
+      <!-- <div class="slider-before" [ngClass]="{'display-none': Mode_State}">{{ 'INSTALL.ON.FOLDER' | translate }}</div>-->
     </label>
     <label class="checkboxbj">
       <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event)">
