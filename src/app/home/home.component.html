@@ -6,15 +6,15 @@
   <!--<div class="center-heading">{{ 'CHOOSE.GAME.VERSION' | translate }}</div>-->
 
   <div class="image-row">
-    <div id="imageROC" class="imageContainerROC" #imageROC data-action="ROCEVENT" (mouseover.self)="onMouseEnter($event)" (mouseout.self)="onMouseLeave($event)" (click)="onClick.self($event)">
+    <div id="imageROC" class="imageContainerROC" #imageROC data-action="ROCEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
       <img id="ImagesROCEnable" src="assets/ROC.Enable.png" [ngClass]="{'display-none': !Images_ROC_Shown}">
       <img id="ImagesROCDisable" src="assets/ROC.Disable.png" [ngClass]="{'display-none': Images_ROC_Shown}">
     </div>
-    <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="TFTEVENT" (mouseover.self)="onMouseEnter($event)" (mouseout.self)="onMouseLeave($event)" (click)="onClick.self($event)">
+    <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="TFTEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
       <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" [ngClass]="{'display-none': !Images_TFT_Shown}">
       <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" [ngClass]="{'display-none': Images_TFT_Shown}">
     </div>
-    <div id="imageREF" class="imageContainerREF" #imageREF data-action="REFEVENT" (mouseover.self)="onMouseEnter($event)" (mouseout.self)="onMouseLeave($event)" (click)="onClick.self($event)">
+    <div id="imageREF" class="imageContainerREF" #imageREF data-action="REFEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
       <img id="ImagesREFEnable" src="assets/REF.Enable.png" [ngClass]="{'display-none': !Images_REF_Shown}">
       <img id="ImagesREFDisable" src="assets/REF.Disable.png" [ngClass]="{'display-none': Images_REF_Shown}">
     </div>
@@ -24,14 +24,14 @@
   <!--<div class="center-text">{{ 'ADVANCED.SETTING' | translate }}</div>-->
   <div class="container.setting">
     <label class="switch">
-      <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick.self($event)">
+      <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
       <div class="slider" [ngClass]="{'display-none': !Mode_State}"  style="color: white;">按文件夹安装</div>  
       <div class="slider-before" [ngClass]="{'display-none': Mode_State}"  style="color: white;">按地图安装</div>  
       <!--<div class="slider" [ngClass]="{'display-none': !Mode_State}" style="color: white;">{{ 'INSTALL.ON.MAP' | translate }}</div>-->
       <!-- <div class="slider-before" [ngClass]="{'display-none': Mode_State}" style="color: white;">{{ 'INSTALL.ON.FOLDER' | translate }}</div>-->
     </label>
     <label class="checkboxbj">
-      <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick.self($event)">
+      <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event)">
       <label for="BJSwitch">安装控制台(B.J)</label>
       <!--<label for="BJSwitch">{{ 'INCLUDE.COMMANDER' | translate }}</label>-->
     </label>
