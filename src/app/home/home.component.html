@@ -6,15 +6,15 @@
   <!--<div class="center-heading">{{ 'CHOOSE.GAME.VERSION' | translate }}</div>-->
 
   <div class="image-row">
-    <div id="imageROC" class="imageContainerROC" #imageROC data-action="Roc" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
+    <div id="imageROC" class="imageContainerROC" #imageROC data-action="Roc" (mouseover)="onMouseEnter($event, 'Roc')" (mouseout)="onMouseLeave($event, 'Roc')" (click)="onClick($event, 'Roc')">
       <img id="ImagesROCEnable" src="assets/ROC.Enable.png" [ngClass]="{'display-none': !Images_ROC_Shown}">
       <img id="ImagesROCDisable" src="assets/ROC.Disable.png" [ngClass]="{'display-none': Images_ROC_Shown}">
     </div>
-    <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="Tft" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
+    <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="Tft" (mouseover)="onMouseEnter($event, 'Tft')" (mouseout)="onMouseLeave($event, 'Tft')" (click)="onClick($event, 'Tft')">
       <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" [ngClass]="{'display-none': !Images_TFT_Shown}">
       <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" [ngClass]="{'display-none': Images_TFT_Shown}">
     </div>
-    <div id="imageREF" class="imageContainerREF" #imageREF data-action="Ref" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
+    <div id="imageREF" class="imageContainerREF" #imageREF data-action="Ref" (mouseover)="onMouseEnter($event, 'Ref')" (mouseout)="onMouseLeave($event, 'Ref')" (click)="onClick($event, 'Ref')">
       <img id="ImagesREFEnable" src="assets/REF.Enable.png" [ngClass]="{'display-none': !Images_REF_Shown}">
       <img id="ImagesREFDisable" src="assets/REF.Disable.png" [ngClass]="{'display-none': Images_REF_Shown}">
     </div>
