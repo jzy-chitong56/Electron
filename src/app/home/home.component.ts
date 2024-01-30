@@ -31,51 +31,50 @@ export class HomeComponent implements OnInit {
   }
 
   // 鼠标移入事件处理函数
-    onMouseEnter(event: MouseEvent) {
-    const action = (event.target as HTMLElement).dataset.action;
+  @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
+  onMouseEnter(event: MouseEvent, action: string) {
+   // const action = (event.target as HTMLElement).dataset.action;
       console.log('0 :', action);
-
-console.log('0 :', event.target);  
-
-switch (action) {
+      console.log('0 :', event.target);  
+    switch (action) {
      case 'Roc':{
-        if (!this.ROCInstall) {  
+        if (!this.ROCInstall) {
           //this.Images_ROC_Disable.nativeElement.style.display = 'none';
           //this.Images_ROC_Enable.nativeElement.style.display = 'block';
           this.Images_ROC_Shown = true;
           console.log('in roc');
         }
-      break;
-    }
+        break;
+     }
      case 'Tft':{
-        if (!this.TFTInstall) {  
+        if (!this.TFTInstall) {
           //this.Images_TFT_Disable.nativeElement.style.display = 'none';
           //this.Images_TFT_Enable.nativeElement.style.display = 'block';
           this.Images_TFT_Shown = true;
           console.log('in tft');
         }
-      break;
-    }
+        break;
+     }
      case 'Ref':{
-        if (!this.REFInstall) {  
+        if (!this.REFInstall) {
           //this.Images_REF_Disable.nativeElement.style.display = 'none';
           //this.Images_REF_Enable.nativeElement.style.display = 'block';
           this.Images_REF_Shown = true;
           console.log('in ref');
         }
-     break;
+        break;
+     }
     }
-   }
   }
 
   // 鼠标移出事件处理函数
-  @HostListener('mouseout', ['$event'])
-  onMouseLeave(event: MouseEvent) {
-    const action = (event.target as HTMLElement).dataset.action;
+  @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
+  onMouseLeave(event: MouseEvent, action: string) {
+    // const action = (event.target as HTMLElement).dataset.action;
             console.log('1 action:', action);
     switch (action) {
       case 'Roc':
-        if (!this.ROCInstall) {  
+        if (!this.ROCInstall) {
           //this.Images_ROC_Disable.nativeElement.style.display = 'block';
           //this.Images_ROC_Enable.nativeElement.style.display = 'none';
           this.Images_ROC_Shown = false;
@@ -83,7 +82,7 @@ switch (action) {
         }
         break;
       case 'Tft':
-        if (!this.TFTInstall) {  
+        if (!this.TFTInstall) {
           //this.Images_TFT_Disable.nativeElement.style.display = 'block';
           //this.Images_TFT_Enable.nativeElement.style.display = 'none';
           this.Images_TFT_Shown = false;
@@ -91,7 +90,7 @@ switch (action) {
         }
         break;
       case 'Ref':
-        if (!this.REFInstall) {  
+        if (!this.REFInstall) {
           //this.Images_REF_Disable.nativeElement.style.display = 'block';
           //this.Images_REF_Enable.nativeElement.style.display = 'none';
           this.Images_REF_Shown = false;
@@ -102,13 +101,13 @@ switch (action) {
   }
 
   // 点击事件处理函数
-  @HostListener('click', ['$event'])
-  onClick(event: MouseEvent) {
-    const action = (event.target as HTMLElement).dataset.action;
-            console.log('2 action:', action);
+  @HostListener('click', ['$event', '$event.target.dataset.action'])
+  onClick(event: MouseEvent, action: string) {
+   //  const action = (event.target as HTMLElement).dataset.action;
+    console.log('2 action:', action);
     switch (action) {
       case 'Roc':
-        if (!this.ROCInstall) {  
+        if (!this.ROCInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
           // this.Images_ROC_Disable.nativeElement.style.display = 'none';
@@ -131,7 +130,7 @@ switch (action) {
         this.ROCInstall = !this.ROCInstall;
         break;
       case 'Tft':
-        if (!this.TFTInstall) {  
+        if (!this.TFTInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
           // this.Images_ROC_Disable.nativeElement.style.display = 'block';
@@ -154,7 +153,7 @@ switch (action) {
         this.TFTInstall = !this.TFTInstall;
         break;
       case 'Ref':
-        if (!this.REFInstall) {  
+        if (!this.REFInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
           // this.Images_ROC_Disable.nativeElement.style.display = 'block';
