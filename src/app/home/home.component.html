@@ -25,8 +25,8 @@
   <div class="container.setting">
     <label class="switch">
       <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
-      <span class="slider" style="color: white;">按文件夹安装</span>
-      <span class="slider-before" style="color: white;">按地图安装</span>
+      <span class="slider" [ngClass]="{'display-none': ModeSwitch}" style="color: white;">按文件夹安装</span>
+      <span class="slider:before" [ngClass]="{'display-none': !ModeSwitch}" style="color: white;">按地图安装</span>
       <!--<div class="slider" [ngClass]="{'display-none': !Mode_State}" style="color: white;">{{ 'INSTALL.ON.MAP' | translate }}</div>-->
       <!-- <div class="slider-before" [ngClass]="{'display-none': Mode_State}" style="color: white;">{{ 'INSTALL.ON.FOLDER' | translate }}</div>-->
     </label>
