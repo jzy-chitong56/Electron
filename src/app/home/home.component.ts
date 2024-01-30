@@ -34,6 +34,13 @@ export class HomeComponent implements OnInit {
     onMouseEnter(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
       console.log('0 :', action);
+
+  
+console.log('0 :', event.target);  
+  
+for (let data in event.target.dataset) {  
+  console.log('0 :', `${data}: ${event.target.dataset[data]}`);  
+}
 switch (action) {
      case 'Roc':{
         if (!this.ROCInstall) {  
@@ -94,9 +101,6 @@ switch (action) {
           this.Images_REF_Shown = false;
           console.log('out ref');
         }
-        break;
-      default:
-        console.log('y action:', action);
         break;
     }
   }
@@ -183,9 +187,6 @@ switch (action) {
       case 'BJ':
         this.BJ_State = !this.BJ_State; 
         console.log('c bj');
-        break;
-      default:
-        console.log('z action:', action);
         break;
     }
   }
