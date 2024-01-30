@@ -12,17 +12,17 @@ import { ElectronService } from '../core/services/electron/electron.service';
 })
 export class HomeComponent implements OnInit {
   
-  @ViewChild('ImagesROCEnable', { static: true }) Images_ROC_Enable: ElementRef;
-  @ViewChild('ImagesROCDisable', { static: true }) Images_ROC_Disable: ElementRef;
-  @ViewChild('imageROC', { static: true }) image_Container_ROC: ElementRef;
-  @ViewChild('ImagesTFTEnable', { static: true }) Images_TFT_Enable: ElementRef;
-  @ViewChild('ImagesTFTDisable', { static: true }) Images_TFT_Disable: ElementRef;
-  @ViewChild('imageTFT', { static: true }) image_Container_TFT: ElementRef;
-  @ViewChild('ImagesREFEnable', { static: true }) Images_REF_Enable: ElementRef;
-  @ViewChild('ImagesREFDisable', { static: true }) Images_REF_Disable: ElementRef;
-  @ViewChild('imageREF', { static: true }) image_Container_REF: ElementRef;
-  // @ViewChild('ModeSwitch', { static: true }) Mode_Switch_State: ElementRef;
-  // @ViewChild('BJSwitch', { static: true }) BJ_Switch_State: ElementRef;
+  @ViewChild('ImagesROCEnable') Images_ROC_Enable: ElementRef;
+  @ViewChild('ImagesROCDisable') Images_ROC_Disable: ElementRef;
+  @ViewChild('imageROC') image_Container_ROC: ElementRef;
+  @ViewChild('ImagesTFTEnable') Images_TFT_Enable: ElementRef;
+  @ViewChild('ImagesTFTDisable') Images_TFT_Disable: ElementRef;
+  @ViewChild('imageTFT') image_Container_TFT: ElementRef;
+  @ViewChild('ImagesREFEnable') Images_REF_Enable: ElementRef;
+  @ViewChild('ImagesREFDisable') Images_REF_Disable: ElementRef;
+  @ViewChild('imageREF') image_Container_REF: ElementRef;
+  // @ViewChild('ModeSwitch') Mode_Switch_State: ElementRef;
+  // @ViewChild('BJSwitch') BJ_Switch_State: ElementRef;
   ROCShown: boolean = false; 
   TFTShown: boolean = false; 
   REFShown: boolean = false; 
