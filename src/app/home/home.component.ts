@@ -33,7 +33,8 @@ export class HomeComponent implements OnInit {
   // 鼠标移入事件处理函数
     onMouseEnter(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
-      console.log('0 :', clickedElement);
+      console.log('0 :', action);
+switch (action) {
      case 'Roc':{
         if (!this.ROCInstall) {  
           //this.Images_ROC_Disable.nativeElement.style.display = 'none';
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
           this.Images_ROC_Shown = true;
           console.log('in roc');
         }
+      break;
     }
      case 'Tft':{
         if (!this.TFTInstall) {  
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit {
           this.Images_TFT_Shown = true;
           console.log('in tft');
         }
+      break;
     }
      case 'Ref':{
         if (!this.REFInstall) {  
@@ -57,7 +60,9 @@ export class HomeComponent implements OnInit {
           this.Images_REF_Shown = true;
           console.log('in ref');
         }
+     break;
     }
+   }
   }
 
   // 鼠标移出事件处理函数
