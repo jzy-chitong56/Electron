@@ -12,9 +12,9 @@ import { ElectronService } from '../core/services/electron/electron.service';
 })
 export class HomeComponent implements OnInit {
   
-  @ViewChild('imageROC') Roc: ElementRef;
-  @ViewChild('imageTFT') Tft: ElementRef;
-  @ViewChild('imageREF') Ref: ElementRef;
+  // @ViewChild('imageROC') Roc: ElementRef;
+  // @ViewChild('imageTFT') Tft: ElementRef;
+  // @ViewChild('imageREF') Ref: ElementRef;
   // @ViewChild('ModeSwitch') Mode_Switch_State: ElementRef;
   // @ViewChild('BJSwitch') BJ_Switch_State: ElementRef;
   Images_ROC_Shown: boolean = false; 
