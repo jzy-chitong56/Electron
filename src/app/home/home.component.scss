@@ -117,7 +117,7 @@
       display: flex; /* 将其转换为弹性布局容器 */
       align-items: center;
       justify-content: center;
-      // content: "按文件夹安装";
+      content: "";
       white-space: nowrap;
       left: 1px;
       height: 100%;
@@ -133,7 +133,7 @@
     }
 
     input:checked + .slider:before {
-      // content: "按地图安装";
+      content: "";
       -webkit-transform: translateX(100%);
       -ms-transform: translateX(100%);
        transform: translateX(100%);
