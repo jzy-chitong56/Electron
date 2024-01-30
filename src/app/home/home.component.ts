@@ -35,12 +35,8 @@ export class HomeComponent implements OnInit {
     const action = (event.target as HTMLElement).dataset.action;
       console.log('0 :', action);
 
-  
 console.log('0 :', event.target);  
-  
-for (let data in event.target.dataset) {  
-  console.log('0 :', `${data}: ${event.target.dataset[data]}`);  
-}
+
 switch (action) {
      case 'Roc':{
         if (!this.ROCInstall) {  
