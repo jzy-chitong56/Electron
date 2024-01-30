@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
         if (!this.ROCInstall) {  
           //this.Images_ROC_Disable.nativeElement.style.display = 'none';
           //this.Images_ROC_Enable.nativeElement.style.display = 'block';
-          this.Images_ROC_Shown = ture;
+          this.Images_ROC_Shown = true;
           console.log('in roc');
         }
     }
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
         if (!this.TFTInstall) {  
           //this.Images_TFT_Disable.nativeElement.style.display = 'none';
           //this.Images_TFT_Enable.nativeElement.style.display = 'block';
-          this.Images_TFT_Shown = ture;
+          this.Images_TFT_Shown = true;
           console.log('in tft');
         }
     }
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
         if (!this.REFInstall) {  
           //this.Images_REF_Disable.nativeElement.style.display = 'none';
           //this.Images_REF_Enable.nativeElement.style.display = 'block';
-          this.Images_REF_Shown = ture;
+          this.Images_REF_Shown = true;
           console.log('in ref');
         }
     }
