@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit {
   ROCShown: boolean = false; 
   TFTShown: boolean = false; 
   REFShown: boolean = false; 
-  Mode_Switch_State: boolean = true;
-  BJ_Switch_State: boolean = true;
+  Mode_State: boolean = true;
+  BJ_State: boolean = true;
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
@@ -113,8 +113,8 @@ export class HomeComponent implements OnInit {
     switch (action) {
       case 'ROC':
         if (!this.ROCShown) {  
-          let modeState = this.Mode_Switch_State ? '-folder' : '-map';
-          let bjState = this.BJ_Switch_State ? '' : '-noc';
+          let modeState = this.Mode_State ? '-folder' : '-map';
+          let bjState = this.BJ_State ? '' : '-noc';
           this.Images_ROC_Disable.nativeElement.style.display = 'none';
           this.Images_ROC_Enable.nativeElement.style.display = 'block';
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
@@ -132,8 +132,8 @@ export class HomeComponent implements OnInit {
         break;
       case 'TFT':
         if (!this.TFTShown) {  
-          let modeState = this.Mode_Switch_State ? '-folder' : '-map';
-          let bjState = this.BJ_Switch_State ? '' : '-noc';
+          let modeState = this.Mode_State ? '-folder' : '-map';
+          let bjState = this.BJ_State ? '' : '-noc';
           this.Images_ROC_Disable.nativeElement.style.display = 'block';
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
           this.Images_TFT_Disable.nativeElement.style.display = 'none';
@@ -150,8 +150,8 @@ export class HomeComponent implements OnInit {
         break;
       case 'REF':
         if (!this.REFShown) {  
-          let modeState = this.Mode_Switch_State ? '-folder' : '-map';
-          let bjState = this.BJ_Switch_State ? '' : '-noc';
+          let modeState = this.Mode_State ? '-folder' : '-map';
+          let bjState = this.BJ_State ? '' : '-noc';
           this.Images_ROC_Disable.nativeElement.style.display = 'block';
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
@@ -167,11 +167,11 @@ export class HomeComponent implements OnInit {
         this.REFShown = !this.REFShown;
         break;
       case 'Mode':
-        this.Mode_Switch_State = !this.Mode_Switch_State; 
+        this.Mode_State = !this.Mode_State; 
         console.log('c mode');
         break;
       case 'BJ':
-        this.BJ_Switch_State = !this.BJ_Switch_State; 
+        this.BJ_State = !this.BJ_State; 
         console.log('c bj');
         break;
       default:
