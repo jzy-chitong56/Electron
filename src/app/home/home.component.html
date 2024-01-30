@@ -27,8 +27,8 @@
 
       <div class="container.setting">
         <label class="switch">
-          <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
-          <span class="slider"></span>
+          <input type="checkbox" [(ngModel)]="Mode_State" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
+          <span class="slider" [innerText]="Mode_State ? '按文件夹安装' : '按地图安装'"></span>
         </label>
         <label class="checkboxbj">
           <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event)">
