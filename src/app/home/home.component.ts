@@ -12,10 +12,9 @@ import { ElectronService } from '../core/services/electron/electron.service';
 })
 export class HomeComponent implements OnInit {
   
-
-  @ViewChild('imageROC') image_Container_ROC: ElementRef;
-  @ViewChild('imageTFT') image_Container_TFT: ElementRef;
-  @ViewChild('imageREF') image_Container_REF: ElementRef;
+  @ViewChild('imageROC') ROCEVENT: ElementRef;
+  @ViewChild('imageTFT') TFTEVENT: ElementRef;
+  @ViewChild('imageREF') REFEVENT: ElementRef;
   // @ViewChild('ModeSwitch') Mode_Switch_State: ElementRef;
   // @ViewChild('BJSwitch') BJ_Switch_State: ElementRef;
   Images_ROC_Shown: boolean = false; 
@@ -32,12 +31,11 @@ export class HomeComponent implements OnInit {
   }
 
   // 鼠标移入事件处理函数
-  // @HostListener('mouseover', ['$event'])
-  onMouseEnter(event: any): void {
-    // const action = (event.target as HTMLElement).dataset.action;
-    const element = event.target as HTMLElement;
-    console.log('0 :', element);
-    if (element.id === 'imageROC') {
+    onMouseEnter(event: MouseEvent) {
+    const clickedElement = event.target || event.currentTarget;
+    console.log('0 :', clickedElement.id);
+      console.log('0 :', clickedElement);
+    if (clickedElement.id === 'imageROC') {
         if (!this.ROCInstall) {  
           //this.Images_ROC_Disable.nativeElement.style.display = 'none';
           //this.Images_ROC_Enable.nativeElement.style.display = 'block';
@@ -45,7 +43,7 @@ export class HomeComponent implements OnInit {
           console.log('in roc');
         }
     }
-    if (element.id === 'imageTFT') {
+    if (clickedElement.id === 'imageTFT') {
         if (!this.TFTInstall) {  
           //this.Images_TFT_Disable.nativeElement.style.display = 'none';
           //this.Images_TFT_Enable.nativeElement.style.display = 'block';
@@ -53,7 +51,7 @@ export class HomeComponent implements OnInit {
           console.log('in tft');
         }
     }
-    if (element.id === 'imageREF') {
+    if (clickedElement.id === 'imageREF') {
         if (!this.REFInstall) {  
           //this.Images_REF_Disable.nativeElement.style.display = 'none';
           //this.Images_REF_Enable.nativeElement.style.display = 'block';
@@ -65,7 +63,7 @@ export class HomeComponent implements OnInit {
 
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event'])
-  onMouseLeave(event: any): void {
+  onMouseLeave(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
             console.log('1 action:', action);
     switch (action) {
@@ -101,7 +99,7 @@ export class HomeComponent implements OnInit {
 
   // 点击事件处理函数
   @HostListener('click', ['$event'])
-  onClick(event: any): void {
+  onClick(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
             console.log('2 action:', action);
     switch (action) {
