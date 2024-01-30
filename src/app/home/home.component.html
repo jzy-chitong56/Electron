@@ -7,16 +7,16 @@
 
   <div class="image-row">
     <div id="imageROC" class="imageContainerROC" #imageROC data-action="ROCEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-      <img id="ImagesROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnable [ngClass]="{'display-none': Images_ROC_Enable}">
-      <img id="ImagesROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable [ngClass]="{'display-none': Images_ROC_Disable}">
+      <img id="ImagesROCEnable" src="assets/ROC.Enable.png" #ImagesROCEnable [ngClass]="{'display-none': Images_ROC_Shown}">
+      <img id="ImagesROCDisable" src="assets/ROC.Disable.png" #ImagesROCDisable [ngClass]="{'display-none': !Images_ROC_Shown}">
     </div>
     <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="TFTEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-      <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnable [ngClass]="{'display-none': Images_TFT_Enable}">
-      <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable [ngClass]="{'display-none': Images_TFT_Disable}">
+      <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" #ImagesTFTEnable [ngClass]="{'display-none': Images_TFT_Shown}">
+      <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" #ImagesTFTDisable [ngClass]="{'display-none': !Images_TFT_Shown}">
     </div>
     <div id="imageREF" class="imageContainerREF" #imageREF data-action="REFEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
-      <img id="ImagesREFEnable" src="assets/REF.Enable.png" #ImagesREFEnable [ngClass]="{'display-none': Images_REF_Enable}">
-      <img id="ImagesREFDisable" src="assets/REF.Disable.png" #ImagesREFDisable [ngClass]="{'display-none': Images_REF_Disable}">
+      <img id="ImagesREFEnable" src="assets/REF.Enable.png" #ImagesREFEnable [ngClass]="{'display-none': Images_REF_Shown}">
+      <img id="ImagesREFDisable" src="assets/REF.Disable.png" #ImagesREFDisable [ngClass]="{'display-none': !Images_REF_Shown}">
     </div>
   </div>
 
