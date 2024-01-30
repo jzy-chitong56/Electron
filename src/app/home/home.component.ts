@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
-    console.log('0 :', event.target);  
     switch (action) {
      case 'Roc':{
         if (!this.ROCInstall) {
@@ -53,7 +52,6 @@ export class HomeComponent implements OnInit {
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
-    console.log('1 action:', action);
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
@@ -76,18 +74,19 @@ export class HomeComponent implements OnInit {
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
-    console.log('2 action:', action);
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          const message = `install${modeState}${bjState}ver`;
+          const message = `install${modeState}${bjState}-ROC`;
           this.Images_ROC_Shown = true;
           this.Images_TFT_Shown = false;
           this.Images_REF_Shown = false;
           this.TFTInstall = false;
           this.REFInstall = false;
+          console.log('roc :', message); 
+          console.log('roc :', ${modeState} - ${bjState}); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_ROC_Shown = false;
@@ -98,12 +97,13 @@ export class HomeComponent implements OnInit {
         if (!this.TFTInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          const message = `install${modeState}${bjState}ver`;
+          const message = `install${modeState}${bjState}-TFT`;
           this.Images_ROC_Shown = false;
           this.Images_TFT_Shown = true;
           this.Images_REF_Shown = false;
           this.ROCInstall = false;
           this.REFInstall = false;
+          console.log('tft :', message); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_TFT_Shown = false;
@@ -114,12 +114,13 @@ export class HomeComponent implements OnInit {
         if (!this.REFInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          const message = `install${modeState}${bjState}ver`;
+          const message = `install${modeState}${bjState}`;
           this.Images_ROC_Shown = false;
           this.Images_TFT_Shown = false;
           this.Images_REF_Shown = true;
           this.ROCInstall = false;
           this.TFTInstall = false;
+          console.log('ref :', message); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_REF_Shown = false;
