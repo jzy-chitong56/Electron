@@ -86,7 +86,6 @@ export class HomeComponent implements OnInit {
           this.TFTInstall = false;
           this.REFInstall = false;
           console.log('roc :', message); 
-          console.log('roc :', ${modeState} - ${bjState}); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_ROC_Shown = false;
