@@ -11,12 +11,6 @@ import { ElectronService } from '../core/services/electron/electron.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
-  // @ViewChild('imageROC') Roc: ElementRef;
-  // @ViewChild('imageTFT') Tft: ElementRef;
-  // @ViewChild('imageREF') Ref: ElementRef;
-  // @ViewChild('ModeSwitch') Mode_Switch_State: ElementRef;
-  // @ViewChild('BJSwitch') BJ_Switch_State: ElementRef;
   Images_ROC_Shown: boolean = false; 
   Images_TFT_Shown: boolean = false; 
   Images_REF_Shown: boolean = false; 
@@ -33,34 +27,23 @@ export class HomeComponent implements OnInit {
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
-   // const action = (event.target as HTMLElement).dataset.action;
-      console.log('0 :', action);
-      console.log('0 :', event.target);  
+    console.log('0 :', event.target);  
     switch (action) {
      case 'Roc':{
         if (!this.ROCInstall) {
-          //this.Images_ROC_Disable.nativeElement.style.display = 'none';
-          //this.Images_ROC_Enable.nativeElement.style.display = 'block';
           this.Images_ROC_Shown = true;
-          console.log('in roc');
         }
         break;
      }
      case 'Tft':{
         if (!this.TFTInstall) {
-          //this.Images_TFT_Disable.nativeElement.style.display = 'none';
-          //this.Images_TFT_Enable.nativeElement.style.display = 'block';
           this.Images_TFT_Shown = true;
-          console.log('in tft');
         }
         break;
      }
      case 'Ref':{
         if (!this.REFInstall) {
-          //this.Images_REF_Disable.nativeElement.style.display = 'none';
-          //this.Images_REF_Enable.nativeElement.style.display = 'block';
           this.Images_REF_Shown = true;
-          console.log('in ref');
         }
         break;
      }
@@ -70,31 +53,21 @@ export class HomeComponent implements OnInit {
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
-    // const action = (event.target as HTMLElement).dataset.action;
-            console.log('1 action:', action);
+    console.log('1 action:', action);
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
-          //this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          //this.Images_ROC_Enable.nativeElement.style.display = 'none';
           this.Images_ROC_Shown = false;
-          console.log('out roc');
         }
         break;
       case 'Tft':
         if (!this.TFTInstall) {
-          //this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          //this.Images_TFT_Enable.nativeElement.style.display = 'none';
           this.Images_TFT_Shown = false;
-          console.log('out tft');
         }
         break;
       case 'Ref':
         if (!this.REFInstall) {
-          //this.Images_REF_Disable.nativeElement.style.display = 'block';
-          //this.Images_REF_Enable.nativeElement.style.display = 'none';
           this.Images_REF_Shown = false;
-          console.log('out ref');
         }
         break;
     }
@@ -103,29 +76,21 @@ export class HomeComponent implements OnInit {
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
-   //  const action = (event.target as HTMLElement).dataset.action;
     console.log('2 action:', action);
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          // this.Images_ROC_Disable.nativeElement.style.display = 'none';
-          // this.Images_ROC_Enable.nativeElement.style.display = 'block';
-          // this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          // this.Images_TFT_Enable.nativeElement.style.display = 'none';
-          // this.Images_REF_Disable.nativeElement.style.display = 'block';
-          // this.Images_REF_Enable.nativeElement.style.display = 'none';
+          const message = `install${modeState}${bjState}ver`;
           this.Images_ROC_Shown = true;
           this.Images_TFT_Shown = false;
           this.Images_REF_Shown = false;
-          this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
-          console.log('c roc');
+          this.TFTInstall = false;
+          this.REFInstall = false;
+          this.electronService.ipcRenderer.send(message);
         } else {
-          // this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          // this.Images_ROC_Enable.nativeElement.style.display = 'none';
           this.Images_ROC_Shown = false;
-          console.log('c roc-at');
         }
         this.ROCInstall = !this.ROCInstall;
         break;
@@ -133,22 +98,15 @@ export class HomeComponent implements OnInit {
         if (!this.TFTInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          // this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          // this.Images_ROC_Enable.nativeElement.style.display = 'none';
-          // this.Images_TFT_Disable.nativeElement.style.display = 'none';
-          // this.Images_TFT_Enable.nativeElement.style.display = 'block';
-          // this.Images_REF_Disable.nativeElement.style.display = 'block';
-          // this.Images_REF_Enable.nativeElement.style.display = 'none';
+          const message = `install${modeState}${bjState}ver`;
           this.Images_ROC_Shown = false;
           this.Images_TFT_Shown = true;
           this.Images_REF_Shown = false;
-          this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
-          console.log('c tft');
+          this.ROCInstall = false;
+          this.REFInstall = false;
+          this.electronService.ipcRenderer.send(message);
         } else {
-          // this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          // this.Images_TFT_Enable.nativeElement.style.display = 'none';
           this.Images_TFT_Shown = false;
-          console.log('c tft-at');
         }
         this.TFTInstall = !this.TFTInstall;
         break;
@@ -156,32 +114,23 @@ export class HomeComponent implements OnInit {
         if (!this.REFInstall) {
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          // this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          // this.Images_ROC_Enable.nativeElement.style.display = 'none';
-          // this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          // this.Images_TFT_Enable.nativeElement.style.display = 'none';
-          // this.Images_REF_Disable.nativeElement.style.display = 'none';
-          // this.Images_REF_Enable.nativeElement.style.display = 'block';
+          const message = `install${modeState}${bjState}ver`;
           this.Images_ROC_Shown = false;
           this.Images_TFT_Shown = false;
           this.Images_REF_Shown = true;
-          this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
-          console.log('c ref');
+          this.ROCInstall = false;
+          this.TFTInstall = false;
+          this.electronService.ipcRenderer.send(message);
         } else {
-          // this.Images_REF_Disable.nativeElement.style.display = 'block';
-          // this.Images_REF_Enable.nativeElement.style.display = 'none';
           this.Images_REF_Shown = false;
-          console.log('c ref-at');
         }
         this.REFInstall = !this.REFInstall;
         break;
       case 'Mode':
         this.Mode_State = !this.Mode_State; 
-        console.log('c mode');
         break;
       case 'BJ':
         this.BJ_State = !this.BJ_State; 
-        console.log('c bj');
         break;
     }
   }
