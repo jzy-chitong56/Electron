@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('ImagesREFEnable', { static: true }) Images_REF_Enable: ElementRef;
   @ViewChild('ImagesREFDisable', { static: true }) Images_REF_Disable: ElementRef;
   @ViewChild('imageREF', { static: true }) image_Container_REF: ElementRef;
-  @ViewChild('ModeSwitch', { static: true }) Mode_Switch_State: ElementRef;
-  @ViewChild('BJSwitch', { static: true }) BJ_Switch_State: ElementRef;
+  // @ViewChild('ModeSwitch', { static: true }) Mode_Switch_State: ElementRef;
+  // @ViewChild('BJSwitch', { static: true }) BJ_Switch_State: ElementRef;
   ROCShown: boolean = false; 
   TFTShown: boolean = false; 
   REFShown: boolean = false; 
@@ -45,21 +45,21 @@ export class HomeComponent implements OnInit {
     const action = (event.target as HTMLElement).dataset.action;
     console.log('0 action:', action);
     switch (action) {
-      case 'ROC' || 'image_Container_ROC':
+      case 'ROCEVENT':
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'none';
           this.Images_ROC_Enable.nativeElement.style.display = 'block';
           console.log('in roc');
         }
         break;
-      case 'TFT':
+      case 'TFTEVENT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'none';
           this.Images_TFT_Enable.nativeElement.style.display = 'block';
           console.log('in tft');
         }
         break;
-      case 'REF':
+      case 'REFEVENT':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'none';
           this.Images_REF_Enable.nativeElement.style.display = 'block';
@@ -76,23 +76,23 @@ export class HomeComponent implements OnInit {
   @HostListener('mouseout', ['$event'])
   onMouseLeave(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
-            console.log('0 action:', action);
+            console.log('1 action:', action);
     switch (action) {
-      case 'ROC':
+      case 'ROCEVENT':
         if (!this.ROCShown) {  
           this.Images_ROC_Disable.nativeElement.style.display = 'block';
           this.Images_ROC_Enable.nativeElement.style.display = 'none';
           console.log('out roc');
         }
         break;
-      case 'TFT':
+      case 'TFTEVENT':
         if (!this.TFTShown) {  
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
           console.log('out tft');
         }
         break;
-      case 'REF':
+      case 'REFEVENT':
         if (!this.REFShown) {  
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
         }
         break;
       default:
-        console.log('x action:', action);
+        console.log('y action:', action);
         break;
     }
   }
@@ -109,9 +109,9 @@ export class HomeComponent implements OnInit {
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     const action = (event.target as HTMLElement).dataset.action;
-            console.log('0 action:', action);
+            console.log('2 action:', action);
     switch (action) {
-      case 'ROC':
+      case 'ROCEVENT':
         if (!this.ROCShown) {  
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
         }
         this.ROCShown = !this.ROCShown;
         break;
-      case 'TFT':
+      case 'TFTEVENT':
         if (!this.TFTShown) {  
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
@@ -140,6 +140,7 @@ export class HomeComponent implements OnInit {
           this.Images_TFT_Enable.nativeElement.style.display = 'block';
           this.Images_REF_Disable.nativeElement.style.display = 'block';
           this.Images_REF_Enable.nativeElement.style.display = 'none';
+          this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
           console.log('c tft');
         } else {
           this.Images_TFT_Disable.nativeElement.style.display = 'block';
@@ -148,7 +149,7 @@ export class HomeComponent implements OnInit {
         }
         this.TFTShown = !this.TFTShown;
         break;
-      case 'REF':
+      case 'REFEVENT':
         if (!this.REFShown) {  
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
@@ -158,6 +159,7 @@ export class HomeComponent implements OnInit {
           this.Images_TFT_Enable.nativeElement.style.display = 'none';
           this.Images_REF_Disable.nativeElement.style.display = 'none';
           this.Images_REF_Enable.nativeElement.style.display = 'block';
+          this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
           console.log('c ref');
         } else {
           this.Images_REF_Disable.nativeElement.style.display = 'block';
@@ -175,7 +177,7 @@ export class HomeComponent implements OnInit {
         console.log('c bj');
         break;
       default:
-        console.log('x action:', action);
+        console.log('z action:', action);
         break;
     }
   }
