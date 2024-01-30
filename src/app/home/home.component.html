@@ -24,14 +24,14 @@
   <!--<div class="center-text">{{ 'ADVANCED.SETTING' | translate }}</div>-->
   <div class="container.setting">
     <label class="switch">
-      <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
-      <div [ngClass]="{'slider': !Mode_State}"  style="color: white;">按文件夹安装</div>  
-      <div [ngClass]="{'slider-before': Mode_State}"  style="color: white;">按地图安装</div>  
+      <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
+      <span class="slider" style="color: white;">按文件夹安装</span>
+      <span class="slider-before" style="color: white;">按地图安装</span>
       <!--<div class="slider" [ngClass]="{'display-none': !Mode_State}" style="color: white;">{{ 'INSTALL.ON.MAP' | translate }}</div>-->
       <!-- <div class="slider-before" [ngClass]="{'display-none': Mode_State}" style="color: white;">{{ 'INSTALL.ON.FOLDER' | translate }}</div>-->
     </label>
     <label class="checkboxbj">
-      <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event)">
+      <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event, 'BJ')">
       <label for="BJSwitch">安装控制台(B.J)</label>
       <!--<label for="BJSwitch">{{ 'INCLUDE.COMMANDER' | translate }}</label>-->
     </label>
