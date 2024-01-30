@@ -12,31 +12,23 @@ import { ElectronService } from '../core/services/electron/electron.service';
 })
 export class HomeComponent implements OnInit {
   
-  @ViewChild('ImagesROCEnable') Images_ROC_Enable: ElementRef;
-  @ViewChild('ImagesROCDisable') Images_ROC_Disable: ElementRef;
+
   @ViewChild('imageROC') image_Container_ROC: ElementRef;
-  @ViewChild('ImagesTFTEnable') Images_TFT_Enable: ElementRef;
-  @ViewChild('ImagesTFTDisable') Images_TFT_Disable: ElementRef;
   @ViewChild('imageTFT') image_Container_TFT: ElementRef;
-  @ViewChild('ImagesREFEnable') Images_REF_Enable: ElementRef;
-  @ViewChild('ImagesREFDisable') Images_REF_Disable: ElementRef;
   @ViewChild('imageREF') image_Container_REF: ElementRef;
   // @ViewChild('ModeSwitch') Mode_Switch_State: ElementRef;
   // @ViewChild('BJSwitch') BJ_Switch_State: ElementRef;
-  ROCShown: boolean = false; 
-  TFTShown: boolean = false; 
-  REFShown: boolean = false; 
+  Images_ROC_Shown: boolean = false; 
+  Images_TFT_Shown: boolean = false; 
+  Images_REF_Shown: boolean = false; 
+  ROCInstall: boolean = false; 
+  TFTInstall: boolean = false; 
+  REFInstall: boolean = false; 
   Mode_State: boolean = true;
   BJ_State: boolean = true;
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
-    this.Images_ROC_Disable.nativeElement.style.display = 'block';
-    this.Images_ROC_Enable.nativeElement.style.display = 'none';
-    this.Images_TFT_Disable.nativeElement.style.display = 'block';
-    this.Images_TFT_Enable.nativeElement.style.display = 'none';
-    this.Images_REF_Disable.nativeElement.style.display = 'block';
-    this.Images_REF_Enable.nativeElement.style.display = 'none';
   }
 
   // 鼠标移入事件处理函数
@@ -47,23 +39,26 @@ export class HomeComponent implements OnInit {
     const element = event.target as HTMLElement;
     console.log('0 :', element);
     if (element.id === 'imageROC') {
-        if (!this.ROCShown) {  
-          this.Images_ROC_Disable.nativeElement.style.display = 'none';
-          this.Images_ROC_Enable.nativeElement.style.display = 'block';
+        if (!this.ROCInstall) {  
+          //this.Images_ROC_Disable.nativeElement.style.display = 'none';
+          //this.Images_ROC_Enable.nativeElement.style.display = 'block';
+          this.Images_ROC_Shown = ture;
           console.log('in roc');
         }
     }
     if (element.id === 'imageTFT') {
-        if (!this.TFTShown) {  
-          this.Images_TFT_Disable.nativeElement.style.display = 'none';
-          this.Images_TFT_Enable.nativeElement.style.display = 'block';
+        if (!this.TFTInstall) {  
+          //this.Images_TFT_Disable.nativeElement.style.display = 'none';
+          //this.Images_TFT_Enable.nativeElement.style.display = 'block';
+          this.Images_TFT_Shown = ture;
           console.log('in tft');
         }
     }
     if (element.id === 'imageREF') {
-        if (!this.REFShown) {  
-          this.Images_REF_Disable.nativeElement.style.display = 'none';
-          this.Images_REF_Enable.nativeElement.style.display = 'block';
+        if (!this.REFInstall) {  
+          //this.Images_REF_Disable.nativeElement.style.display = 'none';
+          //this.Images_REF_Enable.nativeElement.style.display = 'block';
+          this.Images_REF_Shown = ture;
           console.log('in ref');
         }
     }
@@ -76,23 +71,26 @@ export class HomeComponent implements OnInit {
             console.log('1 action:', action);
     switch (action) {
       case 'ROCEVENT':
-        if (!this.ROCShown) {  
-          this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          this.Images_ROC_Enable.nativeElement.style.display = 'none';
+        if (!this.ROCInstall) {  
+          //this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          //this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          this.Images_ROC_Shown = false;
           console.log('out roc');
         }
         break;
       case 'TFTEVENT':
-        if (!this.TFTShown) {  
-          this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          this.Images_TFT_Enable.nativeElement.style.display = 'none';
+        if (!this.TFTInstall) {  
+          //this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          //this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          this.Images_TFT_Shown = false;
           console.log('out tft');
         }
         break;
       case 'REFEVENT':
-        if (!this.REFShown) {  
-          this.Images_REF_Disable.nativeElement.style.display = 'block';
-          this.Images_REF_Enable.nativeElement.style.display = 'none';
+        if (!this.REFInstall) {  
+          //this.Images_REF_Disable.nativeElement.style.display = 'block';
+          //this.Images_REF_Enable.nativeElement.style.display = 'none';
+          this.Images_REF_Shown = false;
           console.log('out ref');
         }
         break;
@@ -109,61 +107,73 @@ export class HomeComponent implements OnInit {
             console.log('2 action:', action);
     switch (action) {
       case 'ROCEVENT':
-        if (!this.ROCShown) {  
+        if (!this.ROCInstall) {  
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          this.Images_ROC_Disable.nativeElement.style.display = 'none';
-          this.Images_ROC_Enable.nativeElement.style.display = 'block';
-          this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          this.Images_TFT_Enable.nativeElement.style.display = 'none';
-          this.Images_REF_Disable.nativeElement.style.display = 'block';
-          this.Images_REF_Enable.nativeElement.style.display = 'none';
+          // this.Images_ROC_Disable.nativeElement.style.display = 'none';
+          // this.Images_ROC_Enable.nativeElement.style.display = 'block';
+          // this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          // this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          // this.Images_REF_Disable.nativeElement.style.display = 'block';
+          // this.Images_REF_Enable.nativeElement.style.display = 'none';
+          this.Images_ROC_Shown = true;
+          this.Images_TFT_Shown = false;
+          this.Images_REF_Shown = false;
           this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
           console.log('c roc');
         } else {
-          this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          // this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          // this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          this.Images_ROC_Shown = false;
           console.log('c roc-at');
         }
-        this.ROCShown = !this.ROCShown;
+        this.ROCInstall = !this.ROCInstall;
         break;
       case 'TFTEVENT':
-        if (!this.TFTShown) {  
+        if (!this.TFTInstall) {  
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          this.Images_ROC_Enable.nativeElement.style.display = 'none';
-          this.Images_TFT_Disable.nativeElement.style.display = 'none';
-          this.Images_TFT_Enable.nativeElement.style.display = 'block';
-          this.Images_REF_Disable.nativeElement.style.display = 'block';
-          this.Images_REF_Enable.nativeElement.style.display = 'none';
+          // this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          // this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          // this.Images_TFT_Disable.nativeElement.style.display = 'none';
+          // this.Images_TFT_Enable.nativeElement.style.display = 'block';
+          // this.Images_REF_Disable.nativeElement.style.display = 'block';
+          // this.Images_REF_Enable.nativeElement.style.display = 'none';
+          this.Images_ROC_Shown = false;
+          this.Images_TFT_Shown = true;
+          this.Images_REF_Shown = false;
           this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
           console.log('c tft');
         } else {
-          this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          // this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          // this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          this.Images_TFT_Shown = false;
           console.log('c tft-at');
         }
-        this.TFTShown = !this.TFTShown;
+        this.TFTInstall = !this.TFTInstall;
         break;
       case 'REFEVENT':
-        if (!this.REFShown) {  
+        if (!this.REFInstall) {  
           let modeState = this.Mode_State ? '-folder' : '-map';
           let bjState = this.BJ_State ? '' : '-noc';
-          this.Images_ROC_Disable.nativeElement.style.display = 'block';
-          this.Images_ROC_Enable.nativeElement.style.display = 'none';
-          this.Images_TFT_Disable.nativeElement.style.display = 'block';
-          this.Images_TFT_Enable.nativeElement.style.display = 'none';
-          this.Images_REF_Disable.nativeElement.style.display = 'none';
-          this.Images_REF_Enable.nativeElement.style.display = 'block';
+          // this.Images_ROC_Disable.nativeElement.style.display = 'block';
+          // this.Images_ROC_Enable.nativeElement.style.display = 'none';
+          // this.Images_TFT_Disable.nativeElement.style.display = 'block';
+          // this.Images_TFT_Enable.nativeElement.style.display = 'none';
+          // this.Images_REF_Disable.nativeElement.style.display = 'none';
+          // this.Images_REF_Enable.nativeElement.style.display = 'block';
+          this.Images_ROC_Shown = false;
+          this.Images_TFT_Shown = false;
+          this.Images_REF_Shown = true;
           this.electronService.ipcRenderer.send('install${modeState}${bjState}ver');
           console.log('c ref');
         } else {
-          this.Images_REF_Disable.nativeElement.style.display = 'block';
-          this.Images_REF_Enable.nativeElement.style.display = 'none';
+          // this.Images_REF_Disable.nativeElement.style.display = 'block';
+          // this.Images_REF_Enable.nativeElement.style.display = 'none';
+          this.Images_REF_Shown = false;
           console.log('c ref-at');
         }
-        this.REFShown = !this.REFShown;
+        this.REFInstall = !this.REFInstall;
         break;
       case 'Mode':
         this.Mode_State = !this.Mode_State; 
