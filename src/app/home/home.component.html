@@ -3,7 +3,7 @@
     {{ 'PAGES.HOME.TITLE' | translate }}
     </h1> -->
   <div class="center-heading">--游戏版本设置--</div>  
-  <!--     {{ 'CHOOSE.GAME.VERSION' | translate }} -->
+  <!--<div class="center-heading">{{ 'CHOOSE.GAME.VERSION' | translate }}</div>-->
 
   <div class="image-row">
     <div id="imageROC" class="imageContainerROC" #imageROC data-action="ROCEVENT" (mouseover)="onMouseEnter($event)" (mouseout)="onMouseLeave($event)" (click)="onClick($event)">
@@ -21,18 +21,20 @@
   </div>
 
   <div class="center-text">--高级设置--</div>
-  <!--     {{ 'ADVANCED.SETTING' | translate }} -->
+  <!--<div class="center-text">{{ 'ADVANCED.SETTING' | translate }}</div>-->
   <div class="container.setting">
     <label class="switch">
-      <input type="checkbox" [(ngModel)]="Mode_State" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
-      <span class="slider" [innerText]="Mode_State ? '按文件夹安装' : '按地图安装'"></span>
-      <!--     {{ 'INSTALL.ON.MAP' | translate }} -->
-      <!--     {{ 'INSTALL.ON.FOLDER' | translate }} -->
+  </div>  
+      <input type="checkbox" [ngClass]="{'checked-state': Mode_State" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event)">
+      <div class="slider">按文件夹安装</div>  
+      <div class="slider-before">按地图安装</div>  
+      <!--<div class="slider">{{ 'INSTALL.ON.MAP' | translate }}</div>-->
+      <!-- <div class="slider-before">{{ 'INSTALL.ON.FOLDER' | translate }}</div>-->
     </label>
     <label class="checkboxbj">
       <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event)">
       <label for="BJSwitch">安装控制台(B.J)</label>
-      <!--     {{ 'INCLUDE.COMMANDER' | translate }} -->
+      <!--<label for="BJSwitch">{{ 'INCLUDE.COMMANDER' | translate }}</label>-->
     </label>
   </div>
 
