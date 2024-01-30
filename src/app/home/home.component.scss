@@ -1,3 +1,144 @@
 :host {
 
+
+    :root {
+      --switch-width: 300px; /* 最大宽度 */
+    }
+
+    .center-container {
+      text-align: center;  
+      justify-content: center;
+      align-items: center;
+      margin: auto;  
+      max-width: 100%;
+    }
+
+    .center-heading {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      margin-top: 4rem;
+    }
+
+    .center-text {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 6rem;
+    }
+
+    /* 当屏幕宽度小于等于800px时，减小字体大小 */
+    @media (max-width: 800px) {
+      .center-heading, .center-text {
+        font-size: 1rem;
+      }
+    }
+
+    /* 当屏幕宽度大于800px时，增大字体大小 */
+    @media (min-width: 801px) {
+      .center-heading, .center-text {
+        font-size: 3remx;
+      }
+    }
+
+    .image-row {
+      display: flex;
+      text-align: center;  
+      justify-content: center;
+      align-items: center;
+      max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
+      width: 100%;
+      gap: 10px;
+      margin-top: 2rem;
+    }
+
+    .imageContainerROC,
+    .imageContainerTFT,
+    .imageContainerREF {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 512px;
+      width: 50%;
+      height: auto;
+    }
+
+    /* 当屏幕宽度小于或等于1600px时，图片容器将占据100%宽度 */
+    @media (max-width: 1600px) {
+      .image-row img {
+        width: 100%;
+      }  
+    }
+
+    .container.setting {
+      display: flex;
+      justify-content: space-between; /* 平均分配空间 */
+      align-items: center;
+      gap: 10px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      top: 30px;
+      max-width: var(--switch-width);
+      width: 50%; 
+      height: 32px;
+      border: 3px solid #5c5c5c; /* 添加边框 */
+      box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
+      border-radius: 26px;
+    }
+    .checkboxbj {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      top: 30px;
+      padding-left: 120px;
+      font-size: 1rem;
+      line-height: 3; 
+      transform: scale(1.5);
+    }
+
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #3dc874;
+      border-radius: 26px;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    .slider:before {
+      position: absolute;
+      display: flex; /* 将其转换为弹性布局容器 */
+      align-items: center;
+      justify-content: center;
+      content: "按文件夹安装";
+      white-space: nowrap;
+      left: 1px;
+      height: 100%;
+      width: 50%;
+      background-color: #ffffff;
+      border-radius: 26px;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: rgb(33, 4, 251);
+    }
+
+    input:checked + .slider:before {
+      content: "按地图安装";
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+       transform: translateX(100%);
+       margin-left: -3px;
+    }
+
+
 }
