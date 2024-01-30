@@ -33,8 +33,7 @@ export class HomeComponent implements OnInit {
 
   // 鼠标移入事件处理函数
   // @HostListener('mouseover', ['$event'])
-
-  onMouseEnter(event: MouseEvent) {
+  onMouseEnter(event: any): void {
     // const action = (event.target as HTMLElement).dataset.action;
     const element = event.target as HTMLElement;
     console.log('0 :', element);
@@ -66,7 +65,7 @@ export class HomeComponent implements OnInit {
 
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event'])
-  onMouseLeave(event: MouseEvent) {
+  onMouseLeave(event: any): void {
     const action = (event.target as HTMLElement).dataset.action;
             console.log('1 action:', action);
     switch (action) {
@@ -102,7 +101,7 @@ export class HomeComponent implements OnInit {
 
   // 点击事件处理函数
   @HostListener('click', ['$event'])
-  onClick(event: MouseEvent) {
+  onClick(event: any): void {
     const action = (event.target as HTMLElement).dataset.action;
             console.log('2 action:', action);
     switch (action) {
