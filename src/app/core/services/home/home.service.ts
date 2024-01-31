@@ -5,7 +5,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class HomeService {
   private enableHomeInteractive = true;
-  private changeEnabledHomeStateEmitter = new EventEmitter<boolean>();
+  public  changeEnabledHomeStateEmitter = new EventEmitter<boolean>();
 
   constructor() {}
 
