@@ -23,6 +23,20 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
+    this.homeService.enabledHomeState$.subscribe(enabled => {
+    this.isInteractive = !enabled; });
+    const isInteractive = ...;
+    this.homeService.changeEnabledHomeState(isInteractive);
+      if (!isInteractive) {
+         Images_ROC_Shown: boolean = false; 
+         Images_TFT_Shown: boolean = false; 
+         Images_REF_Shown: boolean = false; 
+         ROCInstall: boolean = false; 
+         TFTInstall: boolean = false; 
+         REFInstall: boolean = false; 
+         Mode_State: boolean = true;
+         BJ_State: boolean = true;
+      }
   }
 
   // 鼠标移入事件处理函数
@@ -135,9 +149,6 @@ export class HomeComponent implements OnInit {
         break;
     }
   }
-
-  // 安装判断，设置交互
-  @HostBinding('disabled') isInteractive = this.homeService.changeEnabledHomeState(state);
 
   
   constructor(
