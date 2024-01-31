@@ -4,14 +4,12 @@ import { Injectable } from '@angular/core';
 })
 
 export class HomeService {
-  private enableHomeState = new BehaviorSubject<boolean>(false);
+  private enableHomeState = true;
 
   constructor() { }
   public changeEnabledHomeState(state: boolean) {
-    this.enableHomeState.next(state);
+    this.enableHomeState = state;
+    return this.enableHomeState;
   }
 
-  get isInteractive() {
-    return this.enableHomeState.asObservable();
-  }
 }
