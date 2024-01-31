@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
-import { ElectronService } from '../electron/electron.service';
+import { Injectable, EventEmitter } from '@angular/core';
+
 @Injectable({
   providedIn: 'root'
 })
-
 export class HomeService {
-  private enableHomeState = true;
+  private enableHomeInteractive = true;
+  private changeEnabledHomeStateEmitter = new EventEmitter<boolean>();
 
-  constructor(
-    private electronService: ElectronService
-  ) { }
-  public changeEnabledHomeState(state: boolean) {
-    this.enableHomeState = state;
-    return this.enableHomeState;
+  constructor() {}
+
+  changeEnabledHomeState(state: boolean) {
+    this.enableHomeInteractive = state;
+    this.changeEnabledHomeStateEmitter.emit(state);
   }
 
+  get enableHomeState(): boolean {
+    return this.enableHomeInteractive;
+  }
 }
