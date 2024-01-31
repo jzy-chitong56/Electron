@@ -24,26 +24,23 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
+    this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {  
+      this.isInteractive = enabled;  
+      console.log('in set');
+      if (this.isInteractive) {
+        this.Images_ROC_Shown = false; 
+        this.Images_TFT_Shown = false; 
+        this.Images_REF_Shown = false; 
+        this.ROCInstall = false; 
+        this.TFTInstall = false; 
+        this.REFInstall = false; 
+        this.Mode_State = true;
+        this.BJ_State = true;
+      }
+    });  
   }
 
-  public changeEnabledHomeState(state: boolean) {
-    console.log('00');
-    if(this.electronService.isElectron) {
-      this.isInteractive = state;
-      console.log('in set');
-    }
-    if (this.isInteractive) {
-      this.Images_ROC_Shown = false; 
-      this.Images_TFT_Shown = false; 
-      this.Images_REF_Shown = false; 
-      this.ROCInstall = false; 
-      this.TFTInstall = false; 
-      this.REFInstall = false; 
-      this.Mode_State = true;
-      this.BJ_State = true;
-    }
-  }
-  
+
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
