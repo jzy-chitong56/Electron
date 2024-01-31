@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
+import { HomeService } from '../core/services/home/home.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -138,6 +139,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private electronService: ElectronService,
+    private homeService: HomeService,
   ) { }
 
 
