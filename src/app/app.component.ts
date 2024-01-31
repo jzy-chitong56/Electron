@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ElectronService , MenuService } from './core/services';
-import { HomeService } from './core/services';
+import { ElectronService , MenuService , HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
