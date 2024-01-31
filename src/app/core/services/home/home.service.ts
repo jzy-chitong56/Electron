@@ -7,7 +7,6 @@ export class HomeService {
   constructor() { }
   
 
-  public changeEnabledHomeState(state: boolean) {
-      this.isInteractive = state;
+  public template: any = {
   }
 }
