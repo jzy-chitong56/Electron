@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ElectronService } from '../electron/electron.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +8,6 @@ export class HomeService {
   
 
   public changeEnabledHomeState(state: boolean) {
-    if(this.electronService.isElectron) { 
       this.isInteractive = state;
-    }
   }
 }
