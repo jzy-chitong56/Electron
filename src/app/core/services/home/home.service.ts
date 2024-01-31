@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-@Injectable({
-  providedIn: 'root'
-})
+// import { Injectable } from '@angular/core';
+// @Injectable({
+//   providedIn: 'root'
+// })
 
 export class HomeService {
   private _disableHomeState = false;
