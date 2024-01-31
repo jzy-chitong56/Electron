@@ -5,7 +5,7 @@ import { HomeService } from '../core/services/home/home.service';
 @Injectable({
   providedIn: 'root'
 })
- 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
