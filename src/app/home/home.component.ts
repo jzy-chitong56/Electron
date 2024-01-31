@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService } from '../core/services/electron/electron.service';
-import { HomeService } from '../core/services/home/home.service';
+import { ElectronService , HomeService } from '../core/services';
+// import { ElectronService } from '../core/services/electron/electron.service';
+// import { HomeService } from '../core/services/home/home.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,19 +25,17 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
-    this.homeService.enabledHomeState$.subscribe(enabled => {
-      this.isInteractive = enabled;
-      if (this.isInteractive) {
-        this.Images_ROC_Shown = false; 
-        this.Images_TFT_Shown = false; 
-        this.Images_REF_Shown = false; 
-        this.ROCInstall = false; 
-        this.TFTInstall = false; 
-        this.REFInstall = false; 
-        this.Mode_State = true;
-        this.BJ_State = true;
-      }
-    });
+    this.isInteractive = this.homeService.changeEnabledHomeState(true);
+    if (this.isInteractive) {
+      this.Images_ROC_Shown = false; 
+      this.Images_TFT_Shown = false; 
+      this.Images_REF_Shown = false; 
+      this.ROCInstall = false; 
+      this.TFTInstall = false; 
+      this.REFInstall = false; 
+      this.Mode_State = true;
+      this.BJ_State = true;
+    }
   }
 
   // 鼠标移入事件处理函数
