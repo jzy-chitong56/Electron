@@ -24,8 +24,12 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
+  }
+
+  public changeEnabledHomeState(state: boolean) {
     if(this.electronService.isElectron) {
-      this.isInteractive = this.homeService.changeEnabledHomeState(true);
+      this.isInteractive = state;
+      console.log('in set');
     }
     if (this.isInteractive) {
       this.Images_ROC_Shown = false; 
@@ -38,7 +42,7 @@ export class HomeComponent implements OnInit {
       this.BJ_State = true;
     }
   }
-
+  
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
