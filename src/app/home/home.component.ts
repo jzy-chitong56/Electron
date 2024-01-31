@@ -20,53 +20,53 @@ export class HomeComponent implements OnInit {
   REFInstall: boolean = false; 
   Mode_State: boolean = true;
   BJ_State: boolean = true;
+  isInteractive: boolean = false;
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
     this.homeService.enabledHomeState$.subscribe(enabled => {
-    this.isInteractive = !enabled; });
-    const isInteractive = ...;
-    this.homeService.changeEnabledHomeState(isInteractive);
-      if (!isInteractive) {
-         Images_ROC_Shown: boolean = false; 
-         Images_TFT_Shown: boolean = false; 
-         Images_REF_Shown: boolean = false; 
-         ROCInstall: boolean = false; 
-         TFTInstall: boolean = false; 
-         REFInstall: boolean = false; 
-         Mode_State: boolean = true;
-         BJ_State: boolean = true;
+      this.isInteractive = enabled;
+      if (this.isInteractive) {
+        this.Images_ROC_Shown = false; 
+        this.Images_TFT_Shown = false; 
+        this.Images_REF_Shown = false; 
+        this.ROCInstall = false; 
+        this.TFTInstall = false; 
+        this.REFInstall = false; 
+        this.Mode_State = true;
+        this.BJ_State = true;
       }
+    });
   }
 
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
+    if (!this.isInteractive) {
     switch (action) {
-     case 'Roc':{
+     case 'Roc':
         if (!this.ROCInstall) {
           this.Images_ROC_Shown = true;
         }
         break;
-     }
-     case 'Tft':{
+     case 'Tft':
         if (!this.TFTInstall) {
           this.Images_TFT_Shown = true;
         }
         break;
-     }
-     case 'Ref':{
+     case 'Ref':
         if (!this.REFInstall) {
           this.Images_REF_Shown = true;
         }
         break;
-     }
     }
+    };
   }
 
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
+    if (!this.isInteractive) { 
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
@@ -84,11 +84,13 @@ export class HomeComponent implements OnInit {
         }
         break;
     }
+    };
   }
 
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
+    if (!this.isInteractive) { 
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
@@ -148,6 +150,7 @@ export class HomeComponent implements OnInit {
         this.BJ_State = !this.BJ_State; 
         break;
     }
+    };
   }
 
   
