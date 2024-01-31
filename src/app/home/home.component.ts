@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   REFInstall: boolean = false; 
   Mode_State: boolean = true;
   BJ_State: boolean = true;
-  isInteractive: boolean = false;
+  isInteractive: boolean = true;
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
