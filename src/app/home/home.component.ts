@@ -136,6 +136,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // 安装判断，设置交互
+  @HostBinding('disabled') isInteractive = this.homeService.changeEnabledHomeState(state);
+
+  
   constructor(
     private router: Router,
     private electronService: ElectronService,
