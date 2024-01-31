@@ -4,9 +4,16 @@ import { Injectable } from '@angular/core';
 })
 
 export class HomeService {
-  constructor() { }
-  
+  private _enabledHomeState = false;
 
-  public template: any = {
+  constructor() { }
+
+  public get enabledHomeState(): boolean {
+    return this._enabledHomeState;
+  }
+
+  public changeEnabledHomeState(state: boolean): boolean {
+    this._enabledHomeState = state;
+    return this._enabledHomeState;
   }
 }
