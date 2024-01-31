@@ -134,9 +134,11 @@ export class HomeComponent implements OnInit {
         break;
     }
   }
+
   constructor(
     private router: Router,
     private electronService: ElectronService,
   ) { }
+
 
 }
