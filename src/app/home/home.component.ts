@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
     // console.log('HomeComponent INIT');
     this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {  
       this.isInteractive = enabled;  
-      console.log('in set');
       if (this.isInteractive) {
         this.Images_ROC_Shown = false; 
         this.Images_TFT_Shown = false; 
