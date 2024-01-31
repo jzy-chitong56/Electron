@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ElectronService, MenuService } from './core/services';
+import { ElectronService, HomeService } from './home';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
@@ -19,6 +20,7 @@ export class AppComponent {
     private electronService: ElectronService,
     private translate: TranslateService,
     private menuService: MenuService,
+    private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
     this.translate.setDefaultLang('en');
@@ -42,6 +44,9 @@ export class AppComponent {
         this
           .menuService
           .changeEnabledMenuState(false);
+        this
+          .homeService
+          .changeEnabledHomeState(false);
 
         // force update in angular view after update any variable
         // because we are in a IPC async
@@ -65,6 +70,9 @@ export class AppComponent {
         this
           .menuService
           .changeEnabledMenuState(true);
+        this
+          .homeService
+          .changeEnabledHomeState(true);
 
         this.cdr.detectChanges();
       });
@@ -83,6 +91,9 @@ export class AppComponent {
         this
           .menuService
           .changeEnabledMenuState(true);
+        this
+          .homeService
+          .changeEnabledHomeState(true);
 
         this.cdr.detectChanges();
       });
