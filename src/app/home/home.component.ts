@@ -23,10 +23,11 @@ export class HomeComponent implements OnInit {
   isInteractive: boolean = true;
   
   ngOnInit(): void {
-    console.log('HomeComponent INIT');
+    // console.log('HomeComponent INIT');
   }
 
   public changeEnabledHomeState(state: boolean) {
+    console.log('00');
     if(this.electronService.isElectron) {
       this.isInteractive = state;
       console.log('in set');
@@ -106,7 +107,6 @@ export class HomeComponent implements OnInit {
           this.Images_REF_Shown = false;
           this.TFTInstall = false;
           this.REFInstall = false;
-          console.log('roc :', message); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_ROC_Shown = false;
@@ -123,7 +123,6 @@ export class HomeComponent implements OnInit {
           this.Images_REF_Shown = false;
           this.ROCInstall = false;
           this.REFInstall = false;
-          console.log('tft :', message); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_TFT_Shown = false;
@@ -140,7 +139,6 @@ export class HomeComponent implements OnInit {
           this.Images_REF_Shown = true;
           this.ROCInstall = false;
           this.TFTInstall = false;
-          console.log('ref :', message); 
           this.electronService.ipcRenderer.send(message);
         } else {
           this.Images_REF_Shown = false;
