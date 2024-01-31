@@ -26,7 +26,7 @@
     <label class="switch">
       <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
       <span class="slider" [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" style="color: white;">按文件夹安装</span>
-      <span class="slider:before" [ngStyle]="{'display': !Mode_State ? 'block' : 'none','-webkit-transform': !Mode_State ? 'translateX(100%)' : '','-ms-transform': !Mode_State ? 'translateX(100%)' : '','transform': !Mode_State ? 'translateX(100%)' : '','margin-left': !Mode_State ? '-3px' : ''}" style="color: white;">按地图安装</span>
+      <span class="slider:before" [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}" style="color: white;">按地图安装</span>
       <!--<span class="slider" [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" style="color: white;">{{ 'INSTALL.ON.MAP' | translate }}</span>-->
       <!-- <span class="slider:before" [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}" style="color: white;">{{ 'INSTALL.ON.FOLDER' | translate }}</span>-->
     </label>
