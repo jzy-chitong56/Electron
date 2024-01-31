@@ -24,7 +24,9 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
-    this.isInteractive = this.homeService.changeEnabledHomeState(true);
+    if(this.electronService.isElectron) {
+      this.isInteractive = this.homeService.changeEnabledHomeState(true);
+    }
     if (this.isInteractive) {
       this.Images_ROC_Shown = false; 
       this.Images_TFT_Shown = false; 
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit {
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
-    if (!this.isInteractive) {
+    if (this.isInteractive) {
     switch (action) {
      case 'Roc':
         if (!this.ROCInstall) {
@@ -64,7 +66,7 @@ export class HomeComponent implements OnInit {
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
-    if (!this.isInteractive) { 
+    if (this.isInteractive) { 
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
@@ -88,7 +90,7 @@ export class HomeComponent implements OnInit {
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
-    if (!this.isInteractive) { 
+    if (this.isInteractive) { 
     switch (action) {
       case 'Roc':
         if (!this.ROCInstall) {
