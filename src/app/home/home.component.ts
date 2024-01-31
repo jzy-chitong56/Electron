@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ElectronService , HomeService } from '../core/services';
-// import { ElectronService } from '../core/services/electron/electron.service';
-// import { HomeService } from '../core/services/home/home.service';
+import { ElectronService } from '../core/services/electron/electron.service';
+import { HomeService } from '../core/services/home/home.service';
 @Injectable({
   providedIn: 'root'
 })
