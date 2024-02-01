@@ -24,15 +24,14 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
   ) {
     const { app } = electron;
-    app.getLocale().then((systemLang) => {
-      const lang = systemLang.split('-')[0];
-      console.log('Lang', lang);
-      if (this.translate.getLangs().includes(lang)) {
-        this.translate.setDefaultLang(lang);
-      } else {
-        this.translate.setDefaultLang('en');
-      }
-    });
+    const systemLang = app.getLocale();
+    const lang = systemLang.split('-')[0];
+    console.log('Lang', systemLang, lang);
+    if (this.translate.getLangs().includes(lang)) {
+      this.translate.setDefaultLang(lang);
+    } else {
+      this.translate.setDefaultLang('en');
+    }
 
     console.log('APP_CONFIG', APP_CONFIG);
 
