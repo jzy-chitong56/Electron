@@ -1,7 +1,4 @@
 <div class="center-container">
- <!--   <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-    </h1> -->
   <div class="center-heading">--游戏版本设置--</div>  
   <!--<div class="center-heading">{{ 'CHOOSE.GAME.VERSION' | translate }}</div>-->
 
@@ -26,10 +23,10 @@
     <label class="switch">
       <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
       <div class="slider">
-        <span [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" s>按地图安装</span>
-        <span [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}">按文件夹安装</span>
-        <!-- <span [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" s>{{ 'INSTALL.ON.FOLDER' | translate }}</span>
-        <span [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}">{{ 'INSTALL.ON.MAP' | translate }}</span> -->
+        <span>按地图安装</span>
+        <span>按文件夹安装</span>
+        <!-- <span>{{ 'INSTALL.ON.FOLDER' | translate }}</span>
+        <span>{{ 'INSTALL.ON.MAP' | translate }}</span> -->
       </div>
     </label>
     <label class="checkboxbj">
