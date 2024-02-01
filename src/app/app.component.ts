@@ -3,7 +3,7 @@ import { ElectronService , MenuService , HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
-import * as os from 'os';
+import * as electron from 'electron';
 
 @Component({
   selector: 'app-root',
@@ -23,14 +23,17 @@ export class AppComponent {
     private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
-    const systemLang = os.locale();
-    const lang = systemLang.split('-')[0];
-    console.log(systemLang , lang);
-    if (this.translate.getLangs().includes(lang)) {
-      this.translate.setDefaultLang(lang);
-    } else {
-      this.translate.setDefaultLang('en');
-    }
+    const { app } = electron;
+    app.getLocale().then((systemLang) => {
+      const lang = systemLang.split('-')[0];
+      console.log('Lang', lang);
+      if (this.translate.getLangs().includes(lang)) {
+        this.translate.setDefaultLang(lang);
+      } else {
+        this.translate.setDefaultLang('en');
+      }
+    });
+
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
