@@ -24,7 +24,7 @@ export class AppComponent {
   ) {
     const systemLang = os.locale();
     const lang = systemLang.split('-')[0];
-    console.log(SysLang: systemLang -- lang);
+    console.log(systemLang , lang);
     if (this.translate.getLangs().includes(lang)) {
       this.translate.setDefaultLang(lang);
     } else {
