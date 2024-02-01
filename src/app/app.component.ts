@@ -3,6 +3,7 @@ import { ElectronService , MenuService , HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
+import * as os from 'os';
 
 @Component({
   selector: 'app-root',
