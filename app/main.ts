@@ -31,6 +31,8 @@ const createWindow = (): BrowserWindow => {
     width: size.width,
     height: size.height,
     webPreferences: {
+      minimumWidth: 1280,  
+      minimumHeight: 768,  
       devTools: true,
       nodeIntegration: true,
       allowRunningInsecureContent: (serve),
