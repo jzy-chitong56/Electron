@@ -30,9 +30,9 @@ const createWindow = (): BrowserWindow => {
     y: 0,
     width: size.width,
     height: size.height,
+    minWidth: 1280,  
+    minHeight: 768,  
     webPreferences: {
-      minimumWidth: 1280,  
-      minimumHeight: 768,  
       devTools: true,
       nodeIntegration: true,
       allowRunningInsecureContent: (serve),
@@ -79,11 +79,13 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
     title : isMap ? "选择地图": "选择地图目录",
+    // title : isMap ? "{{ 'PAGES.APP.OPEN_MAP' | translate }}": "{{ 'PAGES.APP.OPEN_DIRECTORY' | translate }}",
     // TODO: Change to let multiples selections when is map
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
       { name: '地图文件', extensions: ['w3x', 'w3m'] },
+      // { name: '{{ 'PAGES.APP.MAP_FILE' | translate }}', extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
