@@ -3,7 +3,7 @@ import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
-import { SetLanguage } from 'electron'; 
+import { GetLanguage } from 'electron'; 
 
 @Component({
   selector: 'app-root',
@@ -23,15 +23,28 @@ export class AppComponent {
     private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
-    const systemLang = SetLanguage.getLocale();
-    const lang = systemLang.split('-')[0];
-    console.log('Lang', systemLang, lang);
-    if (this.translate.getLangs().includes(lang)) {
-      this.translate.setDefaultLang(lang);
-    } else {
-      this.translate.setDefaultLang('en');
-    }
+    GetLanguage.whenReady().then(async () => {
+      const defaultLanguage = getSystemDefaultLanguage();
+      console.log("lang:", defaultLanguage);
+      if (isSupportedLanguage(await defaultLanguage)) {
+        setDefaultLanguage(await defaultLanguage);
+      } else {
+        setDefaultLanguage('en');
+      }
+    });
 
+    async function getSystemDefaultLanguage() {  
+      return GetLanguage.getLocale();  
+    }
+    async function setDefaultLanguage(language: string) {  
+      this.translate.setDefaultLang(language);  
+    }
+  
+    function isSupportedLanguage(language: string): boolean {
+      const supportedLanguages = ['en', 'zh']; 
+      return supportedLanguages.includes(language);
+    }
+    
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
