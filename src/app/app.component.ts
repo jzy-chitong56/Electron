@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ElectronService , MenuService , HomeService } from './core/services';
-//import { HomeService } from '../core/services/home/home.service';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
@@ -34,12 +33,13 @@ export class AppComponent {
         console.log('args', args)
         // TODO: use i18n to translate
         this.title = `正在安装： ${args.response}`;
+        // this.title = `{{ 'INSTALLING' | translate }}： ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        !args.isMap && this.messages && this.messages.push(`Installing in directory: ${args.response}`);
-
+        !args.isMap && this.messages && this.messages.push(`安装文件夹: ${args.response}`);
+        // !args.isMap && this.messages && this.messages.push(`{{ 'INSTALLINGTOFOLER' | translate }}: ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -65,6 +65,7 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
         this.title = '安装完成...';
+        // this.title = '{{ 'INSTALLINGDONE' | translate }}...';
         this.couldClose = true;
 
         this
