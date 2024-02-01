@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ElectronService , MenuService , HomeService } from './core/services';
+import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
@@ -23,16 +23,14 @@ export class AppComponent {
     private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
-    SetLanguage.on('ready', () => {
-      const systemLang = SetLanguage.getLocale();
-      const lang = systemLang.split('-')[0];
-      console.log('Lang', systemLang, lang);
-      if (this.translate.getLangs().includes(lang)) {
-        this.translate.setDefaultLang(lang);
-      } else {
-        this.translate.setDefaultLang('en');
-      }
-    });
+    const systemLang = SetLanguage.getLocale();
+    const lang = systemLang.split('-')[0];
+    console.log('Lang', systemLang, lang);
+    if (this.translate.getLangs().includes(lang)) {
+      this.translate.setDefaultLang(lang);
+    } else {
+      this.translate.setDefaultLang('en');
+    }
 
     console.log('APP_CONFIG', APP_CONFIG);
 
