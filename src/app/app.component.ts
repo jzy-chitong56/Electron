@@ -22,7 +22,14 @@ export class AppComponent {
     private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
-    this.translate.setDefaultLang('en');
+    const systemLang = os.locale();
+    const lang = systemLang.split('-')[0];
+    console.log(SysLang: systemLang -- lang);
+    if (this.translate.getLangs().includes(lang)) {
+      this.translate.setDefaultLang(lang);
+    } else {
+      this.translate.setDefaultLang('en');
+    }
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
