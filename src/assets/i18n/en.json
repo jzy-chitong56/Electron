@@ -23,7 +23,7 @@
         "INSTALLING_DONE": "Installation finished...",
         "OPEN_MAP": "Open WC3 Map File",
         "OPEN_DIRECTORY": "Open AMAI Maps Directory",
-        "MAP_FILE": "WC3 Map File",
+        "MAP_FILE": "WC3 Map File"
       },
       "Install.JS": {
         "ERROR_FIND_FAIL": "ERROR: Cannot find",
