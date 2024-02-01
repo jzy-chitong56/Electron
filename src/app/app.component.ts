@@ -3,7 +3,7 @@ import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
-import { GetLanguage } from 'electron'; 
+import { app } from 'electron'; 
 
 @Component({
   selector: 'app-root',
@@ -23,7 +23,7 @@ export class AppComponent {
     private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
-    GetLanguage.whenReady().then(async () => {
+    app.whenReady().then(async () => {
       const defaultLanguage = getSystemDefaultLanguage();
       console.log("lang:", defaultLanguage);
       if (isSupportedLanguage(await defaultLanguage)) {
@@ -34,7 +34,7 @@ export class AppComponent {
     });
 
     async function getSystemDefaultLanguage() {  
-      return GetLanguage.getLocale();  
+      return app.getLocale();  
     }
     async function setDefaultLanguage(language: string) {  
       this.translate.setDefaultLang(language);  
