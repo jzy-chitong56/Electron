@@ -107,10 +107,17 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #3dc874;
+      background-color: #36b61a;
       border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
+
+      color: rgba(255, 255, 255, 0.997);
+      font-size: 16px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
     }
     .slider:before {
       position: absolute;
