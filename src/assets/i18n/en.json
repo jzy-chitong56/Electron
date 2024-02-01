@@ -1,6 +1,6 @@
 {
   "PAGES": {
-      "HOME": {"
+      "HOME": {
           "TITLE": "AMAI Installer. Use toolbar menu to select an option",
           "GO_TO_DETAIL": "Go to Detail",
           "CHOOSE_GAME_VERSION": "Choose Game Version",
@@ -12,16 +12,16 @@
       "DETAIL": {
         "TITLE": "Detail page !",
         "BACK_TO_HOME": "Back to Home"
-      }
+      },
       "INDEX": {
         "TITLE": "AMAI Manager",
         "LOAD": "Loading..."
-      }
+      },
       "APP": {
         "INSTALLING": "Installing into",
         "INSTALLING_TO_FOLER": "Installing in directory:",
         "INSTALLING_DONE": "Installation finished..."
-      }
+      },
       "Install.JS": {
         "ERROR_FIND_FAIL": "ERROR: Cannot find",
         "INSTALLING": "Installing",
@@ -31,7 +31,7 @@
         "WRITE_FAIL": "does not have write permissions so unable to install",
         "UAC_RESIZE": "Failed to run mpqeditor htsize, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
         "RESIZE_MAP": "Resize map hashtable size",
-        "UAC_AI": " Failed to add ai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+        "UAC_AI": "Failed to add ai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
         "UNKOWN_AI": "Possibly failed to add ai scripts, Unknown error occurred:",
         "ADD_AI": "Add ai scripts",
         "UAC_BJ": "Failed to add blizzard.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
@@ -42,6 +42,5 @@
         "ADD_FLUSH": "Optimize map MPQ",
         "INSTALLING_FAIL": "Install failed with error:"
       }
-    
   }
 }
