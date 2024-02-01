@@ -25,10 +25,12 @@
   <div class="container.setting">
     <label class="switch">
       <input type="checkbox" id="ModeSwitch" class="hidden-checkbox" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
-      <span class="slider" [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" style="color: white;">按文件夹安装</span>
-      <span class="slider:before" [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}" style="color: white;">按地图安装</span>
-      <!--<span class="slider" [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" style="color: white;">{{ 'INSTALL.ON.MAP' | translate }}</span>-->
-      <!-- <span class="slider:before" [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}" style="color: white;">{{ 'INSTALL.ON.FOLDER' | translate }}</span>-->
+      <div class="slider">
+        <span [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" s>按地图安装</span>
+        <span [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}">按文件夹安装</span>
+        <!-- <span [ngStyle]="{'display': Mode_State ? 'block' : 'none'}" s>{{ 'INSTALL.ON.FOLDER' | translate }}</span>
+        <span [ngStyle]="{'display': !Mode_State ? 'block' : 'none'}">{{ 'INSTALL.ON.MAP' | translate }}</span> -->
+      </div>
     </label>
     <label class="checkboxbj">
       <input type="checkbox" id="BJSwitch" checked #BJSwitch data-action="BJ" (click)="onClick($event, 'BJ')">
