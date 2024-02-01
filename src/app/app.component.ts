@@ -33,13 +33,13 @@ export class AppComponent {
         console.log('args', args)
         // TODO: use i18n to translate
         this.title = `正在安装： ${args.response}`;
-        // this.title = `{{ 'INSTALLING' | translate }} ${args.response}`;
+        // this.title = `{{ 'PAGES.APP.INSTALLING' | translate }} ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
         !args.isMap && this.messages && this.messages.push(`安装文件夹: ${args.response}`);
-        // !args.isMap && this.messages && this.messages.push(`{{ 'INSTALLING_TO_FOLER' | translate }} ${args.response}`);
+        // !args.isMap && this.messages && this.messages.push(`{{ 'PAGES.APP.INSTALLING_TO_FOLER' | translate }} ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -65,7 +65,7 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
         this.title = '安装完成...';
-        // this.title = '{{ 'INSTALLING_DONE' | translate }}';
+        // this.title = '{{ 'PAGES.APP.INSTALLING_DONE' | translate }}';
         this.couldClose = true;
 
         this
