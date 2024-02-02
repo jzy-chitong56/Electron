@@ -23,7 +23,7 @@
         "INSTALLING_DONE": "安装完成...",
         "OPEN_MAP": "选择地图",
         "OPEN_DIRECTORY": "选择地图目录",
-        "MAP_FILE": "地图文件"
+        "MAP_FILE": "'地图文件'"
       },
       "Install.JS": {
         "ERROR_FIND_FAIL": "错误：找不到文件",
