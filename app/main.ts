@@ -23,10 +23,6 @@ const isDev = () => {
   return require.main.filename.indexOf('app.asar') === -1;
 }
 
-declare interface Window {
-  navigator: any;
-}
-
   const createWindow = (): BrowserWindow => {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
@@ -92,7 +88,6 @@ const installTrans = () => {
     TransmapFile = Trans;
   });
 }
-
 
 const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
