@@ -42,8 +42,8 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING').subscribe(title => {
-        this.title = `${title} ${args.response}`;});
+        this.translate.get('PAGES.APP.INSTALLING').subscribe(transtitle => {
+        this.title = `${transtitle} ${args.response}`;});
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -76,8 +76,8 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(title => {
-        this.title = `${title} ${args.response}`;});
+        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(transtitle => {
+        this.title = `${transtitle} ${args.response}`;});
         this.couldClose = true;
 
         this
