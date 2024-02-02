@@ -12,6 +12,7 @@ let win: BrowserWindow = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 let systemLanguageCode = '';
+let browserCultureLang = '';
 // needed to call remote inside app
 remote.initialize();
 
@@ -20,6 +21,10 @@ Menu.setApplicationMenu(null);
 
 const isDev = () => {
   return require.main.filename.indexOf('app.asar') === -1;
+}
+
+declare interface Window {
+  navigator: any;
 }
 
 const createWindow = (): BrowserWindow => {
@@ -242,7 +247,8 @@ const init = () => {
       setTimeout(() => {
         createWindow();
       }, 400)
-      systemLanguageCode = TranslateService.getBrowserCultureLang();
+      let systemLanguageCode : any = window.navigator.languages ? window.navigator.languages[0] : null;
+      browserCultureLang = browserCultureLang || window.navigator.language;
       win.webContents.send('system-language', systemLanguageCode);
     });
 
