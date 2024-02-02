@@ -25,12 +25,13 @@ export class AppComponent {
   ) {
 
     console.log('APP_CONFIG', APP_CONFIG);
-    // this.translate.addLangs(['en', 'zh']);
+
     const Lang = translate.getBrowserLang();
-    console.log('lang', Lang);
     if (Lang === 'en'|| Lang === 'zh') {
+      console.log('setlang', Lang);
       this.translate.setDefaultLang(Lang);
     } else {
+      console.log('lang - en', Lang);
       this.translate.setDefaultLang('en');
     }
 
