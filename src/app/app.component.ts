@@ -72,7 +72,7 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        this.title = '{{ 'PAGES.APP.INSTALLING_DONE' | translate }}';
+        this.title = "{{ 'PAGES.APP.INSTALLING_DONE' | translate }}";
         this.couldClose = true;
 
         this
