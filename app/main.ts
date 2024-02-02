@@ -3,7 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from '@electron/remote/main';
-import * as os from 'os';
 import { InstallModel } from '../commons/models';
 const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
@@ -11,8 +10,6 @@ const cp = require('child_process');
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
-let systemLanguageCode = '';
-let browserCultureLang = '';
 // needed to call remote inside app
 remote.initialize();
 
@@ -247,9 +244,6 @@ const init = () => {
       setTimeout(() => {
         createWindow();
       }, 400)
-      let systemLanguageCode : any = window.navigator.languages ? window.navigator.languages[0] : null;
-      browserCultureLang = browserCultureLang || window.navigator.language;
-      win.webContents.send('system-language', systemLanguageCode);
     });
 
 
