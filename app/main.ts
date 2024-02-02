@@ -242,7 +242,7 @@ const init = () => {
       setTimeout(() => {
         createWindow();
       }, 400)
-      systemLanguageCode = app.getLocale() || os.locale();
+      systemLanguageCode = os.getLocale();
       win.webContents.send('system-language', systemLanguageCode);
     });
 
