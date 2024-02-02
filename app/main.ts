@@ -91,9 +91,6 @@ const installTrans = () => {
   ipcMain.on('Trans_mapFile', (_event, receivedTranslations) => {
     TransmapFile = receivedTranslations;
   });
-  function translate(key: string): string {
-    return translations[key] || key; // 如果没有找到翻译，则返回原key
-  }
 }
 
 
