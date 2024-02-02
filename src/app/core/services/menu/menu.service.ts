@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from '../electron/electron.service';
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class MenuService {
   public template: any = [
     //{
@@ -127,7 +129,8 @@ export class MenuService {
   ]
 
   constructor(
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private translate: TranslateService,
     ) { }
 
   public createMenu() {
