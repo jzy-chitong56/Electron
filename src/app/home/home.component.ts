@@ -24,19 +24,18 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {  
+    this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
       this.isInteractive = enabled;  
       if (this.isInteractive) {
-        this.Images_ROC_Shown = false; 
-        this.Images_TFT_Shown = false; 
-        this.Images_REF_Shown = false; 
-        this.ROCInstall = false; 
-        this.TFTInstall = false; 
-        this.REFInstall = false; 
-        this.Mode_State = true;
-        this.BJ_State = true;
+        console.log('reset_button');
+        this.Images_ROC_Shown = false;
+        this.Images_TFT_Shown = false;
+        this.Images_REF_Shown = false;
+        this.ROCInstall = false;
+        this.TFTInstall = false;
+        this.REFInstall = false;
       }
-    });  
+    });
   }
 
 
@@ -142,16 +141,16 @@ export class HomeComponent implements OnInit {
         this.REFInstall = !this.REFInstall;
         break;
       case 'Mode':
-        this.Mode_State = !this.Mode_State; 
+        this.Mode_State = !this.Mode_State;
         break;
       case 'BJ':
-        this.BJ_State = !this.BJ_State; 
+        this.BJ_State = !this.BJ_State;
         break;
     }
     };
   }
 
-  
+
   constructor(
     private router: Router,
     private electronService: ElectronService,
