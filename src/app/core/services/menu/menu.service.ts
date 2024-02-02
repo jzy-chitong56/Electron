@@ -27,11 +27,13 @@ export class MenuService {
         'PAGES.MUSE.FULLSCREEN',
         'PAGES.MUSE.DEV_TOOL'
       ]).subscribe(translations => {
-        const translatedMenu = this.menuStructure.map(item => ({
-          ...item,
-          label: item.role === 'togglefullscreen' ? translations['PAGES.MUSE.FULLSCREEN'] : translations['PAGES.MUSE.DEV_TOOL']
-        }));
-        this.template = translatedMenu;
+        const { Menu } = this.electronService;
+        const { items } = Menu.getApplicationMenu();
+        items?.forEach(item => {
+          item?.submenu?.items?.forEach(sub =>
+            sub.role === 'togglefullscreen' ? translations['PAGES.MUSE.FULLSCREEN'] : translations['PAGES.MUSE.DEV_TOOL']
+      )});
+        this.template = items;
       });
       const menu = Menu.buildFromTemplate(this.template);
       Menu.setApplicationMenu(menu);
