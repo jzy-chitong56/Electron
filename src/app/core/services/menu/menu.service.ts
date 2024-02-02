@@ -15,29 +15,20 @@ export class MenuService {
     { role: 'toggleDevTools' }
   ];
 
-  constructor(
-    private electronService: ElectronService,
-    private translate: TranslateService,
-    ) { }
-
   public createMenu() {
-    if(this.electronService.isElectron) {
-      const { Menu } = this.electronService;
-      this.translate.get([
-        'PAGES.MUSE.FULLSCREEN',
-        'PAGES.MUSE.DEV_TOOL'
-      ]).subscribe(translations => {
-        const { Menu } = this.electronService;
-        const { items } = Menu.getApplicationMenu();
-        items?.forEach(item => {
-          item?.submenu?.items?.forEach(sub =>
-            sub.role === 'togglefullscreen' ? translations['PAGES.MUSE.FULLSCREEN'] : translations['PAGES.MUSE.DEV_TOOL']
-      )});
-        this.template = items;
+    const { Menu } = this.electronService;
+    const { items } = Menu.menuStructure();
+    this.translate.get([
+      'PAGES.MUSE.FULLSCREEN',
+      'PAGES.MUSE.DEV_TOOL'
+    ]).items?.forEach(item => {
+        item?.submenu?.items?.forEach(sub =>
+          sub.role === 'togglefullscreen' ? sub.label.translations['PAGES.MUSE.FULLSCREEN'] : sub.label.translations['PAGES.MUSE.DEV_TOOL']
+      )
       });
-      const menu = Menu.buildFromTemplate(this.template);
-      Menu.setApplicationMenu(menu);
-    }
+    this.template = items;
+    const menu = Menu.buildFromTemplate(this.template);
+    Menu.setApplicationMenu(menu);
   }
 
   public changeEnabledMenuState(state: boolean) {
@@ -50,4 +41,10 @@ export class MenuService {
       });
     }
   }
+
+  constructor(
+    private electronService: ElectronService,
+    private translate: TranslateService,
+    ) { }
+  
 }
