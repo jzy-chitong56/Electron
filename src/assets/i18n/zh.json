@@ -44,6 +44,10 @@
         "UNKOWN_FLUSH": "未知错误，MPQ 压缩可能失败,：",
         "ADD_FLUSH": "压缩 MPQ",
         "INSTALLING_FAIL": "安装失败:"
+      },
+      "MUSE": {
+         "DEV_TOOL": "控制台",
+         "FULLSCREEN": "全屏",
       }
   }
 }
