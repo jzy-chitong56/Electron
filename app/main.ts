@@ -242,7 +242,7 @@ const init = () => {
       setTimeout(() => {
         createWindow();
       }, 400)
-      systemLanguageCode = os.getLocale();
+      systemLanguageCode = TranslateService.getBrowserCultureLang();
       win.webContents.send('system-language', systemLanguageCode);
     });
 
