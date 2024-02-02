@@ -81,24 +81,24 @@ declare interface Window {
   const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
 
-  let openMap openDir, mapFile;
+  let Trans.openMap Trans.openDir, Trans.mapFile;
   TranslateService.get([
     'PAGES.APP.OPEN_MAP',
     'PAGES.APP.OPEN_DIRECTORY',
     'PAGES.APP.MAP_FILE'
   ]).subscribe(translations => {
-    openMap = translations['PAGES.APP.OPEN_MAP'];
-    openDir = translations['PAGES.APP.OPEN_DIRECTORY'];
-    mapFile = translations['PAGES.APP.MAP_FILE']; })
+    Trans.openMap = translations['PAGES.APP.OPEN_MAP'];
+    Trans.openDir = translations['PAGES.APP.OPEN_DIRECTORY'];
+    Trans.mapFile = translations['PAGES.APP.MAP_FILE']; })
 
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
-    title : isMap ? openMap : openDir,
+    title : isMap ? Trans.openMap : Trans.openDir,
     // TODO: Change to let multiples selections when is map
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-    { name: mapFile, extensions: ['w3x', 'w3m'] },
+    { name: Trans.mapFile, extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
