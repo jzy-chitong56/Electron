@@ -82,7 +82,7 @@ declare interface Window {
   const controller = new AbortController();
 
   let TransopenMap, TransopenDir, TransmapFile;
-  TranslateService([
+  TranslateService.get([
     'PAGES.APP.OPEN_MAP',
     'PAGES.APP.OPEN_DIRECTORY',
     'PAGES.APP.MAP_FILE'
