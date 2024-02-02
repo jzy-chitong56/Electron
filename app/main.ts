@@ -82,14 +82,14 @@ declare interface Window {
 }
 
 const installTrans = () => {
-  ipcMain.on('Trans_openMap', (_event, receivedTranslations) => {
-    TransopenMap = receivedTranslations;
+  ipcMain.on('Trans_openMap', Trans => {
+    TransopenMap = Trans;
   });
-  ipcMain.on('Trans_openDir', (_event, receivedTranslations) => {
-    TransopenDir = receivedTranslations;
+  ipcMain.on('Trans_openDir', Trans => {
+    TransopenDir = Trans;
   });
-  ipcMain.on('Trans_mapFile', (_event, receivedTranslations) => {
-    TransmapFile = receivedTranslations;
+  ipcMain.on('Trans_mapFile', Trans => {
+    TransmapFile = Trans;
   });
 }
 
