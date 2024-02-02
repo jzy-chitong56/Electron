@@ -25,7 +25,7 @@ export class AppComponent {
   ) {
 
     console.log('APP_CONFIG', APP_CONFIG);
-    this.translate.addLangs(['en', 'fr']);
+    this.translate.addLangs(['en', 'cn']);
     const Lang = translate.getBrowserLang();
     console.log('lang', Lang);
     this.translate.use(Lang.match(/en|cn/) ? Lang : 'en');
