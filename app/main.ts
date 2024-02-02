@@ -87,7 +87,7 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-      { name: '{{ 'PAGES.APP.MAP_FILE' | translate }}', extensions: ['w3x', 'w3m'] },
+    { name: "{{ 'PAGES.APP.MAP_FILE' | translate }}", extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
