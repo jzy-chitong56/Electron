@@ -8,27 +8,23 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 export class MenuService {
-  public template: any = [];
-  private readonly menuStructure = [
-    { role: 'togglefullscreen', label: '' },
-    { role: 'toggleDevTools', label: '' }
+  public template: any = [
+   {
+      label: this.translate.get('PAGES.MUSE.FULLSCREEN'),
+      role: 'togglefullscreen',
+    },
+   {
+      label: this.translate.get('PAGES.MUSE.DEV_TOOL'),
+      role: 'toggleDevTools',
+    },
   ];
 
   public createMenu() {
-    const { Menu } = this.electronService;
-    this.template = this.menuStructure;
-    const menu = Menu.buildFromTemplate(this.template);
-    Menu.setApplicationMenu(menu);
-    const { items } = Menu.getApplicationMenu();
-    items?.forEach(item => {
-      item?.submenu?.items?.forEach(sub =>{
-        if (sub.role === 'togglefullscreen') {
-          sub.label = this.translate.get('PAGES.MUSE.FULLSCREEN');
-        } else if (item.role === 'toggleDevTools') {
-          sub.label = this.translate.get('PAGES.MUSE.DEV_TOOL');
-        }
-      });
-    });
+    if(this.electronService.isElectron) {
+      const { Menu } = this.electronService;
+      const menu = Menu.buildFromTemplate(this.template);
+      Menu.setApplicationMenu(menu);
+    }
   }
 
   public changeEnabledMenuState(state: boolean) {
