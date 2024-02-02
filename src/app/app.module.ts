@@ -9,7 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 // NG Translate
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HomeModule } from './home/home.module';
 import { DetailModule } from './detail/detail.module';
@@ -30,7 +29,6 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     HomeModule,
     DetailModule,
     AppRoutingModule,
-    TranslateService,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
