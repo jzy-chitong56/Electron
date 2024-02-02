@@ -25,11 +25,14 @@ export class AppComponent {
   ) {
 
     console.log('APP_CONFIG', APP_CONFIG);
-    this.translate.addLangs(['en', 'zh']);
+    // this.translate.addLangs(['en', 'zh']);
     const Lang = translate.getBrowserLang();
     console.log('lang', Lang);
-    this.translate.use(Lang.match(/en|zh/) ? Lang : 'en');
-    this.translate.setDefaultLang(Lang);
+    if (lang === 'en'|| lang === 'zh') {
+      this.translate.setDefaultLang(Lang);
+    } else {
+      this.translate.setDefaultLang('en');
+    }
 
     if (electronService.isElectron) {
       this.menuService.createMenu();
