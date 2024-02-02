@@ -24,7 +24,7 @@ declare interface Window {
   navigator: any;
 }
 
-const createWindow = (): BrowserWindow => {
+  const createWindow = (): BrowserWindow => {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
 
@@ -78,16 +78,16 @@ const createWindow = (): BrowserWindow => {
   return win;
 }
 
-const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
+  const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
-    title : isMap ? "{{ 'PAGES.APP.OPEN_MAP' | translate }}": "{{ 'PAGES.APP.OPEN_DIRECTORY' | translate }}",
+    title : isMap ? "{{ 'PAGES.APP.OPEN_MAP' | TranslateService }}": "{{ 'PAGES.APP.OPEN_DIRECTORY' | TranslateService }}",
     // TODO: Change to let multiples selections when is map
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-    { name: "{{ 'PAGES.APP.MAP_FILE' | translate }}", extensions: ['w3x', 'w3m'] },
+    { name: "{{ 'PAGES.APP.MAP_FILE' | TranslateService }}", extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
@@ -267,6 +267,7 @@ const init = () => {
     // throw e;
   }
 }
+
 
 init();
 installProcess();
