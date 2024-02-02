@@ -1,4 +1,5 @@
 import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
+import { TranslateService } from '@ngx-translate/core';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from '@electron/remote/main';
@@ -241,8 +242,8 @@ const init = () => {
       setTimeout(() => {
         createWindow();
       }, 400)
-       systemLanguageCode = app.getLocale() || os.locale();
-       mainWindow.webContents.send('system-language', systemLanguageCode);
+      systemLanguageCode = app.getLocale() || os.locale();
+      win.webContents.send('system-language', systemLanguageCode);
     });
 
 
