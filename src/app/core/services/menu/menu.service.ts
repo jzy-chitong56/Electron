@@ -8,16 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 export class MenuService {
-  public template: any = [
-    {  
-      label: '{{ 'PAGES.MUSE.FULLSCREEN' | translate }}',
-      role: 'togglefullscreen'  
-    },
-    {
-      label: '{{ 'PAGES.MUSE.DEV_TOOL' | translate }}',
-      role: 'toggleDevTools' 
-    },
-  ]
+  public template: any[] = [];
+
+  private readonly menuStructure = [
+    { role: 'togglefullscreen' },
+    { role: 'toggleDevTools' }
+  ];
 
   constructor(
     private electronService: ElectronService,
@@ -27,6 +23,16 @@ export class MenuService {
   public createMenu() {
     if(this.electronService.isElectron) {
       const { Menu } = this.electronService;
+      this.translate.get([
+        'PAGES.MUSE.FULLSCREEN',
+        'PAGES.MUSE.DEV_TOOL'
+      ]).subscribe(translations => {
+        const translatedMenu = this.menuStructure.map(item => ({
+          ...item,
+          label: item.role === 'togglefullscreen' ? translations['PAGES.MUSE.FULLSCREEN'] : translations['PAGES.MUSE.DEV_TOOL']
+        }));
+        this.template = translatedMenu;
+      });
       const menu = Menu.buildFromTemplate(this.template);
       Menu.setApplicationMenu(menu);
     }
