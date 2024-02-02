@@ -25,17 +25,14 @@ export class AppComponent {
   ) {
 
     console.log('APP_CONFIG', APP_CONFIG);
+    this.translate.addLangs(['en', 'fr']);
+    const Lang = translate.getBrowserLang();
+    console.log('lang', Lang);
+    this.translate.use(Lang.match(/en|cn/) ? Lang : 'en');
+    this.translate.setDefaultLang(Lang);
 
     if (electronService.isElectron) {
       this.menuService.createMenu();
-      this.electronService.ipcRenderer.on('system-language', (_, languageCode) => {
-        console.log('args', languageCode);
-        if (languageCode && this.translate.getLangs().includes(languageCode)) {
-          this.translate.setDefaultLang(languageCode);
-        } else {
-          this.translate.setDefaultLang('en');
-        }
-      });
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
