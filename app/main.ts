@@ -78,20 +78,27 @@ declare interface Window {
   return win;
 }
 
+const installTrans = () => {
+  let TransopenMap: Record<string, TranslateResult>;
+  let TransopenDir: Record<string, TranslateResult>;
+  let TransmapFile: Record<string, TranslateResult>;
+  ipcMain.on('Trans_openMap', (_event, receivedTranslations) => {
+    TransopenMap = receivedTranslations;
+  });
+  ipcMain.on('Trans_openDir', (_event, receivedTranslations) => {
+    TransopenDir = receivedTranslations;
+  });
+  ipcMain.on('Trans_mapFile', (_event, receivedTranslations) => {
+    TransmapFile = receivedTranslations;
+  });
+  function translate(key: string): string {
+    return translations[key] || key; // 如果没有找到翻译，则返回原key
+  }
+}
+
+
 const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
-  const translateService = new TranslateService();  
-
-  let TransopenMap, TransopenDir, TransmapFile;
-  translateService.get([
-    'PAGES.APP.OPEN_MAP',
-    'PAGES.APP.OPEN_DIRECTORY',
-    'PAGES.APP.MAP_FILE'
-  ]).subscribe(translations => {
-    TransopenMap = translations['PAGES.APP.OPEN_MAP'];
-    TransopenDir = translations['PAGES.APP.OPEN_DIRECTORY'];
-    TransmapFile = translations['PAGES.APP.MAP_FILE']; })
-
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
     title : isMap ? TransopenMap : TransopenDir,
@@ -283,3 +290,4 @@ const init = () => {
 
 init();
 installProcess();
+installTrans();
