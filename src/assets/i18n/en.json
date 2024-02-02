@@ -44,6 +44,10 @@
         "UNKOWN_FLUSH": "Possibly failed to flush scripts, Unknown error occurred::",
         "ADD_FLUSH": "Optimize map MPQ",
         "INSTALLING_FAIL": "Install failed with error:"
+      },
+      "MUSE": {
+         "DEV_TOOL": "DevTools",
+         "FULLSCREEN": "FullScreen",
       }
   }
 }
