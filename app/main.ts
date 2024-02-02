@@ -78,11 +78,12 @@ declare interface Window {
   return win;
 }
 
-  const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
+const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
+  const translateService = new TranslateService();  
 
   let TransopenMap, TransopenDir, TransmapFile;
-  TranslateService.get([
+  translateService.get([
     'PAGES.APP.OPEN_MAP',
     'PAGES.APP.OPEN_DIRECTORY',
     'PAGES.APP.MAP_FILE'
