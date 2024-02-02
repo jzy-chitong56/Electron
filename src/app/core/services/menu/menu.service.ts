@@ -114,15 +114,15 @@ export class MenuService {
     //     { role: 'togglefullscreen' }
     //   ]
     // },
-    {
-      label: '切换开发者工具',  
-      //label: {{ 'PAGES.MUSE.DEV_TOOL' | translate }}',  
-      role: 'toggleDevTools'  
-    },
     {  
       label: '全屏',  
       //label: {{ 'PAGES.MUSE.FULLSCREEN' | translate }}',  
       role: 'togglefullscreen'  
+    },
+    {
+      label: '开发者工具',  
+      //label: {{ 'PAGES.MUSE.DEV_TOOL' | translate }}',  
+      role: 'toggleDevTools'  
     },
   ]
 
