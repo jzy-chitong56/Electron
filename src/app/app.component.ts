@@ -35,7 +35,6 @@ export class AppComponent {
         } else {
           this.translate.setDefaultLang('en');
         }
-        this.electronService.ipcRenderer.on.removeAllListeners('system-language');
       });
 
       // TODO: add 'push notification'/'notification'
