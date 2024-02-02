@@ -10,11 +10,11 @@ import { TranslateService } from '@ngx-translate/core';
 export class MenuService {
   public template: any = [
    {
-      label: this.translate.get('PAGES.MUSE.FULLSCREEN'),
+      label: this.translate.getTranslation('PAGES.MUSE.FULLSCREEN'),
       role: 'togglefullscreen',
     },
    {
-      label: this.translate.get('PAGES.MUSE.DEV_TOOL'),
+      label: this.translate.getTranslation('PAGES.MUSE.DEV_TOOL'),
       role: 'toggleDevTools',
     },
   ];
