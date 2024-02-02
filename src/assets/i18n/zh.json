@@ -20,7 +20,7 @@
       "APP": {
         "INSTALLING": "正在安装",
         "INSTALLING_TO_FOLER": "安装到文件夹:",
-        "INSTALLING_DONE": "安装完成..."
+        "INSTALLING_DONE": "安装完成...",
         "OPEN_MAP": "选择地图",
         "OPEN_DIRECTORY": "选择地图目录",
         "MAP_FILE": "地图文件"
@@ -47,7 +47,7 @@
       },
       "MUSE": {
          "DEV_TOOL": "开发者工具",
-         "FULLSCREEN": "全屏",
+         "FULLSCREEN": "全屏"
       }
   }
 }
