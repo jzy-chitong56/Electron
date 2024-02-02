@@ -3,7 +3,7 @@ import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
-import { app } from 'electron'; 
+
 
 @Component({
   selector: 'app-root',
@@ -23,32 +23,20 @@ export class AppComponent {
     private homeService: HomeService,
     private cdr: ChangeDetectorRef,
   ) {
-    app.whenReady().then(async () => {
-      const defaultLanguage = getSystemDefaultLanguage();
-      console.log("lang:", defaultLanguage);
-      if (isSupportedLanguage(await defaultLanguage)) {
-        setDefaultLanguage(await defaultLanguage);
-      } else {
-        setDefaultLanguage('en');
-      }
-    });
 
-    async function getSystemDefaultLanguage() {  
-      return app.getLocale();  
-    }
-    async function setDefaultLanguage(language: string) {  
-      this.translate.setDefaultLang(language);  
-    }
-  
-    function isSupportedLanguage(language: string): boolean {
-      const supportedLanguages = ['en', 'zh']; 
-      return supportedLanguages.includes(language);
-    }
-    
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
       this.menuService.createMenu();
+      this.electronService.ipcRenderer.on('system-language', (_, languageCode) => {
+        console.log('args', languageCode);
+        if (languageCode && this.translate.getLangs().includes(languageCode)) {
+          this.translate.setDefaultLang(languageCode);
+        } else {
+          this.translate.setDefaultLang('en');
+        }
+        this.electronService.ipcRenderer.on.removeAllListeners('system-language');
+      });
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
