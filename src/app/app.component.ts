@@ -30,11 +30,11 @@ export class AppComponent {
       console.log('setlang', language);
       this.translate.setDefaultLang(language);
       // TODO: use i18n to translate
-      this.translate.get('PAGES.APP.OPEN_MAP').subscribe(transopenmap => {
+      this.translate.getTranslation('PAGES.APP.OPEN_MAP').subscribe(transopenmap => {
       this.electronService.ipcRenderer.send('Trans_openMap', transopenmap);})
-      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir => {
+      this.translate.getTranslation('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir => {
       this.electronService.ipcRenderer.send('Trans_openDir', transopendir);})
-      this.translate.get('PAGES.APP.MAP_FILE').subscribe(transmapfile => {
+      this.translate.getTranslation('PAGES.APP.MAP_FILE').subscribe(transmapfile => {
       this.electronService.ipcRenderer.send('Trans_mapFile', transmapfile);})
     }
 
