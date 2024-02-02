@@ -8,6 +8,9 @@ const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
 let win: BrowserWindow = null;
+let TransopenMap = null;
+let TransopenDir = null;
+let TransmapFile = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 // needed to call remote inside app
@@ -79,9 +82,6 @@ declare interface Window {
 }
 
 const installTrans = () => {
-  let TransopenMap: Record<string, TranslateResult>;
-  let TransopenDir: Record<string, TranslateResult>;
-  let TransmapFile: Record<string, TranslateResult>;
   ipcMain.on('Trans_openMap', (_event, receivedTranslations) => {
     TransopenMap = receivedTranslations;
   });
