@@ -27,25 +27,40 @@ export class AppComponent {
     const Lang = this.translate.getBrowserLang();
     function handleTranslation(Lang) {  
       console.log('getlang', Lang); 
-      let transopenmap = this.translate.get('PAGES.APP.OPEN_MAP');
-      let transopendir = this.translate.get('PAGES.APP.OPEN_DIRECTORY');
-      let transmapfile = this.translate.get('PAGES.APP.MAP_FILE');
-            console.log('getlang', transopenmap); 
-            console.log('getlang', transopendir); 
-            console.log('getlang', transmapfile); 
-      // this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);
-      // this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
-      // this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
+      this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
+        transopenmap = res;
+        console.log('getlang', transopenmap); 
+        // this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);
+      });
+      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((res) => {
+        transopendir = res;
+        console.log('getlang', transopendir); 
+        // this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
+      });
+      this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
+        transmapfile = res;
+        console.log('getlang', transmapfile); 
+        // this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
+      });
     }  
 
-    if (Lang === 'en' || Lang === 'zh') {  
+    if (Lang === 'en' || Lang === 'zh') {
+      let transopenmap: string;
+      let transopendir: string;
+      let transmapfile: string;
       this.translate.setDefaultLang(Lang);  
-      let transopenmap = this.translate.get('PAGES.APP.OPEN_MAP');
-      let transopendir = this.translate.get('PAGES.APP.OPEN_DIRECTORY');
-      let transmapfile = this.translate.get('PAGES.APP.MAP_FILE');
-            console.log('getlang', transopenmap); 
-            console.log('getlang', transopendir); 
-            console.log('getlang', transmapfile); 
+      this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
+        transopenmap = res;
+        console.log('getlang', transopenmap); 
+      });
+      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((res) => {
+        transopendir = res;
+        console.log('getlang', transopendir); 
+      });
+      this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
+        transmapfile = res;
+        console.log('getlang', transmapfile); 
+      });  
     } else {  
       console.log('errlang - backen', 'en');  
       this.translate.setDefaultLang('en');  
@@ -59,14 +74,20 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
-        let transtitle = this.translate.get('PAGES.APP.INSTALLING');
-        this.title = `${transtitle} ${args.response}`;
+        let transtitle: string;
+        this.translate.get('PAGES.APP.INSTALLING').subscribe((res) => {
+          transtitle = res;
+          this.title = `${transtitle} ${args.response}`;
+        });
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        let translation = this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER');
-        !args.isMap && this.messages && this.messages.push(`${translation} ${args.response}`);
+        let translation: string;
+        this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((res) => {
+          translation = res;
+          !args.isMap && this.messages && this.messages.push(`${translation} ${args.response}`);
+        });
         // disable the menu while the script is running
         this
           .menuService
@@ -91,8 +112,11 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        let transtitle = this.translate.get('PAGES.APP.INSTALLING_DONE');
-        this.title = `${transtitle}`;
+        let transtitle: string;
+        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((res) => {
+          transtitle = res;
+          this.title = `${transtitle}`;
+        });
         this.couldClose = true;
 
         this
