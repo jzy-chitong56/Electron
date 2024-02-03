@@ -33,6 +33,8 @@ export class MenuService {
       const { Menu } = this.electronService;
       const fullscreenLabel = this.translate.getTranslation('PAGES.MUSE.FULLSCREEN');  
       const devToolLabel = this.translate.getTranslation('PAGES.MUSE.DEV_TOOL');  
+      console.log("Menu 1", fullscreenLabel);
+      console.log("Menu 2", devToolLabel);
       this.template[0].label = 'A';  
       this.template[1].label = fullscreenLabel;  
       this.template[2].label = devToolLabel;  
