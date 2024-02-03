@@ -25,6 +25,9 @@ export class AppComponent {
   ) {
 
     const Lang = this.translate.getBrowserLang();
+    let transopenmap: string;
+    let transopendir: string;
+    let transmapfile: string;
     function handleTranslation(Lang) {  
       console.log('getlang', Lang); 
       this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
@@ -45,9 +48,6 @@ export class AppComponent {
     }  
 
     if (Lang === 'en' || Lang === 'zh') {
-      let transopenmap: string;
-      let transopendir: string;
-      let transmapfile: string;
       this.translate.setDefaultLang(Lang);  
       this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
         transopenmap = res;
