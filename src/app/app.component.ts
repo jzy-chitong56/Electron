@@ -37,10 +37,10 @@ export class AppComponent {
         this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
       });  
     }  
-      
+
     if (Lang === 'en' || Lang === 'zh') {  
       this.translate.setDefaultLang(Lang);  
-      handleTranslation(Lang);  
+      // handleTranslation(Lang);  
     } else {  
       console.log('errlang - backen', 'en');  
       this.translate.setDefaultLang('en');  
@@ -50,24 +50,20 @@ export class AppComponent {
 
     if (electronService.isElectron) {
       this.menuService.createMenu();
-      let Tltle = null
-      let InstallToFolder = null
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING').subscribe((transtitle: string) => {
-          Tltle = transtitle
+          this.title = `${transtitle} ${args.response}`;
         });
-        this.title = `Tltle ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((translation: string) => {
-          InstallToFolder = translation
+          !args.isMap && this.messages && this.messages.push(`${translation} ${args.response}`);
         });
-        !args.isMap && this.messages && this.messages.push(`InstallToFolder ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -91,12 +87,10 @@ export class AppComponent {
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
-        let Tltle = null
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((transtitle: string) => {
-          Tltle = transtitle
+          this.title = `${transtitle}`;
         });
-        this.title = `Tltle`;
         this.couldClose = true;
 
         this
