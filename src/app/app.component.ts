@@ -24,12 +24,9 @@ export class AppComponent {
     private cdr: ChangeDetectorRef,
   ) {
 
-    console.log('APP_CONFIG', APP_CONFIG);
-
     const Lang = this.translate.getBrowserLang();
     function handleTranslation(Lang) {  
       console.log('getlang', Lang);  
-      this.translate.setDefaultLang(Lang);  
       this.translate.get('PAGES.APP.OPEN_MAP').subscribe((transopenmap: string) => {  
         this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);  
       });  
@@ -42,29 +39,35 @@ export class AppComponent {
     }  
       
     if (Lang === 'en' || Lang === 'zh') {  
+      this.translate.setDefaultLang(Lang);  
       handleTranslation(Lang);  
     } else {  
       console.log('errlang - backen', 'en');  
+      this.translate.setDefaultLang('en');  
       handleTranslation('en');
     }
+    console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
       this.menuService.createMenu();
-
+      let Tltle = null
+      let InstallToFolder = null
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING').subscribe((transtitle: string) => {
-        this.title = `${transtitle} ${args.response}`;});
+          Tltle = transtitle
+        });
+        this.title = `Tltle ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        if (!args.isMap && this.messages) {
-          this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((translation: string) => {
-          this.messages.push(`${translation} ${args.response}`);});
-        }
+        this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((translation: string) => {
+          InstallToFolder = translation
+        });
+        !args.isMap && this.messages && this.messages.push(`InstallToFolder ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -88,9 +91,12 @@ export class AppComponent {
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
+        let Tltle = null
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((transtitle: string) => {
-        this.title = `${transtitle}`;});
+          Tltle = transtitle
+        });
+        this.title = `Tltle`;
         this.couldClose = true;
 
         this
