@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
-import { InstallModel, TransModel  } from '../../commons/models';
+import { InstallModel } from '../../commons/models';
 
 
 @Component({
