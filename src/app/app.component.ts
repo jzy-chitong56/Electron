@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
-import { InstallModel } from '../../commons/models';
+import { InstallModel, TransModel  } from '../../commons/models';
 
 
 @Component({
@@ -30,14 +30,14 @@ export class AppComponent {
     function handleTranslation(Lang) {  
       console.log('getlang', Lang);  
       this.translate.setDefaultLang(Lang);  
-      this.translate.get('PAGES.APP.OPEN_MAP').subscribe(transopenmap => {  
-        this.electronService.ipcRenderer.send('Trans_openMap', transopenmap);  
+      this.translate.get('PAGES.APP.OPEN_MAP').subscribe(transopenmap: string => {  
+        this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);  
       });  
-      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir => {  
-        this.electronService.ipcRenderer.send('Trans_openDir', transopendir);  
+      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir: string => {  
+        this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
       });  
-      this.translate.get('PAGES.APP.MAP_FILE').subscribe(transmapfile => {  
-        this.electronService.ipcRenderer.send('Trans_mapFile', transmapfile);  
+      this.translate.get('PAGES.APP.MAP_FILE').subscribe(transmapfile: string => {  
+        this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
       });  
     }  
       
