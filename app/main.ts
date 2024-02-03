@@ -80,12 +80,15 @@ const isDev = () => {
 const installTrans = () => {
    
   ipcMain && ipcMain.on('Trans_openMap', (event, Trans) => {
+    console.log('Trans_openMap', Trans);
     TransopenMap = Trans;
   });
   ipcMain && ipcMain.on('Trans_openDir', (event, Trans) => {
+    console.log('Trans_openDir', Trans);
     TransopenDir = Trans;
   });
   ipcMain && ipcMain.on('Trans_mapFile', (event, Trans) => {
+    console.log('Trans_mapFile', Trans);
     TransmapFile = Trans;
   });
 }
