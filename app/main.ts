@@ -79,17 +79,17 @@ const isDev = () => {
 
 const installTrans = () => {
    
-  ipcMain && ipcMain.on('Trans_openMap', (event, Trans) => {
-    console.log('Trans_openMap', Trans);
-    TransopenMap = Trans;
+  ipcMain && ipcMain.on('Trans_openMap', (event, transopenmap) => {
+    console.log('Trans_openMap', transopenmap);
+    TransopenMap = transopenmap;
   });
-  ipcMain && ipcMain.on('Trans_openDir', (event, Trans) => {
-    console.log('Trans_openDir', Trans);
-    TransopenDir = Trans;
+  ipcMain && ipcMain.on('Trans_openDir', (event, transopendir) => {
+    console.log('Trans_openDir', transopendir);
+    TransopenDir = transopendir;
   });
-  ipcMain && ipcMain.on('Trans_mapFile', (event, Trans) => {
-    console.log('Trans_mapFile', Trans);
-    TransmapFile = Trans;
+  ipcMain && ipcMain.on('Trans_mapFile', (event, transmapfile) => {
+    console.log('Trans_mapFile', transmapfile);
+    TransmapFile = transmapfile;
   });
 }
 
