@@ -26,25 +26,26 @@ export class AppComponent {
 
     console.log('APP_CONFIG', APP_CONFIG);
 
-    function setMainTrans(language: string) {  
-      console.log('setlang', language);
-      this.translate.setDefaultLang(language);
-      // TODO: use i18n to translate
-      this.translate.get('PAGES.APP.OPEN_MAP').subscribe(transopenmap => {
-      this.electronService.ipcRenderer.send('Trans_openMap', transopenmap);})
-      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir => {
-      this.electronService.ipcRenderer.send('Trans_openDir', transopendir);})
-      this.translate.get('PAGES.APP.MAP_FILE').subscribe(transmapfile => {
-      this.electronService.ipcRenderer.send('Trans_mapFile', transmapfile);})
-    }
-
-    const Lang = translate.getBrowserLang();
-    if (Lang === 'en'|| Lang === 'zh') {
-      console.log('getlang', Lang);
-      setMainTrans(Lang);
-    } else {
-      console.log('errlang - backen', Lang);
-      setMainTrans('en');
+    const Lang = this.translate.getBrowserLang();
+    function handleTranslation(Lang) {  
+      console.log('getlang', Lang);  
+      this.translate.setDefaultLang(Lang);  
+      this.translate.get('PAGES.APP.OPEN_MAP').subscribe(transopenmap => {  
+        this.electronService.ipcRenderer.send('Trans_openMap', transopenmap);  
+      });  
+      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir => {  
+        this.electronService.ipcRenderer.send('Trans_openDir', transopendir);  
+      });  
+      this.translate.get('PAGES.APP.MAP_FILE').subscribe(transmapfile => {  
+        this.electronService.ipcRenderer.send('Trans_mapFile', transmapfile);  
+      });  
+    }  
+      
+    if (Lang === 'en' || Lang === 'zh') {  
+      handleTranslation(Lang);  
+    } else {  
+      console.log('errlang - backen', 'en');  
+      handleTranslation('en');
     }
 
     if (electronService.isElectron) {
@@ -55,14 +56,14 @@ export class AppComponent {
         console.log('args', args)
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING').subscribe(transtitle => {
-        this.title = `transtitle ${args.response}`;});
+        this.title = `${transtitle} ${args.response}`;});
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
         if (!args.isMap && this.messages) {
           this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe(translation => {
-          this.messages.push(`translation ${args.response}`);});
+          this.messages.push(`${translation} ${args.response}`);});
         }
         // disable the menu while the script is running
         this
@@ -89,7 +90,7 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(transtitle => {
-        this.title = `${transtitle} ${args.response}`;});
+        this.title = `${transtitle}`;});
         this.couldClose = true;
 
         this
