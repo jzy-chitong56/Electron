@@ -281,5 +281,6 @@ const init = () => {
 
 
 init();
-installProcess();
 installTrans();
+installProcess();
+
