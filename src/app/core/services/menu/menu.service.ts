@@ -30,12 +30,14 @@ export class MenuService {
 
   public createMenu() {
     if(this.electronService.isElectron) {
+      let fullscreenLabel;  
+      let devToolLabel;  
       const { Menu } = this.electronService;
       this.translate.get('PAGES.MUSE.FULLSCREEN').subscribe((full: string) => {  
-        const fullscreenLabel = full;  
+        fullscreenLabel = full;  
       });  
       this.translate.get('PAGES.MUSE.DEV_TOOL').subscribe((dev: string) => {  
-        const devToolLabel = dev;  
+        devToolLabel = dev;  
       });  
       console.log("Menu 1", fullscreenLabel);
       console.log("Menu 2", devToolLabel);
