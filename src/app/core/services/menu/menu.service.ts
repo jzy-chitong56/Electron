@@ -19,6 +19,11 @@ export class MenuService {
     },
   ];
 
+  constructor(
+    private electronService: ElectronService,
+    private translate: TranslateService,
+    ) { }
+
   public createMenu() {
     if(this.electronService.isElectron) {
       const { Menu } = this.electronService;
@@ -38,9 +43,5 @@ export class MenuService {
     }
   }
 
-  constructor(
-    private electronService: ElectronService,
-    private translate: TranslateService,
-    ) { }
   
 }
