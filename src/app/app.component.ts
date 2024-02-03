@@ -30,13 +30,13 @@ export class AppComponent {
     function handleTranslation(Lang) {  
       console.log('getlang', Lang);  
       this.translate.setDefaultLang(Lang);  
-      this.translate.get('PAGES.APP.OPEN_MAP').subscribe(transopenmap: string => {  
+      this.translate.get('PAGES.APP.OPEN_MAP').subscribe((transopenmap: string) => {  
         this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);  
       });  
-      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe(transopendir: string => {  
+      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((transopendir: string) => {  
         this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
       });  
-      this.translate.get('PAGES.APP.MAP_FILE').subscribe(transmapfile: string => {  
+      this.translate.get('PAGES.APP.MAP_FILE').subscribe((transmapfile: string) => {  
         this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
       });  
     }  
@@ -55,14 +55,14 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING').subscribe(transtitle => {
+        this.translate.get('PAGES.APP.INSTALLING').subscribe((transtitle: string) => {
         this.title = `${transtitle} ${args.response}`;});
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
         if (!args.isMap && this.messages) {
-          this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe(translation => {
+          this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((translation: string) => {
           this.messages.push(`${translation} ${args.response}`);});
         }
         // disable the menu while the script is running
@@ -89,7 +89,7 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(transtitle => {
+        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((transtitle: string) => {
         this.title = `${transtitle}`;});
         this.couldClose = true;
 
