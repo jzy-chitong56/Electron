@@ -14,11 +14,11 @@ export class MenuService {
       role: 'toggleDevTools',
     },
    {
-      label: '',
+      label: 'V',
       role: 'togglefullscreen',
     },
    {
-      label: '',
+      label: 'W',
       role: 'toggleDevTools',
     },
   ];
@@ -35,9 +35,9 @@ export class MenuService {
       const devToolLabel = this.translate.getTranslation('PAGES.MUSE.DEV_TOOL');  
       console.log("Menu 1", fullscreenLabel);
       console.log("Menu 2", devToolLabel);
-      this.template[0].label = 'A';  
-      this.template[1].label = fullscreenLabel;  
-      this.template[2].label = devToolLabel;  
+      // this.template[0].label = 'A';  
+      // this.template[1].label = fullscreenLabel;  
+      // this.template[2].label = devToolLabel;  
       const menu = Menu.buildFromTemplate(this.template);
       Menu.setApplicationMenu(menu);
     }
