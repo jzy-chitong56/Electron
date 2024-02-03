@@ -26,21 +26,18 @@ export class AppComponent {
 
     const Lang = this.translate.getBrowserLang();
     function handleTranslation(Lang) {  
-      console.log('getlang', Lang);  
-      this.translate.get('PAGES.APP.OPEN_MAP').subscribe((transopenmap: string) => {  
-        this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);  
-      });  
-      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((transopendir: string) => {  
-        this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
-      });  
-      this.translate.get('PAGES.APP.MAP_FILE').subscribe((transmapfile: string) => {  
-        this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
-      });  
+      console.log('getlang', Lang); 
+      let transopenmap = this.translate.get('PAGES.APP.OPEN_MAP');
+      let transopendir = this.translate.get('PAGES.APP.OPEN_DIRECTORY');
+      let transopendir = this.translate.get('PAGES.APP.MAP_FILE');
+      this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);
+      this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
+      this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
     }  
 
     if (Lang === 'en' || Lang === 'zh') {  
       this.translate.setDefaultLang(Lang);  
-      // handleTranslation(Lang);  
+      handleTranslation(Lang);  
     } else {  
       console.log('errlang - backen', 'en');  
       this.translate.setDefaultLang('en');  
@@ -54,16 +51,14 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args', args)
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING').subscribe((transtitle: string) => {
-          this.title = `${transtitle} ${args.response}`;
-        });
+        let transtitle = this.translate.get('PAGES.APP.INSTALLING');
+        this.title = `${transtitle} ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((translation: string) => {
-          !args.isMap && this.messages && this.messages.push(`${translation} ${args.response}`);
-        });
+        let translation = this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER');
+        !args.isMap && this.messages && this.messages.push(`${translation} ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -88,9 +83,8 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((transtitle: string) => {
-          this.title = `${transtitle}`;
-        });
+        let transtitle = this.translate.get('PAGES.APP.INSTALLING_DONE');
+        this.title = `${transtitle}`;
         this.couldClose = true;
 
         this
