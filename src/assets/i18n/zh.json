@@ -26,6 +26,9 @@
         "MAP_FILE": "'地图文件'"
       },
       "Install.JS": {
+        "VER_ROC": "经典版 混乱之治",
+        "VER_TFT": "经典版 冰封王座",
+        "VER_REF": "重制版 冰封王座",
         "ERROR_FIND_FAIL": "错误：找不到文件",
         "INSTALLING": "正在安装",
         "IN_TO": "到：",
