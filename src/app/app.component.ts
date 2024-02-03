@@ -30,14 +30,22 @@ export class AppComponent {
       let transopenmap = this.translate.get('PAGES.APP.OPEN_MAP');
       let transopendir = this.translate.get('PAGES.APP.OPEN_DIRECTORY');
       let transmapfile = this.translate.get('PAGES.APP.MAP_FILE');
-      this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);
-      this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
-      this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
+            console.log('getlang', transopenmap); 
+            console.log('getlang', transopendir); 
+            console.log('getlang', transmapfile); 
+      // this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);
+      // this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
+      // this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
     }  
 
     if (Lang === 'en' || Lang === 'zh') {  
       this.translate.setDefaultLang(Lang);  
-      handleTranslation(Lang);  
+      let transopenmap = this.translate.get('PAGES.APP.OPEN_MAP');
+      let transopendir = this.translate.get('PAGES.APP.OPEN_DIRECTORY');
+      let transmapfile = this.translate.get('PAGES.APP.MAP_FILE');
+            console.log('getlang', transopenmap); 
+            console.log('getlang', transopendir); 
+            console.log('getlang', transmapfile); 
     } else {  
       console.log('errlang - backen', 'en');  
       this.translate.setDefaultLang('en');  
