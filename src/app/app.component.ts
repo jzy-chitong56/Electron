@@ -29,7 +29,7 @@ export class AppComponent {
       console.log('getlang', Lang); 
       let transopenmap = this.translate.get('PAGES.APP.OPEN_MAP');
       let transopendir = this.translate.get('PAGES.APP.OPEN_DIRECTORY');
-      let transopendir = this.translate.get('PAGES.APP.MAP_FILE');
+      let transmapfile = this.translate.get('PAGES.APP.MAP_FILE');
       this.electronService.ipcRenderer.send('Trans_openMapr',transopenmap);
       this.electronService.ipcRenderer.send('Trans_openDir',transopendir);  
       this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
