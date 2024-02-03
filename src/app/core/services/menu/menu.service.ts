@@ -14,11 +14,11 @@ export class MenuService {
       role: 'toggleDevTools',
     },
    {
-      label: 'V',
+      label: '',
       role: 'togglefullscreen',
     },
    {
-      label: 'W',
+      label: '',
       role: 'toggleDevTools',
     },
   ];
@@ -30,20 +30,13 @@ export class MenuService {
 
   public createMenu() {
     if(this.electronService.isElectron) {
-      let fullscreenLabel;  
-      let devToolLabel;  
+      let fullscreenLabel = this.translate.get('PAGES.MUSE.FULLSCREEN'); 
+      let devToolLabel = this.translate.get('PAGES.MUSE.DEV_TOOL'); 
       const { Menu } = this.electronService;
-      this.translate.get('PAGES.MUSE.FULLSCREEN').subscribe((full: string) => {  
-        fullscreenLabel = full;  
-      });  
-      this.translate.get('PAGES.MUSE.DEV_TOOL').subscribe((dev: string) => {  
-        devToolLabel = dev;  
-      });  
       console.log("Menu 1", fullscreenLabel);
       console.log("Menu 2", devToolLabel);
-      // this.template[0].label = 'A';  
-      // this.template[1].label = fullscreenLabel;  
-      // this.template[2].label = devToolLabel;  
+      this.template[1].label = fullscreenLabel;  
+      this.template[2].label = devToolLabel;  
       const menu = Menu.buildFromTemplate(this.template);
       Menu.setApplicationMenu(menu);
     }
