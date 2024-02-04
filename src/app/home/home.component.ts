@@ -25,8 +25,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
     this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
-      this.isInteractive = enabled;  
-      if (this.isInteractive) {
+      this.isInteractive = enabled;
+      console.log('reset_button0');
+      if (!this.isInteractive) {
         console.log('reset_button');
         this.Images_ROC_Shown = false;
         this.Images_TFT_Shown = false;
