@@ -40,12 +40,12 @@ export class AppComponent {
     forkJoin({
       transopenmap: this.translate.get('PAGES.APP.OPEN_MAP'),
       transopendir: this.translate.get('PAGES.APP.OPEN_DIRECTORY'),
-      devTool: this.translate.get('PAGES.APP.MAP_FILE')
+      transmapfile: this.translate.get('PAGES.APP.MAP_FILE')
     }).subscribe((res) => {
       const data = {  
         res1: res.transopenmap,
         res2: res.transopendir,
-        res3: res.transmapfile,  
+        res3: res.transmapfile,
       };  
       this.electronService.ipcRenderer.send('Trans',data as any);
     });
