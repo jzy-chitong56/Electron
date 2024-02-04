@@ -24,12 +24,9 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
-  }
-
-  setInteractive() {
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {
+    this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
+      this.isInteractive = enabled;
       console.log('reset_button0');
-      this.isInteractive = state;
       if (this.isInteractive) {
         console.log('reset_button');
         this.Images_ROC_Shown = false;
@@ -40,7 +37,8 @@ export class HomeComponent implements OnInit {
         this.REFInstall = false;
       }
     });
-  }  
+  }
+
 
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
@@ -107,6 +105,7 @@ export class HomeComponent implements OnInit {
             this.REFInstall = false;
             this.ROCInstall = !this.ROCInstall;
             this.electronService.ipcRenderer.send(message);
+            console.log('message',message);
           }
           break;
         case 'Tft':
@@ -121,6 +120,7 @@ export class HomeComponent implements OnInit {
             this.REFInstall = false;
             this.TFTInstall = !this.TFTInstall;
             this.electronService.ipcRenderer.send(message);
+            console.log('message',message);
           }
           break;
         case 'Ref':
@@ -135,6 +135,7 @@ export class HomeComponent implements OnInit {
             this.TFTInstall = false;
             this.REFInstall = !this.REFInstall;
             this.electronService.ipcRenderer.send(message);
+            console.log('message',message);
           }
           break;
         case 'Mode':
