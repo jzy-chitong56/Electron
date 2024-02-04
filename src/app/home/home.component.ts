@@ -21,8 +21,9 @@ export class HomeComponent implements OnInit {
   Mode_State: boolean = true;
   BJ_State: boolean = true;
   isInteractive: boolean = true;
-  modeState: string
-  bjState: string
+  modeState: string = '';
+  bjState: string = '';
+  message: string = '';
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
@@ -40,27 +41,26 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
     if (this.isInteractive) {
       switch (action) {
-       case 'Roc':
-          if (!this.ROCInstall) {
-            this.Images_ROC_Shown = true;
-          }
-          break;
-       case 'Tft':
-          if (!this.TFTInstall) {
-            this.Images_TFT_Shown = true;
-          }
-          break;
-       case 'Ref':
-          if (!this.REFInstall) {
-            this.Images_REF_Shown = true;
-          }
-          break;
+        case 'Roc':
+        if (!this.ROCInstall) {
+          this.Images_ROC_Shown = true;
+        }
+        break;
+        case 'Tft':
+        if (!this.TFTInstall) {
+          this.Images_TFT_Shown = true;
+        }
+        break;
+        case 'Ref':
+        if (!this.REFInstall) {
+          this.Images_REF_Shown = true;
+        }
+        break;
       }
     };
   }
@@ -71,20 +71,20 @@ export class HomeComponent implements OnInit {
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
-          if (!this.ROCInstall) {
-            this.Images_ROC_Shown = false;
-          }
-          break;
+        if (!this.ROCInstall) {
+          this.Images_ROC_Shown = false;
+        }
+        break;
         case 'Tft':
-          if (!this.TFTInstall) {
-            this.Images_TFT_Shown = false;
-          }
-          break;
+        if (!this.TFTInstall) {
+          this.Images_TFT_Shown = false;
+        }
+        break;
         case 'Ref':
-          if (!this.REFInstall) {
-            this.Images_REF_Shown = false;
-          }
-          break;
+        if (!this.REFInstall) {
+          this.Images_REF_Shown = false;
+        }
+        break;
       }
     };
   }
@@ -95,56 +95,52 @@ export class HomeComponent implements OnInit {
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
-          if (!this.ROCInstall) {
-            this.modeState = this.Mode_State ? '-folder' : '-map';
-            this.bjState = this.BJ_State ? '' : '-noc';
-            const message = `install${modeState}${bjState}-ROC`;
-            this.Images_ROC_Shown = true;
-            this.Images_TFT_Shown = false;
-            this.Images_REF_Shown = false;
-            this.TFTInstall = false;
-            this.REFInstall = false;
-            this.ROCInstall = !this.ROCInstall;
-            this.electronService.ipcRenderer.send(message);
-            console.log('message',message);
-          }
-          break;
+        if (!this.ROCInstall) {
+          this.message = `install${this.modeState}${this.bjState}-ROC`;
+          this.Images_ROC_Shown = true;
+          this.Images_TFT_Shown = false;
+          this.Images_REF_Shown = false;
+          this.TFTInstall = false;
+          this.REFInstall = false;
+          this.ROCInstall = !this.ROCInstall;
+          this.electronService.ipcRenderer.send(this.message);
+          console.log('message',this.message);
+        }
+        break;
         case 'Tft':
-          if (!this.TFTInstall) {
-            this.modeState = this.Mode_State ? '-folder' : '-map';
-            this.bjState = this.BJ_State ? '' : '-noc';
-            const message = `install${modeState}${bjState}-TFT`;
-            this.Images_ROC_Shown = false;
-            this.Images_TFT_Shown = true;
-            this.Images_REF_Shown = false;
-            this.ROCInstall = false;
-            this.REFInstall = false;
-            this.TFTInstall = !this.TFTInstall;
-            this.electronService.ipcRenderer.send(message);
-            console.log('message',message);
-          }
-          break;
+        if (!this.TFTInstall) {
+          this.message = `install${this.modeState}${this.bjState}-TFT`;
+          this.Images_ROC_Shown = false;
+          this.Images_TFT_Shown = true;
+          this.Images_REF_Shown = false;
+          this.ROCInstall = false;
+          this.REFInstall = false;
+          this.TFTInstall = !this.TFTInstall;
+          this.electronService.ipcRenderer.send(this.message);
+          console.log('message',this.message);
+        }
+        break;
         case 'Ref':
-          if (!this.REFInstall) {
-            this.modeState = this.Mode_State ? '-folder' : '-map';
-            this.bjState = this.BJ_State ? '' : '-noc';
-            const message = `install${modeState}${bjState}`;
-            this.Images_ROC_Shown = false;
-            this.Images_TFT_Shown = false;
-            this.Images_REF_Shown = true;
-            this.ROCInstall = false;
-            this.TFTInstall = false;
-            this.REFInstall = !this.REFInstall;
-            this.electronService.ipcRenderer.send(message);
-            console.log('message',message);
-          }
-          break;
+        if (!this.REFInstall) {
+          this.message = `install${this.modeState}${this.bjState}`;
+          this.Images_ROC_Shown = false;
+          this.Images_TFT_Shown = false;
+          this.Images_REF_Shown = true;
+          this.ROCInstall = false;
+          this.TFTInstall = false;
+          this.REFInstall = !this.REFInstall;
+          this.electronService.ipcRenderer.send(this.message);
+          console.log('message',this.message);
+        }
+        break;
         case 'Mode':
           this.Mode_State = !this.Mode_State;
-          break;
+          this.modeState = this.Mode_State ? '-folder' : '-map';
+        break;
         case 'BJ':
           this.BJ_State = !this.BJ_State;
-          break;
+          this.bjState = this.BJ_State ? '' : '-noc';
+        break;
       }
     };
   }
