@@ -28,9 +28,8 @@ export class HomeComponent implements OnInit {
     // console.log('HomeComponent INIT');
     this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
       this.isInteractive = enabled;
-      console.log('reset_button0');
+      console.log('reset_button');
       if (this.isInteractive) {
-        console.log('reset_button');
         this.Images_ROC_Shown = false;
         this.Images_TFT_Shown = false;
         this.Images_REF_Shown = false;
