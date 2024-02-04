@@ -59,6 +59,7 @@ export class AppComponent {
         this.electronService.ipcRenderer.send('Trans_openDir',res);  
       });
       transmapfile = this.translate.instant('PAGES.APP.MAP_FILE')
+      console.log('MAP_FILE', transmapfile); 
       this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
     } else {  
       console.log('errlang - backen', 'en');  
