@@ -12,7 +12,7 @@ import { HomeService } from '../core/services/home/home.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  Images_ROC_Shown: boolean = false; 
+  Images_ROC_Shown: boolean = false;   //public
   Images_TFT_Shown: boolean = false; 
   Images_REF_Shown: boolean = false; 
   ROCInstall: boolean = false; 
