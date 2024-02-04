@@ -14,10 +14,12 @@
         "BACK_TO_HOME": "Back to Home"
       },
       "INDEX": {
-        "TITLE": "AMAI Manager",
-        "LOAD": "Loading..."
+        "TITLE": "Installing log",
+        "CLOSE": "close"
       },
       "APP": {
+        "TITLE": "AMAI Manager",
+        "LOAD": "Loading..."
         "INSTALLING": "Installing into",
         "INSTALLING_TO_FOLER": "Installing in directory:",
         "INSTALLING_DONE": "Installation finished...",
