@@ -136,12 +136,14 @@ export class HomeComponent implements OnInit {
         case 'Mode':
           this.Mode_State = !this.Mode_State;
           this.modeState = this.Mode_State ? '-folder' : '-map';
-          console.log('modeState',this.modeState);
+          console.log('mode',this.modeState);
+          console.log('GETMODE',this.Mode_State);
         break;
         case 'BJ':
           this.BJ_State = !this.BJ_State;
           this.bjState = this.BJ_State ? '' : '-noc';
-          console.log('BJ_State',this.bjState);
+          console.log('BJ',this.bjState);
+          console.log('GETBJ',this.BJ_State);
         break;
       }
     };
