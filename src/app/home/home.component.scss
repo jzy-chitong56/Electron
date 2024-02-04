@@ -41,10 +41,10 @@
       }
     }
 
-    .image-row {
+    .ContainerLattice {
       display: flex;
       text-align: center;  
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
       max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
       width: 100%;
@@ -68,18 +68,27 @@
       .image-row img {
         width: 100%;
       }  
-    }
 
-    .container.setting {
-      display: flex;
-      justify-content: space-between; /* 平均分配空间 */
-      align-items: center;
-      gap: 10px;
+    .checkboxbj {
+      display: flex; 
+      justify-content: center;  
+      text-align: start;
+      align-items: center;  
+      position: relative;
+      cursor: pointer;
+      max-width: var(--switch-width);
+      width: 20%;
+      top: 30px;
+      font-size: 1rem;
+      transform: scale(1.5);
     }
 
     .switch {
+      display: flex;  
+      justify-content: center;  
+      align-items: center;  
+      text-align: center;
       position: relative;
-      display: inline-block;
       top: 30px;
       max-width: var(--switch-width);
       width: 50%; 
@@ -88,17 +97,6 @@
       box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
       border-radius: 26px;
     }
-    .checkboxbj {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
-      top: 30px;
-      padding-left: 120px;
-      font-size: 1rem;
-      line-height: 3; 
-      transform: scale(1.5);
-    }
-
 
     .slider {
       position: absolute;
