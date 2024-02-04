@@ -18,3 +18,22 @@ export class HomeService {
     return this.enableHomeInteractive;
   }
 }
+
+// import { Injectable } from '@angular/core';  
+
+// @Injectable({  
+//   providedIn: 'root'  
+// })  
+// export class HomeService {  
+//   private enableHomeInteractive = true;  
+  
+//   constructor() {}  
+  
+//   changeEnabledHomeState(state: boolean) {  
+//     this.enableHomeInteractive = state;  
+//   }  
+  
+//   get enableHomeState(): boolean {  
+//     return this.enableHomeInteractive;  
+//   }  
+// }
