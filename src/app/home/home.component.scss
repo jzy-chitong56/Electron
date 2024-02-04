@@ -63,11 +63,11 @@
       height: auto;
     }
 
-    /* 当屏幕宽度小于或等于1600px时，图片容器将占据100%宽度 */
     @media (max-width: 1600px) {
-      .image-row img {
+      .ContainerLattice img {
         width: 100%;
-      }  
+      }
+    }
 
     .checkboxbj {
       display: flex; 
@@ -76,8 +76,7 @@
       align-items: center;  
       position: relative;
       cursor: pointer;
-      max-width: var(--switch-width);
-      width: 20%;
+      width: 30%;
       top: 30px;
       font-size: 1rem;
       transform: scale(1.5);
@@ -91,7 +90,7 @@
       position: relative;
       top: 30px;
       max-width: var(--switch-width);
-      width: 50%; 
+      width: 40%; 
       height: 32px;
       border: 3px solid #5c5c5c; /* 添加边框 */
       box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
@@ -117,6 +116,7 @@
       align-items: center;
       justify-content: space-around;
     }
+
     .slider:before {
       position: absolute;
       display: flex; /* 将其转换为弹性布局容器 */
