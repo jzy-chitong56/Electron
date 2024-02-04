@@ -34,10 +34,11 @@ export class MenuService {
         this.template[1].label = res;
         console.log("Menu 1", res);
       }); 
-      this.translate.get('PAGES.MUSE.FULLSCREDEV_TOOLEN').subscribe((res) => {
-        this.template[2].label = res;
-        console.log("Menu 1", res);
-      }); 
+      // this.translate.get('PAGES.MUSE.DEV_TOOL').subscribe((res) => {
+      //   this.template[2].label = res;
+      //   console.log("Menu 1", res);
+      // }); 
+      this.template[2].label =this.translate.instant('PAGES.MUSE.DEV_TOOL')
       const { Menu } = this.electronService;
       const menu = Menu.buildFromTemplate(this.template);
       Menu.setApplicationMenu(menu);
