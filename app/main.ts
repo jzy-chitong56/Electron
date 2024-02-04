@@ -95,7 +95,6 @@ const installTrans = () => {
 
 const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
-  console.log('install0', TransopenMap);
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
     title : isMap ? TransopenMap : TransopenDir,
