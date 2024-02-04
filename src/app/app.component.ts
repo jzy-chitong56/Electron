@@ -47,7 +47,7 @@ export class AppComponent {
         res2: res.transopendir,
         res3: res.transmapfile,  
       };  
-      this.electronService.ipcRenderer.send('Trans_openMap',data as any);
+      this.electronService.ipcRenderer.send('Trans',data as any);
     });
     console.log('APP_CONFIG', APP_CONFIG);
 
