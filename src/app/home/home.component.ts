@@ -24,19 +24,18 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
-      this.isInteractive = enabled;
-      console.log('reset_button0');
-      if (!this.isInteractive) {
-        console.log('reset_button');
-        this.Images_ROC_Shown = false;
-        this.Images_TFT_Shown = false;
-        this.Images_REF_Shown = false;
-        this.ROCInstall = false;
-        this.TFTInstall = false;
-        this.REFInstall = false;
-      }
-    });
+  }
+
+  const homestate = new HomeService();  
+  const isInteractive = homestate.enableHomeState;
+  if (this.isInteractive) {
+    console.log('reset_button');
+    this.Images_ROC_Shown = false;
+    this.Images_TFT_Shown = false;
+    this.Images_REF_Shown = false;
+    this.ROCInstall = false;
+    this.TFTInstall = false;
+    this.REFInstall = false;
   }
 
   // 鼠标移入事件处理函数
