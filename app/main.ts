@@ -95,14 +95,16 @@ const installTrans = () => {
 
 const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
+  console.log('install0', TransopenMap);
+  console.log('install1', ${TransopenMap});
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
-    title : isMap ? "${TransopenMap}" : "${TransopenDir}",
+    title : isMap ? TransopenMap : TransopenDir,
     // TODO: Change to let multiples selections when is map
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-    { name: '${TransmapFile}', extensions: ['w3x', 'w3m'] },
+    { name: TransmapFile , extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
