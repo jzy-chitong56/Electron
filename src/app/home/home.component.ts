@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   Mode_State: boolean = true;
   BJ_State: boolean = true;
   isInteractive: boolean = true;
-  modeState: string = '';
+  modeState: string = '-folder';
   bjState: string = '';
   message: string = '';
   
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
         case 'Mode':
           this.Mode_State = !this.Mode_State;
           this.modeState = this.Mode_State ? '-folder' : '-map';
-          console.log('BJ_State',this.modeState);
+          console.log('modeState',this.modeState);
         break;
         case 'BJ':
           this.BJ_State = !this.BJ_State;
