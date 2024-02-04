@@ -33,8 +33,9 @@ const isDev = () => {
     y: 0,
     width: size.width,
     height: size.height,
-    minWidth: 1280,  
-    minHeight: 768,  
+    minWidth: 1280,
+    minHeight: 768,
+    title: 'AMAI Manager',
     webPreferences: {
       devTools: true,
       nodeIntegration: true,
@@ -82,6 +83,7 @@ const installTrans = () => {
     TransopenMap = data.res1 as string;
     TransopenDir = data.res2 as string;
     TransmapFile = data.res3 as string;
+    win.setTitle(data.res4 as string)
     console.log('Trans1', TransopenMap);
     console.log('Trans2', TransopenDir);
     console.log('Trans3', TransmapFile);
