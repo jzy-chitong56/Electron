@@ -27,7 +27,7 @@ export class AppComponent {
     const Lang = this.translate.getBrowserLang();
     // let transopenmap: string;
     // let transopendir: string;
-    // let transmapfile: string;
+    let transmapfile: string;
     function handleTranslation(Lang) {  
       console.log('getlang', Lang); 
       this.translate.setDefaultLang(Lang);  
@@ -39,10 +39,12 @@ export class AppComponent {
         console.log('OPEN_DIRECTORY', res); 
         this.electronService.ipcRenderer.send('Trans_openDir',res);  
       });
-      this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
-        console.log('MAP_FILE', res); 
-        this.electronService.ipcRenderer.send('Trans_mapFile',res);  
-      });
+      transmapfile = this.translate.instant('PAGES.APP.MAP_FILE')
+      this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
+      // this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
+      //   console.log('MAP_FILE', res); 
+
+      // });
     }  
 
     if (Lang === 'en' || Lang === 'zh') {
@@ -59,6 +61,7 @@ export class AppComponent {
       //   transmapfile = res;
       //   console.log('getlang', transmapfile); 
       // });  
+      handleTranslation(Lang);
     } else {  
       console.log('errlang - backen', 'en');  
       // this.translate.setDefaultLang('en');  
