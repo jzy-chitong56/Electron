@@ -19,7 +19,7 @@
       },
       "APP": {
         "TITLE": "AMAI Manager",
-        "LOAD": "Loading..."
+        "LOAD": "Loading...",
         "INSTALLING": "Installing into",
         "INSTALLING_TO_FOLER": "Installing in directory:",
         "INSTALLING_DONE": "Installation finished...",
