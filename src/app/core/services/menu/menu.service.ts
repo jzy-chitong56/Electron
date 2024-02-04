@@ -38,7 +38,7 @@ export class MenuService {
       //   this.template[2].label = res;
       //   console.log("Menu 2", res);
       // }); 
-      this.template[2].label =this.translate.instant('PAGES.MUSE.DEV_TOOL')
+      this.template[2].label = this.translate.instant('PAGES.MUSE.DEV_TOOL')
       console.log("Menu 2", res);
       const { Menu } = this.electronService;
       const menu = Menu.buildFromTemplate(this.template);
