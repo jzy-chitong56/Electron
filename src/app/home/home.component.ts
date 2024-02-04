@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
   }
 
   setInteractive() {
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {  
+    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {
+      console.log('reset_button0');
       this.isInteractive = state;
       if (this.isInteractive) {
         console.log('reset_button');
