@@ -31,8 +31,8 @@ export class MenuService {
         fullscreen: this.translate.get('PAGES.MUSE.FULLSCREEN'),
         devTool: this.translate.get('PAGES.MUSE.DEV_TOOL')
       }).subscribe((res) => {
-        this.template[1].label = res.fullscreen;
-        this.template[2].label = res.devTool;
+        this.template[0].label = res.fullscreen;
+        this.template[1].label = res.devTool;
         // console.log('menu1', res.fullscreen);
         // console.log('menu2', res.devTool);
         const { Menu } = this.electronService;
