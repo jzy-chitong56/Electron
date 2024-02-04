@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
   Mode_State: boolean = true;
   BJ_State: boolean = true;
   isInteractive: boolean = true;
+  modeState: string
+  bjState: string
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
@@ -95,8 +97,8 @@ export class HomeComponent implements OnInit {
       switch (action) {
         case 'Roc':
           if (!this.ROCInstall) {
-            let modeState = this.Mode_State ? '-folder' : '-map';
-            let bjState = this.BJ_State ? '' : '-noc';
+            this.modeState = this.Mode_State ? '-folder' : '-map';
+            this.bjState = this.BJ_State ? '' : '-noc';
             const message = `install${modeState}${bjState}-ROC`;
             this.Images_ROC_Shown = true;
             this.Images_TFT_Shown = false;
@@ -110,8 +112,8 @@ export class HomeComponent implements OnInit {
           break;
         case 'Tft':
           if (!this.TFTInstall) {
-            let modeState = this.Mode_State ? '-folder' : '-map';
-            let bjState = this.BJ_State ? '' : '-noc';
+            this.modeState = this.Mode_State ? '-folder' : '-map';
+            this.bjState = this.BJ_State ? '' : '-noc';
             const message = `install${modeState}${bjState}-TFT`;
             this.Images_ROC_Shown = false;
             this.Images_TFT_Shown = true;
@@ -125,8 +127,8 @@ export class HomeComponent implements OnInit {
           break;
         case 'Ref':
           if (!this.REFInstall) {
-            let modeState = this.Mode_State ? '-folder' : '-map';
-            let bjState = this.BJ_State ? '' : '-noc';
+            this.modeState = this.Mode_State ? '-folder' : '-map';
+            this.bjState = this.BJ_State ? '' : '-noc';
             const message = `install${modeState}${bjState}`;
             this.Images_ROC_Shown = false;
             this.Images_TFT_Shown = false;
