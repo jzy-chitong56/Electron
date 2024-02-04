@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from '../electron/electron.service';
 import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,21 +31,16 @@ export class MenuService {
 
   public createMenu() {
     if(this.electronService.isElectron) {
-      let aa: string;
-      this.translate.get('PAGES.MUSE.FULLSCREEN').subscribe((res) => {
-        this.template[1].label = res;
-        console.log("Menu 1", res);
-      }); 
-      // this.translate.get('PAGES.MUSE.DEV_TOOL').subscribe((res) => {
-      //   this.template[2].label = res;
-      //   console.log("Menu 2", res);
-      // }); 
-      this.template[2].label = this.translate.instant('PAGES.MUSE.DEV_TOOL')
-      aa = this.translate.instant('PAGES.MUSE.DEV_TOOL')
-      console.log("Menu 2", aa);
-      const { Menu } = this.electronService;
-      const menu = Menu.buildFromTemplate(this.template);
-      Menu.setApplicationMenu(menu);
+      forkJoin({
+        fullscreen: this.translate.get('PAGES.MUSE.FULLSCREEN'),
+        devTool: this.translate.get('PAGES.MUSE.DEV_TOOL')
+      }).subscribe((res) => {
+        this.template[1].label = res.fullscreen;
+        this.template[2].label = res.devTool;
+        const { Menu } = this.electronService;
+        const menu = Menu.buildFromTemplate(this.template);
+        Menu.setApplicationMenu(menu);
+      });
     }
   }
 
