@@ -40,6 +40,7 @@ export class AppComponent {
         this.electronService.ipcRenderer.send('Trans_openDir',res);  
       });
       transmapfile = this.translate.instant('PAGES.APP.MAP_FILE')
+      console.log('MAP_FILE', transmapfile); 
       this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
       // this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
       //   console.log('MAP_FILE', res); 
@@ -48,24 +49,20 @@ export class AppComponent {
     }  
 
     if (Lang === 'en' || Lang === 'zh') {
-      // this.translate.setDefaultLang(Lang);  
-      // this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
-      //   transopenmap = res;
-      //   console.log('getlang', transopenmap); 
-      // });
-      // this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((res) => {
-      //   transopendir = res;
-      //   console.log('getlang', transopendir); 
-      // });
-      // this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
-      //   transmapfile = res;
-      //   console.log('getlang', transmapfile); 
-      // });  
-      handleTranslation(Lang);
+      this.translate.setDefaultLang(Lang);  
+      this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
+        console.log('OPEN_MAP', res); 
+        this.electronService.ipcRenderer.send('Trans_openMapr',res);
+      });
+      this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((res) => {
+        console.log('OPEN_DIRECTORY', res); 
+        this.electronService.ipcRenderer.send('Trans_openDir',res);  
+      });
+      transmapfile = this.translate.instant('PAGES.APP.MAP_FILE')
+      this.electronService.ipcRenderer.send('Trans_mapFile',transmapfile);  
     } else {  
       console.log('errlang - backen', 'en');  
-      // this.translate.setDefaultLang('en');  
-      handleTranslation('en');
+      this.translate.setDefaultLang('en');  
     }
     console.log('APP_CONFIG', APP_CONFIG);
 
