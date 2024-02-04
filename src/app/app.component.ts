@@ -26,7 +26,11 @@ export class AppComponent {
 
     const Lang = this.translate.getBrowserLang();
 
-    if (Lang === 'en' || Lang === 'zh') {
+    if (
+      Lang === 'en' ||
+      Lang === 'zh' 
+      // add *src/app/assets/xx.json* , and add other languages to here
+    ){
       //console.log('getlang', Lang);  
       this.translate.setDefaultLang(Lang);  
     } else {  
