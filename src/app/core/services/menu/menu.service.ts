@@ -11,10 +11,6 @@ import { forkJoin } from 'rxjs';
 export class MenuService {
   public template: any = [
    {
-      label: 'A',
-      role: 'toggleDevTools',
-    },
-   {
       label: '',
       role: 'togglefullscreen',
     },
@@ -37,8 +33,8 @@ export class MenuService {
       }).subscribe((res) => {
         this.template[1].label = res.fullscreen;
         this.template[2].label = res.devTool;
-        console.log('menu1', res.fullscreen);
-        console.log('menu2', res.devTool);
+        // console.log('menu1', res.fullscreen);
+        // console.log('menu2', res.devTool);
         const { Menu } = this.electronService;
         const menu = Menu.buildFromTemplate(this.template);
         Menu.setApplicationMenu(menu);
