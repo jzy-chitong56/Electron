@@ -3,7 +3,7 @@ import { ElectronService, MenuService, HomeService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG } from '../environments/environment';
 import { InstallModel } from '../../commons/models';
-
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -37,19 +37,18 @@ export class AppComponent {
       //console.log('errlang - go en back', 'en');  
       this.translate.setDefaultLang('en');  
     }
-    this.translate.get('PAGES.APP.OPEN_MAP').subscribe((res) => {
-      //console.log('OPEN_MAP', res); 
-      this.electronService.ipcRenderer.send('Trans_openMap',res);
+    forkJoin({
+      transopenmap: this.translate.get('PAGES.APP.OPEN_MAP'),
+      transopendir: this.translate.get('PAGES.APP.OPEN_DIRECTORY'),
+      devTool: this.translate.get('PAGES.APP.MAP_FILE')
+    }).subscribe((res) => {
+      const data = {  
+        res1: res.transopenmap,
+        res2: res.transopendir,
+        res3: res.transmapfile,  
+      };  
+      this.electronService.ipcRenderer.send('Trans_openMap',data as any);
     });
-    this.translate.get('PAGES.APP.OPEN_DIRECTORY').subscribe((res) => {
-      //console.log('OPEN_DIRECTORY', res); 
-      this.electronService.ipcRenderer.send('Trans_openDir',res);  
-    });
-    this.translate.get('PAGES.APP.MAP_FILE').subscribe((res) => {
-      //console.log('Trans_mapFile', res); 
-      this.electronService.ipcRenderer.send('Trans_mapFile',res);  
-    });
-
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
