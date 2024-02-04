@@ -56,7 +56,7 @@ export class AppComponent {
       this.menuService.createMenu();
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
-        console.log('args', args)
+        console.log('args-install-init', args)
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING').subscribe((res) => {
           this.title = `${res} ${args.response}`;
@@ -83,14 +83,19 @@ export class AppComponent {
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-empty', (_, args) => {
-        console.log('args', args);
+        console.log('args-install-empty', args);
         this.active = false;
         this.couldClose = true;
+        this
+          .homeService
+          .changeEnabledHomeState(true);
+
         this.cdr.detectChanges();
       });
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
+        console.log('args-install-exit', args);
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((res) => {
           this.title = `${res}`;
@@ -108,14 +113,14 @@ export class AppComponent {
       });
 
       this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
-        console.log('args', args);
+        console.log('args-install-message', args);
         this.messages && this.messages.push(args);
         this.cdr.detectChanges();
       });
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-error', (_, args) => {
-        console.log('args', args);
+        console.log('args-install-error', args);
         this.couldClose = true;
 
         this
