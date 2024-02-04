@@ -30,6 +30,7 @@ export class MenuService {
 
   public createMenu() {
     if(this.electronService.isElectron) {
+      let aa: string;
       this.translate.get('PAGES.MUSE.FULLSCREEN').subscribe((res) => {
         this.template[1].label = res;
         console.log("Menu 1", res);
@@ -39,7 +40,8 @@ export class MenuService {
       //   console.log("Menu 2", res);
       // }); 
       this.template[2].label = this.translate.instant('PAGES.MUSE.DEV_TOOL')
-      console.log("Menu 2", res);
+      aa = this.translate.instant('PAGES.MUSE.DEV_TOOL')
+      console.log("Menu 2", aa);
       const { Menu } = this.electronService;
       const menu = Menu.buildFromTemplate(this.template);
       Menu.setApplicationMenu(menu);
