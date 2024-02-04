@@ -26,17 +26,20 @@ export class HomeComponent implements OnInit {
     // console.log('HomeComponent INIT');
   }
 
-  const homestate = new HomeService();  
-  const isInteractive = homestate.enableHomeState;
-  if (this.isInteractive) {
-    console.log('reset_button');
-    this.Images_ROC_Shown = false;
-    this.Images_TFT_Shown = false;
-    this.Images_REF_Shown = false;
-    this.ROCInstall = false;
-    this.TFTInstall = false;
-    this.REFInstall = false;
-  }
+  setInteractive() {
+    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {  
+      this.isInteractive = state;
+      if (this.isInteractive) {
+        console.log('reset_button');
+        this.Images_ROC_Shown = false;
+        this.Images_TFT_Shown = false;
+        this.Images_REF_Shown = false;
+        this.ROCInstall = false;
+        this.TFTInstall = false;
+        this.REFInstall = false;
+      }
+    });
+  }  
 
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
