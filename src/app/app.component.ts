@@ -55,9 +55,15 @@ export class AppComponent {
       };  
       this.electronService.ipcRenderer.send('Trans',data as any);
     });
-    this.Installing_Title = this.translate.get('PAGES.APP.INSTALLING') as string;;
-    this.InstalDone_Title = this.translate.get('PAGES.APP.INSTALLING_DONE') as string;;
-    this.InstalDir_Mes = this.translate.get('PAGES.APP.INSTALLING_TO_FOLER') as string;;
+    this.translate.get('PAGES.APP.INSTALLING').subscribe(res => {  
+      this.Installing_Title = res;  
+    },
+    this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(res => {  
+      this.InstalDone_Title = res;  
+    },
+    this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe(res => {  
+      this.InstalDir_Mes = res;  
+    },
     console.log('init Installing Title:', this.Installing_Title);
     console.log('init Install Done Title:', this.InstalDone_Title);
     console.log('init Install Directory Message:', this.InstalDir_Mes);
