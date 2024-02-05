@@ -13,18 +13,22 @@
       max-width: 100%;
     }
 
-    .center-heading {
+    .headtitle-text {
       text-align: center;
       font-size: 3rem;
       font-weight: bold;
       margin-top: 0.5rem;
     }
 
-    .center-text {
+    .subtitle-text {
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
       margin-top: 2rem;
+    }
+
+    .switch-text {
+       font-size: 1rem;
     }
 
     /* 当屏幕宽度小于等于800px时，减小字体大小 */
@@ -143,10 +147,6 @@
       -ms-transform: translateX(100%);
        transform: translateX(100%);
        margin-left: -3px;
-    }
-
-    .switch-text {
-       font-size: 1rem;
     }
 
 }
