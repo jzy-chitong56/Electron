@@ -45,9 +45,9 @@ export class AppComponent {
       transopendir: this.translate.get('PAGES.APP.OPEN_DIRECTORY'),
       transmapfile: this.translate.get('PAGES.APP.MAP_FILE'),
       transmaptitle: this.translate.get('PAGES.APP.TITLE'),
-      Installing_Title: this.translate.get('PAGES.APP.INSTALLING'),
-      InstalDone_Title: this.translate.get('PAGES.APP.INSTALLING_DONE'),
-      InstalDir_Mes: this.translate.get('PAGES.APP.INSTALLING_TO_FOLER')
+      console.log('Installing Title:', res.Installing_Title);  
+      console.log('Install Done Title:', res.InstalDone_Title);  
+      console.log('Install Directory Message:', res.InstalDir_Mes); 
     }).subscribe((res) => {
       const data = {  
         res1: res.transopenmap,
@@ -57,6 +57,9 @@ export class AppComponent {
       };  
       this.electronService.ipcRenderer.send('Trans',data as any);
     });
+    Installing_Title = this.translate.get('PAGES.APP.INSTALLING'),
+    InstalDone_Title = this.translate.get('PAGES.APP.INSTALLING_DONE'),
+    InstalDir_Mes = this.translate.get('PAGES.APP.INSTALLING_TO_FOLER')
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
@@ -65,11 +68,13 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
         // TODO: use i18n to translate
+        console.log('Installing Title:', res.Installing_Title);  
         this.title = `${Installing_Title} ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
+        console.log('Install Directory Message:', res.InstalDir_Mes); 
         !args.isMap && this.messages && this.messages.push(`${InstalDir_Mes} ${args.response}`);
         // disable the menu while the script is running
         this
@@ -99,7 +104,8 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         console.log('args-install-exit', args);
-        // TODO: use i18n to translate
+        // TODO: use i18n to translate  
+        console.log('Install Done Title:', res.InstalDone_Title);  
         this.title = InstalDone_Title;
         this.couldClose = true;
 
