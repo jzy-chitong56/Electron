@@ -66,7 +66,7 @@ export class AppComponent {
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_TO_FOLDER').subscribe((res) => {
+        this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe((res) => {
           !args.isMap && this.messages && this.messages.push(`${res} ${args.response}`);
         });
         // disable the menu while the script is running
