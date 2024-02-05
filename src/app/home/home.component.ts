@@ -27,8 +27,8 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
-      this.isInteractive = enabled;
+    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {
+      this.isInteractive = state;
       console.log('reset_button');
       if (this.isInteractive) {
         this.Images_ROC_Shown = false;
@@ -138,7 +138,7 @@ export class HomeComponent implements OnInit {
   }
 
   onInputChange(inputId: string) {
-    console.log('click:', action, event.target);
+    console.log('input:',  inputId);
     if (this.isInteractive) { 
       switch (inputId) {
         case 'ModeSwitch':
@@ -154,8 +154,6 @@ export class HomeComponent implements OnInit {
       }
     };
   }
-
-}
 
   constructor(
     private router: Router,
