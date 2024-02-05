@@ -25,6 +25,9 @@ export class AppComponent {
   ) {
 
     const Lang = this.translate.getBrowserLang();
+    let Installing_Title: string = '';
+    let InstalDone_Title: string = '';
+    let InstalDir_Mes: string = '';
 
     if (
       Lang === 'en' ||
@@ -41,7 +44,10 @@ export class AppComponent {
       transopenmap: this.translate.get('PAGES.APP.OPEN_MAP'),
       transopendir: this.translate.get('PAGES.APP.OPEN_DIRECTORY'),
       transmapfile: this.translate.get('PAGES.APP.MAP_FILE'),
-      transmaptitle: this.translate.get('PAGES.APP.TITLE')
+      transmaptitle: this.translate.get('PAGES.APP.TITLE'),
+      Installing_Title: this.translate.get('PAGES.APP.INSTALLING'),
+      InstalDone_Title: this.translate.get('PAGES.APP.INSTALLING_DONE'),
+      InstalDir_Mes: this.translate.get('PAGES.APP.INSTALLING_TO_FOLER')
     }).subscribe((res) => {
       const data = {  
         res1: res.transopenmap,
@@ -59,16 +65,12 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING').subscribe((res) => {
-          this.title = res `${args.response}`;
-        });
+        this.title = `${Installing_Title} ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe((res) => {
-          !args.isMap && this.messages && this.messages.push(res `${args.response}`);
-        });
+        !args.isMap && this.messages && this.messages.push(`${InstalDir_Mes} ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -98,9 +100,7 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         console.log('args-install-exit', args);
         // TODO: use i18n to translate
-        this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((res) => {
-          this.title = res;
-        });
+        this.title = InstalDone_Title;
         this.couldClose = true;
 
         this
