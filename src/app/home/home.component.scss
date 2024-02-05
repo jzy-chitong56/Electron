@@ -17,14 +17,14 @@
       text-align: center;
       font-size: 3rem;
       font-weight: bold;
-      // margin-top: 0.5rem;
+      margin-top: 4rem;
     }
 
     .subtitle-text {
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
-      margin-top: 1rem;
+      margin-top: 6rem;
     }
 
     .switch-text {
@@ -49,7 +49,7 @@
       max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
       width: 100%;
       gap: 10px;
-      margin-top: 2rem;
+      margin-top: 2.5rem;
     }
 
     .imageContainerROC,
@@ -90,7 +90,7 @@
       position: relative;
       top: 30px;
       max-width: var(--switch-width);
-      width: 40%; 
+      width: 36%; 
       height: 32px;
       border: 3px solid #5c5c5c; /* 添加边框 */
       box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
