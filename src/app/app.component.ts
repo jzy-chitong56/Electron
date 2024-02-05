@@ -15,6 +15,9 @@ export class AppComponent {
   public active = false;
   public couldClose = false;
   public messages = [];
+  public Installing_Title: string;
+  public InstalDone_Title: string;
+  public InstalDir_Mes: string;
 
   constructor(
     private electronService: ElectronService,
@@ -25,9 +28,7 @@ export class AppComponent {
   ) {
 
     const Lang = this.translate.getBrowserLang();
-    let Installing_Title: string;
-    let InstalDone_Title: string;
-    let InstalDir_Mes: string;
+
 
     if (
       Lang === 'en' ||
@@ -54,12 +55,12 @@ export class AppComponent {
       };  
       this.electronService.ipcRenderer.send('Trans',data as any);
     });
-    Installing_Title = this.translate.get('PAGES.APP.INSTALLING') as string;;
-    InstalDone_Title = this.translate.get('PAGES.APP.INSTALLING_DONE') as string;;
-    InstalDir_Mes = this.translate.get('PAGES.APP.INSTALLING_TO_FOLER') as string;;
-    console.log('init Installing Title:', Installing_Title);
-    console.log('init Install Done Title:', InstalDone_Title);
-    console.log('init Install Directory Message:', InstalDir_Mes);
+    this.Installing_Title = this.translate.get('PAGES.APP.INSTALLING') as string;;
+    this.InstalDone_Title = this.translate.get('PAGES.APP.INSTALLING_DONE') as string;;
+    this.InstalDir_Mes = this.translate.get('PAGES.APP.INSTALLING_TO_FOLER') as string;;
+    console.log('init Installing Title:', this.Installing_Title);
+    console.log('init Install Done Title:', this.InstalDone_Title);
+    console.log('init Install Directory Message:', this.InstalDir_Mes);
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
@@ -68,14 +69,14 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
         // TODO: use i18n to translate
-        console.log('Installing Title:', Installing_Title);  
-        this.title = `${Installing_Title} ${args.response}`;
+        console.log('Installing Title:', this.Installing_Title);  
+        this.title = `${this.Installing_Title} ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        console.log('Install Directory Message:', InstalDir_Mes); 
-        !args.isMap && this.messages && this.messages.push(`${InstalDir_Mes} ${args.response}`);
+        console.log('Install Directory Message:', this.InstalDir_Mes); 
+        !args.isMap && this.messages && this.messages.push(`${this.InstalDir_Mes} ${args.response}`);
         // disable the menu while the script is running
         this
           .menuService
@@ -105,8 +106,8 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         console.log('args-install-exit', args);
         // TODO: use i18n to translate  
-        console.log('Install Done Title:', InstalDone_Title);  
-        this.title = InstalDone_Title;
+        console.log('Install Done Title:', this.InstalDone_Title);  
+        this.title = this.InstalDone_Title;
         this.couldClose = true;
 
         this
