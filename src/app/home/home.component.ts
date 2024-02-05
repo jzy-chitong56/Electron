@@ -92,6 +92,8 @@ export class HomeComponent implements OnInit {
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
+    console.log('onClick called with action:', action);
+    console.log('Clicked element:', event.target); 
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
