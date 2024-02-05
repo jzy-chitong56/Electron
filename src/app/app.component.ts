@@ -29,7 +29,6 @@ export class AppComponent {
 
     const Lang = this.translate.getBrowserLang();
 
-
     if (
       Lang === 'en' ||
       Lang === 'zh' 
@@ -55,13 +54,13 @@ export class AppComponent {
       };  
       this.electronService.ipcRenderer.send('Trans',data as any);
     });
-    this.translate.get('PAGES.APP.INSTALLING').subscribe(res => {  
+    this.translate.get('PAGES.APP.INSTALLING').subscribe(res: string => {  
       this.Installing_Title = res;  
     },
-    this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(res => {  
+    this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(res: string => {  
       this.InstalDone_Title = res;  
     },
-    this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe(res => {  
+    this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe(res: string => {  
       this.InstalDir_Mes = res;  
     },
     console.log('init Installing Title:', this.Installing_Title);
