@@ -17,14 +17,14 @@
       text-align: center;
       font-size: 3rem;
       font-weight: bold;
-      margin-top: 0.5rem;
+      // margin-top: 0.5rem;
     }
 
     .subtitle-text {
       text-align: center;
       font-size: 2rem;
       font-weight: bold;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
 
     .switch-text {
@@ -33,15 +33,11 @@
 
     /* 当屏幕宽度小于等于800px时，减小字体大小 */
     @media (max-width: 800px) {
-      .center-heading, .center-text {
+      .headtitle-text, .subtitle-text {
         font-size: 1rem;
       }
-    }
-
-    /* 当屏幕宽度大于800px时，增大字体大小 */
-    @media (min-width: 801px) {
-      .center-heading, .center-text {
-        font-size: 3remx;
+      .switch-text {
+        font-size: 0.5rem;
       }
     }
 
