@@ -27,32 +27,32 @@
         "OPEN_DIRECTORY": "Open WC3 Maps Directory",
         "MAP_FILE": "'WC3 Map File'"
       },
-      "Install.JS": {
-        "VER_ROC": "Classic ROC",
-        "VER_TFT": "Classic TFT",
-        "VER_REF": "Reforged",
-        "ERROR_FIND_FAIL": "ERROR: Cannot find",
-        "INSTALLING": "Installing",
-        "IN_TO": "into file: ",
-        "SKIP": "skip file: ",
-        "WARN": "WARN:",
-        "WRITE_FAIL": "does not have write permissions so unable to install",
-        "UAC_RESIZE": "Failed to run mpqeditor htsize, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
-        "RESIZE_MAP": "Resize map hashtable size",
-        "UAC_AI": "Failed to add ai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
-        "UNKOWN_AI": "Possibly failed to add ai scripts, Unknown error occurred:",
-        "ADD_AI": "Add ai scripts",
-        "UAC_BJ": "Failed to add blizzard.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
-        "UNKOWN_BJ": "Possibly failed to add blizzard.j script, Unknown error occurred:",
-        "ADD_BJ": "Add commander scrip",
-        "UAC_FLUSH": "Failed to flush scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
-        "UNKOWN_FLUSH": "Possibly failed to flush scripts, Unknown error occurred::",
-        "ADD_FLUSH": "Optimize map MPQ",
-        "INSTALLING_FAIL": "Install failed with error:"
-      },
       "MUSE": {
          "DEV_TOOL": "DevTools",
          "FULLSCREEN": "FullScreen"
       }
+  },
+  "Install_JS": {
+      "VER_ROC": "Classic ROC",
+      "VER_TFT": "Classic TFT",
+      "VER_REF": "Reforged",
+      "ERROR_FIND_FAIL": "ERROR: Cannot find",
+      "INSTALLING": "Installing",
+      "IN_TO": "into file: ",
+      "SKIP": "skip file: ",
+      "WARN": "WARN:",
+      "WRITE_FAIL": "does not have write permissions so unable to install",
+      "UAC_RESIZE": "Failed to run mpqeditor htsize, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+      "RESIZE_MAP": "Resize map hashtable size",
+      "UAC_AI": "Failed to add ai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+      "UNKOWN_AI": "Possibly failed to add ai scripts, Unknown error occurred:",
+      "ADD_AI": "Add ai scripts",
+      "UAC_BJ": "Failed to add blizzard.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+      "UNKOWN_BJ": "Possibly failed to add blizzard.j script, Unknown error occurred:",
+      "ADD_BJ": "Add commander scrip",
+      "UAC_FLUSH": "Failed to flush scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+      "UNKOWN_FLUSH": "Possibly failed to flush scripts, Unknown error occurred::",
+      "ADD_FLUSH": "Optimize map MPQ",
+      "INSTALLING_FAIL": "Install failed with error:"
   }
 }
