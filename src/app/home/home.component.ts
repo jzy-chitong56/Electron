@@ -43,7 +43,6 @@ export class HomeComponent implements OnInit {
 
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
-    console.log('mouseenter:',action);
     if (this.isInteractive) {
       switch (action) {
         case 'Roc':
@@ -67,7 +66,6 @@ export class HomeComponent implements OnInit {
 
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
-    console.log('mouseout:',action);
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
@@ -91,7 +89,6 @@ export class HomeComponent implements OnInit {
 
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
-    console.log('click:', action, event.target);
     if (this.isInteractive) {
       switch (action) {
         case 'Roc':
@@ -138,7 +135,6 @@ export class HomeComponent implements OnInit {
   }
 
   onInputChange(inputId: string) {
-    console.log('input:',  inputId);
     if (this.isInteractive) { 
       switch (inputId) {
         case 'ModeSwitch':
