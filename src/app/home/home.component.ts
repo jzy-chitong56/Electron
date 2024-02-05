@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   modeState: string = '-folder';
   bjState: string = '';
   message: string = '';
-  
+  console.log('init var done');
   ngOnInit(): void {
     // console.log('HomeComponent INIT');
     this.homeService.changeEnabledHomeStateEmitter.subscribe(enabled => {
@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
   // 鼠标移入事件处理函数
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
+    console.log('mouseenter:',action);
     if (this.isInteractive) {
       switch (action) {
         case 'Roc':
@@ -68,6 +69,7 @@ export class HomeComponent implements OnInit {
   // 鼠标移出事件处理函数
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
+    console.log('mouseout:',action);
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
@@ -92,7 +94,7 @@ export class HomeComponent implements OnInit {
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
-    console.log('onClick action element:', action, event.target);
+    console.log('click:', action, event.target);
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
