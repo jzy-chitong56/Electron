@@ -18,7 +18,8 @@
 
   <div class="center-text">{{ 'PAGES.HOME.ADVANCED_SETTING' | translate }}</div>
   <div class="ContainerLattice">
-    <label id="ModeSwitch" class="switch" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
+<!--     <label id="ModeSwitch" class="switch" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')"> -->
+    <label id="ModeSwitch" class="switch" #ModeSwitch data-action="Mode" [attr.data-switch]="true">
       <input type="checkbox" class="hidden-checkbox">
       <div class="slider">
         <span>{{ 'PAGES.HOME.INSTALL_ON_MAP' | translate }}</span>
