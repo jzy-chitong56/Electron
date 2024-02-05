@@ -53,16 +53,17 @@ export class AppComponent {
         res4: res.transmaptitle
       };  
       this.electronService.ipcRenderer.send('Trans',data as any);
-    });
-    this.translate.get('PAGES.APP.INSTALLING').subscribe(res: string => {  
+    },);
+    this.translate.get('PAGES.APP.INSTALLING').subscribe((res: string) => {  
       this.Installing_Title = res;  
-    },
-    this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe(res: string => {  
+    },);
+    this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((res: string) => {  
       this.InstalDone_Title = res;  
-    },
-    this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe(res: string => {  
+    },);
+    this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe((res: string) => {  
       this.InstalDir_Mes = res;  
-    },
+    });
+
     console.log('init Installing Title:', this.Installing_Title);
     console.log('init Install Done Title:', this.InstalDone_Title);
     console.log('init Install Directory Message:', this.InstalDir_Mes);
