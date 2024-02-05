@@ -92,8 +92,7 @@ export class HomeComponent implements OnInit {
   // 点击事件处理函数
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
-    console.log('onClick called with action:', action);
-    console.log('Clicked element:', event.target); 
+    console.log('onClick action element:', action, event.target);
     if (this.isInteractive) { 
       switch (action) {
         case 'Roc':
@@ -138,14 +137,12 @@ export class HomeComponent implements OnInit {
         case 'Mode':
           this.Mode_State = !this.Mode_State;
           this.modeState = this.Mode_State ? '-folder' : '-map';
-          console.log('mode',this.modeState);
-          console.log('GETMODE',this.Mode_State);
+          console.log('mode',this.modeState,this.Mode_State);
         break;
         case 'BJ':
           this.BJ_State = !this.BJ_State;
           this.bjState = this.BJ_State ? '' : '-noc';
-          console.log('BJ',this.bjState);
-          console.log('GETBJ',this.BJ_State);
+          console.log('BJ',this.bjState,this.BJ_State);
         break;
       }
     };
