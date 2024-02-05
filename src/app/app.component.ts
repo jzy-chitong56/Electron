@@ -64,9 +64,6 @@ export class AppComponent {
       this.InstalDir_Mes = res;  
     });
 
-    console.log('init Installing Title:', this.Installing_Title);
-    console.log('init Install Done Title:', this.InstalDone_Title);
-    console.log('init Install Directory Message:', this.InstalDir_Mes);
     console.log('APP_CONFIG', APP_CONFIG);
 
     if (electronService.isElectron) {
@@ -75,13 +72,11 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
         // TODO: use i18n to translate
-        console.log('Installing Title:', this.Installing_Title);  
         this.title = `${this.Installing_Title} ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
-        console.log('Install Directory Message:', this.InstalDir_Mes); 
         !args.isMap && this.messages && this.messages.push(`${this.InstalDir_Mes} ${args.response}`);
         // disable the menu while the script is running
         this
@@ -112,7 +107,6 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         console.log('args-install-exit', args);
         // TODO: use i18n to translate  
-        console.log('Install Done Title:', this.InstalDone_Title);  
         this.title = this.InstalDone_Title;
         this.couldClose = true;
 
