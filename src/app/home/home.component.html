@@ -1,5 +1,5 @@
 <div class="center-container">
-  <div class="center-heading">{{ 'PAGES.HOME.CHOOSE_GAME_VERSION' | translate }}</div>
+  <div class="headtitle-text">{{ 'PAGES.HOME.CHOOSE_GAME_VERSION' | translate }}</div>
 
   <div class="ContainerLattice">
     <div id="imageROC" class="imageContainerROC" #imageROC data-action="Roc" (mouseover)="onMouseEnter($event, 'Roc')" (mouseout)="onMouseLeave($event, 'Roc')" (click)="onClick($event, 'Roc')">
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="center-text">{{ 'PAGES.HOME.ADVANCED_SETTING' | translate }}</div>
+  <div class="subtitle-text">{{ 'PAGES.HOME.ADVANCED_SETTING' | translate }}</div>
   <div class="ContainerLattice">
     <label class="switch">
       <input type="checkbox" class="hidden-checkbox" id="ModeSwitch" #ModeSwitch data-action="Mode" (click)="onClick($event, 'Mode')">
