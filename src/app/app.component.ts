@@ -60,14 +60,14 @@ export class AppComponent {
         console.log('args-install-init', args)
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING').subscribe((res) => {
-          this.title = `${res} ${args.response}`;
+          this.title = res `${args.response}`;
         });
         this.active = true;
         this.couldClose = false;
         this.messages = [];
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_TO_FOLER').subscribe((res) => {
-          !args.isMap && this.messages && this.messages.push(`${res} ${args.response}`);
+          !args.isMap && this.messages && this.messages.push(res `${args.response}`);
         });
         // disable the menu while the script is running
         this
@@ -99,7 +99,7 @@ export class AppComponent {
         console.log('args-install-exit', args);
         // TODO: use i18n to translate
         this.translate.get('PAGES.APP.INSTALLING_DONE').subscribe((res) => {
-          this.title = `${res}`;
+          this.title = res;
         });
         this.couldClose = true;
 
