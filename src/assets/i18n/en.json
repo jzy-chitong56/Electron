@@ -3,8 +3,8 @@
       "HOME": {
         "TITLE": "AMAI Installer. Use toolbar menu to select an option",
         "GO_TO_DETAIL": "Go to Detail",
-        "CHOOSE_GAME_VERSION": "Choose Game Version",
-        "ADVANCED_SETTING": "Advanced Setting",
+        "CHOOSE_GAME_VERSION": "-Choose Game Version-",
+        "ADVANCED_SETTING": "-Advanced Setting-",
         "INSTALL_ON_FOLDER": "Installing To Directory",      
         "INSTALL_ON_MAP": "Installing To Map",
         "INCLUDE_COMMANDER": "Install Commander"
