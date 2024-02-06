@@ -48,7 +48,7 @@
       max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
       width: 100%;
       gap: 10px;
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
 
     .imageContainerROC,
@@ -76,7 +76,6 @@
       position: relative;
       cursor: pointer;
       width: 30%;
-      top: 30px;
       font-size: 1rem;
       transform: scale(1.5);
     }
@@ -87,7 +86,6 @@
       align-items: center;  
       text-align: center;
       position: relative;
-      top: 30px;
       max-width: var(--switch-width);
       width: 36%; 
       height: 32px;
