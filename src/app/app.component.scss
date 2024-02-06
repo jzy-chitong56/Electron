@@ -5,13 +5,13 @@
 .main-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .main-content-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  // flex: 1;
 
   ::ng-deep > *:nth-child(2) {
     height: 100%;
@@ -33,7 +33,7 @@
   transition: height 0.3s;
   height: 0px;
   overflow: hidden;
-  bottom: 0;
+  bottom: 8px;
   //> {
   //  color: white;
   //  margin: 16px;
