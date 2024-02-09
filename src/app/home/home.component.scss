@@ -97,11 +97,8 @@
     .slider {
       position: absolute;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #36b61a;
+      left: 1px;
+      background-color: #ffffff;
       border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
@@ -122,9 +119,7 @@
       content: "";
       white-space: nowrap;
       left: 1px;
-      height: 100%;
-      width: 50%;
-      background-color: #ffffff;
+      background-color: #36b61a;
       border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
@@ -139,7 +134,7 @@
       -webkit-transform: translateX(100%);
       -ms-transform: translateX(100%);
        transform: translateX(100%);
-       margin-left: -3px;
+       margin-left: -1px;
     }
 
 }
