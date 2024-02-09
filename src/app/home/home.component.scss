@@ -98,7 +98,7 @@
       position: absolute;
       cursor: pointer;
       left: 1px;
-      background-color: #ffffff;
+      background-color: rgb(33, 4, 251);
       border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
@@ -118,15 +118,13 @@
       justify-content: center;
       content: "";
       white-space: nowrap;
-      left: 1px;
-      background-color: #36b61a;
-      border-radius: 26px;
+      background-color: #ffffff;
       -webkit-transition: .4s;
       transition: .4s;
     }
 
     input:checked + .slider {
-      background-color: rgb(33, 4, 251);
+      background-color: #36b61a;
     }
 
     input:checked + .slider:before {
