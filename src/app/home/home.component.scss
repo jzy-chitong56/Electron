@@ -97,8 +97,11 @@
     .slider {
       position: absolute;
       cursor: pointer;
+      top: 0;
       left: 1px;
-      background-color: rgb(33, 4, 251);
+      right: 0;
+      bottom: 0;
+      background-color: #ffffff;
       border-radius: 26px;
       -webkit-transition: .4s;
       transition: .4s;
@@ -118,7 +121,9 @@
       justify-content: center;
       content: "";
       white-space: nowrap;
-      background-color: #ffffff;
+      height: 100%;
+      width: 50%;
+      background-color: rgb(33, 4, 251);
       -webkit-transition: .4s;
       transition: .4s;
     }
