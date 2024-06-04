@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   message: string = '';
   
   ngOnInit(): void {
-    // console.log('HomeComponent INIT');
+    console.log('HomeComponent INIT');
     this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {
       this.isInteractive = state;
       console.log('reset_button');
@@ -156,5 +156,4 @@ export class HomeComponent implements OnInit {
     private electronService: ElectronService,
     private homeService: HomeService,
   ) { }
-
 }
