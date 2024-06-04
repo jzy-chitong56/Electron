@@ -29,9 +29,9 @@ export class AppComponent {
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
-        console.log('args', args)
+        console.log('args-install-init', args)
         // TODO: use i18n to translate
-        this.title = `正在安装： ${args.response}`;
+        this.title = `Installing into ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -50,7 +50,7 @@ export class AppComponent {
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-empty', (_, args) => {
-        console.log('args', args);
+        console.log('args-install-empty', args);
         this.active = false;
         this.couldClose = true;
         this.cdr.detectChanges();
@@ -59,7 +59,7 @@ export class AppComponent {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         // TODO: use i18n to translate
-        this.title = '安装完成...';
+        this.title = 'Installation finished...';
         this.couldClose = true;
 
         this
@@ -70,14 +70,14 @@ export class AppComponent {
       });
 
       this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
-        console.log('args', args);
+        console.log('args-install-message', args);
         this.messages && this.messages.push(args);
         this.cdr.detectChanges();
       });
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-error', (_, args) => {
-        console.log('args', args);
+        console.log('args-install-error', args);
         this.couldClose = true;
 
         this
