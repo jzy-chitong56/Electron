@@ -47,8 +47,8 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: 使用 Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: 使用 Node 版本号：${{ matrix.node-version }}
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
 
@@ -84,5 +84,5 @@ jobs:
 
     - name: 下载附件
       uses: actions/download-artifact@v4
-      with:
-        path: ./release/win-unpacked/amai.zip
+      # with:
+        # path: ./release/win-unpacked/amai.zip
