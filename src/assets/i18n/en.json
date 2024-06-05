@@ -7,7 +7,8 @@
         "ADVANCED_SETTING": "Advanced Setting",
         "INSTALL_ON_FOLDER": "Installing To Directory",      
         "INSTALL_ON_MAP": "Installing To Map",
-        "INCLUDE_COMMANDER": "Install Commander"
+        "INCLUDE_COMMANDER": "Install Commander",
+        "BEST_GAME_VERSION": "Optimal:"
       },
       "DETAIL": {
         "TITLE": "Detail page !",
