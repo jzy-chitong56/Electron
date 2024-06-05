@@ -33,9 +33,9 @@ const isDev = () => {
     y: 0,
     width: size.width,
     height: size.height,
-    minWidth: 1280,
-    minHeight: 768,
-    title: 'AMAI Manager',
+    // minWidth: 1280,
+    // minHeight: 768,
+    // title: 'AMAI Manager',
     webPreferences: {
       devTools: true,
       nodeIntegration: true,
