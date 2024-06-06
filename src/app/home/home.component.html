@@ -8,19 +8,19 @@
       <img id="ImagesREFEnable" src="assets/REF.Enable.png" [ngStyle]="{'display': Images_REF_Shown ? 'block' : 'none'}"/>
       <img id="ImagesREFDisable" src="assets/REF.Disable.png" [ngStyle]="{'display': !Images_REF_Shown ? 'block' : 'none'}"/>
       <span>1.33+</span>
-      <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}1.36.2+</span>
+      <span class="reccomendations">{{ 'PAGES.HOME.REF_BEST_GAME_VERSION' | translate }}</span>
     </div>
     <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="Tft" (mouseover)="onMouseEnter($event, 'Tft')" (mouseout)="onMouseLeave($event, 'Tft')" (click)="onClick($event, 'Tft')">
       <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" [ngStyle]="{'display': Images_TFT_Shown ? 'block' : 'none'}"/>
       <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" [ngStyle]="{'display': !Images_TFT_Shown ? 'block' : 'none'}"/>
       <span>1.24e+</span>
-      <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}1.24e~1.28.x</span>
+      <span class="reccomendations">{{ 'PAGES.HOME.TFT_BEST_GAME_VERSION' | translate }}</span>
     </div>
     <div id="imageROC" class="imageContainerROC" #imageROC data-action="Roc" (mouseover)="onMouseEnter($event, 'Roc')" (mouseout)="onMouseLeave($event, 'Roc')" (click)="onClick($event, 'Roc')">
       <img id="ImagesROCEnable" src="assets/ROC.Enable.png" [ngStyle]="{'display': Images_ROC_Shown ? 'block' : 'none'}"/>
       <img id="ImagesROCDisable" src="assets/ROC.Disable.png" [ngStyle]="{'display': !Images_ROC_Shown ? 'block' : 'none'}"/>
       <span>1.24e+~1.31</span>
-      <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}1.24e~1.28.x</span>
+      <span class="reccomendations">{{ 'PAGES.HOME.ROC_BEST_GAME_VERSION' | translate }}</span>
     </div>
   </div>
 
