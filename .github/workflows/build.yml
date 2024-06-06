@@ -6,13 +6,13 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
-      - 详细设置
+    #  - 详细设置
   #path:
 
 
   pull_request:
     branches:
-      - 详细设置
+    #  - 详细设置
 
 
   # Allows you to run this workflow manually from the Actions tab
