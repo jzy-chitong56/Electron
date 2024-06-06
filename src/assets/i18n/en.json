@@ -8,7 +8,9 @@
         "INSTALL_ON_FOLDER": "Installing To Directory",      
         "INSTALL_ON_MAP": "Installing To Map",
         "INCLUDE_COMMANDER": "Install Commander and W3C icon",
-        "BEST_GAME_VERSION": "Optimal:"
+        "REF_BEST_GAME_VERSION": "Optimal: Latest"
+        "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+        "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
       },
       "DETAIL": {
         "TITLE": "Detail page !",
