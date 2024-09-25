@@ -8,6 +8,9 @@
         "INSTALL_ON_FOLDER": "Installing To Directory",      
         "INSTALL_ON_MAP": "Installing To Map",
         "INCLUDE_COMMANDER": "Install Commander and W3C icon",
+        "INCLUDE_COMMANDER_ON": "Install Commander and icon",
+        "INCLUDE_COMMANDER_ON_VSAI": "Install Commander VSAI and icon",
+        "INCLUDE_COMMANDER_OFF": "Not Install Commander",
         "REF_BEST_GAME_VERSION": "Optimal: Latest",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
         "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
