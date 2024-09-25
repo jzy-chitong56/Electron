@@ -131,7 +131,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(33, 4, 251);
+    background-color: #007bff;
     border-radius: 26px;
     -webkit-transition: .4s;
     transition: .4s;
@@ -182,7 +182,8 @@
     display: inline-block;
     padding: 4px 10px; /* 内边距，根据需要调整 */
     border-radius: 12px; /* 圆角 */
-    background-color: #ccc; /* 未选中时背景色 */
+    font-weight: bold;
+    background-color: #AAAAAA; /* 未选中时背景色 */
     cursor: pointer; /* 鼠标悬停时显示指针 */
     position: relative; /* 用于后续可能需要的定位 */
     transition: background-color 0.3s; /* 背景色变化过渡效果 */
@@ -190,8 +191,8 @@
 
   /* 鼠标悬停样式 */
   .radio-btn:hover {
-    color: #FFFFFF; /* 选中时文字颜色 */  
-    background-color: #75BDFF; /* 选中时背景色 */
+    color: #FFFFFF; /* 悬停时文字颜色 */  
+    background-color: #AAC3E8; /* 悬停时背景色 */
   }
 
   input[type="radio"]:checked + .radio-btn {
