@@ -13,6 +13,7 @@ let TransopenDir: string;
 let TransmapFile: string;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
+
 // needed to call remote inside app
 remote.initialize();
 
@@ -89,7 +90,7 @@ const installTrans = () => {
   });
 }
 
-const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
+const execInstall = async (signal, commander: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
@@ -189,52 +190,76 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
 const installProcess = () => {
   let signal = {};
 
-  ipcMain && ipcMain.on('install-folder', async () => {
-    execInstall(signal);
+  ipcMain && ipcMain.on('install-folder-1', async () => {
+    execInstall(signal, "1", false);
   });
   
-  ipcMain && ipcMain.on('install-folder-noc', async () => {
-    execInstall(signal, false, false);
+  ipcMain && ipcMain.on('install-folder-2', async () => {
+    execInstall(signal, "2", false);
   });
 
-  ipcMain && ipcMain.on('install-map', async () => {
-    execInstall(signal, true, true);
-  });
-  
-  ipcMain && ipcMain.on('install-map-noc', async () => {
-    execInstall(signal, false, true);
-  });
-  
-  ipcMain && ipcMain.on('install-folder-TFT', async () => {
-    execInstall(signal, true, false, "TFT");
-  });
-  
-  ipcMain && ipcMain.on('install-folder-noc-TFT', async () => {
-    execInstall(signal, false, false, "TFT");
+  ipcMain && ipcMain.on('install-folder-0', async () => {
+    execInstall(signal, "0", false);
   });
 
-  ipcMain && ipcMain.on('install-map-TFT', async () => {
-    execInstall(signal, true, true, "TFT");
+  ipcMain && ipcMain.on('install-map-1', async () => {
+    execInstall(signal, "1", true);
   });
   
-  ipcMain && ipcMain.on('install-map-noc-TFT', async () => {
-    execInstall(signal, false, true, "TFT");
-  });
-  
-  ipcMain && ipcMain.on('install-folder-ROC', async () => {
-    execInstall(signal, true, false, "ROC");
-  });
-  
-  ipcMain && ipcMain.on('install-folder-noc-ROC', async () => {
-    execInstall(signal, false, false, "ROC");
+  ipcMain && ipcMain.on('install-map-2', async () => {
+    execInstall(signal, "2", true);
   });
 
-  ipcMain && ipcMain.on('install-map-ROC', async () => {
-    execInstall(signal, true, true, "ROC");
+  ipcMain && ipcMain.on('install-map-0', async () => {
+    execInstall(signal, "0", true);
   });
   
-  ipcMain && ipcMain.on('install-map-noc-ROC', async () => {
-    execInstall(signal, false, true, "ROC");
+  ipcMain && ipcMain.on('install-folder-1-TFT', async () => {
+    execInstall(signal, "1", false, "TFT");
+  });
+  
+  ipcMain && ipcMain.on('install-folder-2-TFT', async () => {
+    execInstall(signal, "2", false, "TFT");
+  });
+
+  ipcMain && ipcMain.on('install-folder-0-TFT', async () => {
+    execInstall(signal, "0", false, "TFT");
+  });
+
+  ipcMain && ipcMain.on('install-map-1-TFT', async () => {
+    execInstall(signal, "1", true, "TFT");
+  });
+  
+  ipcMain && ipcMain.on('install-map-2-TFT', async () => {
+    execInstall(signal, "2", true, "TFT");
+  });
+  
+  ipcMain && ipcMain.on('install-map-0-TFT', async () => {
+    execInstall(signal, "0", true, "TFT");
+  });
+  
+  ipcMain && ipcMain.on('install-folder-1-ROC', async () => {
+    execInstall(signal, "1", false, "ROC");
+  });
+  
+  ipcMain && ipcMain.on('install-folder-2-ROC', async () => {
+    execInstall(signal, "2", false, "ROC");
+  });
+  
+  ipcMain && ipcMain.on('install-folder-0-ROC', async () => {
+    execInstall(signal, "0", false, "ROC");
+  });
+
+  ipcMain && ipcMain.on('install-map-1-ROC', async () => {
+    execInstall(signal, "1", true, "ROC");
+  });
+  
+  ipcMain && ipcMain.on('install-map-2-ROC', async () => {
+    execInstall(signal, "2", true, "ROC");
+  });
+  
+  ipcMain && ipcMain.on('install-map-0-ROC', async () => {
+    execInstall(signal, "0", true, "ROC");
   });
 
   // TODO: stop process with signal
@@ -279,8 +304,6 @@ const init = () => {
   }
 }
 
-
 init();
 installTrans();
 installProcess();
-
