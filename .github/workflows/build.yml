@@ -68,7 +68,8 @@ jobs:
 
     - name: 打包应用
      # run: npm run electron:local
-      run: npm run electron:build
+     # run: npm run electron:build
+      run: npm run electron:build -- --ia32
 
     - name: 压缩打包文件
       uses: darshitsri/zip-release@v3
