@@ -103,17 +103,16 @@ export class MenuService {
                 }
               }
             ]
-          }
+          },
+          {
+            label: translations['PAGES.MENU.FULL'],
+            role: 'togglefullscreen',
+          },
+          {
+            label: translations['PAGES.MENU.DEV'],
+            role: 'toggleDevTools',
+           }
         );
-      });
-
-      template.push({
-        label: 'fullscreen',
-        role: 'togglefullscreen',
-      },
-      {
-        label: 'DevTools',
-        role: 'toggleDevTools',
       });
 
       console.log(template);
