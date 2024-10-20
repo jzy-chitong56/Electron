@@ -12,11 +12,11 @@ export class MenuService {
     private readonly translate: TranslateService
     ) { }
 
-    private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
+    private getTemplate(translate : TranslateService) | (Electron.MenuItem)> { 
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
         , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
-        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
+        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH') , _('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL'),
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
