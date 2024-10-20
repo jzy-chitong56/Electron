@@ -67,8 +67,8 @@
         "RUSSIAN": "俄语",
         "SPANISH": "西班牙语",
         "SWEDISH": "瑞典语",
-         "DEV_TOOL": "开发者工具",
-         "FULLSCREEN": "全屏/窗口化"
+        "DEV_TOOL": "开发者工具",
+        "FULLSCREEN": "全屏/窗口化"
       }
   }
 }
