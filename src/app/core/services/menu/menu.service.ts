@@ -105,11 +105,11 @@ export class MenuService {
             ]
           },
           {
-            label: translations['PAGES.MENU.FULL'],
+            label: translations['PAGES.MENU.FULLSCREEN'],
             role: 'togglefullscreen',
           },
           {
-            label: translations['PAGES.MENU.DEV'],
+            label: translations['PAGES.MENU.DEV_TOOL'],
             role: 'toggleDevTools',
            }
         );
