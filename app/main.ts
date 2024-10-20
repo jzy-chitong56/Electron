@@ -1,5 +1,4 @@
 import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
-import { TranslateService } from '@ngx-translate/core';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from '@electron/remote/main';
@@ -8,9 +7,7 @@ const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
 let win: BrowserWindow = null;
-let TransopenMap: string;
-let TransopenDir: string;
-let TransmapFile: string;
+let translations : { [key: string]: string };
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
@@ -78,28 +75,16 @@ const isDev = () => {
   return win;
 }
 
-const installTrans = () => {
-  ipcMain && ipcMain.on('Trans', (event, data) => {
-    TransopenMap = data.res1 as string;
-    TransopenDir = data.res2 as string;
-    TransmapFile = data.res3 as string;
-    win.setTitle(data.res4 as string)
-    console.log('Trans1', TransopenMap);
-    console.log('Trans2', TransopenDir);
-    console.log('Trans3', TransmapFile);
-  });
-}
-
 const execInstall = async (signal, commander: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
-    title : isMap ? TransopenMap : TransopenDir,
+    title : isMap ? translations["PAGES.ELECTRON.OPEN_MAP"]: translations["PAGES.ELECTRON.OPEN_DIR"],
     // TODO: Change to let multiples selections when is map
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-    { name: TransmapFile , extensions: ['w3x', 'w3m'] },
+    { name: translations["PAGES.ELECTRON.MAPFILE"], extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
@@ -302,6 +287,15 @@ const init = () => {
     // Catch Error
     // throw e;
   }
+}
+
+const installTrans = () => {
+  ipcMain?.on('Trans', (_event, data) => {
+    translations = data as { [key: string]: string };
+    if (win != null) {
+      win.setTitle(translations['PAGES.HOME.TITLE'])
+    }
+  });
 }
 
 init();
