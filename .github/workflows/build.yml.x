@@ -6,13 +6,13 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
-      # - VSAI
+      - VSAI
   #path:
 
 
   pull_request:
     branches:
-      # - VSAI
+      - VSAI
 
 
   # Allows you to run this workflow manually from the Actions tab
