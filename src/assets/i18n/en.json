@@ -2,7 +2,6 @@
   "PAGES": {
       "HOME": {
         "TITLE": "AMAI Installer",
-        "GO_TO_DETAIL": "Go to Detail",
         "CHOOSE_GAME_VERSION": "Choose Game Version",
         "ADVANCED_SETTING": "Advanced Setting",
         "INSTALL_ON_FOLDER": "Installing To Directory",      
@@ -14,10 +13,6 @@
         "REF_BEST_GAME_VERSION": "Optimal: Latest",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
         "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
-      },
-      "DETAIL": {
-        "TITLE": "Detail page !",
-        "BACK_TO_HOME": "Back to Home"
       },
       "INDEX": {
         "CLOSE": "close"
@@ -46,14 +41,27 @@
       "APP": {
         "TITLE": "AMAI Manager",
         "LOAD": "Loading...",
-        "INSTALLING": "Installing into",
-        "INSTALLING_TO_FOLER": "Installing in directory:",
-        "INSTALLING_DONE": "Installation finished...",
+        "INSTALLING": "Installing into {{path}}",
+        "INSTALLING_DIR": "Installing in directory: {{path}}",
+        "INSTALL_DONE" : "Installation finished"
+      },
+      "ELECTRON": {
         "OPEN_MAP": "Open WC3 Map File",
-        "OPEN_DIRECTORY": "Open WC3 Maps Directory",
-        "MAP_FILE": "'WC3 Map File'"
+        "OPEN_DIR": "Open AMAI Maps Directory",
+        "MAPFILE": "WC3 Map File"
       },
       "MUSE": {
+        "SELECT_LANG": "Select Language",
+        "ENGLISH": "English",
+        "CHINESE": "Chinese",
+        "FRENCH": "French",
+        "GERMAN": "German",
+        "NORWEGIAN": "Norwegian",
+        "PORTUGUESE": "Portuguese",
+        "ROMANIAN": "Romanian",
+        "RUSSIAN": "Russian",
+        "SPANISH": "Spanish",
+        "SWEDISH": "Swedish",
          "DEV_TOOL": "DevTools",
          "FULLSCREEN": "FullScreen"
       }
