@@ -13,7 +13,8 @@ export class MenuService {
     ) { }
 
     private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
-      let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [
+      let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [      
+      {
           // TODO: recreate MakeTFT script
           // FIXME: convert MakeTFTBase.bat to JS script
           // FIXME: convert MakeTFT.bat to JS script
@@ -28,6 +29,7 @@ export class MenuService {
           // { label: 'Compile, Optimize' },
           // TODO: recreate MakeVAITFT.bat script
           // { label: 'Compile AMAI vs Default AI' },
+      },
       ];
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
