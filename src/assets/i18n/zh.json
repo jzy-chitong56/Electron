@@ -41,7 +41,7 @@
         "UAC_FLUSH": "MPQ 压缩失败,您可能不具备权限,或被 UAC 阻止.请确保地图文件不在受 UAC 保护的目录",
         "UNKOWN_AI": "未知错误,写入 AI脚本 可能失败:",
         "UNKOWN_BJ": "未知错误,写入 控制台 可能失败:",
-        "UNKOWN_FLUSH": "未知错误,MPQ 压缩可能失败"
+        "UNKOWN_FLUSH": "未知错误,MPQ 压缩可能失败:"
       },
       "APP": {
         "TITLE": "AMAI 安装器",
