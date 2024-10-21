@@ -2,6 +2,7 @@
   "PAGES": {
     "HOME": {
       "TITLE": "Instalador de AMAI",
+      "GO_TO_DETAIL": "Ingrese a la página de detalles",
       "CHOOSE_GAME_VERSION": "Elegir versión del juego",
       "ADVANCED_SETTING": "Configuraciones avanzadas",
       "INSTALL_ON_FOLDER": "Instalar en el directorio",
