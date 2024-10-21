@@ -15,7 +15,7 @@ export class MenuService {
     private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
       let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [      
       {
-      },
+      }
           // TODO: recreate MakeTFT script
           // FIXME: convert MakeTFTBase.bat to JS script
           // FIXME: convert MakeTFT.bat to JS script
@@ -125,19 +125,17 @@ export class MenuService {
         );
       });
 
-      // this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
-      // ]).subscribe((translations: { [key: string]: string }) => {
-      //   template.push(
-      //     {
-      //       label: translations['PAGES.MENU.FULLSCREEN'],
-      //       role: 'togglefullscreen',
-      //     },
-      //     {
-      //       label: translations['PAGES.MENU.DEV_TOOL'],
-      //       role: 'toggleDevTools',
-      //     }
-      //   );
-      // });
+
+      template.push(
+        {
+          label: translations['PAGES.MENU.FULLSCREEN'],
+          role: 'togglefullscreen',
+        },
+        {
+          label: translations['PAGES.MENU.DEV_TOOL'],
+          role: 'toggleDevTools',
+        }
+      );
 
       console.log(template);
 
