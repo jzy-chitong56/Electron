@@ -14,6 +14,10 @@
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
         "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
       },
+      "DETAIL": {
+        "TITLE": "Detail!",
+        "BACK_TO_HOME": "back to home"
+      },
       "INDEX": {
         "CLOSE": "close",
         "VER_ROC": "Classic ROC",
