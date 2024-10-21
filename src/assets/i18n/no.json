@@ -2,6 +2,7 @@
   "PAGES": {
     "HOME": {
       "TITLE": "AMAI Installer",
+      "GO_TO_DETAIL": "Legg inn detaljeringssiden",
       "CHOOSE_GAME_VERSION": "Velg spillversjon",
       "ADVANCED_SETTING": "Avanserte innstillinger",
       "INSTALL_ON_FOLDER": "Installer i katalog",
