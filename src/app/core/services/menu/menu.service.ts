@@ -12,8 +12,8 @@ export class MenuService {
     private readonly translate: TranslateService
     ) { }
 
-    private getTemplate(translate : TranslateService) { 
-      let template : any = [
+    private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
+      let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [
       ];
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
