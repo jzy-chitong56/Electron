@@ -1,14 +1,46 @@
 {
   "PAGES": {
       "HOME": {
-          "TITLE": "AMAI Installer",
-          "CHOOSE_GAME_VERSION": "Choose Game Version",
-          "ADVANCED_SETTING": "Advanced Settings",
-          "INSTALL_ON_FOLDER": "Install To Directory",      
-          "INSTALL_ON_MAP": "Install To Map",
-          "INCLUDE_COMMANDER": "Install Commander"
+        "TITLE": "AMAI Installer",
+        "CHOOSE_GAME_VERSION": "Choose Game Version",
+        "ADVANCED_SETTING": "Advanced Setting",
+        "INSTALL_ON_FOLDER": "Installing To Directory",      
+        "INSTALL_ON_MAP": "Installing To Map",
+        "INCLUDE_COMMANDER": "Install Commander and W3C icon",
+        "INCLUDE_COMMANDER_ON": "Install Commander and icon",
+        "INCLUDE_COMMANDER_ON_VSAI": "Install Commander VSAI and icon",
+        "INCLUDE_COMMANDER_OFF": "Not Install Commander",
+        "REF_BEST_GAME_VERSION": "Optimal: Latest",
+        "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
+        "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+      },
+      "INDEX": {
+        "CLOSE": "close"
+        "VER_ROC": "Classic ROC",
+        "VER_TFT": "Classic TFT",
+        "VER_REF": "Reforged",
+        "SKIP": "skip file: ",
+        "INSTALLING": "Installing",
+        "IN_TO": "into file: ",
+        "RESIZE_MAP": "Resize map hashtable size",
+        "ADD_AI": "Add ai scripts",
+        "ADD_BJ": "Add commander scrip",
+        "ADD_FLUSH": "Optimize map MPQ",
+        "WARN": "WARN:",
+        "ERROR_FIND_FAIL": "ERROR: Cannot find",
+        "WRITE_FAIL": "does not have write permissions so unable to install",
+        "INSTALLING_FAIL": "Install failed with error:",
+        "UAC_RESIZE": "Failed to run mpqeditor htsize, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+        "UAC_AI": "Failed to add ai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+        "UAC_BJ": "Failed to add blizzard.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+        "UAC_FLUSH": "Failed to flush scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
+        "UNKOWN_AI": "Possibly failed to add ai scripts, Unknown error occurred:",
+        "UNKOWN_BJ": "Possibly failed to add blizzard.j script, Unknown error occurred:",
+        "UNKOWN_FLUSH": "Possibly failed to flush scripts, Unknown error occurred::"
       },
       "APP": {
+        "TITLE": "AMAI Manager",
+        "LOAD": "Loading...",
         "INSTALLING": "Installing into {{path}}",
         "INSTALLING_DIR": "Installing in directory: {{path}}",
         "INSTALL_DONE" : "Installation finished"
@@ -18,7 +50,7 @@
         "OPEN_DIR": "Open AMAI Maps Directory",
         "MAPFILE": "WC3 Map File"
       },
-      "MENU": {
+      "MUSE": {
         "SELECT_LANG": "Select Language",
         "ENGLISH": "English",
         "CHINESE": "Chinese",
@@ -29,7 +61,9 @@
         "ROMANIAN": "Romanian",
         "RUSSIAN": "Russian",
         "SPANISH": "Spanish",
-        "SWEDISH": "Swedish"
+        "SWEDISH": "Swedish",
+         "DEV_TOOL": "DevTools",
+         "FULLSCREEN": "FullScreen"
       }
   }
 }
