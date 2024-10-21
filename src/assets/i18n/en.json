@@ -15,7 +15,7 @@
         "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
       },
       "INDEX": {
-        "CLOSE": "close"
+        "CLOSE": "close",
         "VER_ROC": "Classic ROC",
         "VER_TFT": "Classic TFT",
         "VER_REF": "Reforged",
@@ -50,7 +50,7 @@
         "OPEN_DIR": "Open AMAI Maps Directory",
         "MAPFILE": "WC3 Map File"
       },
-      "MUSE": {
+      "MENU": {
         "SELECT_LANG": "Select Language",
         "ENGLISH": "English",
         "CHINESE": "Chinese",
