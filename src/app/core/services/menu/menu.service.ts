@@ -15,7 +15,7 @@ export class MenuService {
     private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
       let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [      
       {
-      }
+      },
           // TODO: recreate MakeTFT script
           // FIXME: convert MakeTFTBase.bat to JS script
           // FIXME: convert MakeTFT.bat to JS script
