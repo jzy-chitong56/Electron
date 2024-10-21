@@ -2,6 +2,7 @@
   "PAGES": {
     "HOME": {
       "TITLE": "AMAI-Installationsprogramm",
+      "GO_TO_DETAIL": "Geben Sie die Detailseite ein",
       "CHOOSE_GAME_VERSION": "Spielversion wählen",
       "ADVANCED_SETTING": "Erweiterte Einstellungen",
       "INSTALL_ON_FOLDER": "Im Verzeichnis installieren",
