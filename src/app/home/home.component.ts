@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
-import { HomeService } from '../core/services/home/home.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +12,7 @@ import { HomeService } from '../core/services/home/home.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   Images_ROC_Shown: boolean = false;
   Images_TFT_Shown: boolean = false; 
   Images_REF_Shown: boolean = false; 
@@ -24,21 +25,9 @@ export class HomeComponent implements OnInit {
   modeState: string = '-folder';
   bjState: string = '';
   message: string = '';
-  
+
   ngOnInit(): void {
-    // console.log('HomeComponent INIT');
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {
-      this.isInteractive = state;
-      console.log('reset_button');
-      if (this.isInteractive) {
-        this.Images_ROC_Shown = false;
-        this.Images_TFT_Shown = false;
-        this.Images_REF_Shown = false;
-        this.ROCInstall = false;
-        this.TFTInstall = false;
-        this.REFInstall = false;
-      }
-    });
+    console.log('HomeComponent INIT');
   }
 
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
@@ -64,6 +53,7 @@ export class HomeComponent implements OnInit {
     };
   }
 
+
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
     if (this.isInteractive) { 
@@ -86,6 +76,8 @@ export class HomeComponent implements OnInit {
       }
     };
   }
+  
+
 
   @HostListener('click', ['$event', '$event.target.dataset.action'])
   onClick(event: MouseEvent, action: string) {
@@ -94,9 +86,6 @@ export class HomeComponent implements OnInit {
         case 'Roc':
           if (!this.ROCInstall) {
             this.message = `install${this.modeState}${this.bjState}-ROC`;
-            this.Images_ROC_Shown = true;
-            this.Images_TFT_Shown = false;
-            this.Images_REF_Shown = false;
             this.TFTInstall = false;
             this.REFInstall = false;
             this.ROCInstall = !this.ROCInstall;
@@ -107,9 +96,6 @@ export class HomeComponent implements OnInit {
         case 'Tft':
           if (!this.TFTInstall) {
             this.message = `install${this.modeState}${this.bjState}-TFT`;
-            this.Images_ROC_Shown = false;
-            this.Images_TFT_Shown = true;
-            this.Images_REF_Shown = false;
             this.ROCInstall = false;
             this.REFInstall = false;
             this.TFTInstall = !this.TFTInstall;
@@ -120,9 +106,6 @@ export class HomeComponent implements OnInit {
         case 'Ref':
           if (!this.REFInstall) {
             this.message = `install${this.modeState}${this.bjState}`;
-            this.Images_ROC_Shown = false;
-            this.Images_TFT_Shown = false;
-            this.Images_REF_Shown = true;
             this.ROCInstall = false;
             this.TFTInstall = false;
             this.REFInstall = !this.REFInstall;
@@ -132,6 +115,12 @@ export class HomeComponent implements OnInit {
           break;
       }
     };
+    this.Images_ROC_Shown = false;
+    this.Images_TFT_Shown = false;
+    this.Images_REF_Shown = false;
+    this.ROCInstall = false;
+    this.TFTInstall = false;
+    this.REFInstall = false;
   }
 
   onInputChange(inputId: string) {
@@ -154,7 +143,5 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private electronService: ElectronService,
-    private homeService: HomeService,
   ) { }
-
 }

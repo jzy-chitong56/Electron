@@ -1,6 +1,4 @@
 :host {
-
-
     :root {
       --switch-width: 300px; /* 最大宽度 */
     }
@@ -13,9 +11,13 @@
       max-width: 100%;
     }
 
+    .container {
+      color: white;
+    }
+
     .headtitle-text {
       text-align: center;
-      font-size: 3rem;
+      font-size: 2rem;
       font-weight: bold;
     }
 
@@ -26,13 +28,6 @@
       margin-top: 4rem;
     }
 
-
-    /* 当屏幕宽度小于等于800px时，减小字体大小 */
-    @media (max-width: 800px) {
-      .headtitle-text, .subtitle-text {
-        font-size: 1rem;
-      }
-    }
 
     .ContainerLattice {
       display: flex;
@@ -45,15 +40,51 @@
       margin-top: 2rem;
     }
 
+    .AdvancedSettings {
+      background-color: black;
+    }
+
     .imageContainerROC,
     .imageContainerTFT,
     .imageContainerREF {
-      display: flex;
+      display: block;
       align-items: center;
       justify-content: center;
       max-width: 512px;
       width: 50%;
       height: auto;
+      background-color: black;
+      min-width: 200px;
+    }
+
+    .imageContainerROC span,
+    .imageContainerTFT span,
+    .imageContainerREF span {
+      background-color: black;
+      font-size: 2rem;
+    }
+
+    .reccomendations {
+      font-size: 14pt;
+      display: block;
+      color: gold;
+    }
+
+    /* 当屏幕宽度小于等于800px时，减小字体大小 */
+    @media (max-width: 800px) {
+      .headtitle-text, .subtitle-text {
+        font-size: 1rem;
+      }
+
+      .imageContainerROC span,
+      .imageContainerTFT span,
+      .imageContainerREF span {
+        font-size: 1rem;
+      }
+  
+      .reccomendations {
+        font-size: 10pt;
+      }
     }
 
     @media (max-width: 1600px) {
@@ -72,6 +103,7 @@
       width: 30%;
       font-size: 1rem;
       transform: scale(1.5);
+      min-width: 200px;
     }
 
     .switch {
@@ -86,6 +118,7 @@
       border: 3px solid #5c5c5c; /* 添加边框 */
       box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
       border-radius: 26px;
+      min-width: 400px;
     }
 
     .slider {
@@ -135,5 +168,4 @@
        transform: translateX(100%);
        margin-left: -1px;
     }
-
 }
