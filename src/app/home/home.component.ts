@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
-import { HomeService } from '../core/services/home/home.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,18 +28,6 @@ export class HomeComponent implements OnInit {
   
   ngOnInit(): void {
     console.log('HomeComponent INIT');
-    this.homeService.changeEnabledHomeStateEmitter.subscribe(state => {
-      this.isInteractive = state;
-      console.log('reset_button');
-      if (this.isInteractive) {
-        this.Images_ROC_Shown = false;
-        this.Images_TFT_Shown = false;
-        this.Images_REF_Shown = false;
-        this.ROCInstall = false;
-        this.TFTInstall = false;
-        this.REFInstall = false;
-      }
-    });
   }
 
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
@@ -133,6 +121,12 @@ export class HomeComponent implements OnInit {
           break;
       }
     };
+    this.Images_ROC_Shown = false;
+    this.Images_TFT_Shown = false;
+    this.Images_REF_Shown = false;
+    this.ROCInstall = false;
+    this.TFTInstall = false;
+    this.REFInstall = false;
   }
 
  onInputChange(inputId: string) {
@@ -167,6 +161,5 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private electronService: ElectronService,
-    private homeService: HomeService,
   ) { }
 }
