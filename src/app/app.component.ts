@@ -21,9 +21,9 @@ export class AppComponent {
     private readonly menuService: MenuService,
     private readonly cdr: ChangeDetectorRef,
   ) {
-      this.translate.setDefaultLang('en');  
-      const lang = this.translate.getBrowserLang();
-      this.translate.use(lang)
+    this.translate.setDefaultLang('zh');  
+    const lang = this.translate.getBrowserLang();
+    this.translate.use(lang)
     console.log('APP_CONFIG', APP_CONFIG);
 
     // Refresh app when language changes
