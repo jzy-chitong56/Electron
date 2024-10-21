@@ -14,11 +14,25 @@ export class MenuService {
 
     private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
       let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [
+          // TODO: recreate MakeTFT script
+          // FIXME: convert MakeTFTBase.bat to JS script
+          // FIXME: convert MakeTFT.bat to JS script
+          // FIXME: convert ejass.pl to JS script
+          //{
+          //  label: 'Compile',
+          //  click: () => {
+          //    this.electronService.ipcRenderer.send('compile');
+          //  }
+          // },
+          // TODO: recreate MakeOptTFT.bat script
+          // { label: 'Compile, Optimize' },
+          // TODO: recreate MakeVAITFT.bat script
+          // { label: 'Compile AMAI vs Default AI' },
       ];
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
         , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
-        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH') , _('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
+        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
@@ -105,7 +119,13 @@ export class MenuService {
                 }
               }
             ]
-          },
+          }
+        );
+      });
+
+      this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
+      ]).subscribe((translations: { [key: string]: string }) => {
+        template.push(
           {
             label: translations['PAGES.MENU.FULLSCREEN'],
             role: 'togglefullscreen',
@@ -113,22 +133,9 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.DEV_TOOL'],
             role: 'toggleDevTools',
-           }
+          }
         );
       });
-
-  // this.translate.get([ _('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
-  //     ]).subscribe((translations: { [key: string]: string }) => {
-  //     template.push({
-  //           label: translations['PAGES.MENU.FULLSCREEN'],
-  //           role: 'togglefullscreen',
-  //         },
-  //         {
-  //           label: translations['PAGES.MENU.DEV_TOOL'],
-  //           role: 'toggleDevTools',
-  //          }
-  //       );
-  //     });
 
       console.log(template);
 
