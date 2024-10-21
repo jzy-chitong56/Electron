@@ -34,7 +34,7 @@ export class MenuService {
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
         , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
-        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
+        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH'), _('PAGES.MENU.DEV_TOOL'), _('PAGES.MENU.FULLSCREEN')
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
@@ -121,21 +121,22 @@ export class MenuService {
                 }
               }
             ]
+          }，
+          {
+            label: translations['PAGES.MENU.FULLSCREEN'],
+            role: 'togglefullscreen',
+          },
+          {
+            label: translations['PAGES.MENU.DEV_TOOL'],
+            role: 'toggleDevTools',
           }
         );
       });
 
 
-      template.push(
-        {
-          label: translations['PAGES.MENU.FULLSCREEN'],
-          role: 'togglefullscreen',
-        },
-        {
-          label: translations['PAGES.MENU.DEV_TOOL'],
-          role: 'toggleDevTools',
-        }
-      );
+      // template.push(
+
+      // );
 
       console.log(template);
 
