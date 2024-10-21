@@ -121,7 +121,7 @@ export class MenuService {
                 }
               }
             ]
-          }，
+          },
           {
             label: translations['PAGES.MENU.FULLSCREEN'],
             role: 'togglefullscreen',
