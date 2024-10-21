@@ -40,7 +40,7 @@
         "UAC_FLUSH": "Failed to flush scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
         "UNKOWN_AI": "Possibly failed to add ai scripts, Unknown error occurred:",
         "UNKOWN_BJ": "Possibly failed to add blizzard.j script, Unknown error occurred:",
-        "UNKOWN_FLUSH": "Possibly failed to flush scripts, Unknown error occurred::"
+        "UNKOWN_FLUSH": "Possibly failed to flush scripts, Unknown error occurred:"
       },
       "APP": {
         "TITLE": "AMAI Manager",
