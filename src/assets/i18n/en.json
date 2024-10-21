@@ -16,23 +16,23 @@
       },
       "DETAIL": {
         "TITLE": "Detail!",
-        "BACK_TO_HOME": "back to home"
+        "BACK_TO_HOME": "Back to home"
       },
       "INDEX": {
         "CLOSE": "close",
         "VER_ROC": "Classic ROC",
         "VER_TFT": "Classic TFT",
         "VER_REF": "Reforged",
-        "SKIP": "skip file: ",
+        "SKIP": "Skip file: ",
         "INSTALLING": "Installing",
-        "IN_TO": "into file: ",
+        "IN_TO": "Into file: ",
         "RESIZE_MAP": "Resize map hashtable size",
         "ADD_AI": "Add ai scripts",
         "ADD_BJ": "Add commander scrip",
         "ADD_FLUSH": "Optimize map MPQ",
         "WARN": "WARN:",
         "ERROR_FIND_FAIL": "ERROR: Cannot find",
-        "WRITE_FAIL": "does not have write permissions so unable to install",
+        "WRITE_FAIL": "Does not have write permissions so unable to install",
         "INSTALLING_FAIL": "Install failed with error:",
         "UAC_RESIZE": "Failed to run mpqeditor htsize, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
         "UAC_AI": "Failed to add ai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location",
