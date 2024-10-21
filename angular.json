@@ -7,7 +7,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "amai-electron-manager": {
+    "angular-electron": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -113,27 +113,27 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "amai-electron-manager:build"
+            "browserTarget": "angular-electron:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "amai-electron-manager:build:dev"
+              "browserTarget": "angular-electron:build:dev"
             },
             "production": {
-              "browserTarget": "amai-electron-manager:build:production"
+              "browserTarget": "angular-electron:build:production"
             },
             "web": {
-              "browserTarget": "amai-electron-manager:build:web"
+              "browserTarget": "angular-electron:build:web"
             },
             "web-production": {
-              "browserTarget": "amai-electron-manager:build:web-production"
+              "browserTarget": "angular-electron:build:web-production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "amai-electron-manager:build"
+            "browserTarget": "angular-electron:build"
           }
         },
         "test": {
@@ -169,7 +169,7 @@
         }
       }
     },
-    "amai-electron-manager-e2e": {
+    "angular-electron-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -184,7 +184,7 @@
       }
     }
   },
-  "defaultProject": "amai-electron-manager",
+  "defaultProject": "angular-electron",
   "schematics": {
     "@angular-eslint/schematics:application": {
       "setParserOptionsProject": true
