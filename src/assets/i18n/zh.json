@@ -5,7 +5,7 @@
         "GO_TO_DETAIL": "进入详情页",
         "CHOOSE_GAME_VERSION": "选择游戏版本",
         "ADVANCED_SETTING": "高级设置",
-        "INSTALL_ON_FOLDER": "按文件夹安装",      
+        "INSTALL_ON_FOLDER": "按文件夹安装",
         "INSTALL_ON_MAP": "按地图安装",
         "INCLUDE_COMMANDER": "安装控制台及图标",
         "INCLUDE_COMMANDER_ON": "安装控制台及图标",
@@ -52,8 +52,8 @@
       },
      "ELECTRON": {
         "OPEN_MAP": "选择地图",
-        "OPEN_DIRECTORY": "选择地图目录",
-        "MAP_FILE": "'地图文件'"
+        "OPEN_DIR": "选择地图目录",
+        "MAPFILE": "'地图文件'"
       },
       "MENU": {
         "SELECT_LANG": "选择语言",
