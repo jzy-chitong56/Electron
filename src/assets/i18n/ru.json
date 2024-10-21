@@ -2,6 +2,7 @@
   "PAGES": {
     "HOME": {
       "TITLE": "Установщик AMAI",
+      "GO_TO_DETAIL": "Введите подробную страницу",
       "CHOOSE_GAME_VERSION": "Выберите версию игры",
       "ADVANCED_SETTING": "Расширенные настройки",
       "INSTALL_ON_FOLDER": "Установить в папку",
