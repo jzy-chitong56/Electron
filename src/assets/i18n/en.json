@@ -3,9 +3,9 @@
       "HOME": {
         "TITLE": "AMAI Installer",
         "CHOOSE_GAME_VERSION": "Choose Game Version",
-        "ADVANCED_SETTING": "Advanced Setting",
-        "INSTALL_ON_FOLDER": "Installing To Directory",      
-        "INSTALL_ON_MAP": "Installing To Map",
+        "ADVANCED_SETTING": "Advanced Settings",
+        "INSTALL_ON_FOLDER": "Install To Directory",
+        "INSTALL_ON_MAP": "Install To Map",
         "INCLUDE_COMMANDER": "Install Commander and W3C icon",
         "INCLUDE_COMMANDER_ON": "Install Commander and W3C icon",
         "INCLUDE_COMMANDER_ON_VSAI": "Install Commander VSAI and W3C icon",
@@ -66,8 +66,8 @@
         "RUSSIAN": "Russian",
         "SPANISH": "Spanish",
         "SWEDISH": "Swedish",
-         "DEV_TOOL": "DevTools",
-         "FULLSCREEN": "FullScreen"
+        "DEV_TOOL": "DevTools",
+        "FULLSCREEN": "FullScreen"
       }
   }
 }
