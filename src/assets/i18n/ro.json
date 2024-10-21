@@ -2,6 +2,7 @@
   "PAGES": {
     "HOME": {
       "TITLE": "Instalator AMAI",
+      "GO_TO_DETAIL": "Introduceți pagina de detalii",
       "CHOOSE_GAME_VERSION": "Alege versiunea jocului",
       "ADVANCED_SETTING": "Setări avansate",
       "INSTALL_ON_FOLDER": "Instalează în director",
