@@ -200,7 +200,7 @@ export class MenuService {
         );
       });
 
-       template.push({
+       template.push(
           {
             label: 'DevTools',
             role: 'toggleDevTools' 
@@ -209,7 +209,7 @@ export class MenuService {
             label: 'FullScreen',
             role: 'togglefullscreen' 
           }
-       });
+       );
 
       // template.push({
       //   label: 'View',
