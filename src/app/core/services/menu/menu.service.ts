@@ -105,7 +105,6 @@ export class MenuService {
         //   // { label: 'Compile AMAI vs Default AI' },
         // ]
       }
-      ];
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
         , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
@@ -207,10 +206,10 @@ export class MenuService {
           },
           {
             label: 'FullScreen',
-            role: 'togglefullscreen' 
+            role: 'togglefullscreen',
           }
        );
-
+      ];
       // template.push({
       //   label: 'View',
       //   submenu: [
