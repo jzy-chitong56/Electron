@@ -202,11 +202,11 @@ export class MenuService {
 
        template.push({
           {
-            label: DevTools,
+            label: 'DevTools',
             role: 'toggleDevTools' 
           },
           {
-            label: FullScreen,
+            label: 'FullScreen',
             role: 'togglefullscreen' 
           }
        });
