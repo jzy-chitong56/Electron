@@ -14,8 +14,8 @@ export class MenuService {
 
     private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
       let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [
-      {
-         label: 'Install',
+      // {
+      //    label: 'Install',
         // submenu: [
         //   {
         //     label: 'Install Reforged on Folder',
@@ -104,7 +104,7 @@ export class MenuService {
         //   // TODO: recreate MakeVAITFT.bat script
         //   // { label: 'Compile AMAI vs Default AI' },
         // ]
-      },
+      // },
       ];
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
@@ -113,10 +113,10 @@ export class MenuService {
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
-            label: translations["PAGES.MENU.SELECT_LANG"],
+            label: translations['PAGES.MENU.SELECT_LANG'],
             submenu: [
               {
-                label: translations["PAGES.MENU.ENGLISH"],
+                label: translations['PAGES.MENU.ENGLISH'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'en',
                 click: () => {
@@ -124,7 +124,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.CHINESE"],
+                label: translations['PAGES.MENU.CHINESE'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'zh',
                 click: () => {
@@ -132,7 +132,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.FRENCH"],
+                label: translations['PAGES.MENU.FRENCH'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'fr',
                 click: () => {
@@ -140,7 +140,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.GERMAN"],
+                label: translations['PAGES.MENU.GERMAN'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'de',
                 click: () => {
@@ -148,7 +148,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.NORWEGIAN"],
+                label: translations['PAGES.MENU.NORWEGIAN'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'no',
                 click: () => {
@@ -156,7 +156,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.PORTUGUESE"],
+                label: translations['PAGES.MENU.PORTUGUESE'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'pt',
                 click: () => {
@@ -164,7 +164,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.ROMANIAN"],
+                label: translations['PAGES.MENU.ROMANIAN'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'ro',
                 click: () => {
@@ -172,7 +172,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.RUSSIAN"],
+                label: translations['PAGES.MENU.RUSSIAN'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'ru',
                 click: () => {
@@ -180,7 +180,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.SPANISH"],
+                label: translations['PAGES.MENU.SPANISH'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'es',
                 click: () => {
@@ -188,7 +188,7 @@ export class MenuService {
                 }
               },
               {
-                label: translations["PAGES.MENU.SWEDISH"],
+                label: translations['PAGES.MENU.SWEDISH'],
                 type: 'radio',
                 checked: this.translate.currentLang == 'sv',
                 click: () => {
