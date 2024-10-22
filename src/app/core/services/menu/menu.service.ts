@@ -14,7 +14,7 @@ export class MenuService {
 
     private getTemplate(translate : TranslateService) : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> { 
       let template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [
-      {
+      //{
         // label: 'Install',
         // submenu: [
         //   {
@@ -104,9 +104,12 @@ export class MenuService {
         //   // TODO: recreate MakeVAITFT.bat script
         //   // { label: 'Compile AMAI vs Default AI' },
         // ]
-      },
+      //},
+      ];
 
-      this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH'), _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN'), _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
+      this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
+        , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
+        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
@@ -207,7 +210,7 @@ export class MenuService {
             role: 'togglefullscreen',
           }
        );
-      ];
+
       // template.push({
       //   label: 'View',
       //   submenu: [
