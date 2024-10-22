@@ -47,7 +47,7 @@
         "LOAD": "加载中...",
         "INSTALLING": "正在安装 {{path}}",
         "INSTALLING_DIR": "安装到文件夹:{{path}}",
-        "INSTALLING_DONE": "安装完成..."
+        "INSTALL_DONE": "安装完成..."
       },
      "ELECTRON": {
         "OPEN_MAP": "选择地图",
