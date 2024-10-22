@@ -104,7 +104,7 @@ export class MenuService {
         //   // TODO: recreate MakeVAITFT.bat script
         //   // { label: 'Compile AMAI vs Default AI' },
         // ]
-      },
+      }
       ];
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
@@ -196,17 +196,20 @@ export class MenuService {
                 }
               }
             ]
-          },
-          {
-            label: translations['PAGES.MENU.DEV_TOOL'],
-            role: 'toggleDevTools' 
-          },
-          {
-            label: translations['PAGES.MENU.FULLSCREEN'],
-            role: 'togglefullscreen' 
           }
         );
       });
+
+       template.push({
+          {
+            label: DevTools,
+            role: 'toggleDevTools' 
+          },
+          {
+            label: FullScreen,
+            role: 'togglefullscreen' 
+          }
+       });
 
       // template.push({
       //   label: 'View',
@@ -226,7 +229,7 @@ export class MenuService {
       console.log(template);
 
       return template;
-    }
+  }
 
   public createMenu() {
     if(this.electronService.isElectron) {
