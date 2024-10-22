@@ -47,12 +47,12 @@
         "LOAD": "加载中...",
         "INSTALLING": "正在安装 {{path}}",
         "INSTALLING_TO_FOLER": "安装到文件夹:{{path}}",
-        "INSTALLING_DONE": "安装完成...",
+        "INSTALLING_DONE": "安装完成..."
       },
      "ELECTRON": {
         "OPEN_MAP": "选择地图",
         "OPEN_DIR": "选择地图目录",
-        "MAPFILE": "'地图文件'"
+        "MAPFILE": "地图文件"
       },
       "MENU": {
         "SELECT_LANG": "选择语言",
