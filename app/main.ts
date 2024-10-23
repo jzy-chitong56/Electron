@@ -75,6 +75,14 @@ const isDev = () => {
   return win;
 }
 
+const setLang = async (signal, lang: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
+  win.webContents.send('on-install-init', <InstallModel>{
+    response: null,
+    lang,
+    isMap
+  });
+}
+
 const execInstall = async (signal, commander: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
@@ -176,43 +184,43 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain && ipcMain.on('setlang-English', async () => {
-    execInstall(signal, "English", false);
+    setLang(signal, "English", false);
   });
 
   ipcMain && ipcMain.on('setlang-Chinese', async () => {
-    execInstall(signal, "Chinese", false);
+    setLang(signal, "Chinese", false);
   });
 
   ipcMain && ipcMain.on('setlang-French', async () => {
-    execInstall(signal, "French", false);
+    setLang(signal, "French", false);
   });
 
   ipcMain && ipcMain.on('setlang-Deutsch', async () => {
-    execInstall(signal, "Deutsch", false);
+    setLang(signal, "Deutsch", false);
   });
 
   ipcMain && ipcMain.on('setlang-Norwegian', async () => {
-    execInstall(signal, "Norwegian", false);
+    setLang(signal, "Norwegian", false);
   });
 
   ipcMain && ipcMain.on('setlang-Portuguese', async () => {
-    execInstall(signal, "Portuguese", false);
+    setLang(signal, "Portuguese", false);
   });
 
   ipcMain && ipcMain.on('setlang-Romanian', async () => {
-    execInstall(signal, "Romanian", false);
+    setLang(signal, "Romanian", false);
   });
 
   ipcMain && ipcMain.on('setlang-Russian', async () => {
-    execInstall(signal, "Russian", false);
+    setLang(signal, "Russian", false);
   });
 
   ipcMain && ipcMain.on('setlang-Spanish', async () => {
-    execInstall(signal, "Spanish", false);
+    setLang(signal, "Spanish", false);
   });
 
   ipcMain && ipcMain.on('setlang-Swedish', async () => {
-    execInstall(signal, "Swedish", false);
+    setLang(signal, "Swedish", false);
   });
 
   ipcMain && ipcMain.on('install-folder-1', async () => {
