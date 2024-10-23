@@ -54,7 +54,7 @@ const installOnDirectory = async () => {
         });
       });
     }
-    if (!fs.existsSync(`Scripts\\REFORGED\\Blizzard.j`)) {
+    if (fs.existsSync(`Scripts\\REFORGED\\Blizzard.j`)) {
       const filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
         const searchFor = /string language = "[^"]*"/g;
@@ -67,7 +67,7 @@ const installOnDirectory = async () => {
         });
       });
     }
-    if (!fs.existsSync(`Scripts\\REFORGED\\Blizzard_VSAI.j`)) {
+    if (fs.existsSync(`Scripts\\REFORGED\\Blizzard_VSAI.j`)) {
       const filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard_VSAI.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
         const searchFor = /string language = "[^"]*"/g;
@@ -94,7 +94,7 @@ const installOnDirectory = async () => {
         });
       });
     }
-    if (!fs.existsSync(`Scripts\\TFT\\Blizzard.j`)) {
+    if (fs.existsSync(`Scripts\\TFT\\Blizzard.j`)) {
       const filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
         const searchFor = /string language = "[^"]*"/g;
@@ -107,7 +107,7 @@ const installOnDirectory = async () => {
         });
       });
     }
-    if (!fs.existsSync(`Scripts\\TFT\\Blizzard_VSAI.j`)) {
+    if (fs.existsSync(`Scripts\\TFT\\Blizzard_VSAI.j`)) {
       const filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard_VSAI.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
         const searchFor = /string language = "[^"]*"/g;
@@ -134,7 +134,7 @@ const installOnDirectory = async () => {
         });
       });
     }
-    if (!fs.existsSync(`Scripts\\ROC\\Blizzard.j`)) {
+    if (fs.existsSync(`Scripts\\ROC\\Blizzard.j`)) {
       const filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
         const searchFor = /string language = "[^"]*"/g;
@@ -147,7 +147,7 @@ const installOnDirectory = async () => {
         });
       });
     }
-    if (!fs.existsSync(`Scripts\\ROC\\Blizzard_VSAI.j`)) {
+    if (fs.existsSync(`Scripts\\ROC\\Blizzard_VSAI.j`)) {
       const filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard_VSAI.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
         const searchFor = /string language = "[^"]*"/g;
