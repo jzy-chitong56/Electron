@@ -77,6 +77,7 @@ const isDev = () => {
 
 const setLang = async (signal, lang: String = "English", isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
+  const response = [];
   let child;
 
   // passing reference to external call back
@@ -94,7 +95,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   }
 
   win.webContents.send('setlanguage', <InstallModel>{
-    response: null,
+    response: response[0],
     lang,
     isMap
   });
