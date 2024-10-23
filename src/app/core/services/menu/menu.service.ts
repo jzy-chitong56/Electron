@@ -157,6 +157,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'en',
                 click: () => {
                   this.translate.use('en')
+                  this.electronService.ipcRenderer.send('setlang-English');
                 }
               },
               {
@@ -165,6 +166,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'zh',
                 click: () => {
                   this.translate.use('zh')
+                  this.electronService.ipcRenderer.send('setlang-Chinese');
                 }
               },
               {
@@ -173,6 +175,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'fr',
                 click: () => {
                   this.translate.use('fr')
+                  this.electronService.ipcRenderer.send('setlang-French');
                 }
               },
               {
@@ -181,6 +184,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'de',
                 click: () => {
                   this.translate.use('de')
+                  this.electronService.ipcRenderer.send('setlang-Deutsch');
                 }
               },
               {
@@ -189,6 +193,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'no',
                 click: () => {
                   this.translate.use('no')
+                  this.electronService.ipcRenderer.send('setlang-Norwegian');
                 }
               },
               {
@@ -197,6 +202,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'pt',
                 click: () => {
                   this.translate.use('pt')
+                  this.electronService.ipcRenderer.send('setlang-Portuguese');
                 }
               },
               {
@@ -205,6 +211,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'ro',
                 click: () => {
                   this.translate.use('ro')
+                  this.electronService.ipcRenderer.send('setlang-Romanian');
                 }
               },
               {
@@ -213,6 +220,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'ru',
                 click: () => {
                   this.translate.use('ru')
+                  this.electronService.ipcRenderer.send('setlang-Russian');
                 }
               },
               {
@@ -221,6 +229,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'es',
                 click: () => {
                   this.translate.use('es')
+                  this.electronService.ipcRenderer.send('setlang-Spanish');
                 }
               },
               {
@@ -229,6 +238,7 @@ export class MenuService {
                 checked: this.translate.currentLang == 'sv',
                 click: () => {
                   this.translate.use('sv')
+                  this.electronService.ipcRenderer.send('setlang-Swedish');
                 }
               }
             ]
