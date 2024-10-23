@@ -75,12 +75,60 @@ const isDev = () => {
   return win;
 }
 
-const setLang = async (signal, lang: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
-  win.webContents.send('on-install-init', <InstallModel>{
+const setLang = async (signal, lang: String = "English", isMap: boolean = false, ver: String = "REFORGED") => {
+  const controller = new AbortController();
+  let child;
+
+  // passing reference to external call back
+  signal = controller.signal;
+
+  let currentExecDir = `./AMAI-release/`,
+    currentScriptDir = './AMAI-release/';
+
+  if(!isDev()) {
+    currentExecDir = `./AMAI/`;
+    currentScriptDir = path.join(
+      __dirname,
+      `../${currentExecDir}`
+    );
+  }
+
+  win.webContents.send('setlanguage', <InstallModel>{
     response: null,
     lang,
     isMap
   });
+
+
+  // init set language proccess
+  try {
+    child = cp.fork(
+      require.resolve(
+        path.join(
+          __dirname,
+          `../${currentExecDir}install.js`
+        )
+      ),
+      [ response[0], lang, ver ],
+      { signal },
+      (err) => {
+        win.webContents.send('on-setlanguage-error', err);
+      }
+    );
+
+
+    // send messages to modal on front
+    child.on('message', (message) => {
+      win.webContents.send('on-setlanguage-message', message);
+    });
+
+    // close modal on process finishes
+    child.on('exit', () => {
+      win.webContents.send('on-setlanguage-exit');
+    });
+  } catch(err) {
+    win.webContents.send('on-setlanguage-error', err.message);
+  }
 }
 
 const execInstall = async (signal, commander: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
