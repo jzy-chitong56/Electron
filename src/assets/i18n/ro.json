@@ -7,9 +7,9 @@
       "ADVANCED_SETTING": "Setări avansate",
       "INSTALL_ON_FOLDER": "Instalează în director",
       "INSTALL_ON_MAP": "Instalează pe hartă",
-      "INCLUDE_COMMANDER": "Instalați Commander și pictograma W3C",
-      "INCLUDE_COMMANDER_VSAI": "Instalați Commander VS AI și pictograma W3C",
-      "INCLUDE_COMMANDER_OFF": "nu Instalați Commander și pictograma W3C",
+      "INCLUDE_COMMANDER": "Instalați Commander",
+      "INCLUDE_COMMANDER_VSAI": "Instalați Commander VS AI",
+      "INCLUDE_COMMANDER_OFF": "nu Instalați Commander",
       "REF_BEST_GAME_VERSION": "Optim: Cele mai recente",
       "TFT_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x"

@@ -8,8 +8,8 @@
       "INSTALL_ON_FOLDER": "Instalar en el directorio",
       "INSTALL_ON_MAP": "Instalar en el mapa",
       "INCLUDE_COMMANDER": "Incluir comandante",
-      "INCLUDE_COMMANDER_VSAI": "Incluir comandante VSAI y Icon",
-      "INCLUDE_COMMANDER_OFF": " No Incluir comandante y Icon",
+      "INCLUDE_COMMANDER_VSAI": "Incluir comandante VSAI",
+      "INCLUDE_COMMANDER_OFF": " No Incluir comandante",
       "REF_BEST_GAME_VERSION": "Óptimo: Lo último",
       "TFT_BEST_GAME_VERSION": "Óptimo: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Óptimo: 1.24e~1.28.x"

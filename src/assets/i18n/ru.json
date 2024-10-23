@@ -8,8 +8,8 @@
       "INSTALL_ON_FOLDER": "Установить в папку",
       "INSTALL_ON_MAP": "Установить на карту",
       "INCLUDE_COMMANDER": "Включить командира",
-      "INCLUDE_COMMANDER_VSAI": "Установите Commander VS AI и иконку W3C",
-      "INCLUDE_COMMANDER_OFF": "не Установите Commander и иконку W3C",
+      "INCLUDE_COMMANDER_VSAI": "Включить командира VS AI",
+      "INCLUDE_COMMANDER_OFF": "не Включить командира",
       "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
       "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x"

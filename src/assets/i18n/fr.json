@@ -7,9 +7,9 @@
       "ADVANCED_SETTING": "Paramètres avancés",
       "INSTALL_ON_FOLDER": "Installer dans le répertoire",
       "INSTALL_ON_MAP": "Installer sur la carte",
-      "INCLUDE_COMMANDER": "Installer le commandant et l’icône W3C",
-      "INCLUDE_COMMANDER_VSAI": "Installer le commandant VSAI et l’icône W3C",
-      "INCLUDE_COMMANDER_OFF": "Non Installer le commandant et l’icône W3C",
+      "INCLUDE_COMMANDER": "Installer le commandant",
+      "INCLUDE_COMMANDER_VSAI": "Installer le commandant VSAI",
+      "INCLUDE_COMMANDER_OFF": "Non Installer le commandant",
       "REF_BEST_GAME_VERSION": "Optimal: Dernier",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"

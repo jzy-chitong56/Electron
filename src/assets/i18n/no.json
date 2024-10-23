@@ -7,9 +7,9 @@
       "ADVANCED_SETTING": "Avanserte innstillinger",
       "INSTALL_ON_FOLDER": "Installer i katalog",
       "INSTALL_ON_MAP": "Installer på kart",
-      "INCLUDE_COMMANDER": "Inkluder kommandant og W3C-ikon",
-      "INCLUDE_COMMANDER_VSAI": "Inkluder kommandant VS AI og W3C-ikon",
-      "INCLUDE_COMMANDER_OFF": "Ikke Inkluder kommandant og W3C-ikon",
+      "INCLUDE_COMMANDER": "Inkluder kommandant",
+      "INCLUDE_COMMANDER_VSAI": "Inkluder kommandant VS AI",
+      "INCLUDE_COMMANDER_OFF": "Ikke Inkluder kommandant",
       "REF_BEST_GAME_VERSION": "Optimal: Siste",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"

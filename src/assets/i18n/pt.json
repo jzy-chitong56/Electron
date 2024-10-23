@@ -7,9 +7,9 @@
       "ADVANCED_SETTING": "Configurações avançadas",
       "INSTALL_ON_FOLDER": "Instalar no diretório",
       "INSTALL_ON_MAP": "Instalar no mapa",
-      "INCLUDE_COMMANDER": "Instalar o ícone do Commander e do W3C",
-      "INCLUDE_COMMANDER_VSAI": "Instalar o ícone do Commander CS AI e do W3C",
-      "INCLUDE_COMMANDER_OFF": "não Instalar o ícone do Commander e do W3C",
+      "INCLUDE_COMMANDER": "Instalar Commander",
+      "INCLUDE_COMMANDER_VSAI": "Instalar Commander CS AI",
+      "INCLUDE_COMMANDER_OFF": "não Instalar Commander",
       "REF_BEST_GAME_VERSION": "Optimal: Últimas notícias",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"

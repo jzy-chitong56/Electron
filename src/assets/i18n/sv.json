@@ -7,9 +7,9 @@
       "ADVANCED_SETTING": "Avancerade inställningar",
       "INSTALL_ON_FOLDER": "Installera i katalog",
       "INSTALL_ON_MAP": "Installera på karta",
-      "INCLUDE_COMMANDER": "Installera Commander och W3C-ikon",
-      "INCLUDE_COMMANDER_VSAI": "Installera Commander VS AI och W3C-ikon",
-      "INCLUDE_COMMANDER_OFF": "inte IInstallera Commander och W3C-ikon",
+      "INCLUDE_COMMANDER": "Installera Commander",
+      "INCLUDE_COMMANDER_VSAI": "Installera Commander VS AI",
+      "INCLUDE_COMMANDER_OFF": "inte IInstallera Commander",
       "REF_BEST_GAME_VERSION": "Optimalt: Senaste",
       "TFT_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x"
