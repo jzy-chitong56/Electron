@@ -175,10 +175,50 @@ const execInstall = async (signal, commander: String = "-1", isMap: boolean = fa
 const installProcess = () => {
   let signal = {};
 
+  ipcMain && ipcMain.on('setlang-English', async () => {
+    execInstall(signal, "English", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Chinese', async () => {
+    execInstall(signal, "Chinese", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-French', async () => {
+    execInstall(signal, "French", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Deutsch', async () => {
+    execInstall(signal, "Deutsch", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Norwegian', async () => {
+    execInstall(signal, "Norwegian", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Portuguese', async () => {
+    execInstall(signal, "Portuguese", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Romanian', async () => {
+    execInstall(signal, "Romanian", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Russian', async () => {
+    execInstall(signal, "Russian", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Spanish', async () => {
+    execInstall(signal, "Spanish", false);
+  });
+
+  ipcMain && ipcMain.on('setlang-Swedish', async () => {
+    execInstall(signal, "Swedish", false);
+  });
+
   ipcMain && ipcMain.on('install-folder-1', async () => {
     execInstall(signal, "1", false);
   });
-  
+
   ipcMain && ipcMain.on('install-folder-2', async () => {
     execInstall(signal, "2", false);
   });
@@ -190,7 +230,7 @@ const installProcess = () => {
   ipcMain && ipcMain.on('install-map-1', async () => {
     execInstall(signal, "1", true);
   });
-  
+
   ipcMain && ipcMain.on('install-map-2', async () => {
     execInstall(signal, "2", true);
   });
@@ -198,11 +238,11 @@ const installProcess = () => {
   ipcMain && ipcMain.on('install-map-0', async () => {
     execInstall(signal, "0", true);
   });
-  
+
   ipcMain && ipcMain.on('install-folder-1-TFT', async () => {
     execInstall(signal, "1", false, "TFT");
   });
-  
+
   ipcMain && ipcMain.on('install-folder-2-TFT', async () => {
     execInstall(signal, "2", false, "TFT");
   });
@@ -214,23 +254,23 @@ const installProcess = () => {
   ipcMain && ipcMain.on('install-map-1-TFT', async () => {
     execInstall(signal, "1", true, "TFT");
   });
-  
+
   ipcMain && ipcMain.on('install-map-2-TFT', async () => {
     execInstall(signal, "2", true, "TFT");
   });
-  
+
   ipcMain && ipcMain.on('install-map-0-TFT', async () => {
     execInstall(signal, "0", true, "TFT");
   });
-  
+
   ipcMain && ipcMain.on('install-folder-1-ROC', async () => {
     execInstall(signal, "1", false, "ROC");
   });
-  
+
   ipcMain && ipcMain.on('install-folder-2-ROC', async () => {
     execInstall(signal, "2", false, "ROC");
   });
-  
+
   ipcMain && ipcMain.on('install-folder-0-ROC', async () => {
     execInstall(signal, "0", false, "ROC");
   });
@@ -238,11 +278,11 @@ const installProcess = () => {
   ipcMain && ipcMain.on('install-map-1-ROC', async () => {
     execInstall(signal, "1", true, "ROC");
   });
-  
+
   ipcMain && ipcMain.on('install-map-2-ROC', async () => {
     execInstall(signal, "2", true, "ROC");
   });
-  
+
   ipcMain && ipcMain.on('install-map-0-ROC', async () => {
     execInstall(signal, "0", true, "ROC");
   });
