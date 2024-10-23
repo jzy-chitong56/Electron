@@ -30,9 +30,139 @@ const getAllFiles = (dirPath, arrayOfFiles) => {
 
 const installOnDirectory = async () => {
   const args = process.argv.slice(2);
-  const installCommander = (args[1] == 'true');
+  // const installCommander = (args[1] == 'true');
+  const installCommanderMode1 = (args[1] == '1');
+  const installCommanderMode2 = (args[1] == '2');
+  const setLanguages = args[1] !== '1' && args[1] !== '2' && args[1] !== '0';  
   const response = args[0];
   const ver = args[2]
+
+
+  if (setLanguages) {
+    process.send(`#### Installing AMAI set Scripts Languages ####`);
+
+    if (fs.existsSync(`Scripts\\REFORGED\\common.ai`)) {
+      const filePath = path.join(__dirname, `Scripts\\REFORGED\\common.ai`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set common.ai language`);;
+          }
+        });
+      });
+    }
+    if (!fs.existsSync(`Scripts\\REFORGED\\Blizzard.j`)) {
+      const filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard.j`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set Blizzard.j language`);;
+          }
+        });
+      });
+    }
+    if (!fs.existsSync(`Scripts\\REFORGED\\Blizzard_VSAI.j`)) {
+      const filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard_VSAI.j`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set Blizzard_VSAI.j language`);;
+          }
+        });
+      });
+    }
+
+    if (fs.existsSync(`Scripts\\TFT\\common.ai`)) {
+      const filePath = path.join(__dirname, `Scripts\\TFT\\common.ai`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set common.ai language`);;
+          }
+        });
+      });
+    }
+    if (!fs.existsSync(`Scripts\\TFT\\Blizzard.j`)) {
+      const filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard.j`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set Blizzard.j language`);;
+          }
+        });
+      });
+    }
+    if (!fs.existsSync(`Scripts\\TFT\\Blizzard_VSAI.j`)) {
+      const filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard_VSAI.j`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set Blizzard_VSAI.j language`);;
+          }
+        });
+      });
+    }
+
+    if (fs.existsSync(`Scripts\\ROC\\common.ai`)) {
+      const filePath = path.join(__dirname, `Scripts\\ROC\\common.ai`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set common.ai language`);;
+          }
+        });
+      });
+    }
+    if (!fs.existsSync(`Scripts\\ROC\\Blizzard.j`)) {
+      const filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard.j`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set Blizzard.j language`);;
+          }
+        });
+      });
+    }
+    if (!fs.existsSync(`Scripts\\ROC\\Blizzard_VSAI.j`)) {
+      const filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard_VSAI.j`);
+      fs.readFile(filePath, 'utf8', (err, data) => {
+        const searchFor = /string language = "[^"]*"/g;
+        const replaceWith = 'string language = "${args[1]}"';
+        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        fs.writeFile(filePath, updatedData, 'utf8', (err) => {
+          if (err) {
+            process.send(`ERROR: Cannot Set Blizzard_VSAI.j language`);;
+          }
+        });
+      });
+    }
+
+    return
+  }
 
   process.send(`#### Installing AMAI for ${ver} ####`);
 
@@ -53,8 +183,17 @@ const installOnDirectory = async () => {
     process.send(`ERROR: Cannot find ${process.cwd()}\\MPQEditor.exe`)
     return
   }
-  if (installCommander && !fs.existsSync(`Scripts\\Blizzard_${ver}.j`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\blizzard_${ver}.j`)
+  // if (installCommander && !fs.existsSync(`Scripts\\Blizzard_${ver}.j`)) {
+  //   process.send(`错误: 找不到 ${process.cwd()}\\Scripts\\blizzard_${ver}.j, 请重新编译后将文件放入以下目录: ${process.cwd()}\\Scripts\\${ver}\\`)
+  //   return
+  // }
+  if (installCommanderMode1 && !fs.existsSync(`Scripts\\${ver}\\Blizzard.j`)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
+    return
+  }
+
+  if (installCommanderMode2 && !fs.existsSync(`Scripts\\${ver}\\Blizzard_VSAI.j`)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard_VSAI.j`)
     return
   }
 
@@ -84,7 +223,7 @@ const installOnDirectory = async () => {
 
         const mpqEditor = spawnSync(
           `MPQEditor.exe`,
-          [`htsize`, file, `64`],
+          [`htsize`, file, `128`],
           { encoding : `utf8` }
         );
 
@@ -100,7 +239,7 @@ const installOnDirectory = async () => {
           process.send(mpqEditor.error.message)
             : process.send(`Resize map hashtable size ${file}`);
 
-        const f1AddToMPQ =  spawnSync(
+        const f1AddToMPQ = spawnSync(
           `MPQEditor.exe`,
           [
             'a',
@@ -112,7 +251,7 @@ const installOnDirectory = async () => {
         );
 
         /** uncomment to debbug */
-       // console.log('f1AddToMPQ', f1AddToMPQ.error);
+        // console.log('f1AddToMPQ', f1AddToMPQ.error);
 
         // spawnSync(`echo`, [`running AddToMPQ 1 ${file}`]);
         // process.send(`running AddToMPQ 1 ${file}`);
@@ -127,34 +266,77 @@ const installOnDirectory = async () => {
           process.send(f1AddToMPQ.error.message)
             : process.send(`Add ai scripts ${file}`);
 
-        if (installCommander) {
+        if (installCommanderMode1 || installCommanderMode2) {
 
-          const f2AddToMPQ =  spawnSync(
-            `MPQEditor.exe`,
-            [
-              'a',
-              file,
-              `Scripts\\Blizzard_${ver}.j`,
-              `Scripts\\Blizzard.j`,
-            ],
-            { encoding : `utf8` }
-          );
+          if (installCommanderMode1 ) {
+            const f2AddToMPQ = spawnSync(
+              `MPQEditor.exe`,
+              [
+                'a',
+                file,
+                `Scripts\\${ver}\\Blizzard.j`,
+                `Scripts\\Blizzard.j`
+              ],
+              { encoding : `utf8` }
+            );
 
-          /** uncomment to debbug */
-         // console.log('f2AddToMPQ', f2AddToMPQ.error);
+            /** uncomment to debbug */
+            // console.log('f2AddToMPQ', f2AddToMPQ.error);
 
-          // spawnSync(`echo`, [`running AddToMPQ 2 ${file}`]);
-          if (f2AddToMPQ.status == 5) {
-            process.send(`WARN: ${file} Failed to add blizzard.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
-            continue;
-          } else if (f2AddToMPQ.status > 0) {
-            process.send(`WARN: ${file} Possibly failed to add blizzard.j script, Unknown error occurred: ${f2AddToMPQ.status}`)
-            continue;
+            // spawnSync(`echo`, [`running AddToMPQ 2 ${file}`]);
+            if (f2AddToMPQ.status == 5) {
+              process.send(`WARN: ${file} Failed to add Blizzard.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
+              continue;
+            } else if (f2AddToMPQ.status > 0) {
+              process.send(`WARN: ${file} Possibly failed to add Blizzard.j script, Unknown error occurred: ${f2AddToMPQ.status}`)
+              continue;
+            }
+            f2AddToMPQ.error ?
+              process.send(f2AddToMPQ.error.message)
+                : process.send(`Add commander script ${file}`);
+          } else if (installCommanderMode2) {
+            const f2AddToMPQ = spawnSync(
+              `MPQEditor.exe`,
+              [
+                'a',
+                file,
+                `Scripts\\${ver}\\Blizzard_VSAI.j`,
+                `Scripts\\Blizzard.j`
+              ],
+              { encoding : `utf8` }
+            );
+            if (f2AddToMPQ.status == 5) {
+              process.send(`WARN: ${file} Failed to add Blizzard_VSAI.j script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
+              continue;
+            } else if (f2AddToMPQ.status > 0) {
+              process.send(`WARN: ${file} Possibly failed to add Blizzard_VSAI.j script, Unknown error occurred: ${f2AddToMPQ.status}`)
+              continue;
+            }
+            f2AddToMPQ.error ?
+              process.send(f2AddToMPQ.error.message)
+                : process.send(`Add commander VSAI script ${file}`);
+
+            const f2xAddToMPQ = spawnSync(
+              `MPQEditor.exe`,
+              [
+                'a',
+                file,
+                `Scripts\\Other_AI_${ver}\\*.ai`,
+                `Scripts`
+              ],
+              { encoding : `utf8` }
+            );
+            if (f2xAddToMPQ.status == 5) {
+              process.send(`WARN: ${file} Failed to add Other AI scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
+              continue;
+            } else if (f2xAddToMPQ.status > 0) {
+              process.send(`WARN: ${file} Possibly failed to add Other AI scripts, Unknown error occurred: ${f2xAddToMPQ.status}`)
+              continue;
+            }
+            f2xAddToMPQ.error ?
+              process.send(f2xAddToMPQ.error.message)
+                : process.send(`Add Other AI scripts ${file}`);
           }
-          f2AddToMPQ.error ?
-            process.send(f2AddToMPQ.error.message)
-              : process.send(`Add commander script ${file}`);
-
         }
 
         const f3AddToMPQ =  spawnSync(
@@ -166,8 +348,9 @@ const installOnDirectory = async () => {
           { encoding : `utf8` }
         );
 
+
         /** uncomment to debbug */
-       // console.log('f3AddToMPQ', f3AddToMPQ.error);
+        // console.log('f3AddToMPQ', f3AddToMPQ.error);
 
         // spawnSync(`echo`, [`running AddToMPQ 3 ${file}`]);
         if (f3AddToMPQ.status == 5) {
@@ -176,7 +359,7 @@ const installOnDirectory = async () => {
         } else if (f3AddToMPQ.status > 0) {
             process.send(`WARN: ${file} Possibly failed to flush scripts, Unknown error occurred: ${f3AddToMPQ.status}`)
             continue;
-          }
+        }
         f3AddToMPQ.error ?
           process.send(f3AddToMPQ.error.message)
             : process.send(`Optimize map MPQ ${file}`);
