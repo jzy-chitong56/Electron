@@ -158,6 +158,7 @@ export class MenuService {
                 click: () => {
                   this.translate.use('en')
                   this.electronService.ipcRenderer.send('setlang-English');
+                  console.log('setlang-English');
                 }
               },
               {
