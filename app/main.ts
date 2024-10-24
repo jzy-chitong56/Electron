@@ -80,10 +80,9 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   const response = [];
   let child;
   const newlang = `"${lang}"`;
-   console.log('${newlang}');
   // passing reference to external call back
   signal = controller.signal;
-
+    console.log('${lang}', 'newlang');
   let currentExecDir = `./AMAI-release/`,
     currentScriptDir = './AMAI-release/';
 
@@ -102,10 +101,10 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   });
 
   try {
-    console.log('ScriptDir');
+      console.log('try', 'try 0');
     process.chdir(currentScriptDir);
   } catch(err) {
-    console.log('error:', err.message);
+
   }
 
   // init set language proccess
@@ -117,14 +116,13 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
           `../${currentExecDir}install.js`
         )
       ),
-        console.log('g in');
       [ response[0], newlang, ver ],
       { signal },
       (err) => {
         win.webContents.send('on-setlanguage-error', err);
       }
     );
-
+    console.log('try', 'try 1');
     // send messages to modal on front
     child.on('message', (message) => {
       win.webContents.send('on-setlanguage-message', message);
