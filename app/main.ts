@@ -95,7 +95,7 @@ const setLang = async (signal, lang: String = "English") => {
       `../${currentExecDir}`
     );
   }
-
+  response[0] = currentScriptDir;
   win.webContents.send('setlanguage', <InstallModel>{
     response: response[0],
     newlang,
@@ -236,7 +236,7 @@ const execInstall = async (signal, commander: String = "1", isMap: boolean = fal
 
 const installProcess = () => {
   let signal = {};
-
+    console.log('ein 0');
   ipcMain && ipcMain.on('setlang-English', async () => {
     console.log('eee 1');
     setLang(signal, "English");
