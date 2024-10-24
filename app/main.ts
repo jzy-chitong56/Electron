@@ -79,6 +79,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   const controller = new AbortController();
   const response = [];
   let child;
+  const newlang = `"${lang}"`;
 
   // passing reference to external call back
   signal = controller.signal;
@@ -96,7 +97,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
 
   win.webContents.send('setlanguage', <InstallModel>{
     response: response[0],
-    "${lang}",
+    newlang,
     isMap
   });
 
@@ -114,7 +115,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
           `../${currentExecDir}install.js`
         )
       ),
-      [ response[0], "${lang}", ver ],
+      [ response[0], newlang, ver ],
       { signal },
       (err) => {
         win.webContents.send('on-setlanguage-error', err);
@@ -215,7 +216,6 @@ const execInstall = async (signal, commander: String = "-1", isMap: boolean = fa
         win.webContents.send('on-install-error', err);
       }
     );
-
 
     // send messages to modal on front
     child.on('message', (message) => {
