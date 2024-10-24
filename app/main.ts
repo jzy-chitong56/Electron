@@ -75,14 +75,16 @@ const isDev = () => {
   return win;
 }
 
-const setLang = async (signal, lang: String = "English", isMap: boolean = false, ver: String = "REFORGED") => {
+const setLang = async (signal, lang: String = "English") => {
   const controller = new AbortController();
   const response = [];
-  let child;
   const newlang = `"${lang}"`;
+  const isMap: boolean = false;
+  const ver: String = "REFORGED";
+  let child;
   // passing reference to external call back
   signal = controller.signal;
-    console.log('${lang}', 'newlang');
+  console.log('${lang}  -newlang');
   let currentExecDir = `./AMAI-release/`,
     currentScriptDir = './AMAI-release/';
 
@@ -101,7 +103,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   });
 
   try {
-      console.log('try', 'try 0');
+    console.log('try  0');
     process.chdir(currentScriptDir);
   } catch(err) {
 
@@ -122,7 +124,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
         win.webContents.send('on-setlanguage-error', err);
       }
     );
-    console.log('try', 'try 1');
+    console.log('try 1');
     // send messages to modal on front
     child.on('message', (message) => {
       win.webContents.send('on-setlanguage-message', message);
@@ -137,7 +139,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   }
 }
 
-const execInstall = async (signal, commander: String = "-1", isMap: boolean = false, ver: String = "REFORGED") => {
+const execInstall = async (signal, commander: String = "1", isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
@@ -236,43 +238,43 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain && ipcMain.on('setlang-English', async () => {
-    setLang(signal, "English", false);
+    setLang(signal, "English");
   });
 
   ipcMain && ipcMain.on('setlang-Chinese', async () => {
-    setLang(signal, "Chinese", false);
+    setLang(signal, "Chinese");
   });
 
   ipcMain && ipcMain.on('setlang-French', async () => {
-    setLang(signal, "French", false);
+    setLang(signal, "French");
   });
 
   ipcMain && ipcMain.on('setlang-Deutsch', async () => {
-    setLang(signal, "Deutsch", false);
+    setLang(signal, "Deutsch");
   });
 
   ipcMain && ipcMain.on('setlang-Norwegian', async () => {
-    setLang(signal, "Norwegian", false);
+    setLang(signal, "Norwegian");
   });
 
   ipcMain && ipcMain.on('setlang-Portuguese', async () => {
-    setLang(signal, "Portuguese", false);
+    setLang(signal, "Portuguese");
   });
 
   ipcMain && ipcMain.on('setlang-Romanian', async () => {
-    setLang(signal, "Romanian", false);
+    setLang(signal, "Romanian");
   });
 
   ipcMain && ipcMain.on('setlang-Russian', async () => {
-    setLang(signal, "Russian", false);
+    setLang(signal, "Russian");
   });
 
   ipcMain && ipcMain.on('setlang-Spanish', async () => {
-    setLang(signal, "Spanish", false);
+    setLang(signal, "Spanish");
   });
 
   ipcMain && ipcMain.on('setlang-Swedish', async () => {
-    setLang(signal, "Swedish", false);
+    setLang(signal, "Swedish");
   });
 
   ipcMain && ipcMain.on('install-folder-1', async () => {
