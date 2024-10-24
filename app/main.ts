@@ -238,6 +238,7 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain && ipcMain.on('setlang-English', async () => {
+    console.log('eee 1');
     setLang(signal, "English");
   });
 
