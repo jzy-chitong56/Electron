@@ -33,129 +33,116 @@ const installOnDirectory = async () => {
   // const installCommander = (args[1] == 'true');
   const installCommanderMode1 = (args[1] == '1');
   const installCommanderMode2 = (args[1] == '2');
-  const setLanguages = args[1] !== '1' && args[1] !== '2' && args[1] !== '0';  
   const response = args[0];
-  const ver = args[2]
+  const ver = args[2];
 
 
-  if (setLanguages) {
-    process.send(`#### Installing AMAI set Scripts Languages ####`);
+  if (args[1] !== '1' && args[1] !== '2' && args[1] !== '0') {
+    process.send(`#### AMAI set Scripts Languages ####`);
+    const searchFor = /string language = "([^"]*)"/g;
+    const replaceWith = `string language = ${args[1]}`;
+    process.send(`s ${searchFor}`)
+    process.send(`r ${replaceWith}`)
+    const filePath = ``;
+    const updatedData = ``;
 
     if (fs.existsSync(`Scripts\\REFORGED\\common.ai`)) {
-      const filePath = path.join(__dirname, `Scripts\\REFORGED\\common.ai`);
+      filePath = path.join(__dirname, `Scripts\\REFORGED\\common.ai`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+       updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set common.ai language`);;
+            process.send(`ERROR: Cannot Set REFORGED common.ai language`)
           }
         });
       });
     }
     if (fs.existsSync(`Scripts\\REFORGED\\Blizzard.j`)) {
-      const filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard.j`);
+      filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set Blizzard.j language`);;
+            process.send(`ERROR: Cannot Set REFORGED Blizzard.j language`)
           }
         });
       });
     }
     if (fs.existsSync(`Scripts\\REFORGED\\Blizzard_VSAI.j`)) {
-      const filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard_VSAI.j`);
+      filePath = path.join(__dirname, `Scripts\\REFORGED\\Blizzard_VSAI.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set Blizzard_VSAI.j language`);;
+            process.send(`ERROR: Cannot Set REFORGED Blizzard_VSAI.j language`)
           }
         });
       });
     }
 
     if (fs.existsSync(`Scripts\\TFT\\common.ai`)) {
-      const filePath = path.join(__dirname, `Scripts\\TFT\\common.ai`);
+      filePath = path.join(__dirname, `Scripts\\TFT\\common.ai`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set common.ai language`);;
+            process.send(`ERROR: Cannot Set TFT common.ai language`)
           }
         });
       });
     }
     if (fs.existsSync(`Scripts\\TFT\\Blizzard.j`)) {
-      const filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard.j`);
+      filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set Blizzard.j language`);;
+            process.send(`ERROR: Cannot Set TFT Blizzard.j language`)
           }
         });
       });
     }
     if (fs.existsSync(`Scripts\\TFT\\Blizzard_VSAI.j`)) {
-      const filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard_VSAI.j`);
+      filePath = path.join(__dirname, `Scripts\\TFT\\Blizzard_VSAI.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set Blizzard_VSAI.j language`);;
+            process.send(`ERROR: Cannot Set TFT Blizzard_VSAI.j language`)
           }
         });
       });
     }
 
     if (fs.existsSync(`Scripts\\ROC\\common.ai`)) {
-      const filePath = path.join(__dirname, `Scripts\\ROC\\common.ai`);
+      filePath = path.join(__dirname, `Scripts\\ROC\\common.ai`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set common.ai language`);;
+            process.send(`ERROR: Cannot Set ROC common.ai language`)
           }
         });
       });
     }
     if (fs.existsSync(`Scripts\\ROC\\Blizzard.j`)) {
-      const filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard.j`);
+      filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set Blizzard.j language`);;
+            process.send(`ERROR: Cannot Set ROC Blizzard.j language`)
           }
         });
       });
     }
     if (fs.existsSync(`Scripts\\ROC\\Blizzard_VSAI.j`)) {
-      const filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard_VSAI.j`);
+      filePath = path.join(__dirname, `Scripts\\ROC\\Blizzard_VSAI.j`);
       fs.readFile(filePath, 'utf8', (err, data) => {
-        const searchFor = /string language = "[^"]*"/g;
-        const replaceWith = 'string language = "${args[1]}"';
-        const updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
+        updatedData = data.replace(new RegExp(searchFor, 'g'), replaceWith);
         fs.writeFile(filePath, updatedData, 'utf8', (err) => {
           if (err) {
-            process.send(`ERROR: Cannot Set Blizzard_VSAI.j language`);;
+            process.send(`ERROR: Cannot Set ROC Blizzard_VSAI.j language`)
           }
         });
       });
