@@ -80,7 +80,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   const response = [];
   let child;
   const newlang = `"${lang}"`;
-
+   console.log('${newlang}');
   // passing reference to external call back
   signal = controller.signal;
 
@@ -102,6 +102,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
   });
 
   try {
+    console.log('ScriptDir');
     process.chdir(currentScriptDir);
   } catch(err) {
     console.log('error:', err.message);
@@ -116,6 +117,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
           `../${currentExecDir}install.js`
         )
       ),
+        console.log('g in');
       [ response[0], newlang, ver ],
       { signal },
       (err) => {
