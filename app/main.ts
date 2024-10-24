@@ -105,6 +105,7 @@ const setLang = async (signal, lang: String = "English", isMap: boolean = false,
     process.chdir(currentScriptDir);
   } catch(err) {
     console.log('error:', err.message);
+  }
 
   // init set language proccess
   try {
