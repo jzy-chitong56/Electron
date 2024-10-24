@@ -253,6 +253,8 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.FULLSCREEN'],
             role: 'togglefullscreen',
+             this.electronService.ipcRenderer.send('setlang-English');
+                  console.log('setlang-English2');
           },
           {
             label: translations['PAGES.MENU.DEV_TOOL'],
