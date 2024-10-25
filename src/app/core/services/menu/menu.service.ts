@@ -265,11 +265,11 @@ export class MenuService {
       });
       template.push(
         {
-          label: translations['PAGES.DETAIL.TITLE'],
+          label: 'XXX',
           click: () => {
             this.electronService.ipcRenderer.send('setlang-Spanish');
           }
-          }
+        }
        );
 
       // template.push({
