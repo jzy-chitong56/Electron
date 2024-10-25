@@ -247,22 +247,30 @@ export class MenuService {
         );
       });
 
-      this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL'),
+      this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
             label: translations['PAGES.MENU.FULLSCREEN'],
             role: 'togglefullscreen',
             click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Swedish');
-                }
+              this.electronService.ipcRenderer.send('setlang-Swedish');
+            }
           },
           {
             label: translations['PAGES.MENU.DEV_TOOL'],
             role: 'toggleDevTools' 
           }
+        );
+      });
+      template.push(
+        {
+          label: translations['PAGES.DETAIL.TITLE'],
+          click: () => {
+            this.electronService.ipcRenderer.send('setlang-Spanish');
+          }
+          }
        );
-     });
 
       // template.push({
       //   label: 'View',
