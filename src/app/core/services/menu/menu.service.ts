@@ -141,136 +141,227 @@ export class MenuService {
         //   // { label: 'Compile AMAI vs Default AI' },
         // ]
       // },
+        {
+          label: translations['PAGES.MENU.SELECT_LANG'],
+          submenu: [
+            {
+              label: translations['PAGES.MENU.ENGLISH'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'en',
+              click: () => {
+                this.translate.use('en')
+                this.electronService.ipcRenderer.send('setlang-English');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.CHINESE'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'zh',
+              click: () => {
+                this.translate.use('zh')
+                this.electronService.ipcRenderer.send('setlang-Chinese');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.FRENCH'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'fr',
+              click: () => {
+                this.translate.use('fr')
+                this.electronService.ipcRenderer.send('setlang-French');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.GERMAN'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'de',
+              click: () => {
+                this.translate.use('de')
+                this.electronService.ipcRenderer.send('setlang-Deutsch');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.NORWEGIAN'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'no',
+              click: () => {
+                this.translate.use('no')
+                this.electronService.ipcRenderer.send('setlang-Norwegian');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.PORTUGUESE'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'pt',
+              click: () => {
+                this.translate.use('pt')
+                this.electronService.ipcRenderer.send('setlang-Portuguese');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.ROMANIAN'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'ro',
+              click: () => {
+                this.translate.use('ro')
+                this.electronService.ipcRenderer.send('setlang-Romanian');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.RUSSIAN'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'ru',
+              click: () => {
+                this.translate.use('ru')
+                this.electronService.ipcRenderer.send('setlang-Russian');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.SPANISH'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'es',
+              click: () => {
+                this.translate.use('es')
+                this.electronService.ipcRenderer.send('setlang-Spanish');
+              }
+            },
+            {
+              label: translations['PAGES.MENU.SWEDISH'],
+              type: 'radio',
+              checked: this.translate.currentLang == 'sv',
+              click: () => {
+                this.translate.use('sv')
+                this.electronService.ipcRenderer.send('setlang-Swedish');
+              }
+            }
+          ]
+        },
+        {
+          label: translations['PAGES.MENU.FULLSCREEN'],
+          role: 'togglefullscreen',
+        },
+        {
+          label: translations['PAGES.MENU.DEV_TOOL'],
+          role: 'toggleDevTools' 
+        }
       ];
 
-      this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
-        , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
-        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
-      ]).subscribe((translations: { [key: string]: string }) => {
-        template.push(
-          {
-            label: translations['PAGES.MENU.SELECT_LANG'],
-            submenu: [
-              {
-                label: translations['PAGES.MENU.ENGLISH'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'en',
-                click: () => {
-                  this.translate.use('en')
-                  this.electronService.ipcRenderer.send('setlang-English');
-                  console.log('setlang-English');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.CHINESE'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'zh',
-                click: () => {
-                  this.translate.use('zh')
-                  this.electronService.ipcRenderer.send('setlang-Chinese');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.FRENCH'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'fr',
-                click: () => {
-                  this.translate.use('fr')
-                  this.electronService.ipcRenderer.send('setlang-French');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.GERMAN'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'de',
-                click: () => {
-                  this.translate.use('de')
-                  this.electronService.ipcRenderer.send('setlang-Deutsch');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.NORWEGIAN'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'no',
-                click: () => {
-                  this.translate.use('no')
-                  this.electronService.ipcRenderer.send('setlang-Norwegian');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.PORTUGUESE'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'pt',
-                click: () => {
-                  this.translate.use('pt')
-                  this.electronService.ipcRenderer.send('setlang-Portuguese');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.ROMANIAN'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'ro',
-                click: () => {
-                  this.translate.use('ro')
-                  this.electronService.ipcRenderer.send('setlang-Romanian');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.RUSSIAN'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'ru',
-                click: () => {
-                  this.translate.use('ru')
-                  this.electronService.ipcRenderer.send('setlang-Russian');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.SPANISH'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'es',
-                click: () => {
-                  this.translate.use('es')
-                  this.electronService.ipcRenderer.send('setlang-Spanish');
-                }
-              },
-              {
-                label: translations['PAGES.MENU.SWEDISH'],
-                type: 'radio',
-                checked: this.translate.currentLang == 'sv',
-                click: () => {
-                  this.translate.use('sv')
-                  this.electronService.ipcRenderer.send('setlang-Swedish');
-                }
-              }
-            ]
-          }
-        );
-      });
+      // this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
+      //   , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
+      //   , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
+      // ]).subscribe((translations: { [key: string]: string }) => {
+      //   template.push(
+      //     {
+      //       label: translations['PAGES.MENU.SELECT_LANG'],
+      //       submenu: [
+      //         {
+      //           label: translations['PAGES.MENU.ENGLISH'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'en',
+      //           click: () => {
+      //             this.translate.use('en')
+      //             this.electronService.ipcRenderer.send('setlang-English');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.CHINESE'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'zh',
+      //           click: () => {
+      //             this.translate.use('zh')
+      //             this.electronService.ipcRenderer.send('setlang-Chinese');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.FRENCH'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'fr',
+      //           click: () => {
+      //             this.translate.use('fr')
+      //             this.electronService.ipcRenderer.send('setlang-French');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.GERMAN'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'de',
+      //           click: () => {
+      //             this.translate.use('de')
+      //             this.electronService.ipcRenderer.send('setlang-Deutsch');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.NORWEGIAN'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'no',
+      //           click: () => {
+      //             this.translate.use('no')
+      //             this.electronService.ipcRenderer.send('setlang-Norwegian');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.PORTUGUESE'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'pt',
+      //           click: () => {
+      //             this.translate.use('pt')
+      //             this.electronService.ipcRenderer.send('setlang-Portuguese');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.ROMANIAN'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'ro',
+      //           click: () => {
+      //             this.translate.use('ro')
+      //             this.electronService.ipcRenderer.send('setlang-Romanian');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.RUSSIAN'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'ru',
+      //           click: () => {
+      //             this.translate.use('ru')
+      //             this.electronService.ipcRenderer.send('setlang-Russian');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.SPANISH'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'es',
+      //           click: () => {
+      //             this.translate.use('es')
+      //             this.electronService.ipcRenderer.send('setlang-Spanish');
+      //           }
+      //         },
+      //         {
+      //           label: translations['PAGES.MENU.SWEDISH'],
+      //           type: 'radio',
+      //           checked: this.translate.currentLang == 'sv',
+      //           click: () => {
+      //             this.translate.use('sv')
+      //             this.electronService.ipcRenderer.send('setlang-Swedish');
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   );
+      // });
 
-      this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
-      ]).subscribe((translations: { [key: string]: string }) => {
-        template.push(
-          {
-            label: translations['PAGES.MENU.FULLSCREEN'],
-            role: 'togglefullscreen',
-            click: () => {
-              this.electronService.ipcRenderer.send('setlang-Swedish');
-            }
-          },
-          {
-            label: translations['PAGES.MENU.DEV_TOOL'],
-            role: 'toggleDevTools' 
-          }
-        );
-      });
-      template.push(
-        {
-          label: 'XXX',
-          click: () => {
-            this.electronService.ipcRenderer.send('setlang-Spanish');
-          }
-        }
-       );
+      // this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
+      // ]).subscribe((translations: { [key: string]: string }) => {
+      //   template.push(
+      //     {
+      //       label: translations['PAGES.MENU.FULLSCREEN'],
+      //       role: 'togglefullscreen',
+      //     },
+      //     {
+      //       label: translations['PAGES.MENU.DEV_TOOL'],
+      //       role: 'toggleDevTools' 
+      //     }
+      //   );
+      // });
 
       // template.push({
       //   label: 'View',
