@@ -147,7 +147,7 @@ export class MenuService {
         , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
         , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH')
       ]).subscribe((translations: { [key: string]: string }) => {
-        template : Array<(Electron.MenuItemConstructorOptions) | (Electron.MenuItem)> = [
+        template.push(
           {
             label: translations['PAGES.MENU.SELECT_LANG'],
             submenu: [
@@ -244,7 +244,7 @@ export class MenuService {
               }
             ]
           }
-        ];
+        );
       });
 
       this.translate.get([_('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL'),
@@ -253,6 +253,9 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.FULLSCREEN'],
             role: 'togglefullscreen',
+            click: () => {
+                  this.electronService.ipcRenderer.send('setlang-Swedish');
+                }
           },
           {
             label: translations['PAGES.MENU.DEV_TOOL'],
