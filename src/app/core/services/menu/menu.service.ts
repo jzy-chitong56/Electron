@@ -157,7 +157,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'en',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-English');
                   this.translate.use('en')
                 }
               },
@@ -166,7 +165,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'zh',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Chinese');
                   this.translate.use('zh')
                 }
               },
@@ -175,7 +173,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'fr',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-French');
                   this.translate.use('fr')
                 }
               },
@@ -184,7 +181,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'de',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Deutsch');
                   this.translate.use('de')
                 }
               },
@@ -193,7 +189,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'no',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Norwegian');
                   this.translate.use('no')
                 }
               },
@@ -202,7 +197,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'pt',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Portuguese');
                   this.translate.use('pt')
                 }
               },
@@ -211,7 +205,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'ro',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Romanian');
                   this.translate.use('ro')
                 }
               },
@@ -220,7 +213,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'ru',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Russian');
                   this.translate.use('ru')
                 }
               },
@@ -229,7 +221,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'es',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Spanish');
                   this.translate.use('es')
                 }
               },
@@ -238,7 +229,6 @@ export class MenuService {
                 type: 'radio',
                 checked: this.translate.currentLang == 'sv',
                 click: () => {
-                  this.electronService.ipcRenderer.send('setlang-Swedish');
                   this.translate.use('sv')
                 }
               },
