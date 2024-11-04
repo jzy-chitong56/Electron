@@ -8,6 +8,7 @@ const cp = require('child_process');
 
 let win: BrowserWindow = null;
 let translations : { [key: string]: string };
+let currentLanguage: string = "English";
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
@@ -75,7 +76,7 @@ const isDev = () => {
   return win;
 }
 
-const execInstall = async (signal, commander: String = "1", isMap: boolean = false, ver: String = "REFORGED", translations: String) => {
+const execInstall = async (signal, commander: String = "1", isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
@@ -127,7 +128,7 @@ const execInstall = async (signal, commander: String = "1", isMap: boolean = fal
     response: response[0],
     commander,
     isMap,
-    translations
+    currentLanguage
   });
 
   // Change the relative path from where the script will be executed
@@ -150,7 +151,7 @@ const execInstall = async (signal, commander: String = "1", isMap: boolean = fal
           `../${currentExecDir}install.js`
         )
       ),
-      [ response[0], commander, ver, translations ],
+      [ response[0], commander, ver, currentLanguage ],
       { signal },
       (err) => {
         win.webContents.send('on-install-error', err);
@@ -243,7 +244,7 @@ const installProcess = () => {
   });
 
   ipcMain && ipcMain.on('install-map-0-ROC', async () => {
-    execInstall(signal, "0", true, "ROC");
+    execInstall(signal, "0", true, "ROC", );
   });
 
   // TODO: stop process with signal
@@ -294,6 +295,31 @@ const installTrans = () => {
     if (win != null) {
       win.setTitle(translations['PAGES.HOME.TITLE'])
     }
+    if (data['currentLanguage'] == 'en') {
+      currentLanguage = "English";
+    } else if (data['currentLanguage'] == 'zh') {
+      currentLanguage = "Chinese";
+    } else if (data['currentLanguage'] == 'fr') {
+      currentLanguage = "French";
+    } else if (data['currentLanguage'] == 'de') {
+      currentLanguage = "German";
+    } else if (data['currentLanguage'] == 'no') {
+      currentLanguage = "Norwegian";
+    } else if (data['currentLanguage'] == 'pt') {
+      currentLanguage = "Portuguese";
+    } else if (data['currentLanguage'] == 'ro') {
+      currentLanguage = "Romanian";
+    } else if (data['currentLanguage'] == 'ru') {
+      currentLanguage = "Russian";
+    } else if (data['currentLanguage'] == 'es') {
+      currentLanguage = "Spanish";
+    } else if (data['currentLanguage'] == 'sv') {
+      currentLanguage = "Swedish";
+    } else {
+      currentLanguage = "English"; // Unknown
+      console.log('Current Language: Unknown so change to english');
+    }
+    console.log('Current Language: ', currentLanguage);
   });
 }
 
