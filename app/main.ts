@@ -290,36 +290,49 @@ const init = () => {
 }
 
 const installTrans = () => {
+  ipcMain?.on('Trans-newlang', (_event, data) => {
+    const langCode = data.currentLanguage || 'en';
+    switch (langCode) {
+      case 'en':
+        currentLanguage = "English";
+        break;
+      case 'zh':
+        currentLanguage = "Chinese";
+        break;
+      case 'fr':
+        currentLanguage = "French";
+        break;
+      case 'de':
+        currentLanguage = "German";
+        break;
+      case 'no':
+        currentLanguage = "Norwegian";
+        break;
+      case 'pt':
+        currentLanguage = "Portuguese";
+        break;
+      case 'ro':
+        currentLanguage = "Romanian";
+        break;
+      case 'ru':
+        currentLanguage = "Russian";
+        break;
+      case 'es':
+        currentLanguage = "Spanish";
+        break;
+      case 'sv':
+        currentLanguage = "Swedish";
+        break;
+      default:
+        currentLanguage = "English";
+        console.log('Current Language: Unknown so change to English');
+    }
+  });
   ipcMain?.on('Trans', (_event, data) => {
     translations = data as { [key: string]: string };
     if (win != null) {
       win.setTitle(translations['PAGES.HOME.TITLE'])
     }
-    if (data['currentLanguage'] == 'en') {
-      currentLanguage = "English";
-    } else if (data['currentLanguage'] == 'zh') {
-      currentLanguage = "Chinese";
-    } else if (data['currentLanguage'] == 'fr') {
-      currentLanguage = "French";
-    } else if (data['currentLanguage'] == 'de') {
-      currentLanguage = "German";
-    } else if (data['currentLanguage'] == 'no') {
-      currentLanguage = "Norwegian";
-    } else if (data['currentLanguage'] == 'pt') {
-      currentLanguage = "Portuguese";
-    } else if (data['currentLanguage'] == 'ro') {
-      currentLanguage = "Romanian";
-    } else if (data['currentLanguage'] == 'ru') {
-      currentLanguage = "Russian";
-    } else if (data['currentLanguage'] == 'es') {
-      currentLanguage = "Spanish";
-    } else if (data['currentLanguage'] == 'sv') {
-      currentLanguage = "Swedish";
-    } else {
-      currentLanguage = "English"; // Unknown
-      console.log('Current Language: Unknown so change to english');
-    }
-    console.log('Current Language: ', currentLanguage);
   });
 }
 
