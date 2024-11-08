@@ -30,12 +30,12 @@ const getAllFiles = (dirPath, arrayOfFiles) => {
 
 const installOnDirectory = async () => {
   const args = process.argv.slice(2);
-  const commander = args[1];
   const response = args[0];
+  const commander = args[1];
   const ver = args[2];
   const installCommander = commander == 1
   const vsAICommander = commander == 2
-  let bj = null 
+  let bj = null
   if (installCommander) {bj = 'Blizzard.j'}
   if (vsAICommander) {bj = 'Blizzard_VSAI.j'}
   
