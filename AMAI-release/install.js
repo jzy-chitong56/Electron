@@ -174,7 +174,7 @@ const installOnDirectory = async () => {
           process.send(f1AddToMPQ.error.message)
             : process.send(`Add ai scripts ${file}`);
 
-        if (bj ) {
+        if (bj) {
           const f2AddToMPQ = spawnSync(
             `MPQEditor.exe`,
             [
@@ -200,7 +200,9 @@ const installOnDirectory = async () => {
           f2AddToMPQ.error ?
             process.send(f2AddToMPQ.error.message)
               : process.send(installCommander ? `Installing commander ${file}` : `Installing VS Vanilla AI ${file}`);
-       
+        }
+
+        if (vsAICommander) {
           const f2xAddToMPQ = spawnSync(
             `MPQEditor.exe`,
             [
