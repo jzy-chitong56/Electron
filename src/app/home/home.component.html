@@ -33,14 +33,14 @@
         <span>{{ 'PAGES.HOME.INSTALL_ON_MAP' | translate }}</span>
       </div>
     </label>
-    <label class="radio-group">
-        <input type="radio" id="BJoption1" name="radio-group" value="BJoption1" checked #BJoption1 (input)="onInputChange(BJoption1.id)" hidden>  
-        <label for="BJoption1" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER' | translate }}</label>  
-        <input type="radio" id="BJoption2" name="radio-group" value="BJoption2" #BJoption2 (input)="onInputChange(BJoption2.id)" hidden>  
-        <label for="BJoption2" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_VSAI' | translate }}</label>  
-        <input type="radio" id="BJoption0" name="radio-group" value="BJoption0" #BJoption0 (input)="onInputChange(BJoption0.id)" hidden>  
-        <label for="BJoption0" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_OFF' | translate }}</label>  
-    </label>
+    <label class="commander-group">
+      <input type="radio" id="BJoptionOn" name="commander-group" value="BJoptionOn" checked #BJoptionOn (input)="onInputChange(BJoptionOn.id)" hidden>  
+      <label for="BJoptionOn" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER' | translate }}</label>  
+      <input type="radio" id="BJoptionVsAI" name="commander-group" value="BJoptionVsAI" #BJoptionVsAI (input)="onInputChange(BJoptionVsAI.id)" hidden>  
+      <label for="BJoptionVsAI" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_VSAI' | translate }}</label>  
+      <input type="radio" id="BJoptionOff" name="commander-group" value="BJoptionOff" #BJoptionOff (input)="onInputChange(BJoptionOff.id)" hidden>  
+      <label for="BJoptionOff" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_OFF' | translate }}</label>
+    </label> 
     <!-- <label class="checkboxbj">
       <input type="checkbox" class="switch-text" id="BJSwitch" checked #BJSwitch (input)="onInputChange(BJSwitch.id)">{{ 'PAGES.HOME.INCLUDE_COMMANDER' | translate }}
     </label> -->
