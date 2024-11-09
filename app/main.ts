@@ -76,7 +76,7 @@ const isDev = () => {
   return win;
 }
 
-const execInstall = async (signal, commander: number = 1 isMap: boolean = false, ver: String = "REFORGED") => {
+const execInstall = async (signal, commander: number = 1,  isMap: boolean = false, ver: String = "REFORGED") => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
