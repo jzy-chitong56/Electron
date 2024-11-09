@@ -37,8 +37,8 @@ const installOnDirectory = async () => {
   const vsAICommander = commander == 2
   let bj = null
   if (installCommander) {bj = 'Blizzard.j'}
-  if (vsAICommander) {bj = 'Blizzard_VSAI.j'}
-  
+  if (vsAICommander) {bj = 'vsai\\Blizzard.j'}
+
   process.send(`#### AMAI set Scripts Languages ####`);
   const searchFor = /string language = "(.*)"/;
   const replaceWith = `string language = "${args[3]}"`;
@@ -68,8 +68,8 @@ const installOnDirectory = async () => {
     process.send(`ERROR: Cannot find ${process.cwd()}\\MPQEditor.exe`)
     return
   }
-  if (installCommander && !fs.existsSync(`Scripts\\${ver}\\Blizzard.j`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
+  if (vsAICommander && !fs.existsSync(`Scripts\\${ver}\\vsai\Blizzard.j`)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\vsai\Blizzard.j`)
     return
   }
   if (vsAICommander && !fs.existsSync(`Scripts\\${ver}\\Blizzard_VSAI.j`)) {
@@ -95,12 +95,12 @@ const installOnDirectory = async () => {
       }
     });
   });
-  filePath3 = `Scripts\\${ver}\\Blizzard_VSAI.j`;
+  filePath3 = `Scripts\\${ver}\\vsai\\Blizzard.j`;
   fs.readFile(filePath3, 'utf8', (err, data) => {
     updatedData3 = data.replace(searchFor, replaceWith);
     fs.writeFile(filePath3, updatedData3, 'utf8', (err) => {
       if (err) {
-        process.send(`ERROR: Cannot Set ${ver} Blizzard_VSAI.j language`)
+        process.send(`ERROR: Cannot Set ${ver} VS AI Blizzard.j language`)
       }
     });
   });
@@ -175,6 +175,30 @@ const installOnDirectory = async () => {
             : process.send(`Add ai scripts ${file}`);
 
         if (bj) {
+
+          if (vsAICommander) {
+            const f1AddVSAIToMPQ =  spawnSync(
+            `MPQEditor.exe`,
+            [
+              'a',
+              file,
+              `Scripts\\${ver}\\vsai\*.ai`,
+              `Scripts`
+            ],
+            { encoding : `utf8` }
+            );
+            if (f1AddVSAIToMPQ.status == 5) {
+              process.send(`WARN: ${file} Failed to add vsai scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
+              continue;
+            } else if (f1AddVSAIToMPQ.status > 0) {
+              process.send(`WARN: ${file} Possibly failed to add vsai scripts, Unknown error occurred: ${f1AddVSAIToMPQ.status}`)
+              continue;
+            }
+            f1AddVSAIToMPQ.error ?
+              process.send(f1AddVSAIToMPQ.error.message)
+                : process.send(`Installing VS Vanilla AI Scripts ${file}`);
+          }
+
           const f2AddToMPQ = spawnSync(
             `MPQEditor.exe`,
             [
@@ -191,38 +215,15 @@ const installOnDirectory = async () => {
 
           // spawnSync(`echo`, [`running AddToMPQ 2 ${file}`]);
           if (f2AddToMPQ.status == 5) {
-            process.send(`WARN: ${file} Failed to add ${bj} script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
+            process.send(installCommander ? `WARN: ${file} Failed to add commander script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location` : `WARN: ${file} Failed to add VS Vanilla AI script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
             continue;
           } else if (f2AddToMPQ.status > 0) {
-            process.send(`WARN: ${file} Possibly failed to add ${bj} script, Unknown error occurred: ${f2AddToMPQ.status}`)
+            process.send(installCommander ? `WARN: ${file} Possibly failed to add commander script, Unknown error occurred: ${f2AddToMPQ.status}` : `WARN: ${file} Possibly failed to add VS Vanilla AI commander script, Unknown error occurred: ${f2AddToMPQ.status}`)
             continue;
           }
           f2AddToMPQ.error ?
             process.send(f2AddToMPQ.error.message)
-              : process.send(installCommander ? `Installing commander ${file}` : `Installing VS Vanilla AI ${file}`);
-        }
-
-        if (vsAICommander) {
-          const f2xAddToMPQ = spawnSync(
-            `MPQEditor.exe`,
-            [
-              'a',
-              file,
-              `Scripts\\Other_AI_${ver}\\*.ai`,
-              `Scripts`
-            ],
-            { encoding : `utf8` }
-          );
-          if (f2xAddToMPQ.status == 5) {
-            process.send(`WARN: ${file} Failed to add Other AI scripts, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
-            continue;
-          } else if (f2xAddToMPQ.status > 0) {
-            process.send(`WARN: ${file} Possibly failed to add Other AI scripts, Unknown error occurred: ${f2xAddToMPQ.status}`)
-            continue;
-          }
-          f2xAddToMPQ.error ?
-            process.send(f2xAddToMPQ.error.message)
-              : process.send(`Add Other AI scripts ${file}`);
+              : process.send(installCommander ? `Installing commander ${file}` : `Installing VS Vanilla AI commander ${file}`);
         }
 
         const f3AddToMPQ =  spawnSync(
