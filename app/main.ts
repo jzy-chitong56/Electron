@@ -176,75 +176,75 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain?.on('install-folder-1', async () => {
-    execInstall(signal, "1", false);
+    execInstall(signal, 1, false);
   });
 
   ipcMain?.on('install-folder-2', async () => {
-    execInstall(signal, "2", false);
+    execInstall(signal, 2, false);
   });
 
   ipcMain?.on('install-folder-0', async () => {
-    execInstall(signal, "0", false);
+    execInstall(signal, 0, false);
   });
 
   ipcMain?.on('install-map-1', async () => {
-    execInstall(signal, "1", true);
+    execInstall(signal, 1, true);
   });
 
   ipcMain?.on('install-map-2', async () => {
-    execInstall(signal, "2", true);
+    execInstall(signal, 2, true);
   });
 
   ipcMain?.on('install-map-0', async () => {
-    execInstall(signal, "0", true);
+    execInstall(signal, 0, true);
   });
 
   ipcMain?.on('install-folder-1-TFT', async () => {
-    execInstall(signal, "1", false, "TFT");
+    execInstall(signal, 1, false, "TFT");
   });
 
   ipcMain?.on('install-folder-2-TFT', async () => {
-    execInstall(signal, "2", false, "TFT");
+    execInstall(signal, 2, false, "TFT");
   });
 
   ipcMain?.on('install-folder-0-TFT', async () => {
-    execInstall(signal, "0", false, "TFT");
+    execInstall(signal, 0, false, "TFT");
   });
 
   ipcMain?.on('install-map-1-TFT', async () => {
-    execInstall(signal, "1", true, "TFT");
+    execInstall(signal, 1, true, "TFT");
   });
 
   ipcMain?.on('install-map-2-TFT', async () => {
-    execInstall(signal, "2", true, "TFT");
+    execInstall(signal, 2, true, "TFT");
   });
 
   ipcMain?.on('install-map-0-TFT', async () => {
-    execInstall(signal, "0", true, "TFT");
+    execInstall(signal, 0, true, "TFT");
   });
 
   ipcMain?.on('install-folder-1-ROC', async () => {
-    execInstall(signal, "1", false, "ROC");
+    execInstall(signal, 1, false, "ROC");
   });
 
   ipcMain?.on('install-folder-2-ROC', async () => {
-    execInstall(signal, "2", false, "ROC");
+    execInstall(signal, 2, false, "ROC");
   });
 
   ipcMain?.on('install-folder-0-ROC', async () => {
-    execInstall(signal, "0", false, "ROC");
+    execInstall(signal, 0, false, "ROC");
   });
 
   ipcMain?.on('install-map-1-ROC', async () => {
-    execInstall(signal, "1", true, "ROC");
+    execInstall(signal, 1, true, "ROC");
   });
 
   ipcMain?.on('install-map-2-ROC', async () => {
-    execInstall(signal, "2", true, "ROC");
+    execInstall(signal, 2, true, "ROC");
   });
 
   ipcMain?.on('install-map-0-ROC', async () => {
-    execInstall(signal, "0", true, "ROC", );
+    execInstall(signal, 0, true, "ROC", );
   });
 
   // TODO: stop process with signal
