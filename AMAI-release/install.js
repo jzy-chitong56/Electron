@@ -38,18 +38,16 @@ const installOnDirectory = async () => {
   let bj = null
   if (installCommander) {bj = 'Blizzard.j'}
   if (vsAICommander) {bj = 'vsai\\Blizzard.j'}
-
-  process.send(`#### AMAI set Scripts Languages ####`);
-  const searchFor = /string language = "(.*)"/;
+  const searchFor = /string language = "([^"]*)"/;
   const replaceWith = `string language = "${args[3]}"`;
-  process.send(`lang ${replaceWith}`)
   let filePath1 = ``;
   let filePath2 = ``;
   let filePath3 = ``;
   let updatedData1 = ``;
   let updatedData2 = ``;
   let updatedData3 = ``;
-  process.send(`#### Installing AMAI for ${ver} Commander ${bj || 'none'} ####`);
+
+  process.send(`#### Installing AMAI for ${ver} Commander ${installCommander ? 'install' : (vsAICommander ? 'install VS AI' : 'none')} , Languages ${args[3]} ####`);
 
   // TODO: change to receive array of maps
   if (fs.statSync(response).isDirectory()) {
@@ -63,47 +61,34 @@ const installOnDirectory = async () => {
   if (!fs.existsSync(`Scripts\\${ver}\\common.ai`)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\common.ai`)
     return
+  } else {
+    filePath1 = `Scripts\\${ver}\\common.ai`;
+    data = fs.readFileSync(filePath1, 'utf8');
+    updatedData1 = data.replace(searchFor, replaceWith);
+    fs.writeFileSync(filePath1, updatedData1, 'utf8');
   }
   if (!fs.existsSync(`MPQEditor.exe`)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\MPQEditor.exe`)
     return
   }
+  if (installCommander && !fs.existsSync(`Scripts\\${ver}\\Blizzard.j`)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
+    return
+  } else {
+    filePath2 = `Scripts\\${ver}\\Blizzard.j`;
+    data = fs.readFileSync(filePath2, 'utf8');
+    updatedData2 = data.replace(searchFor, replaceWith);
+    fs.writeFileSync(filePath2, updatedData2, 'utf8');
+  }
   if (vsAICommander && !fs.existsSync(`Scripts\\${ver}\\vsai\Blizzard.j`)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\vsai\Blizzard.j`)
     return
-  }
-  if (vsAICommander && !fs.existsSync(`Scripts\\${ver}\\Blizzard_VSAI.j`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard_VSAI.j`)
-    return
-  }
-
-  filePath1 = `Scripts\\${ver}\\common.ai`;
-  fs.readFile(filePath1, 'utf8', (err, data) => {
-    updatedData1 = data.replace(searchFor, replaceWith);
-    fs.writeFile(filePath1, updatedData1, 'utf8', (err) => {
-      if (err) {
-        process.send(`ERROR: Cannot Set ${ver} common.ai language`)
-      }
-    });
-  });
-  filePath2 = `Scripts\\${ver}\\Blizzard.j`;
-  fs.readFile(filePath2, 'utf8', (err, data) => {
-    updatedData2 = data.replace(searchFor, replaceWith);
-    fs.writeFile(filePath2, updatedData2, 'utf8', (err) => {
-      if (err) {
-        process.send(`ERROR: Cannot Set ${ver} Blizzard.j language`)
-      }
-    });
-  });
-  filePath3 = `Scripts\\${ver}\\vsai\\Blizzard.j`;
-  fs.readFile(filePath3, 'utf8', (err, data) => {
+  } else {
+    filePath3 = `Scripts\\${ver}\\vsai\\Blizzard.j`;
+    data = fs.readFileSync(filePath3, 'utf8');
     updatedData3 = data.replace(searchFor, replaceWith);
-    fs.writeFile(filePath3, updatedData3, 'utf8', (err) => {
-      if (err) {
-        process.send(`ERROR: Cannot Set ${ver} VS AI Blizzard.j language`)
-      }
-    });
-  });
+    fs.writeFileSync(filePath3, updatedData3, 'utf8');
+  }
 
   if(arrayOfFiles) {
     for (const file of arrayOfFiles) {
@@ -174,7 +159,7 @@ const installOnDirectory = async () => {
           process.send(f1AddToMPQ.error.message)
             : process.send(`Add ai scripts ${file}`);
 
-        if (bj) {
+        if (installCommander || vsAICommander) {
 
           if (vsAICommander) {
             const f1AddVSAIToMPQ =  spawnSync(
