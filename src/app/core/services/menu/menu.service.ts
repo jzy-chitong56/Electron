@@ -146,7 +146,7 @@ export class MenuService {
 
       this.translate.get([_('PAGES.MENU.SELECT_LANG'), _('PAGES.MENU.ENGLISH'), _('PAGES.MENU.CHINESE'), _('PAGES.MENU.FRENCH')
         , _('PAGES.MENU.GERMAN'), _('PAGES.MENU.NORWEGIAN'), _('PAGES.MENU.PORTUGUESE'), _('PAGES.MENU.ROMANIAN')
-        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH'), _('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL')
+        , _('PAGES.MENU.RUSSIAN'), _('PAGES.MENU.SPANISH'), _('PAGES.MENU.SWEDISH'), _('PAGES.MENU.FULLSCREEN'), _('PAGES.MENU.DEV_TOOL'), _('PAGES.MENU.ABOUT')
       ]).subscribe((translations: { [key: string]: string }) => {
         template.push(
           {
@@ -245,7 +245,8 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.ABOUT'],
             click: () => {
-              shell.openExternal('https://github.com/SMUnlimited/AMAI/tree/master');
+              const { shell } = this.electronService;
+              shell.openExternal('https://github.com/SMUnlimited/AMAI/tree/master');替换为你想要打开的链接
             }
           }
         );
