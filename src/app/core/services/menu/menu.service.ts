@@ -241,6 +241,12 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.DEV_TOOL'],
             role: 'toggleDevTools'
+          },
+          {
+            label: translations['PAGES.MENU.ABOUT'],
+            click: () => {
+              shell.openExternal('https://github.com/SMUnlimited/AMAI/tree/master');
+            }
           }
         );
       });
