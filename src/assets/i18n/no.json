@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "Inkluder kommandant",
       "INCLUDE_COMMANDER_VSAI": "Inkluder kommandant VS AI",
       "INCLUDE_COMMANDER_OFF": "Ikke Inkluder kommandant",
+      "OPTIMISE": "Bruk optimaliserte skript", 
+      "FORCELANG": "Overstyr standard AI-språk",
       "REF_BEST_GAME_VERSION": "Optimal: Siste",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
