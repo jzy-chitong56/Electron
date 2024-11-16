@@ -14,8 +14,7 @@
       "FORCELANG": "Overstyr standard AI-språk",
       "REF_BEST_GAME_VERSION": "Optimal: Siste",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ABOUT":"om"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
     },
     "DETAIL": {
       "TITLE": "Detalj!",
@@ -70,7 +69,8 @@
       "SPANISH": "Spansk",
       "SWEDISH": "Svensk",
       "DEV_TOOL": "DevTools",
-      "FULLSCREEN": "Fullskjerm"
+      "FULLSCREEN": "Fullskjerm",
+      "ABOUT":"om"
     }
   }
 }
