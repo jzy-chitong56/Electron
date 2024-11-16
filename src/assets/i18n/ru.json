@@ -14,8 +14,7 @@
       "FORCELANG": "Переопределить язык по умолчанию ИИ",
       "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
       "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
-      "ABOUT":"О"
+      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x"
     },
     "DETAIL": {
       "TITLE": "Подробность!",
@@ -70,7 +69,8 @@
       "SPANISH": "Испанский",
       "SWEDISH": "Шведский",
       "DEV_TOOL": "Инструменты разработчика",
-      "FULLSCREEN": "Полноэкранный режим"
+      "FULLSCREEN": "Полноэкранный режим",
+      "ABOUT":"О"
     }
   }
 }
