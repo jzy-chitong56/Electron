@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "Instalați Commander",
       "INCLUDE_COMMANDER_VSAI": "Instalați Commander VS AI",
       "INCLUDE_COMMANDER_OFF": "nu Instalați Commander",
+      "OPTIMISE": "Utilizați scripturi optimizate", 
+      "FORCELANG": "Suprascrieți limba implicită a AI",
       "REF_BEST_GAME_VERSION": "Optim: Cele mai recente",
       "TFT_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x"
