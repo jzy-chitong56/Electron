@@ -25,6 +25,9 @@ export class HomeComponent implements OnInit {
   modeState: string = '-folder';
   bjState: string = '-1';
   message: string = '';
+  optimize: boolean = true;
+  forcelang: boolean = false;
+  installEvent: string = 'install'
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
