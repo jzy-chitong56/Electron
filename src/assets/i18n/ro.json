@@ -14,8 +14,7 @@
       "FORCELANG": "Suprascrieți limba implicită a AI",
       "REF_BEST_GAME_VERSION": "Optim: Cele mai recente",
       "TFT_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x",
-      "ABOUT":"despre"
+      "ROC_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x"
     },
     "DETAIL": {
       "TITLE": "Amănunt!",
@@ -70,7 +69,8 @@
       "SPANISH": "Spaniolă",
       "SWEDISH": "Suedeză",
       "DEV_TOOL": "Instrumente de dezvoltare",
-      "FULLSCREEN": "Ecran complet"
+      "FULLSCREEN": "Ecran complet",
+      "ABOUT":"despre"
     }
   }
 }
