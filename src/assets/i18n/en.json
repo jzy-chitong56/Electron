@@ -10,7 +10,6 @@
         "INCLUDE_COMMANDER": "Input Commander",
         "INCLUDE_COMMANDER_VSAI": "Input VSAI Commander",
         "INCLUDE_COMMANDER_OFF": "Not Input Commander",
-        "INCLUDE_COMMANDER_OFF": "Sin Comandante",
         "OPTIMISE": "Use Optimised Scripts",
         "FORCELANG": "Override Default AI Language",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
