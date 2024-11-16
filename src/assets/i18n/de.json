@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "Kommandant installieren",
       "INCLUDE_COMMANDER_VSAI": "Kommandant installieren VSAI",
       "INCLUDE_COMMANDER_OFF": "nicht Kommandant installieren",
+      "OPTIMISE": "Optimierte Skripte verwenden", 
+      "FORCELANG": "Standardsprache der KI überschreiben",
       "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
