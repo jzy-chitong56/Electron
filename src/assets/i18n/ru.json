@@ -14,7 +14,8 @@
       "FORCELANG": "Переопределить язык по умолчанию ИИ",
       "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
       "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
+      "ABOUT":"О"
     },
     "DETAIL": {
       "TITLE": "Подробность!",
