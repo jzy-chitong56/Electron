@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "Включить командира",
       "INCLUDE_COMMANDER_VSAI": "Включить командира VS AI",
       "INCLUDE_COMMANDER_OFF": "не Включить командира",
+      "OPTIMISE": "Использовать оптимизированные скрипты", 
+      "FORCELANG": "Переопределить язык по умолчанию ИИ",
       "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
       "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x"
