@@ -290,7 +290,7 @@ const init = () => {
 }
 
 const installTrans = () => {
-  ipcMain?.on('Trans-newlang', (_event, data) => {
+  ipcMain?.on('Trans', (_event, currentLang: string, data) => {
     switch (data) {
       case 'en':
         currentLanguage = "English";
