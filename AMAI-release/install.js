@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { takeHeapSnapshot } = require("process");
 const spawnSync = require("child_process").spawnSync;
 const arrayOfFiles = [];
 
@@ -33,21 +34,18 @@ const installOnDirectory = async () => {
   const response = args[0];
   const commander = args[1];
   const ver = args[2];
+  const language = args[3]
   const installCommander = commander == 1
   const vsAICommander = commander == 2
   let bj = null
   if (installCommander) {bj = 'Blizzard.j'}
   if (vsAICommander) {bj = 'vsai\\Blizzard.j'}
-  const searchFor = /string language = "([^"]*)"/;
-  const replaceWith = `string language = "${args[3]}"`;
-  let filePath1 = ``;
-  let filePath2 = ``;
-  let filePath3 = ``;
-  let updatedData1 = ``;
-  let updatedData2 = ``;
-  let updatedData3 = ``;
+  const icon = (args[2] == "REFORGED");
+  const commonAIPath = `Scripts\\${ver}\\common.ai`
+  const blizzardPath =`Scripts\\${ver}\\Blizzard.j`
+  const blizzardvsaiPath =`Scripts\\${ver}\\vsai\\Blizzard.j`
 
-  process.send(`#### Installing AMAI for ${ver} Commander ${installCommander ? 'install' : (vsAICommander ? 'install VS AI' : 'none')} , Languages ${args[3]} ####`);
+  process.send(`#### Installing AMAI for ${ver} Commander ${installCommander ? 'install' : (vsAICommander ? 'install VS AI' : 'none')} , forcing ai language to ${args[3]} ####`);
 
   // TODO: change to receive array of maps
   if (fs.statSync(response).isDirectory()) {
@@ -58,36 +56,39 @@ const installOnDirectory = async () => {
     arrayOfFiles.push(response);
   }
 
-  if (!fs.existsSync(`Scripts\\${ver}\\common.ai`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\common.ai`)
+  if (!fs.existsSync(commonAIPath)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\${commonAIPath}`)
     return
-  } else {
-    filePath1 = `Scripts\\${ver}\\common.ai`;
-    data = fs.readFileSync(filePath1, 'utf8');
-    updatedData1 = data.replace(searchFor, replaceWith);
-    fs.writeFileSync(filePath1, updatedData1, 'utf8');
   }
   if (!fs.existsSync(`MPQEditor.exe`)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\MPQEditor.exe`)
     return
   }
-  if (installCommander && !fs.existsSync(`Scripts\\${ver}\\Blizzard.j`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
+  if (installCommander && !fs.existsSync(blizzardPath)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\${blizzardPath}`)
     return
-  } else {
-    filePath2 = `Scripts\\${ver}\\Blizzard.j`;
-    data = fs.readFileSync(filePath2, 'utf8');
-    updatedData2 = data.replace(searchFor, replaceWith);
-    fs.writeFileSync(filePath2, updatedData2, 'utf8');
   }
-  if (vsAICommander && !fs.existsSync(`Scripts\\${ver}\\vsai\Blizzard.j`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\vsai\Blizzard.j`)
+  if (vsAICommander && !fs.existsSync(blizzardvsaiPath)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\${blizzardvsaiPath}`)
     return
+  }
+
+  if (language !== '-') {
+    setLanguage(commonAIPath, language);
+    if (installCommander) {
+      setLanguage(blizzardPath, language);
+    }
+    if (vsAICommander) {
+      setLanguage(blizzardvsaiPath, language);
+    }
   } else {
-    filePath3 = `Scripts\\${ver}\\vsai\\Blizzard.j`;
-    data = fs.readFileSync(filePath3, 'utf8');
-    updatedData3 = data.replace(searchFor, replaceWith);
-    fs.writeFileSync(filePath3, updatedData3, 'utf8');
+    setLanguage(commonAIPath, "English");
+    if (installCommander) {
+      setLanguage(blizzardPath, ""); // Select at game start
+    }
+    if (vsAICommander) {
+      setLanguage(blizzardvsaiPath, "");
+    }
   }
 
   if(arrayOfFiles) {
@@ -220,7 +221,6 @@ const installOnDirectory = async () => {
           { encoding : `utf8` }
         );
 
-
         /** uncomment to debbug */
         // console.log('f3AddToMPQ', f3AddToMPQ.error);
 
@@ -240,6 +240,14 @@ const installOnDirectory = async () => {
         process.send(`Install failed with error: ${error}`);
       }
     }
+  }
+
+  function setLanguage(file, language) {
+    let data = fs.readFileSync(file, 'utf8');
+    const searchFor = /string language = "([^"]*)"/;
+    const replaceWith = `string language = "${language}"`;
+    data = data.replace(searchFor, replaceWith);
+    fs.writeFileSync(file, data, 'utf8');
   }
 
   // spawnSync(`echo`, [`finish install processing into folder ${dirPath}`]);
