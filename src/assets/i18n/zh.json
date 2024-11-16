@@ -14,7 +14,8 @@
       "FORCELANG": "覆盖默认AI语言",
       "REF_BEST_GAME_VERSION": "最佳版本：最新版",
       "TFT_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x",
+      "ABOUT":"关于"
     },
     "DETAIL": {
       "TITLE": "详情页!",
