@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from '../electron/electron.service';
 import { TranslateService, TranslatePipe, TranslateDirective, _ , LangChangeEvent} from "@codeandweb/ngx-translate";
-import { remote } from '@electron/remote';
+import * as remote from '@electron/remote';
 
 @Injectable({
   providedIn: 'root'
