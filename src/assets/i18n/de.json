@@ -14,7 +14,8 @@
       "FORCELANG": "Standardsprache der KI überschreiben",
       "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
+      "ABOUT":"über"
     },
     "DETAIL": {
       "TITLE": "Detail!",
