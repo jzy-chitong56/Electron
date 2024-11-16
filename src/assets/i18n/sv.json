@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "Installera Commander",
       "INCLUDE_COMMANDER_VSAI": "Installera Commander VS AI",
       "INCLUDE_COMMANDER_OFF": "inte IInstallera Commander",
+      "OPTIMISE": "Använd optimerade skript", 
+      "FORCELANG": "Åsidosätt standard AI-språk",
       "REF_BEST_GAME_VERSION": "Optimalt: Senaste",
       "TFT_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x"
