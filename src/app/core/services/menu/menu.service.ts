@@ -244,7 +244,8 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.ABOUT'],
             click: () => {
-              window.open('https://github.com/SMUnlimited/AMAI/tree/master', '_blank');
+              const { shell } = window.require('electron');
+              shell.openExternal('https://github.com/SMUnlimited/AMAI');
             }
           }
         );
