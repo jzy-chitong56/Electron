@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from '../electron/electron.service';
 import { TranslateService, TranslatePipe, TranslateDirective, _ , LangChangeEvent} from "@codeandweb/ngx-translate";
-// import * as remote from '@electron/remote';
 
 @Injectable({
   providedIn: 'root'
@@ -241,15 +240,13 @@ export class MenuService {
           {
             label: translations['PAGES.MENU.DEV_TOOL'],
             role: 'toggleDevTools'
+          },
+          {
+            label: translations['PAGES.MENU.ABOUT'],
+            click: () => {
+              window.open('https://github.com/SMUnlimited/AMAI/tree/master', '_blank');
+            }
           }
-          // },
-          // {
-          //   label: translations['PAGES.MENU.ABOUT'],
-          //   click: () => {
-          //     const { shell } = remote;
-          //     shell.openExternal('https://github.com/SMUnlimited/AMAI/tree/master');
-          //   }
-          // }
         );
       });
 
