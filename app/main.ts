@@ -76,7 +76,7 @@ const isDev = () => {
   return win;
 }
 
-const execInstall = async (signal, commander: number = 1,  isMap: boolean = false, ver: String = "REFORGED") => {
+const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean) => {
   const controller = new AbortController();
   const response = dialog.showOpenDialogSync(win, {
     // TODO: add i18n here
@@ -151,7 +151,7 @@ const execInstall = async (signal, commander: number = 1,  isMap: boolean = fals
           `../${currentExecDir}install.js`
         )
       ),
-      [ response[0], commander, ver, currentLanguage ],
+      [ response[0], commander, ver, forceLang ? currentLanguage : '-' ],
       { signal },
       (err) => {
         win.webContents.send('on-install-error', err);
@@ -175,77 +175,8 @@ const execInstall = async (signal, commander: number = 1,  isMap: boolean = fals
 const installProcess = () => {
   let signal = {};
 
-  ipcMain?.on('install-folder-1', async () => {
-    execInstall(signal, 1, false);
-  });
-
-  ipcMain?.on('install-folder-2', async () => {
-    execInstall(signal, 2, false);
-  });
-
-  ipcMain?.on('install-folder-0', async () => {
-    execInstall(signal, 0, false);
-  });
-
-  ipcMain?.on('install-map-1', async () => {
-    execInstall(signal, 1, true);
-  });
-
-  ipcMain?.on('install-map-2', async () => {
-    execInstall(signal, 2, true);
-  });
-
-  ipcMain?.on('install-map-0', async () => {
-    execInstall(signal, 0, true);
-  });
-
-  ipcMain?.on('install-folder-1-TFT', async () => {
-    execInstall(signal, 1, false, "TFT");
-  });
-
-  ipcMain?.on('install-folder-2-TFT', async () => {
-    execInstall(signal, 2, false, "TFT");
-  });
-
-  ipcMain?.on('install-folder-0-TFT', async () => {
-    execInstall(signal, 0, false, "TFT");
-  });
-
-  ipcMain?.on('install-map-1-TFT', async () => {
-    execInstall(signal, 1, true, "TFT");
-  });
-
-  ipcMain?.on('install-map-2-TFT', async () => {
-    execInstall(signal, 2, true, "TFT");
-  });
-
-  ipcMain?.on('install-map-0-TFT', async () => {
-    execInstall(signal, 0, true, "TFT");
-  });
-
-  ipcMain?.on('install-folder-1-ROC', async () => {
-    execInstall(signal, 1, false, "ROC");
-  });
-
-  ipcMain?.on('install-folder-2-ROC', async () => {
-    execInstall(signal, 2, false, "ROC");
-  });
-
-  ipcMain?.on('install-folder-0-ROC', async () => {
-    execInstall(signal, 0, false, "ROC");
-  });
-
-  ipcMain?.on('install-map-1-ROC', async () => {
-    execInstall(signal, 1, true, "ROC");
-  });
-
-  ipcMain?.on('install-map-2-ROC', async () => {
-    execInstall(signal, 2, true, "ROC");
-  });
-
-  ipcMain?.on('install-map-0-ROC', async () => {
-    execInstall(signal, 0, true, "ROC", );
-  });
+  ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang);
 
   // TODO: stop process with signal
   ipcMain?.on('on-stop-process', async () => {
