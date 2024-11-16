@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   TFTInstall: boolean = false; 
   REFInstall: boolean = false; 
   Mode_State: boolean = true;
-  BJ_State: boolean = true;
+  BJ_State: number = 1;
   isInteractive: boolean = true;
   modeState: string = '-folder';
   bjState: string = '-1';
