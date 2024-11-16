@@ -10,6 +10,9 @@
         "INCLUDE_COMMANDER": "Input Commander",
         "INCLUDE_COMMANDER_VSAI": "Input VSAI Commander",
         "INCLUDE_COMMANDER_OFF": "Not Input Commander",
+        "INCLUDE_COMMANDER_OFF": "Sin Comandante",
+        "OPTIMISE": "Usar scripts optimizados", 
+        "FORCELANG": "Sobrescribir el idioma predeterminado de la IA",
         "REF_BEST_GAME_VERSION": "Optimal: Latest",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
         "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
