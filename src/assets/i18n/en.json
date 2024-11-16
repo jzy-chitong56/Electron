@@ -14,8 +14,7 @@
         "FORCELANG": "Override Default AI Language",
         "REF_BEST_GAME_VERSION": "Optimal: latest",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-        "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-        "ABOUT":"about"
+        "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
       },
       "DETAIL": {
         "TITLE": "Detail!",
@@ -70,7 +69,8 @@
         "SPANISH": "Spanish",
         "SWEDISH": "Swedish",
         "DEV_TOOL": "DevTools",
-        "FULLSCREEN": "FullScreen"
+        "FULLSCREEN": "FullScreen",
+        "ABOUT":"about"
       }
   }
 }
