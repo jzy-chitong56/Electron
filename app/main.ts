@@ -259,11 +259,11 @@ const installTrans = () => {
         currentLanguage = "English";
         console.log('Current Language: Unknown so change to English');
     }
-    translations = data as { [key: string]: string };
-    if (win != null) {
-      win.setTitle(translations['PAGES.HOME.TITLE'])
-    }
   });
+  translations = data as { [key: string]: string };
+  if (win != null) {
+    win.setTitle(translations['PAGES.HOME.TITLE'])
+  }
 }
 
 init();
