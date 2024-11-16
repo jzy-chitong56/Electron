@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
             this.TFTInstall = false;
             this.REFInstall = false;
             this.ROCInstall = !this.ROCInstall;
-            this.electronService.ipcRenderer.send(this.message);
+            this.electronService.ipcRenderer.send(this.installEvent, 'ROC', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
             console.log('message',this.message);
           }
           break;
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
             this.ROCInstall = false;
             this.REFInstall = false;
             this.TFTInstall = !this.TFTInstall;
-            this.electronService.ipcRenderer.send(this.message);
+            this.electronService.ipcRenderer.send(this.installEvent, 'TFT', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
             console.log('message',this.message);
           }
           break;
@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit {
             this.ROCInstall = false;
             this.TFTInstall = false;
             this.REFInstall = !this.REFInstall;
-            this.electronService.ipcRenderer.send(this.message);
+            this.electronService.ipcRenderer.send(this.installEvent, 'REFORGED', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
             console.log('message',this.message);
           }
           break;
@@ -142,16 +142,30 @@ export class HomeComponent implements OnInit {
           break;
         case 'BJoptionOn':
           this.bjState = '';
+          this.BJ_State = 1;
           console.log('BJ',this.bjState);
           break;
         case 'BJoptionVsAI':
           this.bjState = '-vai';
+          this.BJ_State = 2;
           console.log('BJ',this.bjState);
           break;
         case 'BJoptionOff':
           this.bjState = '-noc';
           console.log('BJ',this.bjState);
-          break;  
+            break;
+        case 'Optimise':
+          this.optimize = !this.optimize;
+          if (this.optimize) {
+            this.forcelang = false;
+          }
+          break;
+        case 'ForceLang':
+          this.forcelang = !this.forcelang;
+          if (this.forcelang) {
+            this.optimize = false;
+          }
+          break;     
       }
     };
   }
