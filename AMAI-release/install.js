@@ -37,14 +37,10 @@ const installOnDirectory = async () => {
   const language = args[3]
   const installCommander = commander == 1
   const vsAICommander = commander == 2
-  let bj = null
-  if (installCommander) {bj = 'Blizzard.j'}
+  let bj = 'Blizzard.j'
   if (vsAICommander) {bj = 'vsai\\Blizzard.j'}
-  const icon = (args[2] == "REFORGED");
   const commonAIPath = `Scripts\\${ver}\\common.ai`
   const blizzardPath =`Scripts\\${ver}\\Blizzard.j`
-  const blizzardvsaiPath =`Scripts\\${ver}\\vsai\\Blizzard.j`
-
   process.send(`#### Installing AMAI for ${ver} Commander ${installCommander ? 'install' : (vsAICommander ? 'install VS AI' : 'none')} , forcing ai language to ${args[3]} ####`);
 
   // TODO: change to receive array of maps
@@ -68,8 +64,8 @@ const installOnDirectory = async () => {
     process.send(`ERROR: Cannot find ${process.cwd()}\\${blizzardPath}`)
     return
   }
-  if (vsAICommander && !fs.existsSync(blizzardvsaiPath)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\${blizzardvsaiPath}`)
+  if (vsAICommander && !fs.existsSync(`Scripts\\${ver}\\vsai\Blizzard.j`)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\vsai\Blizzard.j`)
     return
   }
 
@@ -78,16 +74,10 @@ const installOnDirectory = async () => {
     if (installCommander) {
       setLanguage(blizzardPath, language);
     }
-    if (vsAICommander) {
-      setLanguage(blizzardvsaiPath, language);
-    }
   } else {
     setLanguage(commonAIPath, "English");
     if (installCommander) {
       setLanguage(blizzardPath, ""); // Select at game start
-    }
-    if (vsAICommander) {
-      setLanguage(blizzardvsaiPath, "");
     }
   }
 
@@ -160,7 +150,7 @@ const installOnDirectory = async () => {
           process.send(f1AddToMPQ.error.message)
             : process.send(`Add ai scripts ${file}`);
 
-        if (installCommander || vsAICommander) {
+        if (commander > 0) {
 
           if (vsAICommander) {
             const f1AddVSAIToMPQ =  spawnSync(
@@ -249,7 +239,6 @@ const installOnDirectory = async () => {
     data = data.replace(searchFor, replaceWith);
     fs.writeFileSync(file, data, 'utf8');
   }
-
   // spawnSync(`echo`, [`finish install processing into folder ${dirPath}`]);
 }
 
