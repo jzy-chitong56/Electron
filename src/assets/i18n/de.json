@@ -14,8 +14,7 @@
       "FORCELANG": "Standardsprache der KI überschreiben",
       "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ABOUT":"über"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
     },
     "DETAIL": {
       "TITLE": "Detail!",
@@ -70,7 +69,8 @@
       "SPANISH": "Spanisch",
       "SWEDISH": "Schwedisch",
       "DEV_TOOL": "DevTools",
-      "FULLSCREEN": "Vollbildmodus"
+      "FULLSCREEN": "Vollbildmodus",
+      "ABOUT":"über"
     }
   }
 }
