@@ -226,37 +226,37 @@ const installTrans = () => {
   ipcMain?.on('Trans', (_event, currentLang: string, data) => {
     switch (currentLang) {
       case 'en':
-        currentLang = "English";
+        currentLanguage = "English";
         break;
       case 'zh':
-        currentLang = "Chinese";
+        currentLanguage = "Chinese";
         break;
       case 'fr':
-        currentLang = "French";
+        currentLanguage = "French";
         break;
       case 'de':
-        currentLang = "Deutsch";
+        currentLanguage = "Deutsch";
         break;
       case 'no':
-        currentLang = "Norwegian";
+        currentLanguage = "Norwegian";
         break;
       case 'pt':
-        currentLang = "Portuguese";
+        currentLanguage = "Portuguese";
         break;
       case 'ro':
-        currentLang = "Romanian";
+        currentLanguage = "Romanian";
         break;
       case 'ru':
-        currentLang = "Russian";
+        currentLanguage = "Russian";
         break;
       case 'es':
-        currentLang = "Spanish";
+        currentLanguage = "Spanish";
         break;
       case 'sv':
-        currentLang = "Swedish";
+        currentLanguage = "Swedish";
         break;
       default:
-        currentLang = "English";
+        currentLanguage = "English";
         console.log('Current Language: Unknown so change to English');
     }
     translations = data as { [key: string]: string };
