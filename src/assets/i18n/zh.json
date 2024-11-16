@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "安装控制台",
       "INCLUDE_COMMANDER_VSAI": "安装VS AI控制台",
       "INCLUDE_COMMANDER_OFF": "不安装控制台",
+      "OPTIMISE": "使用优化脚本", 
+      "FORCELANG": "覆盖默认AI语言",
       "REF_BEST_GAME_VERSION": "最佳版本：最新版",
       "TFT_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x"
