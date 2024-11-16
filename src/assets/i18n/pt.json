@@ -14,7 +14,8 @@
       "FORCELANG": "Substituir idioma padrão da IA",
       "REF_BEST_GAME_VERSION": "Optimal: Últimas notícias",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
+      "ABOUT":"cerca de"
     },
     "DETAIL": {
       "TITLE": "Detalhe!",
