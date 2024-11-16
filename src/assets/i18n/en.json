@@ -12,6 +12,7 @@
         "INCLUDE_COMMANDER_OFF": "Not Input Commander",
         "OPTIMISE": "Use Optimised Scripts",
         "FORCELANG": "Override Default AI Language",
+        "REF_BEST_GAME_VERSION": "Optimal: latest",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
         "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
       },
