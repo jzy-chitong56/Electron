@@ -127,8 +127,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   win.webContents.send('on-install-init', <InstallModel>{
     response: response[0],
     commander,
-    isMap,
-    currentLanguage
+    isMap
   });
 
   // Change the relative path from where the script will be executed
@@ -141,6 +140,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     /** uncomment to debbug */
     // win.webContents.send('on-install-message', 'Error: ' + err.message);
   }
+
 
   // init install proccess
   try {
@@ -157,6 +157,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         win.webContents.send('on-install-error', err);
       }
     );
+
 
     // send messages to modal on front
     child.on('message', (message) => {
@@ -177,6 +178,7 @@ const installProcess = () => {
 
   ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
     execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang);
+  });
 
   // TODO: stop process with signal
   ipcMain?.on('on-stop-process', async () => {
@@ -222,7 +224,7 @@ const init = () => {
 
 const installTrans = () => {
   ipcMain?.on('Trans', (_event, currentLang: string, data) => {
-    switch (data) {
+    switch (currentLang) {
       case 'en':
         currentLanguage = "English";
         break;
@@ -233,7 +235,7 @@ const installTrans = () => {
         currentLanguage = "French";
         break;
       case 'de':
-        currentLanguage = "German";
+        currentLanguage = "Deutsch";
         break;
       case 'no':
         currentLanguage = "Norwegian";
@@ -257,8 +259,6 @@ const installTrans = () => {
         currentLanguage = "English";
         console.log('Current Language: Unknown so change to English');
     }
-  });
-  ipcMain?.on('Trans', (_event, data) => {
     translations = data as { [key: string]: string };
     if (win != null) {
       win.setTitle(translations['PAGES.HOME.TITLE'])
