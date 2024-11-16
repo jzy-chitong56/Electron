@@ -14,8 +14,7 @@
       "FORCELANG": "Åsidosätt standard AI-språk",
       "REF_BEST_GAME_VERSION": "Optimalt: Senaste",
       "TFT_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
-      "ABOUT":"om"
+      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x"
     },
     "DETAIL": {
       "TITLE": "Detalj!",
@@ -70,7 +69,8 @@
       "SPANISH": "Spanska",
       "SWEDISH": "Svenska",
       "DEV_TOOL": "på engelska",
-      "FULLSCREEN": "Helskärm"
+      "FULLSCREEN": "Helskärm",
+      "ABOUT":"om"
     }
   }
 }
