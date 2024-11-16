@@ -10,6 +10,8 @@
       "INCLUDE_COMMANDER": "Installer le commandant",
       "INCLUDE_COMMANDER_VSAI": "Installer le commandant VSAI",
       "INCLUDE_COMMANDER_OFF": "Non Installer le commandant",
+      "OPTIMISE": "Utiliser des scripts optimisés", 
+      "FORCELANG": "Remplacer la langue par défaut de l'IA",
       "REF_BEST_GAME_VERSION": "Optimal: Dernier",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
       "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
