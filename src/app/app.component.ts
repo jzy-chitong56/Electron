@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { ElectronService, MenuService } from './core/services';
 import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
 import { APP_CONFIG } from '../environments/environment';
@@ -9,12 +9,18 @@ import { InstallModel } from '../../commons/models';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   public title = '';
   public active = false;
   public couldClose = false;
   public messages = [];
 
+  @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
+    
+  ngAfterViewChecked() { this.scrollToBottom(); } 
+    
+  private scrollToBottom(): void { this.logContainer.nativeElement.scrollTop = this.logContainer.nativeElement.scrollHeight; } 
+  
   constructor(
     private readonly electronService: ElectronService,
     private readonly translate: TranslateService,
