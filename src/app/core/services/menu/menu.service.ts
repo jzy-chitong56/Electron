@@ -17,112 +17,27 @@ export class MenuService {
       //   label: 'Install',
       //   submenu: [
       //     {
-      //       label: 'Install Reforged on Folder',
+      //       label: 'Install Opt Reforged on Folder with Commander',
       //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-1');
+      //         this.electronService.ipcRenderer.send('install', 'REFORGED', true, true, true, false);
       //       }
       //     },
       //     {
-      //       label: 'Install Reforged on Folder (VS AI Commander)',
+      //       label: 'Install Opt Reforged on Folder (No Commander)',
       //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-2');
+      //         this.electronService.ipcRenderer.send('install', true, false, true, false);
       //       }
       //     },
       //     {
-      //       label: 'Install Reforged on Folder (No Commander)',
+      //       label: 'Install Opt Reforged on Map with Commander',
       //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-0');
+      //         this.electronService.ipcRenderer.send('install','REFORGED', false, true, true, false);
       //       }
       //     },
       //     {
-      //       label: 'Install Reforged on Map',
+      //       label: 'Install Opt Reforged on Map (No Commander)',
       //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-1');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install Reforged on Map (VS AI Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-2');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install Reforged on Map (No Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-0');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic TFT on Folder',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-1-TFT');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic TFT on Folder (VS AI Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-2-TFT');
-      //       }
-      //     },
-      //     {
-      //     {
-      //       label: 'Install classic TFT on Folder (No Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-0-TFT');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic TFT on Map',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-1-TFT');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic TFT on Map (VS AI Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-2-TFT');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic TFT on Map (No Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-0-TFT');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic ROC on Folder',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-1-ROC');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic ROC on Folder (VS AI Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-2-ROC');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic ROC on Folder (No Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-folder-0-ROC');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic ROC on Map',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-1-ROC');
-      //       }
-      //     },
-            //     {
-      //       label: 'Install classic ROC on Map (VS AI Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-2-ROC');
-      //       }
-      //     },
-      //     {
-      //       label: 'Install classic ROC on Map (No Commander)',
-      //       click: () => {
-      //         this.electronService.ipcRenderer.send('install-map-0-ROC');
+      //         this.electronService.ipcRenderer.send('install', false, false, true, false);
       //       }
       //     }
       //     // TODO: recreate MakeTFT script
@@ -262,6 +177,10 @@ export class MenuService {
       const menu = Menu.buildFromTemplate(this.getTemplate(this.translate));
       Menu.setApplicationMenu(menu);
       this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+        const menu = Menu.buildFromTemplate(this.getTemplate(this.translate));
+        Menu.setApplicationMenu(menu);
+      });
+      this.translate.onDefaultLangChange.subscribe((event: LangChangeEvent) => {
         const menu = Menu.buildFromTemplate(this.getTemplate(this.translate));
         Menu.setApplicationMenu(menu);
       });
