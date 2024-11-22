@@ -65,7 +65,7 @@ const installOnDirectory = async () => {
     process.send(`ERROR: Cannot find ${process.cwd()}\\MPQEditor.exe`)
     return
   }
-  // if (installCommander && !fs.existsSync(`Scripts\\Blizzard_${ver}.j`)) {
+  // if (installCommander && !fs.existsSync(`Scripts\\Blizzard.j`)) {
     // process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
   //   return
   // }
@@ -73,8 +73,8 @@ const installOnDirectory = async () => {
     process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
     return
   }
-  if (installCommanderMode2 && !fs.existsSync(`Scripts\\${ver}\\Blizzard_VSAI.j`)) {
-    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard_VSAI.j`)
+  if (installCommanderMode2 && !fs.existsSync(`Scripts\\${ver}\\Blizzard.j`)) {
+    process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\Blizzard.j`)
     return
   }
 
@@ -96,12 +96,12 @@ const installOnDirectory = async () => {
       }
     });
   });
-  filePath3 = `Scripts\\${ver}\\Blizzard_VSAI.j`;
+  filePath3 = `Scripts\\${ver}\\Blizzard.j`;
   fs.readFile(filePath3, 'utf8', (err, data) => {
     updatedData3 = data.replace(searchFor, replaceWith);
     fs.writeFile(filePath3, updatedData3, 'utf8', (err) => {
       if (err) {
-        process.send(`ERROR: Cannot Set ${ver} Blizzard_VSAI.j language`)
+        process.send(`ERROR: Cannot Set ${ver} Blizzard.j language`)
       }
     });
   });
