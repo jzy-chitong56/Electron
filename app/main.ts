@@ -262,23 +262,15 @@ const installTrans = () => {
     }
     translations = data as { [key: string]: string };
     if (win != null) {
-      interface PackageJson {
-        version: string;
-      }
-      let packageJson: PackageJson = {} as PackageJson;
-      let version = '';
-      let WinTitle = translations['PAGES.HOME.TITLE'];
-      let WinTitle_err = '';
-      fs.readFile(path.join(__dirname, 'package.json'), 'utf8', (err, data) => {
-        if (err) {
-          console.warn('Error reading package.json:', err);
-        } else {
-          packageJson = JSON.parse(data);
-          version = packageJson.version;
-          WinTitle = '${WinTitle}   v${version}';
-          WinTitle_err = 'v${version}';
-        }
-      });
+      // interface PackageJson {
+      //   version: string;
+      // }
+      const packageJsonPath = path.join(__dirname, '../package.json');
+      const packageJson = require(packageJsonPath);
+      const version = packageJson.version || '';
+      let appName = translations['PAGES.HOME.TITLE'];
+      let WinTitle_err = 'v${version}';
+      WinTitle = '${appName}   v${version}';
       win.setTitle(WinTitle || WinTitle_err)
     }
   });
