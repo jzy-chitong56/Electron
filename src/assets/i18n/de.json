@@ -9,7 +9,7 @@
       "INSTALL_ON_MAP": "Auf Karte installieren",
       "INCLUDE_COMMANDER": "Kommandant installieren",
       "INCLUDE_COMMANDER_VSAI": "Gegen Vanilla KI", 
-      "INCLUDE_COMMANDER_OFF": "nicht Kommandant installieren",
+      "INCLUDE_COMMANDER_OFF": "Kein Kommandant",
       "OPTIMISE": "Optimierte Skripte verwenden", 
       "FORCELANG": "AI Chat Sprache überschreiben",
       "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
