@@ -9,7 +9,7 @@
       "INSTALL_ON_MAP": "Instalar no mapa",
       "INCLUDE_COMMANDER": "Instalar Commander",
       "INCLUDE_COMMANDER_VSAI": "Contra IA Vanilla", 
-      "INCLUDE_COMMANDER_OFF": "não Instalar Commander",
+      "INCLUDE_COMMANDER_OFF": "Sem Comandante",
       "OPTIMISE": "Usar scripts otimizados", 
       "FORCELANG": "Substituir a linguagem de conversação AI",
       "REF_BEST_GAME_VERSION": "Optimal: Últimas notícias",
