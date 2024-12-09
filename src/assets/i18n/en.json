@@ -9,7 +9,7 @@
         "INSTALL_ON_MAP": "Install To Map",
         "INCLUDE_COMMANDER": "Input Commander",
         "INCLUDE_COMMANDER_VSAI": "Vs Vanilla AI",
-        "INCLUDE_COMMANDER_OFF": "Not Input Commander",
+        "INCLUDE_COMMANDER_OFF": "No Commander",
         "OPTIMISE": "Use Optimised Scripts",
         "FORCELANG": "Override AI Chat Language",
         "REF_BEST_GAME_VERSION": "Optimal: latest",
