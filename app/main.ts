@@ -265,9 +265,7 @@ const installTrans = () => {
       // interface PackageJson {
       //   version: string;
       // }
-      const packageJsonPath = path.join(__dirname, '../package.json');
-      const packageJson = require(packageJsonPath);
-      const version = packageJson.version || '';
+      const version = __APP_VERSION__ || '';
       let appName = translations['PAGES.HOME.TITLE'];
       let WinTitle = '${appName}   v${version}';
       let WinTitle_err = 'v${version}';
