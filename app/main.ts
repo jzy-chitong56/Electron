@@ -267,7 +267,7 @@ const installTrans = () => {
       // }
       let version = __APP_VERSION__ || '';
       let appName = translations['PAGES.HOME.TITLE'] || '';
-      let WinTitle = '${appName}'  'v${version}';
+      let WinTitle = '${appName}  v${version}';
       win.setTitle(WinTitle)
     }
   });
