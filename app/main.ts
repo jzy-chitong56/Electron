@@ -25,7 +25,6 @@ const isDev = () => {
   const createWindow = (): BrowserWindow => {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
-  const version = __APP_VERSION__ || '';
   // Create the browser window.
   win = new BrowserWindow({
     x: 0,
@@ -265,6 +264,7 @@ const installTrans = () => {
       // interface PackageJson {
       //   version: string;
       // }
+      let version = __APP_VERSION__ || '';
       let appName = translations['PAGES.HOME.TITLE'] || '';
       let WinTitle = `${appName} v${version}`;
       win.setTitle(WinTitle)
