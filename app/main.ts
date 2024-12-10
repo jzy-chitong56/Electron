@@ -261,12 +261,9 @@ const installTrans = () => {
     }
     translations = data as { [key: string]: string };
     if (win != null) {
-      // interface PackageJson {
-      //   version: string;
-      // }
-      let version = __APP_VERSION__ || '';
+      let version = __APP_VERSION__ ? `v${__APP_VERSION__}` : '';
       let appName = translations['PAGES.HOME.TITLE'] || '';
-      let WinTitle = `${appName} v${version}`;
+      let WinTitle = `${appName}  ${version}`;
       win.setTitle(WinTitle)
     }
   });
