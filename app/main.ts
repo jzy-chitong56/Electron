@@ -265,11 +265,10 @@ const installTrans = () => {
       // interface PackageJson {
       //   version: string;
       // }
-      const version = __APP_VERSION__ || '';
-      let appName = translations['PAGES.HOME.TITLE'];
-      let WinTitle = '${appName}   v${version}';
-      let WinTitle_err = 'v${version}';
-      win.setTitle(WinTitle || WinTitle_err)
+      let version = __APP_VERSION__ || '';
+      let appName = translations['PAGES.HOME.TITLE'] || '';
+      let WinTitle = '${appName}'  'v${version}';
+      win.setTitle(WinTitle)
     }
   });
 }
