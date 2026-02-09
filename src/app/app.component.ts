@@ -56,7 +56,7 @@ export class AppComponent implements AfterViewChecked {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
         this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-          this.title = `${res} - ${this.currentFile}/${this.totalFiles}`;
+          this.title = res + ` (${this.currentFile}/${this.totalFiles})`;
         });
         this.active = true;
         this.couldClose = false;
@@ -109,7 +109,7 @@ export class AppComponent implements AfterViewChecked {
         this.currentFile = args.current;
         this.totalFiles = args.total;
         this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
-          this.title = `${res} - ${this.currentFile}/${this.totalFiles}`;
+          this.title = res + ` (${this.currentFile}/${this.totalFiles})`;
         });
         this.cdr.detectChanges();
       });
