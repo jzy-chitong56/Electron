@@ -18,13 +18,21 @@ const getAllFiles = (dirPath, arrayOfFiles) => {
 
   arrayOfFiles = arrayOfFiles || [];
 
-  files.forEach(function(file) {
-    if (fs.statSync(dirPath + "\\" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + "\\" + file, arrayOfFiles);
+  const fileCount = 0;
+  files.forEach(file => {
+    const filePath = path.join(dirPath, file);
+    const stats = fs.statSync(filePath);
+    
+    if (stats.isDirectory()) {
+      const subFiles = getAllFiles(filePath, arrayOfFiles);
+      fileCount += subFiles.length;
     } else {
-      arrayOfFiles.push(path.join(dirPath, "\\", file));
+      arrayOfFiles.push(filePath);
+      fileCount++;
     }
-  })
+  });
+
+  process.send(`file-count:  ${fileCount}` );
 
   return arrayOfFiles;
 }
