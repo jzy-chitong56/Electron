@@ -89,16 +89,19 @@ const installOnDirectory = async () => {
 
   if(arrayOfFiles) {
     for (const file of arrayOfFiles) {
-      currentFileIndex++;
       /** uncomment to debbug */
       // process.send(`path.extname(file): ${path.extname(file)}`);
 
       // Send progress update
-      process.send(`${currentFileIndex}/${totalFiles}`);
 
       const ext = path.extname(file).toLowerCase();
 
       if(ext.indexOf(`w3m`) >= 0 || ext.indexOf(`w3x`) >= 0) {
+      currentFileIndex++;
+      // Send progress via dedicated IPC channel
+      if (process.send) {
+        process.send({ type: 'progress', current: currentFileIndex, total: totalFiles });
+      }
         process.send(`#### Installing ${ver} into file: ${file} ####`);
       } else {
         process.send(`skip file: ${file}`);
