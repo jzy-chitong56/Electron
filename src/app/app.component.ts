@@ -99,18 +99,29 @@ export class AppComponent implements AfterViewChecked {
 
       this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
         console.log('args-install-message', args);
-        this.messages?.push(args);
-        // Check if message contains progress info (format: "current/total")
+        
+        // Check if message is a progress update (starts with PROGRESS:)
         if (typeof args === 'string') {
-          const progressMatch = args.match(/(\d+)\/(\d+)/);
-          if (progressMatch) {
-            this.currentFile = parseInt(progressMatch[1], 10);
-            this.totalFiles = parseInt(progressMatch[2], 10);
-            this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
-              this.title = `${res} - ${this.currentFile}/${this.totalFiles}`;
-            });
+          if (args.startsWith('PROGRESS:')) {
+            // Process progress update without adding to logs
+            const progressStr = args.slice('PROGRESS:'.length);
+            const progressMatch = progressStr.match(/(\d+)\/(\d+)/);
+            if (progressMatch) {
+              this.currentFile = parseInt(progressMatch[1], 10);
+              this.totalFiles = parseInt(progressMatch[2], 10);
+              this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
+                this.title = `${res} - ${this.currentFile}/${this.totalFiles}`;
+              });
+            }
+          } else {
+            // Add regular message to logs
+            this.messages?.push(args);
           }
+        } else {
+          // Add non-string messages to logs
+          this.messages?.push(args);
         }
+        
         this.cdr.detectChanges();
       });
 
