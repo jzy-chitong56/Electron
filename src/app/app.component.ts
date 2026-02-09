@@ -55,9 +55,9 @@ export class AppComponent implements AfterViewChecked {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-          this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-            this.title = `${this.currentFile}/${this.totalFiles} - ${res}`;
-          });
+        this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
+          this.title = `${res} - ${this.currentFile}/${this.totalFiles}`;
+        });
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -106,8 +106,8 @@ export class AppComponent implements AfterViewChecked {
           if (progressMatch) {
             this.currentFile = parseInt(progressMatch[1], 10);
             this.totalFiles = parseInt(progressMatch[2], 10);
-            this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-              this.title = `${this.currentFile}/${this.totalFiles} - ${res}`;
+            this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
+              this.title = `${res} - ${this.currentFile}/${this.totalFiles}`;
             });
           }
         }
