@@ -158,10 +158,16 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     );
 
 
-    // send messages to modal on front
-    child.on('message', (message) => {
-      win.webContents.send('on-install-message', message);
-    });
+      // send messages to modal on front
+      child.on('message', (message) => {
+        if (typeof message === 'object' && message.type === 'progress') {
+          // Send progress updates via dedicated channel
+          win.webContents.send('on-install-progress', message);
+        } else {
+          // Send regular messages via standard channel
+          win.webContents.send('on-install-message', message);
+        }
+      });
 
     // close modal on process finishes
     child.on('exit', () => {
