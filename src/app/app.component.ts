@@ -1,4 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ElectronService, MenuService } from './core/services';
 import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
 import { APP_CONFIG } from '../environments/environment';
@@ -14,6 +15,8 @@ export class AppComponent implements AfterViewChecked {
   public active = false;
   public couldClose = false;
   public messages = [];
+  public currentFile = 0;
+  public totalFiles = 0;
 
   @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
     
@@ -52,9 +55,9 @@ export class AppComponent implements AfterViewChecked {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-          this.title = res
-        });
+          this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
+            this.title = `${this.currentFile}/${this.totalFiles} - ${res}`;
+          });
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -97,6 +100,17 @@ export class AppComponent implements AfterViewChecked {
       this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
         console.log('args-install-message', args);
         this.messages?.push(args);
+        // Check if message contains progress info (format: "current/total")
+        if (typeof args === 'string') {
+          const progressMatch = args.match(/(\d+)\/(\d+)/);
+          if (progressMatch) {
+            this.currentFile = parseInt(progressMatch[1], 10);
+            this.totalFiles = parseInt(progressMatch[2], 10);
+            this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
+              this.title = `${this.currentFile}/${this.totalFiles} - ${res}`;
+            });
+          }
+        }
         this.cdr.detectChanges();
       });
 
