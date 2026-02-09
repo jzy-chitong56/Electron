@@ -32,7 +32,7 @@ const getAllFiles = (dirPath, arrayOfFiles) => {
     }
   });
 
-  process.send(`file-count:  ${fileCount}` );
+  process.send({ type: "file-count", total: fileCount });
 
   return arrayOfFiles;
 }
@@ -251,3 +251,4 @@ const installOnDirectory = async () => {
 }
 
 installOnDirectory();
+
