@@ -3,6 +3,8 @@ const path = require("path");
 const { takeHeapSnapshot } = require("process");
 const spawnSync = require("child_process").spawnSync;
 const arrayOfFiles = [];
+let totalFiles = 0;
+let currentFileIndex = 0;
 
 
 /** uncomment to debbug */
@@ -51,6 +53,10 @@ const installOnDirectory = async () => {
     // on single map
     arrayOfFiles.push(response);
   }
+  
+  // Set total files count for progress tracking
+  totalFiles = arrayOfFiles.length;
+  process.send(`Total files to process: ${totalFiles}`);
 
   if (!fs.existsSync(commonAIPath)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\${commonAIPath}`)
@@ -83,8 +89,12 @@ const installOnDirectory = async () => {
 
   if(arrayOfFiles) {
     for (const file of arrayOfFiles) {
+      currentFileIndex++;
       /** uncomment to debbug */
       // process.send(`path.extname(file): ${path.extname(file)}`);
+
+      // Send progress update
+      process.send(`${currentFileIndex}/${totalFiles}`);
 
       const ext = path.extname(file).toLowerCase();
 
