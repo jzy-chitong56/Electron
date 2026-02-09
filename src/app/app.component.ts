@@ -109,7 +109,7 @@ export class AppComponent implements AfterViewChecked {
         this.currentFile = args.current;
         this.totalFiles = args.total;
         this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
-          this.title = res + ` (${this.currentFile}/${this.totalFiles})`;
+          this.title = res + ` (this.currentFile/this.totalFiles)`;
         });
         this.cdr.detectChanges();
       });
