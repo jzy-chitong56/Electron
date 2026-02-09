@@ -18,21 +18,13 @@ const getAllFiles = (dirPath, arrayOfFiles) => {
 
   arrayOfFiles = arrayOfFiles || [];
 
-  const fileCount = 0;
-  files.forEach(file => {
-    const filePath = path.join(dirPath, file);
-    const stats = fs.statSync(filePath);
-    
-    if (stats.isDirectory()) {
-      const subFiles = getAllFiles(filePath, arrayOfFiles);
-      fileCount += subFiles.length;
+  files.forEach(function(file) {
+    if (fs.statSync(dirPath + "\\" + file).isDirectory()) {
+      arrayOfFiles = getAllFiles(dirPath + "\\" + file, arrayOfFiles);
     } else {
-      arrayOfFiles.push(filePath);
-      fileCount++;
+      arrayOfFiles.push(path.join(dirPath, "\\", file));
     }
-  });
-
-  process.send({ type: "file-count", total: fileCount });
+  })
 
   return arrayOfFiles;
 }
@@ -251,4 +243,3 @@ const installOnDirectory = async () => {
 }
 
 installOnDirectory();
-
