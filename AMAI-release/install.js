@@ -53,8 +53,6 @@ const installOnDirectory = async () => {
     arrayOfFiles.push(response);
   }
 
-  // Set total files count for progress tracking
-  totalFiles = arrayOfFiles.length;
   if (!fs.existsSync(commonAIPath)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\${commonAIPath}`)
     return
@@ -72,9 +70,6 @@ const installOnDirectory = async () => {
     return
   }
 
-  process.send(`Total files to process: ${totalFiles}`);
-  process.send({ type: 'progress', total: totalFiles });
-
   if (language !== '-') {
     setLanguage(commonAIPath, language);
     if (installCommander) {
@@ -88,6 +83,8 @@ const installOnDirectory = async () => {
   }
 
   if(arrayOfFiles) {
+    totalFiles = arrayOfFiles.length;
+    process.send({ type: 'progress', current: currentFileIndex, total: totalFiles });
     for (const file of arrayOfFiles) {
       /** uncomment to debbug */
       // process.send(`path.extname(file): ${path.extname(file)}`);
@@ -103,6 +100,7 @@ const installOnDirectory = async () => {
            process.send({ 
              type: 'progress', 
              current: currentFileIndex, 
+             total: totalFiles,
            });
          }
          process.send(`#### Installing ${ver} into file: ${file} ####`);
