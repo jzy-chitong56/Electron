@@ -17,6 +17,7 @@ export class AppComponent implements AfterViewChecked {
   public messages = [];
   public currentFile = 0;
   public totalFiles = 0;
+  public installingText = '';
 
   @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
     
@@ -33,6 +34,7 @@ export class AppComponent implements AfterViewChecked {
     const lang = this.translate.getBrowserLang();
     this.translate.use(lang)
     console.log('APP_CONFIG', APP_CONFIG);
+    this.installingText = this.translate.get(t_('PAGES.APP.INSTALLING'));
 
     // Refresh app when language changes
     this.translate.onDefaultLangChange.subscribe((event: LangChangeEvent) => {
@@ -52,12 +54,15 @@ export class AppComponent implements AfterViewChecked {
     if (electronService.isElectron) {
       this.menuService.createMenu();
 
+      this.electronService.ipcRenderer.on('on-install-progress', (_, args: { total: number }) => {
+        this.totalFiles = args.total;
+      });
+
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-          this.title = res + ` (${this.currentFile}/${this.totalFiles})`;
-        });
+        this.currentFile++;
+        this.title = `${this.installingText} (${this.currentFile}/${this.totalFiles}) path: ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -80,6 +85,8 @@ export class AppComponent implements AfterViewChecked {
         console.log('args-install-empty', args);
         this.active = false;
         this.couldClose = true;
+        this.totalFiles = 0;
+        this.currentFile = 0;
         this.cdr.detectChanges();
       });
 
@@ -89,7 +96,8 @@ export class AppComponent implements AfterViewChecked {
           this.title = res;
         });
         this.couldClose = true;
-
+        this.totalFiles = 0;
+        this.currentFile = 0;
         this
           .menuService
           .changeEnabledMenuState(true);
@@ -104,21 +112,12 @@ export class AppComponent implements AfterViewChecked {
         this.cdr.detectChanges();
       });
 
-      // Handle progress updates via dedicated channel
-      this.electronService.ipcRenderer.on('on-install-progress', (_, args: { current: number, total: number }) => {
-        this.currentFile = args.current;
-        this.totalFiles = args.total;
-        this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
-          this.title = res + ` (this.currentFile/this.totalFiles)`;
-        });
-        this.cdr.detectChanges();
-      });
-
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-error', (_, args) => {
         console.log('args-install-error', args);
         this.couldClose = true;
-
+        this.totalFiles = 0;
+        this.currentFile = 0;
         this
           .menuService
           .changeEnabledMenuState(true);
