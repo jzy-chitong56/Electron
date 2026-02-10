@@ -98,8 +98,8 @@ const installOnDirectory = async () => {
          // Send complete progress data including both current and total
          if (process.send) {
            process.send({ 
-             type: 'progress', 
-             current: currentFileIndex, 
+             type: 'progress',
+             current: currentFileIndex,
              total: totalFiles,
            });
          }
