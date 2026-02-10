@@ -6,7 +6,6 @@ const arrayOfFiles = [];
 let totalFiles = 0;
 let currentFileIndex = 0;
 
-
 /** uncomment to debbug */
 // const ls = spawnSync(
 //   `ls`,
@@ -53,11 +52,9 @@ const installOnDirectory = async () => {
     // on single map
     arrayOfFiles.push(response);
   }
-  
+
   // Set total files count for progress tracking
   totalFiles = arrayOfFiles.length;
-  process.send(`Total files to process: ${totalFiles}`);
-
   if (!fs.existsSync(commonAIPath)) {
     process.send(`ERROR: Cannot find ${process.cwd()}\\${commonAIPath}`)
     return
@@ -74,6 +71,9 @@ const installOnDirectory = async () => {
     process.send(`ERROR: Cannot find ${process.cwd()}\\Scripts\\${ver}\\vsai\\Blizzard.j`)
     return
   }
+
+  process.send(`Total files to process: ${totalFiles}`);
+  process.send({ type: 'progress', total: totalFiles });
 
   if (language !== '-') {
     setLanguage(commonAIPath, language);
@@ -96,14 +96,17 @@ const installOnDirectory = async () => {
 
       const ext = path.extname(file).toLowerCase();
 
-      if(ext.indexOf(`w3m`) >= 0 || ext.indexOf(`w3x`) >= 0) {
-      currentFileIndex++;
-      // Send progress via dedicated IPC channel
-        if (process.send) {
-          process.send({ type: 'progress', current: currentFileIndex, total: totalFiles });
-        }
-        process.send(`#### Installing ${ver} into file: ${file} ####`);
-      } else {
+       if(ext.indexOf(`w3m`) >= 0 || ext.indexOf(`w3x`) >= 0) {
+         currentFileIndex++;
+         // Send complete progress data including both current and total
+         if (process.send) {
+           process.send({ 
+             type: 'progress', 
+             current: currentFileIndex, 
+           });
+         }
+         process.send(`#### Installing ${ver} into file: ${file} ####`);
+       } else {
         process.send(`skip file: ${file}`);
         continue;
       }
@@ -256,4 +259,3 @@ const installOnDirectory = async () => {
 }
 
 installOnDirectory();
-
