@@ -58,6 +58,7 @@ export class AppComponent implements AfterViewChecked {
       this.menuService.createMenu();
 
       this.electronService.ipcRenderer.on('on-install-progress', (_, args: { current: number, total: number }) => {
+        console.log('totalFiles-send:', args.total, 'currentFile-send:', args.current);
         if ( args.total > 0 && this.totalFiles < args.total) {
           this.totalFiles = args.total;
         }
@@ -71,7 +72,7 @@ export class AppComponent implements AfterViewChecked {
             this.title = res;
           })
         }
-        console.log('totalFiles:', this.totalFiles , 'currentFile:', this.currentFile);
+        console.log('totalFiles-out:', this.totalFiles, 'currentFile-out:', this.currentFile);
         this.cdr.detectChanges();
       });
 
