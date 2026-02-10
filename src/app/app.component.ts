@@ -18,6 +18,7 @@ export class AppComponent implements AfterViewChecked {
   public currentFile = 0;
   public totalFiles = 0;
   public installingText = '';
+  public pathText = '';
 
   @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
     
@@ -56,19 +57,23 @@ export class AppComponent implements AfterViewChecked {
     if (electronService.isElectron) {
       this.menuService.createMenu();
 
-      this.electronService.ipcRenderer.on('on-install-progress', (_, args: { total: number }) => {
-        this.totalFiles = args.total;
-         console.log('totalFiles:', this.totalFiles);
+      this.electronService.ipcRenderer.on('on-install-progress', (_, args: { current: number, total: number }) => {
+        if (this.currentFile < this.totalFiles) {
+          this.currentFile++;
+          this.installingText = `${this.installingText} (${this.currentFile}/${this.totalFiles}) ${this.pathText}`;
+        }
+        if ( this.totalFiles  > 0) {
+          this.totalFiles = args.total;
+        }
+        console.log('totalFiles:', this.totalFiles , 'currentFile:', this.currentFile);
+        this.cdr.detectChanges();
       });
 
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        if (this.currentFile < this.totalFiles) {
-          this.currentFile++;
-          console.log('currentFile:', this.currentFile);
-        }
         this.title = `${this.installingText} (${this.currentFile}/${this.totalFiles}) path: ${args.response}`;
+        this.pathText = args.response;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
