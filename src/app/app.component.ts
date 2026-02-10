@@ -58,12 +58,18 @@ export class AppComponent implements AfterViewChecked {
       this.menuService.createMenu();
 
       this.electronService.ipcRenderer.on('on-install-progress', (_, args: { current: number, total: number }) => {
+        if ( args.total > 0 && this.totalFiles < args.total) {
+          this.totalFiles = args.total;
+        }
         if (this.currentFile < this.totalFiles) {
           this.currentFile++;
-          this.installingText = `${this.installingText} (${this.currentFile}/${this.totalFiles}) ${this.pathText}`;
-        }
-        if ( this.totalFiles  > 0) {
-          this.totalFiles = args.total;
+          this.translate.get(t_('PAGES.APP.INSTALLING'), { 
+            current: this.currentFile, 
+            total: this.totalFiles,
+            path: this.pathText 
+          }).subscribe((res: string) => {
+            this.title = res;
+          })
         }
         console.log('totalFiles:', this.totalFiles , 'currentFile:', this.currentFile);
         this.cdr.detectChanges();
@@ -72,7 +78,9 @@ export class AppComponent implements AfterViewChecked {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        this.title = `${this.installingText} (${this.currentFile}/${this.totalFiles}) path: ${args.response}`;
+        this.translate.get(t_('PAGES.APP.INSTALLING'), this.currentFile/this.totalFiles, {path: args.response}).subscribe((res: string) => {
+          this.title = res;
+        });
         this.pathText = args.response;
         this.active = true;
         this.couldClose = false;
