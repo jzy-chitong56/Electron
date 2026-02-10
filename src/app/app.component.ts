@@ -58,6 +58,7 @@ export class AppComponent implements AfterViewChecked {
 
       this.electronService.ipcRenderer.on('on-install-progress', (_, args: { total: number }) => {
         this.totalFiles = args.total;
+         console.log('totalFiles:', this.totalFiles);
       });
 
       // TODO: add 'push notification'/'notification'
@@ -65,6 +66,7 @@ export class AppComponent implements AfterViewChecked {
         console.log('args-install-init', args)
         if (this.currentFile < this.totalFiles) {
           this.currentFile++;
+          console.log('currentFile:', this.currentFile);
         }
         this.title = `${this.installingText} (${this.currentFile}/${this.totalFiles}) path: ${args.response}`;
         this.active = true;
