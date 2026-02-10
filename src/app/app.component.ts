@@ -79,8 +79,8 @@ export class AppComponent implements AfterViewChecked {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        this.translate.get(t_('PAGES.APP.INSTALLING'), this.currentFile/this.totalFiles, {path: args.response}).subscribe((res: string) => {
-          this.title = res;
+        this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
+          this.title = '(' + this.currentFile + '/' + this.totalFiles + ')' + res;
         });
         this.pathText = args.response;
         this.active = true;
