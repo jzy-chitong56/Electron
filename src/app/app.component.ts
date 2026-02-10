@@ -34,7 +34,9 @@ export class AppComponent implements AfterViewChecked {
     const lang = this.translate.getBrowserLang();
     this.translate.use(lang)
     console.log('APP_CONFIG', APP_CONFIG);
-    this.installingText = this.translate.get(t_('PAGES.APP.INSTALLING'));
+    this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
+      this.installingText = res;
+    });
 
     // Refresh app when language changes
     this.translate.onDefaultLangChange.subscribe((event: LangChangeEvent) => {
@@ -61,7 +63,9 @@ export class AppComponent implements AfterViewChecked {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        this.currentFile++;
+        if (this.currentFile < this.totalFiles) {
+          this.currentFile++;
+        }
         this.title = `${this.installingText} (${this.currentFile}/${this.totalFiles}) path: ${args.response}`;
         this.active = true;
         this.couldClose = false;
