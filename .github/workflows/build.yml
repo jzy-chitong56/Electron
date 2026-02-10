@@ -6,13 +6,13 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
-      - 计数器
+      - 计数器x
   #path:
 
 
   pull_request:
     branches:
-      - 计数器
+      - 计数器x
 
 
   # Allows you to run this workflow manually from the Actions tab
