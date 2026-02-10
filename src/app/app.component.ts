@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ElectronService, MenuService } from './core/services';
 import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
 import { APP_CONFIG } from '../environments/environment';
@@ -9,27 +10,44 @@ import { InstallModel } from '../../commons/models';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   public title = '';
   public active = false;
   public couldClose = false;
   public messages = [];
+  public currentFile = 0;
+  public totalFiles = 0;
+  public installingText = '';
 
+  @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
+    
+  ngAfterViewChecked() { this.scrollToBottom(); } 
+    
+  private scrollToBottom(): void { this.logContainer.nativeElement.scrollTop = this.logContainer.nativeElement.scrollHeight; } 
+  
   constructor(
     private readonly electronService: ElectronService,
     private readonly translate: TranslateService,
     private readonly menuService: MenuService,
     private readonly cdr: ChangeDetectorRef,
   ) {
-    this.translate.setDefaultLang('en');
     const lang = this.translate.getBrowserLang();
     this.translate.use(lang)
     console.log('APP_CONFIG', APP_CONFIG);
+    this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
+      this.installingText = res;
+    });
 
     // Refresh app when language changes
+    this.translate.onDefaultLangChange.subscribe((event: LangChangeEvent) => {
+      this.translate.get([t_('PAGES.HOME.TITLE'),t_('PAGES.ELECTRON.OPEN_MAP'), t_('PAGES.ELECTRON.OPEN_DIR'), t_('PAGES.ELECTRON.MAPFILE')]).subscribe((translations: { [key: string]: string } ) => {
+        this.electronService.ipcRenderer.send('Trans', event.lang, translations);
+      })
+      this.cdr.detectChanges();
+    });
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translate.get([t_('PAGES.HOME.TITLE'),t_('PAGES.ELECTRON.OPEN_MAP'), t_('PAGES.ELECTRON.OPEN_DIR'), t_('PAGES.ELECTRON.MAPFILE')]).subscribe((translations: { [key: string]: string } ) => {
-        this.electronService.ipcRenderer.send('Trans', translations);
+        this.electronService.ipcRenderer.send('Trans', event.lang, translations);
       })
       this.cdr.detectChanges();
     });
@@ -38,12 +56,17 @@ export class AppComponent {
     if (electronService.isElectron) {
       this.menuService.createMenu();
 
+      this.electronService.ipcRenderer.on('on-install-progress', (_, args: { total: number }) => {
+        this.totalFiles = args.total;
+      });
+
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
-        this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-          this.title = res
-        });
+        if (this.currentFile < this.totalFiles) {
+          this.currentFile++;
+        }
+        this.title = `${this.installingText} (${this.currentFile}/${this.totalFiles}) path: ${args.response}`;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -66,6 +89,8 @@ export class AppComponent {
         console.log('args-install-empty', args);
         this.active = false;
         this.couldClose = true;
+        this.totalFiles = 0;
+        this.currentFile = 0;
         this.cdr.detectChanges();
       });
 
@@ -75,7 +100,8 @@ export class AppComponent {
           this.title = res;
         });
         this.couldClose = true;
-
+        this.totalFiles = 0;
+        this.currentFile = 0;
         this
           .menuService
           .changeEnabledMenuState(true);
@@ -83,6 +109,7 @@ export class AppComponent {
         this.cdr.detectChanges();
       });
 
+      // Handle standard messages
       this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
         console.log('args-install-message', args);
         this.messages?.push(args);
@@ -93,7 +120,8 @@ export class AppComponent {
       this.electronService.ipcRenderer.on('on-install-error', (_, args) => {
         console.log('args-install-error', args);
         this.couldClose = true;
-
+        this.totalFiles = 0;
+        this.currentFile = 0;
         this
           .menuService
           .changeEnabledMenuState(true);
