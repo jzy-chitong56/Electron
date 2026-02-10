@@ -18,14 +18,13 @@ export class AppComponent implements AfterViewChecked {
   public currentFile = 0;
   public totalFiles = 0;
   public installingText = '';
-  public pathText = '';
 
   @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
-    
+
   ngAfterViewChecked() { this.scrollToBottom(); } 
-    
+
   private scrollToBottom(): void { this.logContainer.nativeElement.scrollTop = this.logContainer.nativeElement.scrollHeight; } 
-  
+
   constructor(
     private readonly electronService: ElectronService,
     private readonly translate: TranslateService,
@@ -35,9 +34,6 @@ export class AppComponent implements AfterViewChecked {
     const lang = this.translate.getBrowserLang();
     this.translate.use(lang)
     console.log('APP_CONFIG', APP_CONFIG);
-    this.translate.get(t_('PAGES.APP.INSTALLING')).subscribe((res: string) => {
-      this.installingText = res;
-    });
 
     // Refresh app when language changes
     this.translate.onDefaultLangChange.subscribe((event: LangChangeEvent) => {
@@ -52,27 +48,20 @@ export class AppComponent implements AfterViewChecked {
       })
       this.cdr.detectChanges();
     });
-    
 
     if (electronService.isElectron) {
       this.menuService.createMenu();
 
       this.electronService.ipcRenderer.on('on-install-progress', (_, args: { current: number, total: number }) => {
-        console.log('totalFiles-send:', args.total, 'currentFile-send:', args.current);
+        // console.log('totalFiles-in:', args.total, 'currentFile-in:', args.current);
         if ( args.total > 0 && this.totalFiles < args.total) {
           this.totalFiles = args.total;
         }
         if (this.currentFile < this.totalFiles) {
           this.currentFile++;
-          this.translate.get(t_('PAGES.APP.INSTALLING'), { 
-            current: this.currentFile, 
-            total: this.totalFiles,
-            path: this.pathText 
-          }).subscribe((res: string) => {
-            this.title = res;
-          })
+          this.title = '(' + this.currentFile + '/' + this.totalFiles + ') ' + this.installingText;
         }
-        console.log('totalFiles-out:', this.totalFiles, 'currentFile-out:', this.currentFile);
+        // console.log('totalFiles-out:', this.totalFiles, 'currentFile-out:', this.currentFile);
         this.cdr.detectChanges();
       });
 
@@ -80,9 +69,9 @@ export class AppComponent implements AfterViewChecked {
       this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
         console.log('args-install-init', args)
         this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
-          this.title = '(' + this.currentFile + '/' + this.totalFiles + ')' + res;
+          this.title = '(0/X) ' + res;
+          this.installingText = res;
         });
-        this.pathText = args.response;
         this.active = true;
         this.couldClose = false;
         this.messages = [];
@@ -113,7 +102,7 @@ export class AppComponent implements AfterViewChecked {
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
         this.translate.get(t_('PAGES.APP.INSTALL_DONE')).subscribe((res: string) => {
-          this.title = res;
+          this.title = '(' + this.currentFile + '/' + this.totalFiles + ')' + ' ' + res;
         });
         this.couldClose = true;
         this.totalFiles = 0;
