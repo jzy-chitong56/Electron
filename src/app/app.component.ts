@@ -1,5 +1,4 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { ElectronService, MenuService } from './core/services';
 import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
 import { APP_CONFIG } from '../environments/environment';
@@ -114,7 +113,6 @@ export class AppComponent implements AfterViewChecked {
         this.cdr.detectChanges();
       });
 
-      // Handle standard messages
       this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
         console.log('args-install-message', args);
         this.messages?.push(args);
