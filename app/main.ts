@@ -22,7 +22,7 @@ const isDev = () => {
   return require.main.filename.indexOf('app.asar') === -1;
 }
 
-const createWindow = (): BrowserWindow => {
+  const createWindow = (): BrowserWindow => {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
   // Create the browser window.
@@ -84,7 +84,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     properties: isMap ? ['openFile'] : ['openDirectory'],
     // TODO: add i18n here
     filters: isMap ? [
-      { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+    { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
     ] : null,
   });
 
@@ -267,7 +267,11 @@ const installTrans = () => {
     }
     translations = data as { [key: string]: string };
     if (win != null) {
-      win.setTitle(translations['PAGES.HOME.TITLE'] || '')
+      let rawVersion = __APP_VERSION__ || '';
+      let version = rawVersion ? `v${rawVersion}` : '';
+      let appName = translations['PAGES.HOME.TITLE'] || '';
+      let WinTitle = `${appName}  ${version}`;
+      win.setTitle(WinTitle)
     }
   });
 }
