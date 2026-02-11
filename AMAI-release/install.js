@@ -35,10 +35,10 @@ const installOnDirectory = async () => {
   const response = args[0];
   const commander = args[1];
   const ver = args[2];
-  const language = args[3]
-  const installCommander = commander == 1
-  const vsAICommander = commander == 2
-  let bj = 'Blizzard.j'
+  const language = args[3];
+  const installCommander = commander == 1;
+  const vsAICommander = commander == 2;
+  let bj = 'Blizzard.j';
   if (vsAICommander) {bj = 'vsai\\Blizzard.j'}
   const commonAIPath = `Scripts\\${ver}\\common.ai`
   const blizzardPath =`Scripts\\${ver}\\Blizzard.j`
@@ -84,12 +84,10 @@ const installOnDirectory = async () => {
 
   if(arrayOfFiles) {
     totalFiles = arrayOfFiles.length;
-    process.send({ type: 'progress', current: currentFileIndex, total: totalFiles });
+    //process.send({ type: 'progress', current: currentFileIndex, total: totalFiles });
     for (const file of arrayOfFiles) {
       /** uncomment to debbug */
       // process.send(`path.extname(file): ${path.extname(file)}`);
-
-      // Send progress update
 
       const ext = path.extname(file).toLowerCase();
 
@@ -205,10 +203,10 @@ const installOnDirectory = async () => {
 
           // spawnSync(`echo`, [`running AddToMPQ 2 ${file}`]);
           if (f2AddToMPQ.status == 5) {
-            process.send(installCommander ? `WARN: ${file} Failed to add commander script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location` : `WARN: ${file} Failed to add VS Vanilla AI script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
+            process.send(`WARN: ${file} Failed to add ${bj} script, you may not have valid permissions or are blocked by windows UAC. Ensure map files are not in a UAC protected location`)
             continue;
           } else if (f2AddToMPQ.status > 0) {
-            process.send(installCommander ? `WARN: ${file} Possibly failed to add commander script, Unknown error occurred: ${f2AddToMPQ.status}` : `WARN: ${file} Possibly failed to add VS Vanilla AI commander script, Unknown error occurred: ${f2AddToMPQ.status}`)
+            process.send(`WARN: ${file} Possibly failed to add ${bj} script, Unknown error occurred: ${f2AddToMPQ.status}`)
             continue;
           }
           f2AddToMPQ.error ?
