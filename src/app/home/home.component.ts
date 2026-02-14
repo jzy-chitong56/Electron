@@ -187,6 +187,7 @@ export class HomeComponent implements OnInit {
   async loadDefaultPath(): Promise<void> {
     try {
       this.defaultPath = await this.electronService.loadDefaultPath();
+      console.error('loading default path:', this.defaultPath);
       this.defaultPathText = this.defaultPath || 
         await this.translate.get('PAGES.ELECTRON.NO_SET_DEFAULT_FOLDER').toPromise();
     } catch (error) {
@@ -198,17 +199,15 @@ export class HomeComponent implements OnInit {
 
   async selectDefaultFolder(): Promise<void> {
     try {
-      const selectedPath = await this.electronService.selectFolder(this.defaultPath || undefined);
+      const selectedPath = await this.electronService.selectFolder(this.defaultPath || null);
       if (!selectedPath) {
         console.log('Folder selection canceled');
         return;
       }
-      
       await this.electronService.saveDefaultPath(selectedPath);
       this.defaultPath = selectedPath;
-      console.log('select default Path :', this.defaultPath);
       this.defaultPathText = selectedPath;
-      await this.loadDefaultPath();
+      console.log('select default Path :', this.defaultPath);
     } catch (error) {
       console.error('Error selecting default folder:', error);
     }
