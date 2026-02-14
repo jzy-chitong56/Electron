@@ -222,7 +222,7 @@
   }
 
   .default-folder-container {
-    max-width: 75%;
+    max-width: 85%;
     margin: 1.5rem auto;
     padding: 0.8rem;
     background-color: #5c5c5c;
@@ -242,5 +242,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+  
+  .underlined-path {
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-position: under;
+    text-decoration-thickness: 1px;
+    text-decoration-color: currentColor;
   }
 }

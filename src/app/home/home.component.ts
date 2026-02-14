@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
+import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
+
 
 @Injectable({
   providedIn: 'root'
@@ -176,6 +178,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private electronService: ElectronService,
+    private translate: TranslateService
   ) { 
     this.loadDefaultPath();
   }
@@ -185,10 +188,11 @@ export class HomeComponent implements OnInit {
       this.defaultPath = this.electronService.loadDefaultPath();
       console.log('load default Path :',this.defaultPath);
       this.defaultPathText = this.defaultPath 
-        ? this.defaultPath : '';
+        ? this.defaultPath 
+        : this.translate.get('PAGES.ELECTRON.NO_DEFAULT_FOLDER').subscribe() 
     } catch (error) {
       console.error('Error loading default path:', error);
-      this.defaultPathText = '';
+      this.translate.get('PAGES.ELECTRON.CAN_NOT_GET_DEFAULT_FOLDER').subscribe()
     }
   }
 
@@ -199,7 +203,7 @@ export class HomeComponent implements OnInit {
         this.electronService.saveDefaultPath(selectedPath);
         this.defaultPath = selectedPath;
         console.log('select default Path :',this.defaultPath);
-        this.defaultPathText = selectedPath; // 直接使用路径，不需要前缀
+        this.defaultPathText = selectedPath;
       } else {
         console.log('Folder selection canceled');
       }
