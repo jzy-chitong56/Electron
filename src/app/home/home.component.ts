@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
-import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
+import { TranslateService } from "@codeandweb/ngx-translate";
+// 移除 firstValueFrom 导入
 
 
 @Injectable({
@@ -185,14 +186,13 @@ export class HomeComponent implements OnInit {
 
   async loadDefaultPath(): Promise<void> {
     try {
-      this.defaultPath = this.electronService.loadDefaultPath();
-      console.log('load default Path :',this.defaultPath);
-      this.defaultPathText = this.defaultPath 
-        ? this.defaultPath 
-        : this.translate.get('PAGES.ELECTRON.NO_DEFAULT_FOLDER').subscribe() 
+      this.defaultPath = await this.electronService.loadDefaultPath();
+      this.defaultPathText = this.defaultPath || 
+        await this.translate.get('PAGES.ELECTRON.NO_DEFAULT_FOLDER').toPromise();
     } catch (error) {
       console.error('Error loading default path:', error);
-      this.translate.get('PAGES.ELECTRON.CAN_NOT_GET_DEFAULT_FOLDER').subscribe()
+      this.defaultPathText = 
+        await this.translate.get('PAGES.ELECTRON.CAN_NOT_GET_DEFAULT_FOLDER').toPromise();
     }
   }
 
