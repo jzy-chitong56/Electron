@@ -1,89 +1,246 @@
 :host {
+  :root {
+    --switch-width: 300px; /* 最大宽度 */
+  }
 
-}
+  .center-container {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    max-width: 100%;
+  }
 
-.main-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+  .container {
+    color: white;
+  }
 
-.main-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  .headtitle-text {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+  }
 
-  ::ng-deep > *:nth-child(2) {
-    height: 100%;
-    width: 100%;
+  .subtitle-text {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 4rem;
+  }
+
+
+  .ContainerLattice {
     display: flex;
-    flex: 1;
-    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
+    width: 100%;
+    gap: 10px;
+    margin-top: 2rem;
+  }
 
-    .container {
-      flex: 1;
+  .AdvancedSettings,
+  .MoreSettings {
+    background-color: black;
+  }
+
+  .MoreSettings {
+    margin-top: 1rem;
+  }
+
+  .imageContainerROC,
+  .imageContainerTFT,
+  .imageContainerREF {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    max-width: 512px;
+    width: 50%;
+    height: auto;
+    background-color: black;
+    min-width: 200px;
+  }
+
+  .imageContainerROC span,
+  .imageContainerTFT span,
+  .imageContainerREF span {
+    background-color: black;
+    font-size: 2rem;
+  }
+
+  .reccomendations {
+    font-size: 14pt;
+    display: block;
+    color: gold;
+  }
+
+  /* 当屏幕宽度小于等于800px时，减小字体大小 */
+  @media (max-width: 800px) {
+    .headtitle-text, .subtitle-text {
+      font-size: 1rem;
+    }
+
+    .imageContainerROC span,
+    .imageContainerTFT span,
+    .imageContainerREF span {
+      font-size: 1rem;
+    }
+
+    .reccomendations {
+      font-size: 10pt;
     }
   }
-}
 
-.message-area-wrapper {
-  position: relative;
-  width: 100%;
-  background: black;
-  transition: height 0.3s;
-  height: 0px;
-  overflow: hidden;
-
-  //> {
-  //  color: white;
-  //  margin: 16px;
-  //}
-
-  &.active {
-    height: 200px;
+  @media (max-width: 1600px) {
+    .ContainerLattice img {
+      width: 100%;
+    }
   }
 
-  .info {
-    background: white;
-    margin: 0;
-    padding: 8px 16px;
-    color: black;
-    font-weight: 600;
-    font-size: 14px;
-    border: 3px solid #00000009;
-    height: 15px;
+  .commander-group {
+    display: flex;
+    justify-content: center;
+    text-align: start;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    width: 30%;
+    font-size: 1rem;
+    transform: scale(1.5);
+    min-width: 200px;
+  }
+
+  .checkboxbj {
+    display: flex;
+    justify-content: center;
+    text-align: start;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    width: 30%;
+    font-size: 1rem;
+    transform: scale(1.5);
+    min-width: 200px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background-color: black;
+    color: #FFFFFF;
+  }
+
+  .radio-btn {
+    display: inline-flex; /* 使用 flex 布局来更好地控制内部元素 */
+    align-items: center; /* 垂直居中文本 */
+    justify-content: center; /* 水平居中文本 */
+    padding: 4px 10px; /* 内边距，根据需要调整 */
+    border-radius: 12px; /* 圆角 */
+    font-weight: bold;
+    background-color: #AAAAAA; /* 未选中时背景色 */
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+    transition: background-color 0.3s, font-size 0.3s; /* 背景色变化过渡效果和字体大小变化过渡效果 */
+    width: 220px; /* 固定宽度 */
+    white-space: nowrap; /* 防止文本换行 */
+    overflow: hidden; /* 隐藏超出部分 */
+    text-overflow: ellipsis; /* 显示省略号 */
+    box-sizing: border-box; /* 包含padding和border */
+    font-size: calc(100% - 2px); /* 初始字体大小 */
+    max-width: 100%; /* 最大宽度 */
+  }
+
+  /* 鼠标悬停样式 */
+  .radio-btn:hover {
+    color: #FFFFFF; /* 悬停时文字颜色 */
+    background-color: #47A4F9; /* 悬停时背景色 */
+  }
+
+  input[type="radio"]:checked + .radio-btn {
+    background-color: #007bff; /* 选中时背景色 */
+    color: #FFFFFF; /* 选中时文字颜色 */
+  }
+
+  .switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    max-width: var(--switch-width);
+    width: 36%;
+    height: 32px;
+    border: 3px solid #5c5c5c; /* 添加边框 */
+    box-sizing: border-box; /* 包含边框和内填充在内的总宽度 */
+    border-radius: 26px;
+    min-width: 400px;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #007bff;
+    border-radius: 26px;
+    -webkit-transition: .4s;
+    transition: .4s;
+
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: calc(100% - 36px);
+    justify-content: space-around;
+  }
 
-    .title {
+  .slider:before {
+    position: absolute;
+    display: flex; /* 将其转换为弹性布局容器 */
+    align-items: center;
+    justify-content: center;
+    content: "";
+    white-space: nowrap;
+    left: 1px;
+    height: 100%;
+    width: 50%;
+    background-color: #ffffff;
+    border-radius: 26px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #36b61a;
+  }
+
+  input:checked + .slider:before {
+    content: "";
+    -webkit-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+     transform: translateX(100%);
+     margin-left: -1px;
+  }
+
+  .default-folder-container {
+    max-width: 75%;
+    margin: 1.5rem auto;
+    padding: 0.8rem;
+    background-color: #5c5c5c;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: #47A4F9;
+    }
+    
+    .default-folder-text {
+      display: block;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: calc(100% - 64px);
-    }
-
-    .icon-handle {
-      cursor: pointer;
-      // background: rgba(0, 0, 0, 0.1);
-
-      &.disabled {
-        cursor: not-allowed;
-        color: rgba(0, 0, 0, 0.3);
-      }
-    }
-  }
-
-  .log-area-wrapper {
-    height: 147px;
-    overflow-y: auto;
-    margin: 0;
-    color: white;
-    padding: 8px 16px;
-
-    .row-log {
-      margin-bottom: 8px;
     }
   }
 }
