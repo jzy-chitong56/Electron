@@ -9,6 +9,7 @@ const cp = require('child_process');
 let win: BrowserWindow = null;
 let translations : { [key: string]: string } = {};
 let currentLanguage: string = "English";
+let defaultPath: string | null = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
@@ -77,16 +78,49 @@ const isDev = () => {
 
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean) => {
   const controller = new AbortController();
-  const response = dialog.showOpenDialogSync(win, {
-    // TODO: add i18n here
-    title : isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '': translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-    // TODO: Change to let multiples selections when is map
-    properties: isMap ? ['openFile'] : ['openDirectory'],
-    // TODO: add i18n here
-    filters: isMap ? [
-    { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
-    ] : null,
-  });
+  let response;
+  try {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    if (fs.existsSync(settingsPath)) {
+      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      defaultPath = settings.defaultPath || null;
+      console.log('get default Path :',defaultPath);
+    }
+  } catch (err) {
+    console.error('Failed to load default path:', err);
+  }
+  // Handle folder mode (isMap = false)
+  if (!isMap) {
+    // If default path exists, use it directly
+    if (defaultPath) {
+      response = [defaultPath];
+    } else {
+      // Show dialog and save selected path as default
+      response = dialog.showOpenDialogSync(win, {
+        title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+        properties: ['openDirectory'],
+      });
+      
+      // Save the selected path as default if not canceled
+      if (response && response.length > 0) {
+        defaultPath = response[0];
+        console.log('set default Path :',defaultPath);
+        this.electronService.saveDefaultPath(defaultPath);
+      }
+    }
+  } else {
+    // Handle map mode (isMap = true)
+    response = dialog.showOpenDialogSync(win, {
+      title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
+      properties: ['openFile'],
+      filters: [
+        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+      ],
+      // Use default path if available
+      defaultPath: defaultPath || undefined,
+    });
+    console.log('default Path :',defaultPath);
+  }
 
   let child;
 
