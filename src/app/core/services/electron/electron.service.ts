@@ -85,17 +85,18 @@ export class ElectronService {
     this.fs.writeFileSync(settingsPath, JSON.stringify(settings));
   }
 
-  loadDefaultPath(): string | null {
-    if (!this.isElectron) return null;
+  loadDefaultPath(): string {
+    if (!this.isElectron) return ''; // Return empty string for non-Electron environments
+    const documentsPath = this.app.getPath('documents');
     try {
       const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
       if (this.fs.existsSync(settingsPath)) {
         const settings = JSON.parse(this.fs.readFileSync(settingsPath, 'utf8'));
-        return settings.defaultPath || null;
+        return settings.defaultPath || documentsPath;
       }
-      return null;
+      return documentsPath;
     } catch {
-      return null;
+      return documentsPath;
     }
   }
 
