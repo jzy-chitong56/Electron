@@ -174,7 +174,7 @@ export class HomeComponent implements OnInit {
   }
 
   defaultPath: string | null = null;
-  defaultPathText: string = 'Set Default Folder';
+  defaultPathText: string = '';
 
   constructor(
     private router: Router,
@@ -188,11 +188,10 @@ export class HomeComponent implements OnInit {
       this.defaultPath = this.electronService.loadDefaultPath();
       console.log('load default Path :',this.defaultPath);
       this.defaultPathText = this.defaultPath 
-        ? this.defaultPath  // 直接使用路径，不需要前缀
-        : 'Set Default Folder';  // 显示提示文字
+        ? this.defaultPath : '';
     } catch (error) {
       console.error('Error loading default path:', error);
-      this.defaultPathText = 'Set Default Folder';
+      this.defaultPathText = '';
     }
   }
 
