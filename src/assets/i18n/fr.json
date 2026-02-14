@@ -14,7 +14,10 @@
       "FORCELANG": "Couvrir le langage de chat ai",
       "REF_BEST_GAME_VERSION": "Optimal: Dernier",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "Aucun chemin par défaut défini",
+      "CAN_NOT_GET_DEFAULT_PATH":"Ne peut pas obtenir le chemin par défaut",
+      "DEFAULT_PATH":"Chemin par défaut: "
     },
     "DETAIL": {
       "TITLE": "Détail!",
@@ -54,10 +57,7 @@
     "ELECTRON": {
       "OPEN_MAP": "Ouvrir le fichier de carte WC3",
       "OPEN_DIR": "Ouvrir le répertoire des cartes AMAI",
-      "MAPFILE": "Fichier de carte WC3",
-      "NO_SET_DEFAULT_PATH": "Aucun chemin par défaut défini",
-      "CAN_NOT_GET_DEFAULT_PATH":"Ne peut pas obtenir le chemin par défaut",
-      "DEFAULT_PATH":"Chemin par défaut: "
+      "MAPFILE": "Fichier de carte WC3"
     },
     "MENU": {
       "SELECT_LANG": "Choisir la langue",

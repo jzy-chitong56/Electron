@@ -14,7 +14,10 @@
       "FORCELANG": "Substituir a linguagem de conversação AI",
       "REF_BEST_GAME_VERSION": "Optimal: Últimas notícias",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "No set caminho padrão",
+      "CAN_NOT_GET_DEFAULT_PATH":"Can not get caminho padrão",
+      "DEFAULT_PATH":"caminho padrão: "
     },
     "DETAIL": {
       "TITLE": "Detalhe!",
@@ -54,10 +57,7 @@
     "ELECTRON": {
       "OPEN_MAP": "Abrir arquivo de mapa WC3",
       "OPEN_DIR": "Abrir diretório de mapas AMAI",
-      "MAPFILE": "Arquivo de mapa WC3",
-      "NO_SET_DEFAULT_PATH": "No set caminho padrão",
-      "CAN_NOT_GET_DEFAULT_PATH":"Can not get caminho padrão",
-      "DEFAULT_PATH":"caminho padrão: "
+      "MAPFILE": "Arquivo de mapa WC3"
     },
     "MENU": {
       "SELECT_LANG": "Selecionar idioma",

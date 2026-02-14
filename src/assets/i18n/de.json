@@ -14,7 +14,10 @@
       "FORCELANG": "AI Chat Sprache überschreiben",
       "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "Kein standardmäßiger Pfad festgelegt",
+      "CAN_NOT_GET_DEFAULT_PATH":"Kann den Standardspeicherort nicht abrufen",
+      "DEFAULT_PATH":"Standardpfad: "
     },
     "DETAIL": {
       "TITLE": "Detail!",
@@ -54,10 +57,7 @@
     "ELECTRON": {
       "OPEN_MAP": "WC3-Kartendatei öffnen",
       "OPEN_DIR": "AMAI-Kartenverzeichnis öffnen",
-      "MAPFILE": "WC3-Kartendatei",
-      "NO_SET_DEFAULT_PATH": "Kein standardmäßiger Pfad festgelegt",
-      "CAN_NOT_GET_DEFAULT_PATH":"Kann den Standardspeicherort nicht abrufen",
-      "DEFAULT_PATH":"Standardpfad: "
+      "MAPFILE": "WC3-Kartendatei"
     },
     "MENU": {
       "SELECT_LANG": "Sprache auswählen",

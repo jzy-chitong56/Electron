@@ -14,7 +14,10 @@
       "FORCELANG": "覆盖默认AI语言",
       "REF_BEST_GAME_VERSION": "最佳版本：最新版",
       "TFT_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "最佳版本：1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "未设置默认路径",
+      "CAN_NOT_GET_DEFAULT_PATH":"找不到默认路径",
+      "DEFAULT_PATH":"默认路径: "
     },
     "DETAIL": {
       "TITLE": "详情页!",
@@ -54,10 +57,7 @@
    "ELECTRON": {
       "OPEN_MAP": "选择地图",
       "OPEN_DIR": "选择地图目录",
-      "MAPFILE": "地图文件",
-      "NO_SET_DEFAULT_PATH": "未设置默认路径",
-      "CAN_NOT_GET_DEFAULT_PATH":"找不到默认路径",
-      "DEFAULT_PATH":"默认路径: "
+      "MAPFILE": "地图文件"
     },
     "MENU": {
       "SELECT_LANG": "选择语言",

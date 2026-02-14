@@ -14,7 +14,10 @@
       "FORCELANG": "Suprascrie limbajul de chat AI",
       "REF_BEST_GAME_VERSION": "Optim: Cele mai recente",
       "TFT_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optim: 1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "Nu există un set de cale implicită",
+      "CAN_NOT_GET_DEFAULT_PATH":"Nu se poate obține calea implicită",
+      "DEFAULT_PATH":"Căi implicită: "
     },
     "DETAIL": {
       "TITLE": "Amănunt!",
@@ -54,10 +57,7 @@
     "ELECTRON": {
       "OPEN_MAP": "Deschide fișierul de hartă WC3",
       "OPEN_DIR": "Deschide directorul de hărți AMAI",
-      "MAPFILE": "Fișier de hartă WC3",
-      "NO_SET_DEFAULT_PATH": "Nu există un set de cale implicită",
-      "CAN_NOT_GET_DEFAULT_PATH":"Nu se poate obține calea implicită",
-      "DEFAULT_PATH":"Căi implicită: "
+      "MAPFILE": "Fișier de hartă WC3"
     },
     "MENU": {
       "SELECT_LANG": "Selectează limba",

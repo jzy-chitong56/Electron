@@ -14,7 +14,10 @@
       "FORCELANG": "Скачать язык разговора",
       "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
       "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "Нет установленного пути по умолчанию",
+      "CAN_NOT_GET_DEFAULT_PATH":"Не удается получить путь по умолчанию",
+      "DEFAULT_PATH":"Nути по умолчанию: "
     },
     "DETAIL": {
       "TITLE": "Подробность!",
@@ -54,10 +57,7 @@
     "ELECTRON": {
       "OPEN_MAP": "Открыть файл карты WC3",
       "OPEN_DIR": "Открыть папку карт AMAI",
-      "MAPFILE": "Файл карты WC3",
-      "NO_SET_DEFAULT_PATH": "Нет установленного пути по умолчанию",
-      "CAN_NOT_GET_DEFAULT_PATH":"Не удается получить путь по умолчанию",
-      "DEFAULT_PATH":"Nути по умолчанию: "
+      "MAPFILE": "Файл карты WC3"
     },
     "MENU": {
       "SELECT_LANG": "Выбрать язык",

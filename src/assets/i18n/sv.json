@@ -14,7 +14,10 @@
       "FORCELANG": "Skriv över AI-chattspråk",
       "REF_BEST_GAME_VERSION": "Optimalt: Senaste",
       "TFT_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x"
+      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
+      "NO_SET_DEFAULT_PATH": "Ingen inställd standardväg",
+      "CAN_NOT_GET_DEFAULT_PATH":"Kan inte få standardvägen",
+      "DEFAULT_PATH":"Standardväg: "
     },
     "DETAIL": {
       "TITLE": "Detalj!",
@@ -54,10 +57,7 @@
     "ELECTRON": {
       "OPEN_MAP": "Öppna WC3-kartfil",
       "OPEN_DIR": "Öppna AMAI-kartkatalog",
-      "MAPFILE": "WC3-kartfil",
-      "NO_SET_DEFAULT_PATH": "Ingen inställd standardväg",
-      "CAN_NOT_GET_DEFAULT_PATH":"Kan inte få standardvägen",
-      "DEFAULT_PATH":"Standardväg: "
+      "MAPFILE": "WC3-kartfil"
     },
     "MENU": {
       "SELECT_LANG": "Välj språk",
