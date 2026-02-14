@@ -87,16 +87,15 @@ export class ElectronService {
 
   loadDefaultPath(): string {
     if (!this.isElectron) return ''; // Return empty string for non-Electron environments
-    const documentsPath = this.app.getPath('documents');
     try {
       const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
       if (this.fs.existsSync(settingsPath)) {
         const settings = JSON.parse(this.fs.readFileSync(settingsPath, 'utf8'));
-        return settings.defaultPath || documentsPath;
+        return settings.defaultPath || null;
       }
-      return documentsPath;
+      return null;
     } catch {
-      return documentsPath;
+      return null;
     }
   }
 
