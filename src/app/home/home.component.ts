@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
-import { TranslateService } from "@codeandweb/ngx-translate";
+import { TranslateService, LangChangeEvent } from "@codeandweb/ngx-translate";
+import { Subscription } from 'rxjs';
 // 移除 firstValueFrom 导入
 
 
@@ -14,7 +15,9 @@ import { TranslateService } from "@codeandweb/ngx-translate";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private langChangeSub: Subscription | null = null;
+  private pathTranslationSub: Subscription | null = null;
 
   Images_ROC_Shown: boolean = false;
   Images_TFT_Shown: boolean = false; 
@@ -34,6 +37,20 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
+    // Subscribe to language changes to update path text dynamically
+    this.langChangeSub = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.updatePathText(); // Refresh text when language switches
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscriptions to prevent memory leaks
+    if (this.langChangeSub) {
+      this.langChangeSub.unsubscribe();
+    }
+    if (this.pathTranslationSub) {
+      this.pathTranslationSub.unsubscribe();
+    }
   }
 
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
@@ -187,14 +204,36 @@ export class HomeComponent implements OnInit {
   async loadDefaultPath(): Promise<void> {
     try {
       this.defaultPath = await this.electronService.loadDefaultPath();
-      console.error('loading default path:', this.defaultPath);
-      this.defaultPathText = this.defaultPath || 
-        await this.translate.get('PAGES.ELECTRON.NO_SET_DEFAULT_PATH').toPromise();
+      console.log('loading default path:', this.defaultPath);
+      this.updatePathText(); // Use helper to handle translations
     } catch (error) {
       console.error('Error loading default path:', error);
-      this.defaultPathText = 
-        await this.translate.get('PAGES.ELECTRON.CAN_NOT_GET_DEFAULT_PATH').toPromise();
+      this.defaultPath = null;
+      this.updatePathText(true); // Pass error flag
     }
+  }
+
+  // Helper: Update path text (stays in sync with language changes)
+  private updatePathText(isError: boolean = false): void {
+    // Unsubscribe from previous translation to prevent memory leaks
+    if (this.pathTranslationSub) {
+      this.pathTranslationSub.unsubscribe();
+    }
+
+    if (this.defaultPath) {
+      this.defaultPathText = this.defaultPath;
+      return;
+    }
+
+    // Get the correct translation key
+    const key = isError 
+      ? 'PAGES.HOME.CAN_NOT_GET_DEFAULT_PATH' 
+      : 'PAGES.HOME.NO_SET_DEFAULT_PATH';
+
+    // Subscribe to translation (auto-updates when language changes)
+    this.pathTranslationSub = this.translate.get(key).subscribe(translatedText => {
+      this.defaultPathText = translatedText;
+    });
   }
 
   async selectDefaultFolder(): Promise<void> {
