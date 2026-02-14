@@ -220,4 +220,27 @@
      transform: translateX(100%);
      margin-left: -1px;
   }
+
+  .default-folder-container {
+    max-width: 75%;
+    margin: 1.5rem auto;
+    padding: 0.8rem;
+    background-color: #5c5c5c;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: #47A4F9;
+    }
+    
+    .default-folder-text {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }

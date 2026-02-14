@@ -56,7 +56,6 @@ export class HomeComponent implements OnInit {
     };
   }
 
-
   @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
   onMouseLeave(event: MouseEvent, action: string) {
     if (this.isInteractive) { 
@@ -79,11 +78,9 @@ export class HomeComponent implements OnInit {
       }
     };
   }
-  
-
 
   @HostListener('click', ['$event', '$event.target.dataset.action'])
-  onClick(event: MouseEvent, action: string) {
+  async onClick(event: MouseEvent, action: string): Promise<void> {
     if (this.isInteractive) {
       switch (action) {
         case 'Roc':
@@ -95,6 +92,7 @@ export class HomeComponent implements OnInit {
             this.TFTInstall = false;
             this.REFInstall = false;
             this.ROCInstall = !this.ROCInstall;
+            
             this.electronService.ipcRenderer.send(this.installEvent, 'ROC', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
             console.log('message',this.message);
           }
@@ -108,6 +106,7 @@ export class HomeComponent implements OnInit {
             this.ROCInstall = false;
             this.REFInstall = false;
             this.TFTInstall = !this.TFTInstall;
+            
             this.electronService.ipcRenderer.send(this.installEvent, 'TFT', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
             console.log('message',this.message);
           }
@@ -121,6 +120,7 @@ export class HomeComponent implements OnInit {
             this.ROCInstall = false;
             this.TFTInstall = false;
             this.REFInstall = !this.REFInstall;
+            
             this.electronService.ipcRenderer.send(this.installEvent, 'REFORGED', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
             console.log('message',this.message);
           }
@@ -173,8 +173,31 @@ export class HomeComponent implements OnInit {
     };
   }
 
+  defaultPath: string | null = null;
+  defaultPathText: string = 'Set Default Folder';
+
   constructor(
     private router: Router,
     private electronService: ElectronService,
-  ) { }
+  ) { 
+    this.loadDefaultPath();
+  }
+
+  async loadDefaultPath(): Promise<void> {
+    this.defaultPath = this.electronService.loadDefaultPath();
+    console.log('load default Path :',this.defaultPath);
+    this.defaultPathText = this.defaultPath 
+      ? `Default: ${this.defaultPath}` 
+      : 'Set Default Folder';
+  }
+
+  async selectDefaultFolder(): Promise<void> {
+    const selectedPath = await this.electronService.selectFolder(this.defaultPath || undefined);
+    if (selectedPath) {
+      this.electronService.saveDefaultPath(selectedPath);
+      this.defaultPath = selectedPath;
+      console.log('select default Path :',this.defaultPath);
+      this.defaultPathText = `Default: ${selectedPath}`;
+    }
+  }
 }
