@@ -76,11 +76,11 @@ export class ElectronService {
     return result.canceled ? null : result.filePaths[0];
   }
 
-  saveDefaultPath(path: string): void {
+  saveDefaultPath(pathValue: string): void {
     if (!this.isElectron) return;
-    const settingsPath = path.join(this.app.getPath('userData'), 'settings.json');
+    const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
     const settings = {
-      defaultPath: path
+      defaultPath: pathValue
     };
     this.fs.writeFileSync(settingsPath, JSON.stringify(settings));
   }
@@ -88,7 +88,7 @@ export class ElectronService {
   loadDefaultPath(): string | null {
     if (!this.isElectron) return null;
     try {
-      const settingsPath = path.join(this.app.getPath('userData'), 'settings.json');
+      const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
       if (this.fs.existsSync(settingsPath)) {
         const settings = JSON.parse(this.fs.readFileSync(settingsPath, 'utf8'));
         return settings.defaultPath || null;
