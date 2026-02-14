@@ -189,11 +189,11 @@ export class HomeComponent implements OnInit {
       this.defaultPath = await this.electronService.loadDefaultPath();
       console.error('loading default path:', this.defaultPath);
       this.defaultPathText = this.defaultPath || 
-        await this.translate.get('PAGES.ELECTRON.NO_SET_DEFAULT_FOLDER').toPromise();
+        await this.translate.get('PAGES.ELECTRON.NO_SET_DEFAULT_PATH').toPromise();
     } catch (error) {
       console.error('Error loading default path:', error);
       this.defaultPathText = 
-        await this.translate.get('PAGES.ELECTRON.CAN_NOT_GET_DEFAULT_FOLDER').toPromise();
+        await this.translate.get('PAGES.ELECTRON.CAN_NOT_GET_DEFAULT_PATH').toPromise();
     }
   }
 
