@@ -54,7 +54,10 @@
     "ELECTRON": {
       "OPEN_MAP": "Ouvrir le fichier de carte WC3",
       "OPEN_DIR": "Ouvrir le répertoire des cartes AMAI",
-      "MAPFILE": "Fichier de carte WC3"
+      "MAPFILE": "Fichier de carte WC3",
+      "NO_SET_DEFAULT_PATH": "Aucun chemin par défaut défini",
+      "CAN_NOT_GET_DEFAULT_PATH":"Ne peut pas obtenir le chemin par défaut",
+      "DEFAULT_PATH":"Chemin par défaut: "
     },
     "MENU": {
       "SELECT_LANG": "Choisir la langue",

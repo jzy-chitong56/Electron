@@ -54,7 +54,10 @@
     "ELECTRON": {
       "OPEN_MAP": "Åpne WC3-kartfil",
       "OPEN_DIR": "Åpne AMAI-kartkatalog",
-      "MAPFILE": "WC3-kartfil"
+      "MAPFILE": "WC3-kartfil",
+      "NO_SET_DEFAULT_PATH": "Ingen standardstilpasset sti",
+      "CAN_NOT_GET_DEFAULT_PATH":"Kan ikke få standardstien",
+      "DEFAULT_PATH":"Standardstiendeveis: "
     },
     "MENU": {
       "SELECT_LANG": "Velg språk",

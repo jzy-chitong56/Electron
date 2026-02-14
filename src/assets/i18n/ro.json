@@ -54,7 +54,10 @@
     "ELECTRON": {
       "OPEN_MAP": "Deschide fișierul de hartă WC3",
       "OPEN_DIR": "Deschide directorul de hărți AMAI",
-      "MAPFILE": "Fișier de hartă WC3"
+      "MAPFILE": "Fișier de hartă WC3",
+      "NO_SET_DEFAULT_PATH": "Nu există un set de cale implicită",
+      "CAN_NOT_GET_DEFAULT_PATH":"Nu se poate obține calea implicită",
+      "DEFAULT_PATH":"Căi implicită: "
     },
     "MENU": {
       "SELECT_LANG": "Selectează limba",

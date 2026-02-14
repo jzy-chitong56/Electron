@@ -54,7 +54,10 @@
       "ELECTRON": {
         "OPEN_MAP": "Open WC3 Map File",
         "OPEN_DIR": "Open AMAI Maps Directory",
-        "MAPFILE": "WC3 Map File"
+        "MAPFILE": "WC3 Map File",
+        "NO_SET_DEFAULT_PATH": "No set default path",
+        "CAN_NOT_GET_DEFAULT_PATH":"Can not get default path",
+        "DEFAULT_PATH":"Default path: "
       },
       "MENU": {
         "SELECT_LANG": "Select Language",

@@ -54,7 +54,10 @@
    "ELECTRON": {
       "OPEN_MAP": "选择地图",
       "OPEN_DIR": "选择地图目录",
-      "MAPFILE": "地图文件"
+      "MAPFILE": "地图文件",
+      "NO_SET_DEFAULT_PATH": "未设置默认路径",
+      "CAN_NOT_GET_DEFAULT_PATH":"找不到默认路径",
+      "DEFAULT_PATH":"默认路径: "
     },
     "MENU": {
       "SELECT_LANG": "选择语言",

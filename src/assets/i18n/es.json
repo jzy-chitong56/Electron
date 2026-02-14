@@ -54,7 +54,10 @@
     "ELECTRON": {
       "OPEN_MAP": "Abrir archivo de mapa de WC3",
       "OPEN_DIR": "Abrir directorio de mapas AMAI",
-      "MAPFILE": "Archivo de mapa de WC3"
+      "MAPFILE": "Archivo de mapa de WC3",
+      "NO_SET_DEFAULT_PATH": "No establecer ruta predeterminada",
+      "CAN_NOT_GET_DEFAULT_PATH":"No se puede obtener la ruta predeterminada",
+      "DEFAULT_PATH":"Ruta predeterminada: "
     },
     "MENU": {
       "SELECT_LANG": "Seleccionar idioma",
