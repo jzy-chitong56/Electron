@@ -105,7 +105,12 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       if (response && response.length > 0) {
         defaultPath = response[0];
         console.log('set default Path :',defaultPath);
-        this.electronService.saveDefaultPath(defaultPath);
+        // Save to settings.json directly in main process
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        const settings = {
+          defaultPath: defaultPath
+        };
+        fs.writeFileSync(settingsPath, JSON.stringify(settings));
       }
     }
   } else {
