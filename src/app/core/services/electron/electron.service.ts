@@ -6,7 +6,9 @@ import { ipcRenderer, webFrame } from 'electron';
 import * as electron from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import * as path from 'path';
 import { Menu, MenuItem } from '@electron/remote';
+import { dialog } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,9 @@ export class ElectronService {
   webFrame: typeof webFrame;
   childProcess: typeof childProcess;
   fs: typeof fs;
+  path: typeof path;
+  dialog: typeof dialog;
+  app: typeof electron.app;
 
   constructor() {
     // Conditional imports
@@ -28,8 +33,11 @@ export class ElectronService {
       this.MenuItem = window.require('@electron/remote').MenuItem;
       this.ipcRenderer = window.require('electron').ipcRenderer;
       this.webFrame = window.require('electron').webFrame;
+      this.app = window.require('electron').app;
 
       this.fs = window.require('fs');
+      this.path = window.require('path');
+      this.dialog = window.require('electron').dialog;
 
       this.childProcess = window.require('child_process');
       this.childProcess.exec('node -v', (error, stdout, stderr) => {
@@ -55,6 +63,39 @@ export class ElectronService {
       // If you want to use a NodeJS 3rd party deps in Renderer process,
       // ipcRenderer.invoke can serve many common use cases.
       // https://www.electronjs.org/docs/latest/api/ipc-renderer#ipcrendererinvokechannel-args
+    }
+  }
+
+
+  async selectFolder(defaultPath?: string): Promise<string | null> {
+    if (!this.isElectron) return null;
+    const result = await this.dialog.showOpenDialog({
+      properties: ['openDirectory'],
+      defaultPath
+    });
+    return result.canceled ? null : result.filePaths[0];
+  }
+
+  saveDefaultPath(path: string): void {
+    if (!this.isElectron) return;
+    const settingsPath = path.join(this.app.getPath('userData'), 'settings.json');
+    const settings = {
+      defaultPath: path
+    };
+    this.fs.writeFileSync(settingsPath, JSON.stringify(settings));
+  }
+
+  loadDefaultPath(): string | null {
+    if (!this.isElectron) return null;
+    try {
+      const settingsPath = path.join(this.app.getPath('userData'), 'settings.json');
+      if (this.fs.existsSync(settingsPath)) {
+        const settings = JSON.parse(this.fs.readFileSync(settingsPath, 'utf8'));
+        return settings.defaultPath || null;
+      }
+      return null;
+    } catch {
+      return null;
     }
   }
 
