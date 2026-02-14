@@ -1,213 +1,145 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { ElectronService } from '../core/services/electron/electron.service';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { ElectronService, MenuService } from './core/services';
+import { TranslateService, TranslatePipe, TranslateDirective, _ as t_, LangChangeEvent } from "@codeandweb/ngx-translate";
+import { APP_CONFIG } from '../environments/environment';
+import { InstallModel } from '../../commons/models';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class AppComponent implements AfterViewChecked {
+  public title = '';
+  public active = false;
+  public couldClose = false;
+  public messages = [];
+  public currentFile = 0;
+  public totalFiles = 0;
+  public installingText = '';
 
-  Images_ROC_Shown: boolean = false;
-  Images_TFT_Shown: boolean = false; 
-  Images_REF_Shown: boolean = false; 
-  ROCInstall: boolean = false; 
-  TFTInstall: boolean = false; 
-  REFInstall: boolean = false; 
-  Mode_State: boolean = true;
-  BJ_State: number = 1;
-  isInteractive: boolean = true;
-  modeState: string = '-folder';
-  bjState: string = '-1';
-  message: string = '';
-  optimize: boolean = true;
-  forcelang: boolean = false;
-  installEvent: string = 'install'
+  @ViewChild('logareawrapper') private readonly logContainer: ElementRef; 
 
-  ngOnInit(): void {
-    console.log('HomeComponent INIT');
-  }
+  ngAfterViewChecked() { this.scrollToBottom(); } 
 
-  @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
-  onMouseEnter(event: MouseEvent, action: string) {
-    if (this.isInteractive) {
-      switch (action) {
-        case 'Roc':
-          if (!this.ROCInstall) {
-            this.Images_ROC_Shown = true;
-          }
-          break;
-        case 'Tft':
-          if (!this.TFTInstall) {
-            this.Images_TFT_Shown = true;
-          }
-          break;
-        case 'Ref':
-          if (!this.REFInstall) {
-            this.Images_REF_Shown = true;
-          }
-          break;
-      }
-    };
-  }
-
-  @HostListener('mouseout', ['$event', '$event.target.dataset.action'])
-  onMouseLeave(event: MouseEvent, action: string) {
-    if (this.isInteractive) { 
-      switch (action) {
-        case 'Roc':
-          if (!this.ROCInstall) {
-            this.Images_ROC_Shown = false;
-          }
-          break;
-        case 'Tft':
-          if (!this.TFTInstall) {
-            this.Images_TFT_Shown = false;
-          }
-          break;
-        case 'Ref':
-          if (!this.REFInstall) {
-            this.Images_REF_Shown = false;
-          }
-          break;
-      }
-    };
-  }
-
-  @HostListener('click', ['$event', '$event.target.dataset.action'])
-  async onClick(event: MouseEvent, action: string): Promise<void> {
-    if (this.isInteractive) {
-      switch (action) {
-        case 'Roc':
-          if (!this.ROCInstall) {
-            this.message = `install${this.modeState}${this.bjState}-ROC`;
-            this.Images_ROC_Shown = true;
-            this.Images_TFT_Shown = false;
-            this.Images_REF_Shown = false;
-            this.TFTInstall = false;
-            this.REFInstall = false;
-            this.ROCInstall = !this.ROCInstall;
-            
-            this.electronService.ipcRenderer.send(this.installEvent, 'ROC', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
-            console.log('message',this.message);
-          }
-          break;
-        case 'Tft':
-          if (!this.TFTInstall) {
-            this.message = `install${this.modeState}${this.bjState}-TFT`;
-            this.Images_ROC_Shown = false;
-            this.Images_TFT_Shown = true;
-            this.Images_REF_Shown = false;
-            this.ROCInstall = false;
-            this.REFInstall = false;
-            this.TFTInstall = !this.TFTInstall;
-            
-            this.electronService.ipcRenderer.send(this.installEvent, 'TFT', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
-            console.log('message',this.message);
-          }
-          break;
-        case 'Ref':
-          if (!this.REFInstall) {
-            this.message = `install${this.modeState}${this.bjState}`;
-            this.Images_ROC_Shown = false;
-            this.Images_TFT_Shown = false;
-            this.Images_REF_Shown = true;
-            this.ROCInstall = false;
-            this.TFTInstall = false;
-            this.REFInstall = !this.REFInstall;
-            
-            this.electronService.ipcRenderer.send(this.installEvent, 'REFORGED', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
-            console.log('message',this.message);
-          }
-          break;
-      }
-    };
-    this.Images_ROC_Shown = false;
-    this.Images_TFT_Shown = false;
-    this.Images_REF_Shown = false;
-    this.ROCInstall = false;
-    this.TFTInstall = false;
-    this.REFInstall = false;
-  }
-
-  onInputChange(inputId: string) {
-    if (this.isInteractive) { 
-      switch (inputId) {
-        case 'ModeSwitch':
-          this.Mode_State = !this.Mode_State;
-          this.modeState = this.Mode_State ? '-folder' : '-map';
-          console.log('mode',this.modeState,this.Mode_State);
-          break;
-        case 'BJoptionOn':
-          this.bjState = '';
-          this.BJ_State = 1;
-          console.log('BJ',this.bjState);
-          break;
-        case 'BJoptionVsAI':
-          this.bjState = '-vai';
-          this.BJ_State = 2;
-          console.log('BJ',this.bjState);
-          break;
-        case 'BJoptionOff':
-          this.bjState = '-noc';
-          console.log('BJ',this.bjState);
-            break;
-        case 'Optimise':
-          this.optimize = !this.optimize;
-          if (this.optimize) {
-            this.forcelang = false;
-          }
-          break;
-        case 'ForceLang':
-          this.forcelang = !this.forcelang;
-          if (this.forcelang) {
-            this.optimize = false;
-          }
-          break;     
-      }
-    };
-  }
-
-  defaultPath: string | null = null;
-  defaultPathText: string = '';
+  private scrollToBottom(): void { this.logContainer.nativeElement.scrollTop = this.logContainer.nativeElement.scrollHeight; } 
 
   constructor(
-    private router: Router,
-    private electronService: ElectronService,
-  ) { 
-    this.loadDefaultPath();
-  }
+    private readonly electronService: ElectronService,
+    private readonly translate: TranslateService,
+    private readonly menuService: MenuService,
+    private readonly cdr: ChangeDetectorRef,
+  ) {
+    const lang = this.translate.getBrowserLang();
+    this.translate.use(lang)
+    console.log('APP_CONFIG', APP_CONFIG);
 
-  async loadDefaultPath(): Promise<void> {
-    try {
-      this.defaultPath = this.electronService.loadDefaultPath();
-      console.log('load default Path :',this.defaultPath);
-      this.defaultPathText = this.defaultPath 
-        ? this.defaultPath : '';
-    } catch (error) {
-      console.error('Error loading default path:', error);
-      this.defaultPathText = '';
+    // Refresh app when language changes
+    this.translate.onDefaultLangChange.subscribe((event: LangChangeEvent) => {
+      this.translate.get([t_('PAGES.HOME.TITLE'),t_('PAGES.ELECTRON.OPEN_MAP'), t_('PAGES.ELECTRON.OPEN_DIR'), t_('PAGES.ELECTRON.MAPFILE')]).subscribe((translations: { [key: string]: string } ) => {
+        this.electronService.ipcRenderer.send('Trans', event.lang, translations);
+      })
+      this.cdr.detectChanges();
+    });
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translate.get([t_('PAGES.HOME.TITLE'),t_('PAGES.ELECTRON.OPEN_MAP'), t_('PAGES.ELECTRON.OPEN_DIR'), t_('PAGES.ELECTRON.MAPFILE')]).subscribe((translations: { [key: string]: string } ) => {
+        this.electronService.ipcRenderer.send('Trans', event.lang, translations);
+      })
+      this.cdr.detectChanges();
+    });
+
+    if (electronService.isElectron) {
+      this.menuService.createMenu();
+
+      this.electronService.ipcRenderer.on('on-install-progress', (_, args: { current: number, total: number }) => {
+        // console.log('totalFiles-in:', args.total, 'currentFile-in:', args.current);
+        if ( args.total > 0 && this.totalFiles < args.total) {
+          this.totalFiles = args.total;
+        }
+        if (this.currentFile < this.totalFiles) {
+          this.currentFile++;
+          this.title = '(' + this.currentFile + '/' + this.totalFiles + ') ' + this.installingText;
+        }
+        // console.log('totalFiles-out:', this.totalFiles, 'currentFile-out:', this.currentFile);
+        this.cdr.detectChanges();
+      });
+
+      // TODO: add 'push notification'/'notification'
+      this.electronService.ipcRenderer.on('on-install-init', (_, args: InstallModel) => {
+        console.log('args-install-init', args)
+        this.translate.get(t_('PAGES.APP.INSTALLING'), {path: args.response}).subscribe((res: string) => {
+          this.title = '(0/X) ' + res;
+          this.installingText = res;
+        });
+        this.active = true;
+        this.couldClose = false;
+        this.messages = [];
+        this.translate.get(t_('PAGES.APP.INSTALLING_DIR'), {path: args.response}).subscribe((res: string) => {
+          !args.isMap && this.messages?.push(res);
+        });
+
+        // disable the menu while the script is running
+        this
+          .menuService
+          .changeEnabledMenuState(false);
+
+        // force update in angular view after update any variable
+        // because we are in a IPC async
+        this.cdr.detectChanges();
+      });
+
+      // TODO: add 'push notification'/'notification'
+      this.electronService.ipcRenderer.on('on-install-empty', (_, args) => {
+        console.log('args-install-empty', args);
+        this.active = false;
+        this.couldClose = true;
+        this.totalFiles = 0;
+        this.currentFile = 0;
+        this.cdr.detectChanges();
+      });
+
+      // TODO: add 'push notification'/'notification'
+      this.electronService.ipcRenderer.on('on-install-exit', (_, args) => {
+        this.translate.get(t_('PAGES.APP.INSTALL_DONE')).subscribe((res: string) => {
+          this.title = '(' + this.currentFile + '/' + this.totalFiles + ')' + ' ' + res;
+        });
+        this.couldClose = true;
+        this.totalFiles = 0;
+        this.currentFile = 0;
+        this
+          .menuService
+          .changeEnabledMenuState(true);
+
+        this.cdr.detectChanges();
+      });
+
+      this.electronService.ipcRenderer.on('on-install-message', (_, args) => {
+        console.log('args-install-message', args);
+        this.messages?.push(args);
+        this.cdr.detectChanges();
+      });
+
+      // TODO: add 'push notification'/'notification'
+      this.electronService.ipcRenderer.on('on-install-error', (_, args) => {
+        console.log('args-install-error', args);
+        this.couldClose = true;
+        this.totalFiles = 0;
+        this.currentFile = 0;
+        this
+          .menuService
+          .changeEnabledMenuState(true);
+
+        this.cdr.detectChanges();
+      });
+
+    } else {
+      console.log('Run in browser');
     }
   }
 
-  async selectDefaultFolder(): Promise<void> {
-    try {
-      const selectedPath = await this.electronService.selectFolder(this.defaultPath || undefined);
-      if (selectedPath) {
-        this.electronService.saveDefaultPath(selectedPath);
-        this.defaultPath = selectedPath;
-        console.log('select default Path :',this.defaultPath);
-        this.defaultPathText = selectedPath; // 直接使用路径，不需要前缀
-      } else {
-        console.log('Folder selection canceled');
-      }
-    } catch (error) {
-      console.error('Error selecting default folder:', error);
+  public closeCmd() {
+    if (this.couldClose) { 
+      this.active = false;
     }
   }
 }
