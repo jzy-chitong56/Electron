@@ -115,15 +115,26 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     }
   } else {
     // Handle map mode (isMap = true)
+    const documentsPath = app.getPath('documents');
     response = dialog.showOpenDialogSync(win, {
       title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
       properties: ['openFile'],
       filters: [
         { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
       ],
-      // Use default path if available
-      defaultPath: defaultPath || undefined,
+      // Use default path if available, otherwise open "documents"
+      defaultPath: defaultPath || documentsPath,
     });
+    // 选择文件后自动将文件所在目录设为默认路径
+    if (response && response.length > 0) {
+      const filePath = response[0];
+      const folderPath = path.dirname(filePath);
+      defaultPath = folderPath;
+      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+      const settings = { defaultPath: folderPath };
+      fs.writeFileSync(settingsPath, JSON.stringify(settings));
+      console.log('Default path updated to:', folderPath);
+    }
     console.log('default Path :',defaultPath);
   }
 
