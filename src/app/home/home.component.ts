@@ -37,6 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
+    // Load default path after component is initialized
+    this.loadDefaultPath();
     // Subscribe to language changes to update path text dynamically
     this.langChangeSub = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.updatePathText(); // Refresh text when language switches
@@ -198,7 +200,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private electronService: ElectronService,
     private translate: TranslateService
   ) { 
-    this.loadDefaultPath();
+    // 去掉调试信息，保持简洁
   }
 
   async loadDefaultPath(): Promise<void> {
@@ -246,15 +248,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   async selectDefaultFolder(): Promise<void> {
     try {
+      console.log('Attempting to select default folder...');
       const selectedPath = await this.electronService.selectFolder(this.defaultPath || null);
+      console.log('Selected path:', selectedPath);
+      
       if (!selectedPath) {
         console.log('Folder selection canceled');
         return;
       }
+      
       await this.electronService.saveDefaultPath(selectedPath);
       this.defaultPath = selectedPath;
       this.defaultPathText = selectedPath;
-      console.log('select default Path :', this.defaultPath);
+      console.log('Selected default path:', this.defaultPath);
     } catch (error) {
       console.error('Error selecting default folder:', error);
     }

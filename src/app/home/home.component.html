@@ -52,13 +52,13 @@
   <div class="default-folder-container">
     <span class="default-folder-text">
       {{ 'PAGES.HOME.DEFAULT_PATH' | translate }}
-      <span 
+      <button 
         *ngIf="defaultPathText" 
         class="underlined-path" 
         [title]="defaultPathText"
         (click)="selectDefaultFolder(); $event.stopPropagation()"
-        style="cursor: pointer;"
-      >{{defaultPathText}}</span>
+        style="cursor: pointer; display: inline-block; position: relative; z-index: 1; user-select: none; text-decoration: underline;"
+      >{{defaultPathText}}</button>
     </span>
   </div>
 </div>
