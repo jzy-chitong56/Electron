@@ -36,26 +36,23 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  selectDefaultFolder(): void {
+  async selectDefaultFolder(event?: Event): Promise<void> {
+    event?.stopPropagation(); // 首先停止事件冒泡
     console.log('Select default folder clicked');
-    // 防止事件冒泡
-    event?.stopPropagation();
     
-    this.electronService.selectFolder().then((selectedPath: string | null) => {
+    try {
+      const selectedPath = await this.electronService.selectFolder(this.defaultPath || null);
       console.log('Selected path:', selectedPath);
+      
       if (selectedPath) {
         this.defaultPath = selectedPath;
         this.defaultPathText = selectedPath;
-        // 保存选中的路径
-        this.electronService.saveDefaultPath(selectedPath).then(() => {
-          console.log('Default path saved successfully');
-        }).catch(error => {
-          console.error('Error saving default path:', error);
-        });
+        await this.electronService.saveDefaultPath(selectedPath);
+        console.log('Default path saved successfully');
       }
-    }).catch(error => {
-      console.error('Error selecting folder:', error);
-    });
+    } catch (error) {
+      console.error('Error in selectDefaultFolder:', error);
+    }
   }
 
   Images_ROC_Shown: boolean = false;
