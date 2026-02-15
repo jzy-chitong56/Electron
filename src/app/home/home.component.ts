@@ -15,9 +15,48 @@ import { Subscription } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  private langChangeSub: Subscription | null = null;
-  private pathTranslationSub: Subscription | null = null;
+export class HomeComponent implements OnInit {
+  defaultPath: string | null = null;
+  defaultPathText: string = '未设置路径';
+
+  constructor(private electronService: ElectronService, private translate: TranslateService) {}
+
+  ngOnInit(): void {
+    this.loadDefaultPath();
+  }
+
+  loadDefaultPath(): void {
+    this.electronService.loadDefaultPath().then((path: string | null) => {
+      console.log('Loaded default path:', path);
+      this.defaultPath = path;
+      this.defaultPathText = path || '未设置路径';
+    }).catch(error => {
+      console.error('Error loading default path:', error);
+      this.defaultPathText = '未设置路径';
+    });
+  }
+
+  selectDefaultFolder(): void {
+    console.log('Select default folder clicked');
+    // 防止事件冒泡
+    event?.stopPropagation();
+    
+    this.electronService.selectFolder().then((selectedPath: string | null) => {
+      console.log('Selected path:', selectedPath);
+      if (selectedPath) {
+        this.defaultPath = selectedPath;
+        this.defaultPathText = selectedPath;
+        // 保存选中的路径
+        this.electronService.saveDefaultPath(selectedPath).then(() => {
+          console.log('Default path saved successfully');
+        }).catch(error => {
+          console.error('Error saving default path:', error);
+        });
+      }
+    }).catch(error => {
+      console.error('Error selecting folder:', error);
+    });
+  }
 
   Images_ROC_Shown: boolean = false;
   Images_TFT_Shown: boolean = false; 
@@ -34,26 +73,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   optimize: boolean = true;
   forcelang: boolean = false;
   installEvent: string = 'install'
-
-  ngOnInit(): void {
-    console.log('HomeComponent INIT');
-    // Load default path after component is initialized
-    this.loadDefaultPath();
-    // Subscribe to language changes to update path text dynamically
-    this.langChangeSub = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.updatePathText(); // Refresh text when language switches
-    });
-  }
-
-  ngOnDestroy(): void {
-    // Clean up subscriptions to prevent memory leaks
-    if (this.langChangeSub) {
-      this.langChangeSub.unsubscribe();
-    }
-    if (this.pathTranslationSub) {
-      this.pathTranslationSub.unsubscribe();
-    }
-  }
 
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
@@ -190,79 +209,5 @@ export class HomeComponent implements OnInit, OnDestroy {
           break;     
       }
     };
-  }
-
-  defaultPath: string | null = null;
-  defaultPathText: string = '';
-
-  constructor(
-    private router: Router,
-    private electronService: ElectronService,
-    private translate: TranslateService
-  ) { 
-    // 去掉调试信息，保持简洁
-  }
-
-  async loadDefaultPath(): Promise<void> {
-    try {
-      console.log('Attempting to load default path...');
-      this.defaultPath = await this.electronService.loadDefaultPath();
-      console.log('Loaded default path:', this.defaultPath);
-      console.log('Path type:', typeof this.defaultPath);
-      console.log('Path is null?', this.defaultPath === null);
-      console.log('Path is empty?', this.defaultPath === '');
-
-      // Debug: Check if we're in Electron environment
-      console.log('Is Electron:', this.electronService.isElectron);
-      
-      this.updatePathText(); // Use helper to handle translations
-    } catch (error) {
-      console.error('home - Error loading default path:', error);
-      this.defaultPath = null;
-      this.updatePathText(true); // Pass error flag
-    }
-  }
-
-  // Helper: Update path text (stays in sync with language changes)
-  private updatePathText(isError: boolean = false): void {
-    // Unsubscribe from previous translation to prevent memory leaks
-    if (this.pathTranslationSub) {
-      this.pathTranslationSub.unsubscribe();
-    }
-
-    if (this.defaultPath) {
-      this.defaultPathText = this.defaultPath;
-      return;
-    }
-
-    // Get the correct translation key
-    const key = isError 
-      ? 'PAGES.HOME.CAN_NOT_GET_DEFAULT_PATH' 
-      : 'PAGES.HOME.NO_SET_DEFAULT_PATH';
-
-    // Subscribe to translation (auto-updates when language changes)
-    this.pathTranslationSub = this.translate.get(key).subscribe(translatedText => {
-      this.defaultPathText = translatedText;
-    });
-  }
-
-  async selectDefaultFolder(): Promise<void> {
-    try {
-      console.log('Attempting to select default folder...');
-      const selectedPath = await this.electronService.selectFolder(this.defaultPath || null);
-      console.log('Selected path:', selectedPath);
-      
-      if (!selectedPath) {
-        console.log('Folder selection canceled');
-        return;
-      }
-      
-      await this.electronService.saveDefaultPath(selectedPath);
-      this.defaultPath = selectedPath;
-      this.defaultPathText = selectedPath;
-      console.log('Selected default path:', this.defaultPath);
-    } catch (error) {
-      console.error('Error selecting default folder:', error);
-    }
   }
 }
