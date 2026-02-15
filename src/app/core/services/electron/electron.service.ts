@@ -84,18 +84,33 @@ export class ElectronService {
     };
     this.fs.writeFileSync(settingsPath, JSON.stringify(settings));
   }
-
   loadDefaultPath(): string {
-    if (!this.isElectron) return ''; // Return empty string for non-Electron environments
+    if (!this.isElectron) {
+      console.log('Not in Electron environment, returning empty string');
+      return '';
+    }
+
     try {
       const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
+      console.log('Checking settings path:', settingsPath);
+      
       if (this.fs.existsSync(settingsPath)) {
-        const settings = JSON.parse(this.fs.readFileSync(settingsPath, 'utf8'));
-        return settings.defaultPath || null;
+        const settingsContent = this.fs.readFileSync(settingsPath, 'utf8');
+        console.log('Settings file content:', settingsContent);
+        
+        const settings = JSON.parse(settingsContent);
+        console.log('Parsed settings:', settings);
+        console.log('Saved default path:', settings.defaultPath);
+        
+        return settings.defaultPath || '';
+      } else {
+        console.log('Settings file does not exist, using documents path');
       }
-      return null;
-    } catch {
-      return null;
+      
+      return '';
+    } catch (error) {
+      console.error('electron - Error loading default path:', error);
+      return '';
     }
   }
 
