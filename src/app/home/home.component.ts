@@ -29,29 +29,35 @@ export class HomeComponent implements OnInit {
     this.electronService.loadDefaultPath().then((path: string | null) => {
       console.log('Loaded default path:', path);
       this.defaultPath = path;
-      this.defaultPathText = path || '未设置路径';
+      this.defaultPathText = path || this.translate.instant('PAGES.HOME.DEFAULT_PATH');
     }).catch(error => {
       console.error('Error loading default path:', error);
-      this.defaultPathText = '未设置路径';
+      this.defaultPathText = this.translate.instant('PAGES.HOME.DEFAULT_PATH');
     });
   }
 
-  async selectDefaultFolder(event?: Event): Promise<void> {
-    event?.stopPropagation(); // 首先停止事件冒泡
-    console.log('Select default folder clicked');
-    
+  async selectDefaultFolder(event: Event): Promise<void> {
+    event.stopPropagation();
     try {
-      const selectedPath = await this.electronService.selectFolder(this.defaultPath || null);
-      console.log('Selected path:', selectedPath);
-      
-      if (selectedPath) {
-        this.defaultPath = selectedPath;
-        this.defaultPathText = selectedPath;
-        await this.electronService.saveDefaultPath(selectedPath);
-        console.log('Default path saved successfully');
-      }
+      console.log('尝试选择文件夹');
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.webkitdirectory = true;
+      input.style.display = 'none';
+      input.onchange = async (e) => {
+        if (e.target && (e.target as HTMLInputElement).files?.length > 0) {
+          const selectedPath = (e.target as HTMLInputElement).files![0].webkitRelativePath.split('/')[0];
+          this.defaultPath = selectedPath;
+          this.defaultPathText = selectedPath;
+          await this.electronService.saveDefaultPath(selectedPath);
+          console.log('已选择文件夹:', selectedPath);
+        }
+        document.body.removeChild(input);
+      };
+      document.body.appendChild(input);
+      input.click();
     } catch (error) {
-      console.error('Error in selectDefaultFolder:', error);
+      console.error('文件夹选择失败:', error);
     }
   }
 
