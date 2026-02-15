@@ -67,51 +67,68 @@ export class ElectronService {
   }
 
 
-  async selectFolder(defaultPath?: string): Promise<string | null> {
-    if (!this.isElectron) return null;
-    const result = await this.dialog.showOpenDialog({
-      properties: ['openDirectory'],
-      defaultPath
-    });
-    return result.canceled ? null : result.filePaths[0];
-  }
-
-  saveDefaultPath(pathValue: string): void {
-    if (!this.isElectron) return;
-    const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
-    const settings = {
-      defaultPath: pathValue
-    };
-    this.fs.writeFileSync(settingsPath, JSON.stringify(settings));
-  }
-  loadDefaultPath(): string {
-    if (!this.isElectron) {
-      console.log('Not in Electron environment, returning empty string');
-      return '';
-    }
-
-    try {
-      const settingsPath = this.path.join(this.app.getPath('userData'), 'settings.json');
-      console.log('Checking settings path:', settingsPath);
-      
-      if (this.fs.existsSync(settingsPath)) {
-        const settingsContent = this.fs.readFileSync(settingsPath, 'utf8');
-        console.log('Settings file content:', settingsContent);
-        
-        const settings = JSON.parse(settingsContent);
-        console.log('Parsed settings:', settings);
-        console.log('Saved default path:', settings.defaultPath);
-        
-        return settings.defaultPath || '';
-      } else {
-        console.log('Settings file does not exist, using documents path');
+  loadDefaultPath(): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.isElectron) {
+          const path = this.ipcRenderer.sendSync('load-default-path');
+          console.log('IPC loaded path:', path);
+          resolve(path);
+        } else {
+          // 浏览器环境下的模拟实现
+          const path = localStorage.getItem('defaultPath');
+          console.log('LocalStorage loaded path:', path);
+          resolve(path);
+        }
+      } catch (error) {
+        console.error('Error in loadDefaultPath:', error);
+        reject(error);
       }
-      
-      return '';
-    } catch (error) {
-      console.error('electron - Error loading default path:', error);
-      return '';
-    }
+    });
+  }
+
+  selectFolder(): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.isElectron) {
+          this.ipcRenderer.invoke('select-folder').then((result: string | null) => {
+            console.log('IPC selected folder:', result);
+            resolve(result);
+          }).catch((error: any) => {
+            console.error('IPC select folder error:', error);
+            reject(error);
+          });
+        } else {
+          // 浏览器环境下的模拟实现
+          const result = prompt('请输入文件夹路径:');
+          console.log('Prompt selected folder:', result);
+          resolve(result);
+        }
+      } catch (error) {
+        console.error('Error in selectFolder:', error);
+        reject(error);
+      }
+    });
+  }
+
+  saveDefaultPath(path: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        if (this.isElectron) {
+          this.ipcRenderer.send('save-default-path', path);
+          console.log('IPC saved path:', path);
+          resolve();
+        } else {
+          // 浏览器环境下的模拟实现
+          localStorage.setItem('defaultPath', path);
+          console.log('LocalStorage saved path:', path);
+          resolve();
+        }
+      } catch (error) {
+        console.error('Error in saveDefaultPath:', error);
+        reject(error);
+      }
+    });
   }
 
   get isElectron(): boolean {
