@@ -228,6 +228,22 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   }
 }
 
+const loadDefaultPath = () => {
+  ipcMain?.handle('load-default-path', () => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    try {
+      if (fs.existsSync(settingsPath)) {
+        const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        return settings.defaultPath || null;
+      }
+    } catch (err) {
+      console.error('Error loading default path:', err);
+      return null;
+    }
+    return null;
+  });
+}
+
 const installProcess = () => {
   let signal = {};
 
@@ -328,4 +344,5 @@ const installTrans = () => {
 
 init();
 installTrans();
+loadDefaultPath();
 installProcess();
