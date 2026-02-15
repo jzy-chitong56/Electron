@@ -67,24 +67,22 @@ export class ElectronService {
   }
 
 
-  loadDefaultPath(): Promise<string | null> {
-    return new Promise((resolve, reject) => {
-      try {
-        if (this.isElectron) {
-          const path = this.ipcRenderer.sendSync('load-default-path');
-          console.log('IPC loaded path:', path);
-          resolve(path);
-        } else {
-          // 浏览器环境下的模拟实现
-          const path = localStorage.getItem('defaultPath');
-          console.log('LocalStorage loaded path:', path);
-          resolve(path);
-        }
-      } catch (error) {
-        console.error('Error in loadDefaultPath:', error);
-        reject(error);
+  async loadDefaultPath(): Promise<string | null> {
+    try {
+      if (this.isElectron) {
+        const path = await this.ipcRenderer.invoke('load-default-path');
+        console.log('IPC loaded path:', path);
+        return path;
+      } else {
+        // 浏览器环境下的模拟实现
+        const path = localStorage.getItem('defaultPath');
+        console.log('LocalStorage loaded path:', path);
+        return path;
       }
-    });
+    } catch (error) {
+      console.error('Error in loadDefaultPath:', error);
+      throw error;
+    }
   }
 
   selectFolder(): Promise<string | null> {
