@@ -49,11 +49,16 @@
     <label class="checkboxbj">
       <input type="checkbox" class="switch-text" id="ForceLang" [checked]="forcelang" #ForceLang (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
     </label>
-  </div>
-  <div class="default-folder-container" (click)="selectDefaultFolder(); $event.stopPropagation()">
+  <div class="default-folder-container">
     <span class="default-folder-text">
       {{ 'PAGES.HOME.DEFAULT_PATH' | translate }}
-      <span *ngIf="defaultPathText" class="underlined-path" [title]="defaultPathText">{{defaultPathText}}</span>
+      <span 
+        *ngIf="defaultPathText" 
+        class="underlined-path" 
+        [title]="defaultPathText"
+        (click)="selectDefaultFolder(); $event.stopPropagation()"
+        style="cursor: pointer;"
+      >{{defaultPathText}}</span>
     </span>
   </div>
 </div>

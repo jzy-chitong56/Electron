@@ -203,11 +203,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   async loadDefaultPath(): Promise<void> {
     try {
+      console.log('Attempting to load default path...');
       this.defaultPath = await this.electronService.loadDefaultPath();
-      console.log('loading default path:', this.defaultPath);
+      console.log('Loaded default path:', this.defaultPath);
+      console.log('Path type:', typeof this.defaultPath);
+      console.log('Path is null?', this.defaultPath === null);
+      console.log('Path is empty?', this.defaultPath === '');
+
+      // Debug: Check if we're in Electron environment
+      console.log('Is Electron:', this.electronService.isElectron);
+      
       this.updatePathText(); // Use helper to handle translations
     } catch (error) {
-      console.error('Error loading default path:', error);
+      console.error('home - Error loading default path:', error);
       this.defaultPath = null;
       this.updatePathText(true); // Pass error flag
     }
