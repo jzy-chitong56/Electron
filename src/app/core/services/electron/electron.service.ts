@@ -83,28 +83,20 @@ export class ElectronService {
       throw error;
     }
   }
-
-  selectFolder(defaultPath?: string): Promise<string | null> {
-    return new Promise((resolve, reject) => {
-      try {
-        if (this.isElectron) {
-          this.ipcRenderer.invoke('select-folder', defaultPath).then((result: string | null) => {
-            console.log('IPC selected folder:', result);
-            resolve(result);
-          }).catch((error: any) => {
-            console.error('IPC select folder error:', error);
-            reject(error);
-          });
-        } else {
-          const result = prompt('selectedfolder path:');
-          console.log('Prompt selected folder:', result);
-          resolve(result);
-        }
-      } catch (error) {
-        console.error('Error in selectFolder:', error);
-        reject(error);
+  async selectFolder(defaultPath?: string): Promise<string | null> {
+    try {
+      if (this.isElectron) {
+        const result = await this.ipcRenderer.invoke('select-folder', defaultPath);
+        console.log('IPC selected folder:', result);
+        return result;
+      } else {
+        console.warn('use folder selected only on Electron');
+        return null;
       }
-    });
+    } catch (error) {
+      console.error('IPC select folder error:', error);
+      throw error;
+    }
   }
 
   saveDefaultPath(path: string): Promise<void> {
