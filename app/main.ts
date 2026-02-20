@@ -244,13 +244,21 @@ const loadDefaultPath = () => {
   });
 }
 
-const setupFolderDialog = () => {
-  ipcMain?.handle('select-folder', (_, defaultPath?: string) => {
-    return dialog.showOpenDialogSync({
-      title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
-      defaultPath: defaultPath || undefined,
-      properties: ['openDirectory']
-    })?.[0] || null;
+const setupCustomFolderDialog = () => {
+  ipcMain?.handle('select-folder', async (_, defaultPath?: string) => {
+    try {
+      const result = await dialog.showOpenDialog({
+        title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
+        defaultPath: defaultPath || app.getPath('documents'),
+        properties: ['openDirectory'],
+        buttonLabel: '选择'
+      });
+      
+      return result?.filePaths[0] || null;
+    } catch (error) {
+      console.error('Folder selection failed:', error);
+      return null;
+    }
   });
 }
 
@@ -355,5 +363,5 @@ const installTrans = () => {
 init();
 installTrans();
 loadDefaultPath();
-setupFolderDialog();
+setupCustomFolderDialog();
 installProcess();
