@@ -247,14 +247,14 @@ const loadDefaultPath = () => {
 const setupCustomFolderDialog = () => {
   ipcMain?.handle('select-folder', async (_, defaultPath?: string) => {
     try {
-      const result = await dialog.showOpenDialog({
+      const result = await dialog.showOpenDialog(win, {
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
         defaultPath: defaultPath || app.getPath('documents'),
         properties: ['openDirectory'],
-        buttonLabel: '选择'
+        buttonLabel: 'OK',
       });
       
-      return result?.filePaths[0] || null;
+      return result?.canceled ? null : result?.filePaths[0] || null;
     } catch (error) {
       console.error('Folder selection failed:', error);
       return null;
