@@ -244,6 +244,16 @@ const loadDefaultPath = () => {
   });
 }
 
+const setupFolderDialog = () => {
+  ipcMain?.handle('select-folder', (_, defaultPath?: string) => {
+    return dialog.showOpenDialogSync({
+      title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
+      defaultPath: defaultPath || undefined,
+      properties: ['openDirectory']
+    })?.[0] || null;
+  });
+}
+
 const installProcess = () => {
   let signal = {};
 
@@ -345,4 +355,5 @@ const installTrans = () => {
 init();
 installTrans();
 loadDefaultPath();
+setupFolderDialog();
 installProcess();
