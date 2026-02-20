@@ -25,7 +25,7 @@ export class ElectronService {
   dialog: typeof dialog;
   app: typeof electron.app;
 
-  constructor(private translate: TranslateService) {
+  constructor() {
     // Conditional imports
     if (this.isElectron) {
       this.electron = window.require('electron');
