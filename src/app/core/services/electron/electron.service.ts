@@ -25,7 +25,7 @@ export class ElectronService {
   dialog: typeof dialog;
   app: typeof electron.app;
 
-  constructor() {
+  constructor(private translate: TranslateService) {
     // Conditional imports
     if (this.isElectron) {
       this.electron = window.require('electron');
@@ -90,8 +90,51 @@ export class ElectronService {
         console.log('IPC selected folder:', result);
         return result;
       } else {
-        console.warn('use folder selected only on Electron');
-        return null;
+        return new Promise<string | null>((resolve) => {
+          const container = document.createElement('div');
+          container.style.position = 'fixed';
+          container.style.top = '0';
+          container.style.left = '0';
+          container.style.width = '100vw';
+          container.style.height = '100vh';
+          container.style.backgroundColor = 'rgba(0,0,0,0.5)';
+          container.style.zIndex = '9999';
+          container.style.display = 'flex';
+          container.style.justifyContent = 'center';
+          container.style.alignItems = 'center';
+
+          const dialog = document.createElement('div');
+          dialog.style.backgroundColor = 'white';
+          dialog.style.padding = '20px';
+          dialog.style.borderRadius = '8px';
+          dialog.style.maxWidth = '80%';
+          
+          const title = 'path';
+          const pathText = defaultPath || ' ';
+          
+          dialog.innerHTML = `
+            <h3>${title}</h3>
+            <p>path: ${pathText}</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+              <button id="confirmBtn" style="padding: 8px 16px;">OK</button>
+            </div>
+          `;
+
+          const removeDialog = () => document.body.removeChild(container);
+
+          container.appendChild(dialog);
+          document.body.appendChild(container);
+
+          document.getElementById('confirmBtn')!.onclick = () => {
+            removeDialog();
+            resolve(defaultPath || null);
+          };
+
+          document.getElementById('cancelBtn')!.onclick = () => {
+            removeDialog();
+            resolve(null);
+          };
+        });
       }
     } catch (error) {
       console.error('IPC select folder error:', error);
