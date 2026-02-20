@@ -74,7 +74,6 @@ export class ElectronService {
         console.log('IPC loaded path:', path);
         return path;
       } else {
-        // 浏览器环境下的模拟实现
         const path = localStorage.getItem('defaultPath');
         console.log('LocalStorage loaded path:', path);
         return path;
@@ -85,11 +84,11 @@ export class ElectronService {
     }
   }
 
-  selectFolder(): Promise<string | null> {
+  selectFolder(defaultPath?: string): Promise<string | null> {
     return new Promise((resolve, reject) => {
       try {
         if (this.isElectron) {
-          this.ipcRenderer.invoke('select-folder').then((result: string | null) => {
+          this.ipcRenderer.invoke('select-folder', defaultPath).then((result: string | null) => {
             console.log('IPC selected folder:', result);
             resolve(result);
           }).catch((error: any) => {
@@ -97,8 +96,7 @@ export class ElectronService {
             reject(error);
           });
         } else {
-          // 浏览器环境下的模拟实现
-          const result = prompt('请输入文件夹路径:');
+          const result = prompt('selectedfolder path:');
           console.log('Prompt selected folder:', result);
           resolve(result);
         }
@@ -117,7 +115,6 @@ export class ElectronService {
           console.log('IPC saved path:', path);
           resolve();
         } else {
-          // 浏览器环境下的模拟实现
           localStorage.setItem('defaultPath', path);
           console.log('LocalStorage saved path:', path);
           resolve();
