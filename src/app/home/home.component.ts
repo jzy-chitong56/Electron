@@ -29,11 +29,27 @@ export class HomeComponent implements OnInit {
     this.electronService.loadDefaultPath().then((path: string | null) => {
       console.log('Loaded default path:', path);
       this.defaultPath = path;
-      this.defaultPathText = path || this.translate.instant('PAGES.HOME.DEFAULT_PATH');
+      this.defaultPathText = path ? this.formatPath(path) : this.translate.instant('PAGES.HOME.DEFAULT_PATH');
     }).catch(error => {
       console.error('Error loading default path:', error);
       this.defaultPathText = this.translate.instant('PAGES.HOME.DEFAULT_PATH');
     });
+  }
+
+  private formatPath(path: string, maxLength = 30): string {
+    if (path.length <= maxLength) return path;
+    
+    const parts = path.split(/[\\/]/);
+    if (parts.length <= 2) return path;
+    
+    const firstPart = parts[0];
+    const lastPart = parts[parts.length - 1];
+    const middleLength = maxLength - (firstPart.length + lastPart.length + 5);
+    
+    if (middleLength > 0) {
+      return `${firstPart}/.../${lastPart}`;
+    }
+    return `${firstPart}/...${lastPart}`;
   }
 
   async selectDefaultFolder(event: Event): Promise<void> {
@@ -48,7 +64,7 @@ export class HomeComponent implements OnInit {
         if (e.target && (e.target as HTMLInputElement).files?.length > 0) {
           const selectedPath = (e.target as HTMLInputElement).files![0].webkitRelativePath.split('/')[0];
           this.defaultPath = selectedPath;
-          this.defaultPathText = selectedPath;
+          this.defaultPathText = this.formatPath(selectedPath);
           await this.electronService.saveDefaultPath(selectedPath);
           console.log('已选择文件夹:', selectedPath);
         }
