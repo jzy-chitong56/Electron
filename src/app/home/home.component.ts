@@ -37,18 +37,19 @@ export class HomeComponent implements OnInit {
     console.log('HomeComponent INIT');
     this.loadDefaultPath();
   }
-
   loadDefaultPath(): void {
     if (this.electronService.isElectron) {
       this.electronService.ipcRenderer.invoke('file-operations', {
         operation: 'load-default-path'
-      }).then((paths: any) => {
-        console.log('Loaded paths:', paths);
-        if (paths) {
-          this.gamePaths.TFT.path = paths.TFT || null;
-          this.gamePaths.REF.path = paths.REF || null;
-          this.gamePaths.ROC.path = paths.ROC || null;
+      }).then((settings: any) => {
+        console.log('Loaded settings:', settings);
+        if (settings) {
+          // 确保每个游戏类型都有独立的路径
+          this.gamePaths.TFT.path = settings.TFT || null;
+          this.gamePaths.REF.path = settings.REF || null;
+          this.gamePaths.ROC.path = settings.ROC || null;
           
+          // 为每个路径更新显示文本
           this.gamePaths.TFT.displayText = this.gamePaths.TFT.path ? this.formatPath(this.gamePaths.TFT.path) : '';
           this.gamePaths.REF.displayText = this.gamePaths.REF.path ? this.formatPath(this.gamePaths.REF.path) : '';
           this.gamePaths.ROC.displayText = this.gamePaths.ROC.path ? this.formatPath(this.gamePaths.ROC.path) : '';
