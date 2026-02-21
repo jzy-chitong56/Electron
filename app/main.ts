@@ -245,7 +245,7 @@ const setupFileOperations = () => {
           defaultPath: payload?.defaultPath,
           properties: ['openDirectory'],
         });
-        return result.canceled ? null : result.filePaths[0];
+        return result && result.length > 0 ? result[0] : null;
 
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
