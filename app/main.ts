@@ -82,15 +82,15 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   try {
     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
-      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-      // get path with version
-      if (ver === 'TFT') {
-        defaultPath = settings.TFT || null;
-      } else if (ver === 'ROC') {
-        defaultPath = settings.ROC || null;
-      } else {
-        defaultPath = settings.REF || null;
-      }
+        const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        // get path with version
+        if (ver === 'TFT') {
+          defaultPath = (settings as { TFT?: string }).TFT || null;
+        } else if (ver === 'ROC') {
+          defaultPath = (settings as { ROC?: string }).ROC || null;
+        } else {
+          defaultPath = (settings as { REF?: string }).REF || null;
+        }
       console.log(`get ${ver} path:`, defaultPath);
     }
   } catch (err) {
@@ -119,11 +119,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         }
         // get path with version
         if (ver === 'TFT') {
-          settings.TFT = defaultPath;
+          (settings as { TFT?: string }).TFT = defaultPath;
         } else if (ver === 'ROC') {
-          settings.ROC = defaultPath;
+          (settings as { ROC?: string }).ROC = defaultPath;
         } else {
-          settings.REF = defaultPath;
+          (settings as { REF?: string }).REF = defaultPath;
         }
         fs.writeFileSync(settingsPath, JSON.stringify(settings));
       }
@@ -151,11 +151,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       }
       // 根据游戏版本保存对应路径
       if (ver === 'TFT') {
-        settings.TFT = folderPath;
+        (settings as { TFT?: string }).TFT = folderPath;
       } else if (ver === 'ROC') {
-        settings.ROC = folderPath;
+        (settings as { ROC?: string }).ROC = folderPath;
       } else {
-        settings.REF = folderPath;
+        (settings as { REF?: string }).REF = folderPath;
       }
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', folderPath);
