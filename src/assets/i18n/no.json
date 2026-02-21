@@ -14,8 +14,7 @@
       "FORCELANG": "Overskriv AI-samtalespråk",
       "REF_BEST_GAME_VERSION": "Optimal: Siste",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "NO_SET_DEFAULT_PATH": "Ingen standardstilpasset sti",
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x",
       "CAN_NOT_GET_DEFAULT_PATH":"Kan ikke få standardstien",
       "DEFAULT_PATH":"Standardstiendeveis: "
     },

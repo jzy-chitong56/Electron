@@ -14,8 +14,7 @@
         "FORCELANG": "Override AI Chat Language",
         "REF_BEST_GAME_VERSION": "Optimal: latest",
         "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-        "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-        "NO_SET_DEFAULT_PATH": "No set default path",
+        "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x",
         "CAN_NOT_GET_DEFAULT_PATH":"Can not get default path",
         "DEFAULT_PATH":"Default path: "
       },

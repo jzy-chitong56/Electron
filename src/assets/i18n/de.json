@@ -14,8 +14,7 @@
       "FORCELANG": "AI Chat Sprache überschreiben",
       "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "NO_SET_DEFAULT_PATH": "Kein standardmäßiger Pfad festgelegt",
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x",
       "CAN_NOT_GET_DEFAULT_PATH":"Kann den Standardspeicherort nicht abrufen",
       "DEFAULT_PATH":"Standardpfad: "
     },

@@ -14,8 +14,7 @@
       "FORCELANG": "Skriv över AI-chattspråk",
       "REF_BEST_GAME_VERSION": "Optimalt: Senaste",
       "TFT_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
-      "NO_SET_DEFAULT_PATH": "Ingen inställd standardväg",
+      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.31.x",
       "CAN_NOT_GET_DEFAULT_PATH":"Kan inte få standardvägen",
       "DEFAULT_PATH":"Standardväg: "
     },

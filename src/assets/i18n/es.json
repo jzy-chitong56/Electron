@@ -14,8 +14,7 @@
       "FORCELANG": "Cubrir el lenguaje de chat de Ia", 
       "REF_BEST_GAME_VERSION": "Óptimo: Lo último",
       "TFT_BEST_GAME_VERSION": "Óptimo: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Óptimo: 1.24e~1.28.x",
-      "NO_SET_DEFAULT_PATH": "No establecer ruta predeterminada",
+      "ROC_BEST_GAME_VERSION": "Óptimo: 1.24e~1.31.x",
       "CAN_NOT_GET_DEFAULT_PATH":"No se puede obtener la ruta predeterminada",
       "DEFAULT_PATH":"Ruta predeterminada: "
     },
