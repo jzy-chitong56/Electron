@@ -15,23 +15,26 @@ import { TranslateService, LangChangeEvent } from "@codeandweb/ngx-translate";
 export class HomeComponent implements OnInit {
   gamePaths = {
     TFT: { 
-      path: null as string | null,
+      PAHT: null as string | null,
       displayText: '',
       installed: false
     },
     REF: { 
-      path: null as string | null,
+      PAHT: null as string | null,
       displayText: '',
       installed: false
     },
     ROC: { 
-      path: null as string | null,
+      PAHT: null as string | null,
       displayText: '',
       installed: false
     }
   };
 
-  constructor(private electronService: ElectronService, private translate: TranslateService) {}
+  constructor(
+    private electronService: ElectronService, 
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
@@ -44,15 +47,17 @@ export class HomeComponent implements OnInit {
       }).then((settings: any) => {
         console.log('Loaded settings:', settings);
         if (settings) {
-          // 确保每个游戏类型都有独立的路径
-          this.gamePaths.TFT.path = settings.TFT || null;
-          this.gamePaths.REF.path = settings.REF || null;
-          this.gamePaths.ROC.path = settings.ROC || null;
-          
-          // 为每个路径更新显示文本
-          this.gamePaths.TFT.displayText = this.gamePaths.TFT.path ? this.formatPath(this.gamePaths.TFT.path) : '';
-          this.gamePaths.REF.displayText = this.gamePaths.REF.path ? this.formatPath(this.gamePaths.REF.path) : '';
-          this.gamePaths.ROC.displayText = this.gamePaths.ROC.path ? this.formatPath(this.gamePaths.ROC.path) : '';
+          this.gamePaths.TFT.PAHT = settings.TFT_PAHT || null;
+          this.gamePaths.REF.PAHT = settings.REF_PAHT || null;
+          this.gamePaths.ROC.PAHT = settings.ROC_PAHT || null;
+          this.gamePaths.TFT.displayText = this.gamePaths.TFT.PAHT ? this.formatPath(this.gamePaths.TFT.PAHT) : '';
+          this.gamePaths.REF.displayText = this.gamePaths.REF.PAHT ? this.formatPath(this.gamePaths.REF.PAHT) : '';
+          this.gamePaths.ROC.displayText = this.gamePaths.ROC.PAHT ? this.formatPath(this.gamePaths.ROC.PAHT) : '';
+          console.log('Path values after loading:');
+          console.log('TFT:', this.gamePaths.TFT.PAHT, 'Display:', this.gamePaths.TFT.displayText);
+          console.log('REF:', this.gamePaths.REF.PAHT, 'Display:', this.gamePaths.REF.displayText);
+          console.log('ROC:', this.gamePaths.ROC.PAHT, 'Display:', this.gamePaths.ROC.displayText);
+          console.log('Paths container should show:', this.gamePaths.TFT.PAHT || this.gamePaths.REF.PAHT || this.gamePaths.ROC.PAHT);
         }
       }).catch(error => {
         console.error('Error loading paths:', error);
@@ -72,27 +77,30 @@ export class HomeComponent implements OnInit {
     }
     return `${firstPart}/...${lastPart}`;
   }
-  async selectGameFolder(gameType: 'TFT'|'REF'|'ROC'): Promise<void> {
+  async selectGameFolder(gameVer: 'TFT'|'REF'|'ROC'): Promise<void> {
     try {
       if (this.electronService.isElectron) {
-        console.log(`Selecting folder for ${gameType}`);
+        console.log(`Selecting folder for ${gameVer}`);
         const result = await this.electronService.ipcRenderer.invoke('file-operations', {
           operation: 'select-folder',
-          payload: this.gamePaths[gameType].path
+          payload: this.gamePaths[gameVer].PAHT
         });
-        
         if (result && result.length > 0) {
-          this.gamePaths[gameType].path = result[0];
-          this.gamePaths[gameType].displayText = this.formatPath(result[0]);
+          this.gamePaths[gameVer].PAHT = result[0];
+          this.gamePaths[gameVer].displayText = this.formatPath(result[0]);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
-            payload: { gameType, path: result[0] }
+            payload: { ver: gameVer, path: result[0] }
           });
-          console.log(`${gameType} folder selected:`, result[0]);
+          console.log(`${gameVer} folder selected:`, result[0]);
+          console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PAHT);
+          console.log(`${gameVer} display text:`, this.gamePaths[gameVer].displayText);
+          console.log('Paths container visibility:', 
+          this.gamePaths.TFT.PAHT || this.gamePaths.REF.PAHT || this.gamePaths.ROC.PAHT);
         }
       }
     } catch (error) {
-      console.error(`${gameType} folder selection failed:`, error);
+      console.error(`${gameVer} folder selection failed:`, error);
     }
   }
 

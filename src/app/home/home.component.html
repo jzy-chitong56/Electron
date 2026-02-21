@@ -50,19 +50,19 @@
       <input type="checkbox" class="switch-text" id="ForceLang" [checked]="forcelang" #ForceLang (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
     </label>
   </div>
-  <div class="paths-container" *ngIf="gamePaths.TFT.path || gamePaths.REF.path || gamePaths.ROC.path">
+  <div class="paths-container" *ngIf="gamePaths.TFT.PAHT || gamePaths.REF.PAHT || gamePaths.ROC.PAHT">
     <label>{{ 'PAGES.HOME.DEFAULT_PATH' | translate }}</label>
-    <div class="game-path-item" (click)="selectGameFolder('REF')" *ngIf="gamePaths.REF.path">
+    <div class="game-path-item" (click)="selectGameFolder('REF')" *ngIf="gamePaths.REF.PAHT">
       <span class="game-path-label">REF: </span>
-      <span class="underlined-path" [title]="gamePaths.REF.path">{{gamePaths.REF.displayText}}</span>
+      <span class="underlined-path" [title]="gamePaths.REF.PAHT">{{gamePaths.REF.displayText}}</span>
     </div>
-    <div class="game-path-item" (click)="selectGameFolder('TFT')" *ngIf="gamePaths.TFT.path">
+    <div class="game-path-item" (click)="selectGameFolder('TFT')" *ngIf="gamePaths.TFT.PAHT">
       <span class="game-path-label">TFT: </span>
-      <span class="underlined-path" [title]="gamePaths.TFT.path">{{gamePaths.TFT.displayText}}</span>
+      <span class="underlined-path" [title]="gamePaths.TFT.PAHT">{{gamePaths.TFT.displayText}}</span>
     </div>
-    <div class="game-path-item" (click)="selectGameFolder('ROC')" *ngIf="gamePaths.ROC.path">
+    <div class="game-path-item" (click)="selectGameFolder('ROC')" *ngIf="gamePaths.ROC.PAHT">
       <span class="game-path-label">ROC: </span>
-      <span class="underlined-path" [title]="gamePaths.ROC.path">{{gamePaths.ROC.displayText}}</span>
+      <span class="underlined-path" [title]="gamePaths.ROC.PAHT">{{gamePaths.ROC.displayText}}</span>
     </div>
   </div>
 </div>
