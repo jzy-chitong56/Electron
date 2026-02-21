@@ -240,11 +240,10 @@ const setupFileOperations = () => {
         return null;
 
       case 'select-folder':
-        const result = await dialog.showOpenDialog(win, {
-          title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
+        const result = dialog.showOpenDialogSync(win, {
+          title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
           defaultPath: payload?.defaultPath,
           properties: ['openDirectory'],
-          buttonLabel: '选择'
         });
         return result.canceled ? null : result.filePaths[0];
 
@@ -255,7 +254,7 @@ const setupFileOperations = () => {
       }
 
       default:
-        throw new Error(`未知操作: ${operation}`);
+        throw new Error(`unknow: ${operation}`);
     }
   });
 }
