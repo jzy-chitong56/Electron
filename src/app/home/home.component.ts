@@ -13,8 +13,23 @@ import { TranslateService, LangChangeEvent } from "@codeandweb/ngx-translate";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  defaultPath: string | null = null;
-  defaultPathText: string = '';
+  gamePaths = {
+    TFT: { 
+      path: null as string | null,
+      displayText: '',
+      installed: false
+    },
+    REF: { 
+      path: null as string | null,
+      displayText: '',
+      installed: false
+    },
+    ROC: { 
+      path: null as string | null,
+      displayText: '',
+      installed: false
+    }
+  };
 
   constructor(private electronService: ElectronService, private translate: TranslateService) {}
 
@@ -27,59 +42,56 @@ export class HomeComponent implements OnInit {
     if (this.electronService.isElectron) {
       this.electronService.ipcRenderer.invoke('file-operations', {
         operation: 'load-default-path'
-      }).then((path: string | null) => {
-        console.log('Loaded default path:', path);
-        this.defaultPath = path;
-        if (path) {
-          this.defaultPathText = this.formatPath(path);
-          this.defaultPath = path;
-        } else {
-          this.defaultPathText = '';
-          this.defaultPath = null;
+      }).then((paths: any) => {
+        console.log('Loaded paths:', paths);
+        if (paths) {
+          this.gamePaths.TFT.path = paths.TFT || null;
+          this.gamePaths.REF.path = paths.REF || null;
+          this.gamePaths.ROC.path = paths.ROC || null;
+          
+          this.gamePaths.TFT.displayText = this.gamePaths.TFT.path ? this.formatPath(this.gamePaths.TFT.path) : '';
+          this.gamePaths.REF.displayText = this.gamePaths.REF.path ? this.formatPath(this.gamePaths.REF.path) : '';
+          this.gamePaths.ROC.displayText = this.gamePaths.ROC.path ? this.formatPath(this.gamePaths.ROC.path) : '';
         }
       }).catch(error => {
-        console.error('Error loading default path:', error);
-        this.defaultPathText = this.translate.instant('PAGES.HOME.CAN_NOT_GET_DEFAULT_PATH');
+        console.error('Error loading paths:', error);
       });
     }
   }
 
   private formatPath(path: string, maxLength = 30): string {
     if (path.length <= maxLength) return path;
-    
     const parts = path.split(/[\\/]/);
     if (parts.length <= 2) return path;
-    
     const firstPart = parts[0];
     const lastPart = parts[parts.length - 1];
     const middleLength = maxLength - (firstPart.length + lastPart.length + 5);
-    
     if (middleLength > 0) {
       return `${firstPart}/.../${lastPart}`;
     }
     return `${firstPart}/...${lastPart}`;
   }
-  async selectDefaultFolder(event: Event): Promise<void> {
-    event.stopPropagation();
+  async selectGameFolder(gameType: 'TFT'|'REF'|'ROC'): Promise<void> {
     try {
       if (this.electronService.isElectron) {
-        console.log('try select folder');
+        console.log(`Selecting folder for ${gameType}`);
         const result = await this.electronService.ipcRenderer.invoke('file-operations', {
           operation: 'select-folder',
-          payload: this.defaultPath
+          payload: this.gamePaths[gameType].path
         });
+        
         if (result && result.length > 0) {
-          this.defaultPath = result[0];
-          this.defaultPathText = this.formatPath(result[0]);
+          this.gamePaths[gameType].path = result[0];
+          this.gamePaths[gameType].displayText = this.formatPath(result[0]);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
-            payload: result[0]
+            payload: { gameType, path: result[0] }
           });
-          console.log('selected folder:', result[0]);
+          console.log(`${gameType} folder selected:`, result[0]);
         }
       }
     } catch (error) {
-      console.error('select folder fail:', error);
+      console.error(`${gameType} folder selection failed:`, error);
     }
   }
 
