@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   defaultPath: string | null = null;
-  defaultPathText: string = '未设置路径';
+  defaultPathText: string = '';
 
   constructor(private electronService: ElectronService, private translate: TranslateService) {}
 
@@ -32,10 +32,16 @@ export class HomeComponent implements OnInit {
       }).then((path: string | null) => {
         console.log('Loaded default path:', path);
         this.defaultPath = path;
-        this.defaultPathText = path ? this.formatPath(path) : this.translate.instant('PAGES.HOME.DEFAULT_PATH');
+        if (path) {
+          this.defaultPathText = this.formatPath(path);
+          this.defaultPath = path;
+        } else {
+          this.defaultPathText = '';
+          this.defaultPath = null;
+        }
       }).catch(error => {
         console.error('Error loading default path:', error);
-        this.defaultPathText = this.translate.instant('PAGES.HOME.DEFAULT_PATH');
+        this.defaultPathText = this.translate.instant('PAGES.HOME.CAN_NOT_GET_DEFAULT_PATH');
       });
     }
   }
@@ -59,24 +65,23 @@ export class HomeComponent implements OnInit {
     event.stopPropagation();
     try {
       if (this.electronService.isElectron) {
-        console.log('尝试选择文件夹');
-        const selectedPath = await this.electronService.ipcRenderer.invoke('file-operations', {
+        console.log('try select folder');
+        const result = await this.electronService.ipcRenderer.invoke('file-operations', {
           operation: 'select-folder',
           payload: this.defaultPath
         });
-        
-        if (selectedPath) {
-          this.defaultPath = selectedPath;
-          this.defaultPathText = this.formatPath(selectedPath);
+        if (result && result.length > 0) {
+          this.defaultPath = result[0];
+          this.defaultPathText = this.formatPath(result[0]);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
-            payload: selectedPath
+            payload: result[0]
           });
-          console.log('已选择文件夹:', selectedPath);
+          console.log('selected folder:', result[0]);
         }
       }
     } catch (error) {
-      console.error('文件夹选择失败:', error);
+      console.error('select folder fail:', error);
     }
   }
 

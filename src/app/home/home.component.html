@@ -50,11 +50,10 @@
       <input type="checkbox" class="switch-text" id="ForceLang" [checked]="forcelang" #ForceLang (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
     </label>
   </div>
-  <div class="default-folder-container" (click)="selectDefaultFolder($event)">
+  <div class="default-folder-container" (click)="selectDefaultFolder($event)" *ngIf="defaultPath">
     <span class="default-folder-text">
       {{ 'PAGES.HOME.DEFAULT_PATH' | translate }}
       <button 
-        *ngIf="defaultPathText" 
         class="underlined-path" 
         [title]="defaultPathText"
         style="cursor: pointer; display: inline-block; position: relative; z-index: 1; user-select: none; text-decoration: underline;"
