@@ -348,11 +348,7 @@ const installTrans = () => {
     }
     translations = data as { [key: string]: string };
     if (win != null) {
-      let rawVersion = __APP_VERSION__ || '';
-      let version = rawVersion ? `v${rawVersion}` : '';
-      let appName = translations['PAGES.HOME.TITLE'] || '';
-      let WinTitle = `${appName}  ${version}`;
-      win.setTitle(WinTitle)
+      win.setTitle(translations['PAGES.HOME.TITLE'] || '')
     }
   });
 }
