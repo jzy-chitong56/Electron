@@ -228,36 +228,34 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   }
 }
 
-const loadDefaultPath = () => {
-  ipcMain?.handle('load-default-path', () => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    try {
-      if (fs.existsSync(settingsPath)) {
-        const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-        return settings.defaultPath || null;
-      }
-    } catch (err) {
-      console.error('Error loading default path:', err);
-      return null;
-    }
-    return null;
-  });
-}
 
-const setupCustomFolderDialog = () => {
-  ipcMain?.handle('select-folder', async (_, defaultPath?: string) => {
-    try {
-      const result = await dialog.showOpenDialog(win, {
-        title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
-        defaultPath: defaultPath || app.getPath('documents'),
-        properties: ['openDirectory'],
-        buttonLabel: 'OK',
-      });
-      
-      return result?.canceled ? null : result?.filePaths[0] || null;
-    } catch (error) {
-      console.error('Folder selection failed:', error);
-      return null;
+const setupFileOperations = () => {
+  ipcMain?.handle('file-operations', async (_, { operation, payload }) => {
+    switch(operation) {
+      case 'load-default-path':
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        if (fs.existsSync(settingsPath)) {
+          return JSON.parse(fs.readFileSync(settingsPath, 'utf8')).defaultPath;
+        }
+        return null;
+
+      case 'select-folder':
+        const result = await dialog.showOpenDialog(win, {
+          title: translations["PAGES.ELECTRON.OPEN_DIR"] || 'Select Folder',
+          defaultPath: payload?.defaultPath,
+          properties: ['openDirectory'],
+          buttonLabel: '选择'
+        });
+        return result.canceled ? null : result.filePaths[0];
+
+      case 'save-default-path': {
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        fs.writeFileSync(settingsPath, JSON.stringify({ defaultPath: payload }));
+        return true;
+      }
+
+      default:
+        throw new Error(`未知操作: ${operation}`);
     }
   });
 }
@@ -362,6 +360,5 @@ const installTrans = () => {
 
 init();
 installTrans();
-loadDefaultPath();
-setupCustomFolderDialog();
+setupFileOperations();
 installProcess();
