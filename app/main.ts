@@ -100,7 +100,6 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
         properties: ['openDirectory'],
       });
-      
       // Save the selected path as default if not canceled
       if (response && response.length > 0) {
         defaultPath = response[0];
@@ -125,7 +124,6 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       // Use default path if available, otherwise open "documents"
       defaultPath: defaultPath || documentsPath,
     });
-    // 选择文件后自动将文件所在目录设为默认路径
     if (response && response.length > 0) {
       const filePath = response[0];
       const folderPath = path.dirname(filePath);
@@ -249,8 +247,31 @@ const setupFileOperations = () => {
 
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        fs.writeFileSync(settingsPath, JSON.stringify({ defaultPath: payload }));
-        return true;
+        let settings = {};
+        
+        try {
+          if (fs.existsSync(settingsPath)) {
+            settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+          }
+          settings = {
+            ...settings,
+            [payload.gameType]: payload.path
+          };
+          fs.writeFileSync(settingsPath, JSON.stringify(settings));
+          return true;
+        } catch (err) {
+          console.error('save path error:', err);
+          return false;
+        }
+      }
+
+      case 'load-default-path': {
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        if (fs.existsSync(settingsPath)) {
+          const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+          return settings;
+        }
+        return null;
       }
 
       default:
