@@ -26,14 +26,18 @@ export class HomeComponent implements OnInit {
   }
 
   loadDefaultPath(): void {
-    this.electronService.loadDefaultPath().then((path: string | null) => {
-      console.log('Loaded default path:', path);
-      this.defaultPath = path;
-      this.defaultPathText = path ? this.formatPath(path) : this.translate.instant('PAGES.HOME.DEFAULT_PATH');
-    }).catch(error => {
-      console.error('Error loading default path:', error);
-      this.defaultPathText = this.translate.instant('PAGES.HOME.DEFAULT_PATH');
-    });
+    if (this.electronService.isElectron) {
+      this.electronService.ipcRenderer.invoke('file-operations', {
+        operation: 'load-default-path'
+      }).then((path: string | null) => {
+        console.log('Loaded default path:', path);
+        this.defaultPath = path;
+        this.defaultPathText = path ? this.formatPath(path) : this.translate.instant('PAGES.HOME.DEFAULT_PATH');
+      }).catch(error => {
+        console.error('Error loading default path:', error);
+        this.defaultPathText = this.translate.instant('PAGES.HOME.DEFAULT_PATH');
+      });
+    }
   }
 
   private formatPath(path: string, maxLength = 30): string {
@@ -51,27 +55,26 @@ export class HomeComponent implements OnInit {
     }
     return `${firstPart}/...${lastPart}`;
   }
-
   async selectDefaultFolder(event: Event): Promise<void> {
     event.stopPropagation();
     try {
-      console.log('尝试选择文件夹');
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.webkitdirectory = true;
-      input.style.display = 'none';
-      input.onchange = async (e) => {
-        if (e.target && (e.target as HTMLInputElement).files?.length > 0) {
-          const selectedPath = (e.target as HTMLInputElement).files![0].webkitRelativePath.split('/')[0];
+      if (this.electronService.isElectron) {
+        console.log('尝试选择文件夹');
+        const selectedPath = await this.electronService.ipcRenderer.invoke('file-operations', {
+          operation: 'select-folder',
+          payload: this.defaultPath
+        });
+        
+        if (selectedPath) {
           this.defaultPath = selectedPath;
           this.defaultPathText = this.formatPath(selectedPath);
-          await this.electronService.saveDefaultPath(selectedPath);
+          await this.electronService.ipcRenderer.invoke('file-operations', {
+            operation: 'save-default-path',
+            payload: selectedPath
+          });
           console.log('已选择文件夹:', selectedPath);
         }
-        document.body.removeChild(input);
-      };
-      document.body.appendChild(input);
-      input.click();
+      }
     } catch (error) {
       console.error('文件夹选择失败:', error);
     }
