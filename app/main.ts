@@ -18,6 +18,7 @@ let win: BrowserWindow = null;
 let translations : { [key: string]: string } = {};
 let currentLanguage: string = "English";
 let defaultPath: string | null = null;
+const documentsPath = app.getPath('documents');
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
@@ -92,7 +93,7 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
     case "ROC":
       return settings.ROC_PAHT || null;
     default:
-      return settings.REF_PAHT || app.getPath('documents');
+      return settings.REF_PAHT || documentsPath;
   }
 };
 
@@ -113,7 +114,6 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   if (!isMap) {
     // If default path exists, use it directly
     if (defaultPath) {
-      response = [defaultPath];
     } else {
       // Show dialog and save selected path as default
       response = dialog.showOpenDialogSync(win, {
@@ -122,21 +122,19 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       });
       // Save the selected path as default if not canceled
       if (response && response.length > 0) {
-        defaultPath = response[0];
-        console.log('set default Path :',defaultPath);
+        console.log('set default Path :', response[0]);
         // Save to settings.json directly in main process
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings: Settings = {};
         if (fs.existsSync(settingsPath)) {
           settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-          defaultPath = getVersionPath(settings, ver);
         }
+        settings[`${ver}_PAHT`] = response[0];
         fs.writeFileSync(settingsPath, JSON.stringify(settings));
       }
     }
   } else {
     // Handle map mode (isMap = true)
-    const documentsPath = app.getPath('documents');
     response = dialog.showOpenDialogSync(win, {
       title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
       properties: ['openFile'],
@@ -144,22 +142,18 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
       ],
       // Use default path if available, otherwise open "documents"
-      defaultPath: defaultPath || documentsPath,
     });
     if (response && response.length > 0) {
-      const filePath = response[0];
-      const folderPath = path.dirname(filePath);
-      defaultPath = folderPath;
+      const folderPath = path.dirname(response[0]);
       const settingsPath = path.join(app.getPath('userData'), 'settings.json');
       let settings: Settings = {};
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-        defaultPath = getVersionPath(settings, ver);
       }
+      settings[`${ver}_PAHT`] = folderPath;
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', folderPath);
     }
-    console.log('default Path :',defaultPath);
   }
 
   let child;
@@ -256,45 +250,70 @@ const setupFileOperations = () => {
     switch(operation) {
       case 'load-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        if (fs.existsSync(settingsPath)) {
-          const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        try {
+          if (fs.existsSync(settingsPath)) {
+            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+            console.log('Loaded paths:', {
+              REF: settings.REF_PAHT,
+              TFT: settings.TFT_PAHT,
+              ROC: settings.ROC_PAHT
+            });
+            return {
+              TFT_PAHT: settings.TFT_PAHT || null,
+              REF_PAHT: settings.REF_PAHT || documentsPath,
+              ROC_PAHT: settings.ROC_PAHT || null
+            };
+          }
+          console.log('No settings file found, using defaults');
           return {
-            TFT_PAHT: settings.TFT_PAHT || null,
-            REF_PAHT: settings.REF_PAHT || app.getPath('documents'),
-            ROC_PAHT: settings.ROC_PAHT || null
+            TFT_PAHT: null,
+            REF_PAHT: documentsPath,
+            ROC_PAHT: null
           };
+        } catch (err) {
+          console.error('Error loading paths:', err);
+          return null;
         }
-        return {
-          TFT_PAHT: null,
-          REF_PAHT: app.getPath('documents'),
-          ROC_PAHT: null
-        };
       }
       case 'select-folder': {
-        const result = dialog.showOpenDialogSync(win, {
+        console.log('Selecting folder for version:', payload?.ver);
+        try {
+          const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+          if (fs.existsSync(settingsPath)) {
+            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+            const versionPath = settings[`${payload?.ver}_PAHT`] || settings.REF_PAHT;
+            const result = dialog.showOpenDialogSync(win, {
+              title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+              defaultPath: versionPath || payload?.defaultPath || documentsPath,
+              properties: ['openDirectory'],
+            });
+            return result && result.length > 0 ? result[0] : null;
+          }
+        } catch (err) {
+          console.error('Error loading settings:', err);
+        }
+        return dialog.showOpenDialogSync(win, {
           title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-          defaultPath: payload?.defaultPath,
+          defaultPath: payload?.defaultPath || documentsPath,
           properties: ['openDirectory'],
-        });
-        return result && result.length > 0 ? result[0] : null;
+        })?.[0] || null;
       }
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        let settings = {};
         try {
-          if (fs.existsSync(settingsPath)) {
-            settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-          }
-          const gameVer = ['TFT', 'REF', 'ROC'];
-          gameVer.forEach(ver => {
-            if (payload.ver === ver) {
-              settings[`${ver}_PAHT`] = payload.path; // 使用正确的变量名格式
-            }
-          });
+          let settings: Settings = fs.existsSync(settingsPath) 
+            ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) 
+            : {};
+          const pathKey = `${payload.ver}_PAHT`;
+          settings[pathKey] = payload.path;
           fs.writeFileSync(settingsPath, JSON.stringify(settings));
+          console.log(`Saved path for ${payload.ver}:`, {
+            path: payload.path,
+            allPaths: settings
+          });
           return true;
         } catch (err) {
-          console.error('save path error:', err);
+          console.error('Failed to save path:', err);
           return false;
         }
       }
