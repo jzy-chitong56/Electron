@@ -6,6 +6,14 @@ import { InstallModel } from '../commons/models';
 const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
+// Define settings type
+type Settings = {
+  TFT_PAHT?: string;
+  ROC_PAHT?: string;
+  REF_PAHT?: string;
+  [key: string]: any; // Allow other properties
+};
+
 let win: BrowserWindow = null;
 let translations : { [key: string]: string } = {};
 let currentLanguage: string = "English";
@@ -76,26 +84,31 @@ const isDev = () => {
   return win;
 }
 
+// 通用路径获取方法
+const getVersionPath = (settings: Settings, ver: string): string | null => {
+  switch(ver) {
+    case "TFT":
+      return settings.TFT_PAHT || null;
+    case "ROC":
+      return settings.ROC_PAHT || null;
+    default:
+      return settings.REF_PAHT || app.getPath('documents');
+  }
+};
+
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean) => {
   const controller = new AbortController();
   let response;
-  try {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    if (fs.existsSync(settingsPath)) {
-        const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-        // get path with version
-        if (ver === 'TFT') {
-          defaultPath = (settings as { TFT?: string }).TFT || null;
-        } else if (ver === 'ROC') {
-          defaultPath = (settings as { ROC?: string }).ROC || null;
-        } else {
-          defaultPath = (settings as { REF?: string }).REF || null;
-        }
-      console.log(`get ${ver} path:`, defaultPath);
+    try {
+      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+      if (fs.existsSync(settingsPath)) {
+        const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+        defaultPath = getVersionPath(settings, ver);
+        console.log(`get ${ver} path:`, defaultPath);
+      }
+    } catch (err) {
+      console.error('Failed to load path:', err);
     }
-  } catch (err) {
-    console.error('Failed to load path:', err);
-  }
   // Handle folder mode (isMap = false)
   if (!isMap) {
     // If default path exists, use it directly
@@ -113,17 +126,10 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         console.log('set default Path :',defaultPath);
         // Save to settings.json directly in main process
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        let settings = {};
+        let settings: Settings = {};
         if (fs.existsSync(settingsPath)) {
-          settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-        }
-        // get path with version
-        if (ver === 'TFT') {
-          (settings as { TFT?: string }).TFT = defaultPath;
-        } else if (ver === 'ROC') {
-          (settings as { ROC?: string }).ROC = defaultPath;
-        } else {
-          (settings as { REF?: string }).REF = defaultPath;
+          settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+          defaultPath = getVersionPath(settings, ver);
         }
         fs.writeFileSync(settingsPath, JSON.stringify(settings));
       }
@@ -145,17 +151,10 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       const folderPath = path.dirname(filePath);
       defaultPath = folderPath;
       const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      let settings = {};
+      let settings: Settings = {};
       if (fs.existsSync(settingsPath)) {
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-      }
-      // 根据游戏版本保存对应路径
-      if (ver === 'TFT') {
-        (settings as { TFT?: string }).TFT = folderPath;
-      } else if (ver === 'ROC') {
-        (settings as { ROC?: string }).ROC = folderPath;
-      } else {
-        (settings as { REF?: string }).REF = folderPath;
+        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+        defaultPath = getVersionPath(settings, ver);
       }
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', folderPath);
@@ -215,7 +214,6 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     // win.webContents.send('on-install-message', 'Error: ' + err.message);
   }
 
-
   // init install proccess
   try {
     child = cp.fork(
@@ -253,51 +251,46 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   }
 }
 
-
 const setupFileOperations = () => {
   ipcMain?.handle('file-operations', async (_, { operation, payload }) => {
     switch(operation) {
-      case 'load-default-path':
+      case 'load-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         if (fs.existsSync(settingsPath)) {
           const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-          // 返回完整路径对象
           return {
-            TFT: settings.TFT || null,
-            REF: settings.REF || null,
-            ROC: settings.ROC || null
+            TFT_PAHT: settings.TFT_PAHT || null,
+            REF_PAHT: settings.REF_PAHT || app.getPath('documents'),
+            ROC_PAHT: settings.ROC_PAHT || null
           };
         }
         return {
-          TFT: null,
-          REF: null,
-          ROC: null
+          TFT_PAHT: null,
+          REF_PAHT: app.getPath('documents'),
+          ROC_PAHT: null
         };
-
-      case 'select-folder':
+      }
+      case 'select-folder': {
         const result = dialog.showOpenDialogSync(win, {
           title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
           defaultPath: payload?.defaultPath,
           properties: ['openDirectory'],
         });
         return result && result.length > 0 ? result[0] : null;
+      }
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings = {};
-        
         try {
           if (fs.existsSync(settingsPath)) {
             settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
           }
-          
-          // 为每个游戏类型单独保存路径
-          const gameTypes = ['TFT', 'REF', 'ROC'];
-          gameTypes.forEach(type => {
-            if (payload.gameType === type) {
-              settings[type] = payload.path;
+          const gameVer = ['TFT', 'REF', 'ROC'];
+          gameVer.forEach(ver => {
+            if (payload.ver === ver) {
+              settings[`${ver}_PAHT`] = payload.path; // 使用正确的变量名格式
             }
           });
-          
           fs.writeFileSync(settingsPath, JSON.stringify(settings));
           return true;
         } catch (err) {
@@ -305,25 +298,6 @@ const setupFileOperations = () => {
           return false;
         }
       }
-
-      case 'load-default-path': {
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        if (fs.existsSync(settingsPath)) {
-          const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-          // 确保返回完整路径对象
-          return {
-            TFT: settings.TFT || null,
-            REF: settings.REF || null,
-            ROC: settings.ROC || null
-          };
-        }
-        return {
-          TFT: null,
-          REF: null,
-          ROC: null
-        };
-      }
-
       default:
         throw new Error(`unknow: ${operation}`);
     }
