@@ -6,9 +6,7 @@ import { ipcRenderer, webFrame } from 'electron';
 import * as electron from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
-import * as path from 'path';
 import { Menu, MenuItem } from '@electron/remote';
-import { dialog } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +19,6 @@ export class ElectronService {
   webFrame: typeof webFrame;
   childProcess: typeof childProcess;
   fs: typeof fs;
-  path: typeof path;
-  dialog: typeof dialog;
-  app: typeof electron.app;
 
   constructor() {
     // Conditional imports
@@ -33,11 +28,8 @@ export class ElectronService {
       this.MenuItem = window.require('@electron/remote').MenuItem;
       this.ipcRenderer = window.require('electron').ipcRenderer;
       this.webFrame = window.require('electron').webFrame;
-      this.app = window.require('electron').app;
 
       this.fs = window.require('fs');
-      this.path = window.require('path');
-      this.dialog = window.require('electron').dialog;
 
       this.childProcess = window.require('child_process');
       this.childProcess.exec('node -v', (error, stdout, stderr) => {
@@ -64,101 +56,6 @@ export class ElectronService {
       // ipcRenderer.invoke can serve many common use cases.
       // https://www.electronjs.org/docs/latest/api/ipc-renderer#ipcrendererinvokechannel-args
     }
-  }
-
-
-  async loadDefaultPath(): Promise<string | null> {
-    try {
-      if (this.isElectron) {
-        const path = await this.ipcRenderer.invoke('load-default-path');
-        console.log('IPC loaded path:', path);
-        return path;
-      } else {
-        const path = localStorage.getItem('defaultPath');
-        console.log('LocalStorage loaded path:', path);
-        return path;
-      }
-    } catch (error) {
-      console.error('Error in loadDefaultPath:', error);
-      throw error;
-    }
-  }
-  async selectFolder(defaultPath?: string): Promise<string | null> {
-    try {
-      if (this.isElectron) {
-        const result = await this.ipcRenderer.invoke('select-folder', defaultPath);
-        console.log('IPC selected folder:', result);
-        return result;
-      } else {
-        return new Promise<string | null>((resolve) => {
-          const container = document.createElement('div');
-          container.style.position = 'fixed';
-          container.style.top = '0';
-          container.style.left = '0';
-          container.style.width = '100vw';
-          container.style.height = '100vh';
-          container.style.backgroundColor = 'rgba(0,0,0,0.5)';
-          container.style.zIndex = '9999';
-          container.style.display = 'flex';
-          container.style.justifyContent = 'center';
-          container.style.alignItems = 'center';
-
-          const dialog = document.createElement('div');
-          dialog.style.backgroundColor = 'white';
-          dialog.style.padding = '20px';
-          dialog.style.borderRadius = '8px';
-          dialog.style.maxWidth = '80%';
-          
-          const title = 'path';
-          const pathText = defaultPath || ' ';
-          
-          dialog.innerHTML = `
-            <h3>${title}</h3>
-            <p>path: ${pathText}</p>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-              <button id="confirmBtn" style="padding: 8px 16px;">OK</button>
-            </div>
-          `;
-
-          const removeDialog = () => document.body.removeChild(container);
-
-          container.appendChild(dialog);
-          document.body.appendChild(container);
-
-          document.getElementById('confirmBtn')!.onclick = () => {
-            removeDialog();
-            resolve(defaultPath || null);
-          };
-
-          document.getElementById('cancelBtn')!.onclick = () => {
-            removeDialog();
-            resolve(null);
-          };
-        });
-      }
-    } catch (error) {
-      console.error('IPC select folder error:', error);
-      throw error;
-    }
-  }
-
-  saveDefaultPath(path: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      try {
-        if (this.isElectron) {
-          this.ipcRenderer.send('save-default-path', path);
-          console.log('IPC saved path:', path);
-          resolve();
-        } else {
-          localStorage.setItem('defaultPath', path);
-          console.log('LocalStorage saved path:', path);
-          resolve();
-        }
-      } catch (error) {
-        console.error('Error in saveDefaultPath:', error);
-        reject(error);
-      }
-    });
   }
 
   get isElectron(): boolean {
