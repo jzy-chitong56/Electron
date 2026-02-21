@@ -83,11 +83,18 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
       const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-      defaultPath = settings.defaultPath || null;
-      console.log('get default Path :',defaultPath);
+      // get path with version
+      if (ver === 'TFT') {
+        defaultPath = settings.TFT || null;
+      } else if (ver === 'ROC') {
+        defaultPath = settings.ROC || null;
+      } else {
+        defaultPath = settings.REF || null;
+      }
+      console.log(`get ${ver} path:`, defaultPath);
     }
   } catch (err) {
-    console.error('Failed to load default path:', err);
+    console.error('Failed to load path:', err);
   }
   // Handle folder mode (isMap = false)
   if (!isMap) {
@@ -106,9 +113,18 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         console.log('set default Path :',defaultPath);
         // Save to settings.json directly in main process
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        const settings = {
-          defaultPath: defaultPath
-        };
+        let settings = {};
+        if (fs.existsSync(settingsPath)) {
+          settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        }
+        // get path with version
+        if (ver === 'TFT') {
+          settings.TFT = defaultPath;
+        } else if (ver === 'ROC') {
+          settings.ROC = defaultPath;
+        } else {
+          settings.REF = defaultPath;
+        }
         fs.writeFileSync(settingsPath, JSON.stringify(settings));
       }
     }
@@ -129,7 +145,18 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       const folderPath = path.dirname(filePath);
       defaultPath = folderPath;
       const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      const settings = { defaultPath: folderPath };
+      let settings = {};
+      if (fs.existsSync(settingsPath)) {
+        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      }
+      // 根据游戏版本保存对应路径
+      if (ver === 'TFT') {
+        settings.TFT = folderPath;
+      } else if (ver === 'ROC') {
+        settings.ROC = folderPath;
+      } else {
+        settings.REF = folderPath;
+      }
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', folderPath);
     }
@@ -233,9 +260,19 @@ const setupFileOperations = () => {
       case 'load-default-path':
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         if (fs.existsSync(settingsPath)) {
-          return JSON.parse(fs.readFileSync(settingsPath, 'utf8')).defaultPath;
+          const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+          // 返回完整路径对象
+          return {
+            TFT: settings.TFT || null,
+            REF: settings.REF || null,
+            ROC: settings.ROC || null
+          };
         }
-        return null;
+        return {
+          TFT: null,
+          REF: null,
+          ROC: null
+        };
 
       case 'select-folder':
         const result = dialog.showOpenDialogSync(win, {
@@ -244,7 +281,6 @@ const setupFileOperations = () => {
           properties: ['openDirectory'],
         });
         return result && result.length > 0 ? result[0] : null;
-
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings = {};
@@ -253,10 +289,15 @@ const setupFileOperations = () => {
           if (fs.existsSync(settingsPath)) {
             settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
           }
-          settings = {
-            ...settings,
-            [payload.gameType]: payload.path
-          };
+          
+          // 为每个游戏类型单独保存路径
+          const gameTypes = ['TFT', 'REF', 'ROC'];
+          gameTypes.forEach(type => {
+            if (payload.gameType === type) {
+              settings[type] = payload.path;
+            }
+          });
+          
           fs.writeFileSync(settingsPath, JSON.stringify(settings));
           return true;
         } catch (err) {
@@ -269,9 +310,18 @@ const setupFileOperations = () => {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         if (fs.existsSync(settingsPath)) {
           const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-          return settings;
+          // 确保返回完整路径对象
+          return {
+            TFT: settings.TFT || null,
+            REF: settings.REF || null,
+            ROC: settings.ROC || null
+          };
         }
-        return null;
+        return {
+          TFT: null,
+          REF: null,
+          ROC: null
+        };
       }
 
       default:
