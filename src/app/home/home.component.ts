@@ -1,10 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
 import { TranslateService, LangChangeEvent } from "@codeandweb/ngx-translate";
-import { Subscription } from 'rxjs';
-// 移除 firstValueFrom 导入
-
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +19,7 @@ export class HomeComponent implements OnInit {
   constructor(private electronService: ElectronService, private translate: TranslateService) {}
 
   ngOnInit(): void {
+    console.log('HomeComponent INIT');
     this.loadDefaultPath();
   }
 
@@ -95,7 +93,7 @@ export class HomeComponent implements OnInit {
   BJ_State: number = 1;
   isInteractive: boolean = true;
   modeState: string = '-folder';
-  bjState: string = '-1';
+  bjState: string = '';
   message: string = '';
   optimize: boolean = true;
   forcelang: boolean = false;
@@ -220,8 +218,9 @@ export class HomeComponent implements OnInit {
           break;
         case 'BJoptionOff':
           this.bjState = '-noc';
+          this.BJ_State = 0;
           console.log('BJ',this.bjState);
-            break;
+          break;
         case 'Optimise':
           this.optimize = !this.optimize;
           if (this.optimize) {

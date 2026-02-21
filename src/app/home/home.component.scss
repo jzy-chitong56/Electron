@@ -154,7 +154,7 @@
   }
 
   input[type="radio"]:checked + .radio-btn {
-    background-color: #007bff; /* 选中时背景色 */
+    background-color: rgb(33, 4, 251); /* 选中时背景色 */
     color: #FFFFFF; /* 选中时文字颜色 */
   }
 
@@ -180,7 +180,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #007bff;
+    background-color: rgb(33, 4, 251);
     border-radius: 26px;
     -webkit-transition: .4s;
     transition: .4s;
