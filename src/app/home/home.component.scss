@@ -222,15 +222,20 @@
   }
 
   .default-folder-container {
-    max-width: 85%;
-    margin: 1.5rem auto;
+    width: 100%;
+    margin: 1.5rem 0;
     padding: 0.8rem;
     background-color: #000000;
-    border-radius: 0.5rem;
+    border-radius: 0;
     color: white;
     cursor: pointer;
     text-align: center;
     transition: background-color 0.2s ease;
+    display: none;
+
+    &:has(.underlined-path) {
+      display: block;
+    }
     
     &:hover {
       background-color: #47A4F9;
