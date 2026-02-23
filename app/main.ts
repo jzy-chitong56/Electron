@@ -89,23 +89,23 @@ const isDev = () => {
 const getVersionPath = (settings: Settings, ver: string): string | null => {
   switch(ver) {
     case "TFT":
-      return settings.TFT_PAHT || null;
+      return settings.TFT_PATH|| null;
     case "ROC":
-      return settings.ROC_PAHT || null;
+      return settings.ROC_PATH|| null;
     default:
-      return settings.REF_PAHT || documentsPath;
+      return settings.REF_PATH|| documentsPath;
   }
 };
 
-const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean) => {
+const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver?: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
   try {
     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
       const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-      defaultPath = getVersionPath(settings, ver);
-      console.log(`get ${ver} path:`, defaultPath);
+      defaultPath = getVersionPath(settings, pathver);
+      console.log(`get ${pathver} path:`, defaultPath);
     }
   } catch (err) {
     console.error('Failed to load path:', err);
@@ -136,7 +136,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     if (fs.existsSync(settingsPath)) {
       settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
     }
-    settings[`${ver}_PAHT`] = folderPath;
+    settings[`${pathver}_PAHT`] = folderPath;
     fs.writeFileSync(settingsPath, JSON.stringify(settings));
     console.log('Default path updated to:', folderPath);
   }
@@ -231,7 +231,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
 }
 
 const setupFileOperations = () => {
-  ipcMain?.handle('file-operations', async (_, { operation, payload }) => {
+  ipcMain?.handle('file-operations', async (_, { operation, ver, newpath }) => {
     switch(operation) {
       case 'load-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
@@ -244,9 +244,9 @@ const setupFileOperations = () => {
               ROC: settings.ROC_PAHT
             });
             return {
-              REF_PAHT: settings.REF_PAHT || documentsPath,
-              TFT_PAHT: settings.TFT_PAHT || null,
-              ROC_PAHT: settings.ROC_PAHT || null
+              REF_PAHT: settings.REF_PATH|| documentsPath,
+              TFT_PAHT: settings.TFT_PATH|| null,
+              ROC_PAHT: settings.ROC_PATH|| null
             };
           }
           console.log('No settings file found, using defaults');
@@ -261,15 +261,15 @@ const setupFileOperations = () => {
         }
       }
       case 'select-folder': {
-        console.log('Selecting folder for version:', payload?.ver);
+        console.log('Selecting folder for version:', ver);
         try {
           const settingsPath = path.join(app.getPath('userData'), 'settings.json');
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            const versionPath = settings[`${payload?.ver}_PAHT`] || settings.REF_PAHT;
+            const versionPath = settings[`${ver}_PAHT`] || settings.REF_PAHT;
             const result = dialog.showOpenDialogSync(win, {
               title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-              defaultPath: versionPath || payload?.defaultPath || documentsPath,
+              defaultPath: versionPath || newpath || documentsPath,
               properties: ['openDirectory'],
             });
             return result && result.length > 0 ? result[0] : null;
@@ -279,23 +279,20 @@ const setupFileOperations = () => {
         }
         return dialog.showOpenDialogSync(win, {
           title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-          defaultPath: payload?.defaultPath || documentsPath,
+          defaultPath: newpath || documentsPath,
           properties: ['openDirectory'],
         })?.[0] || null;
       }
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         try {
-          let settings: Settings = fs.existsSync(settingsPath) 
-            ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) 
+          let settings: Settings = fs.existsSync(settingsPath)
+            ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
             : {};
-          const pathKey = `${payload.ver}_PAHT`;
-          settings[pathKey] = payload.path;
+          const pathKey = `${ver}_PAHT`;
+          settings[pathKey] = newpath;
           fs.writeFileSync(settingsPath, JSON.stringify(settings));
-          console.log(`Saved path for ${payload.ver}:`, {
-            path: payload.path,
-            allPaths: settings
-          });
+          console.log(`Saved path for ${ver}: ${newpath}`);
           return true;
         } catch (err) {
           console.error('Failed to save path:', err);
@@ -312,7 +309,7 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang);
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver: ver);
   });
 
   // TODO: stop process with signal
