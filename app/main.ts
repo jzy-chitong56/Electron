@@ -309,7 +309,8 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver: ver);
+    const pathver = ver;
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver);
   });
 
   // TODO: stop process with signal
