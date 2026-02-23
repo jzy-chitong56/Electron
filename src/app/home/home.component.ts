@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
-import { TranslateService, LangChangeEvent } from "@codeandweb/ngx-translate";
+import { TranslateService } from "@codeandweb/ngx-translate";
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +13,33 @@ import { TranslateService, LangChangeEvent } from "@codeandweb/ngx-translate";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  Images_ROC_Shown: boolean = false;
+  Images_TFT_Shown: boolean = false;
+  Images_REF_Shown: boolean = false;
+  ROCInstall: boolean = false;
+  TFTInstall: boolean = false;
+  REFInstall: boolean = false;
+  Mode_State: boolean = true;
+  BJ_State: number = 1;
+  isInteractive: boolean = true;
+  modeState: string = '-folder';
+  bjState: string = '';
+  message: string = '';
+  optimize: boolean = true;
+  forcelang: boolean = false;
+  installEvent: string = 'install'
   gamePaths = {
     TFT: { 
       PAHT: null as string | null,
       displayText: '--',
-      installed: false
     },
     REF: { 
       PAHT: null as string | null,
       displayText: '--',
-      installed: false
     },
     ROC: { 
       PAHT: null as string | null,
       displayText: '--',
-      installed: false
     }
   };
 
@@ -47,9 +59,9 @@ export class HomeComponent implements OnInit {
       }).then((settings: any) => {
         console.log('Loaded settings:', settings);
         if (settings) {
-          this.gamePaths.TFT.PAHT = settings.TFT_PAHT || null;
-          this.gamePaths.REF.PAHT = settings.REF_PAHT || null;
-          this.gamePaths.ROC.PAHT = settings.ROC_PAHT || null;
+          this.gamePaths.TFT.PAHT = settings.TFT_PATH|| null;
+          this.gamePaths.REF.PAHT = settings.REF_PATH|| null;
+          this.gamePaths.ROC.PAHT = settings.ROC_PATH|| null;
           this.gamePaths.TFT.displayText = this.gamePaths.TFT.PAHT ? this.formatPath(this.gamePaths.TFT.PAHT) : '--';
           this.gamePaths.REF.displayText = this.gamePaths.REF.PAHT ? this.formatPath(this.gamePaths.REF.PAHT) : '--';
           this.gamePaths.ROC.displayText = this.gamePaths.ROC.PAHT ? this.formatPath(this.gamePaths.ROC.PAHT) : '--';
@@ -82,14 +94,15 @@ export class HomeComponent implements OnInit {
         console.log(`Selecting folder for ${gameVer}`);
         const result = await this.electronService.ipcRenderer.invoke('file-operations', {
           operation: 'select-folder',
-          payload: this.gamePaths[gameVer].PAHT
+          ver: gameVer
         });
         if (result && result.length > 0) {
           this.gamePaths[gameVer].PAHT = result[0];
           this.gamePaths[gameVer].displayText = this.formatPath(result[0]);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
-            payload: { ver: gameVer, path: result[0] }
+            ver: gameVer,
+            newpath: result[0]
           });
           console.log(`${gameVer} folder selected:`, result[0]);
           console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PAHT);
@@ -102,22 +115,6 @@ export class HomeComponent implements OnInit {
       console.error(`${gameVer} folder selection failed:`, error);
     }
   }
-
-  Images_ROC_Shown: boolean = false;
-  Images_TFT_Shown: boolean = false;
-  Images_REF_Shown: boolean = false;
-  ROCInstall: boolean = false;
-  TFTInstall: boolean = false;
-  REFInstall: boolean = false;
-  Mode_State: boolean = true;
-  BJ_State: number = 1;
-  isInteractive: boolean = true;
-  modeState: string = '-folder';
-  bjState: string = '';
-  message: string = '';
-  optimize: boolean = true;
-  forcelang: boolean = false;
-  installEvent: string = 'install'
 
   @HostListener('mouseenter', ['$event', '$event.target.dataset.action'])
   onMouseEnter(event: MouseEvent, action: string) {
