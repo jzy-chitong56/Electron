@@ -66,8 +66,8 @@ export class HomeComponent implements OnInit {
           this.gamePaths.REF.displayText = this.gamePaths.REF.PATH ? this.formatPath(this.gamePaths.REF.PATH) : '--';
           this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
           console.log('Path values after loading:');
+          console.log('REFORGED:', this.gamePaths.REF.PATH, 'Display:', this.gamePaths.REF.displayText);
           console.log('TFT:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
-          console.log('REF:', this.gamePaths.REF.PATH, 'Display:', this.gamePaths.REF.displayText);
           console.log('ROC:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
         }
       }).catch(error => {
@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
     }
     return `${firstPart}/...${lastPart}`;
   }
-  async selectGameFolder(gameVer: 'TFT'|'REF'|'ROC'): Promise<void> {
+  async selectGameFolder(gameVer: 'REFORGED' | 'TFT' | 'ROC'): Promise<void> {
     try {
       if (this.electronService.isElectron) {
         console.log(`Selecting folder for ${gameVer}`);

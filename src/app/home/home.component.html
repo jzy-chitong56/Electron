@@ -52,7 +52,7 @@
   </div>
   <div class="paths-container" *ngIf="gamePaths.TFT.PATH || gamePaths.REF.PATH || gamePaths.ROC.PATH">
     <label>{{ 'PAGES.HOME.DEFAULT_PATH' | translate }}</label>
-    <div class="game-path-item" (click)="selectGameFolder('REF')" *ngIf="gamePaths.REF.PATH">
+    <div class="game-path-item" (click)="selectGameFolder('REFORGED')" *ngIf="gamePaths.REF.PATH">
       <span class="game-path-label">REF: </span>
       <span class="underlined-path" [title]="gamePaths.REF.PATH">{{gamePaths.REF.displayText}}</span>
     </div>
