@@ -16,17 +16,17 @@ export class HomeComponent implements OnInit {
   gamePaths = {
     TFT: { 
       PAHT: null as string | null,
-      displayText: '',
+      displayText: '--',
       installed: false
     },
     REF: { 
       PAHT: null as string | null,
-      displayText: '',
+      displayText: '--',
       installed: false
     },
     ROC: { 
       PAHT: null as string | null,
-      displayText: '',
+      displayText: '--',
       installed: false
     }
   };
@@ -50,14 +50,13 @@ export class HomeComponent implements OnInit {
           this.gamePaths.TFT.PAHT = settings.TFT_PAHT || null;
           this.gamePaths.REF.PAHT = settings.REF_PAHT || null;
           this.gamePaths.ROC.PAHT = settings.ROC_PAHT || null;
-          this.gamePaths.TFT.displayText = this.gamePaths.TFT.PAHT ? this.formatPath(this.gamePaths.TFT.PAHT) : '';
-          this.gamePaths.REF.displayText = this.gamePaths.REF.PAHT ? this.formatPath(this.gamePaths.REF.PAHT) : '';
-          this.gamePaths.ROC.displayText = this.gamePaths.ROC.PAHT ? this.formatPath(this.gamePaths.ROC.PAHT) : '';
+          this.gamePaths.TFT.displayText = this.gamePaths.TFT.PAHT ? this.formatPath(this.gamePaths.TFT.PAHT) : '--';
+          this.gamePaths.REF.displayText = this.gamePaths.REF.PAHT ? this.formatPath(this.gamePaths.REF.PAHT) : '--';
+          this.gamePaths.ROC.displayText = this.gamePaths.ROC.PAHT ? this.formatPath(this.gamePaths.ROC.PAHT) : '--';
           console.log('Path values after loading:');
           console.log('TFT:', this.gamePaths.TFT.PAHT, 'Display:', this.gamePaths.TFT.displayText);
           console.log('REF:', this.gamePaths.REF.PAHT, 'Display:', this.gamePaths.REF.displayText);
           console.log('ROC:', this.gamePaths.ROC.PAHT, 'Display:', this.gamePaths.ROC.displayText);
-          console.log('Paths container should show:', this.gamePaths.TFT.PAHT || this.gamePaths.REF.PAHT || this.gamePaths.ROC.PAHT);
         }
       }).catch(error => {
         console.error('Error loading paths:', error);
@@ -95,7 +94,7 @@ export class HomeComponent implements OnInit {
           console.log(`${gameVer} folder selected:`, result[0]);
           console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PAHT);
           console.log(`${gameVer} display text:`, this.gamePaths[gameVer].displayText);
-          console.log('Paths container visibility:', 
+          console.log('Paths container visibility:',
           this.gamePaths.TFT.PAHT || this.gamePaths.REF.PAHT || this.gamePaths.ROC.PAHT);
         }
       }
@@ -105,11 +104,11 @@ export class HomeComponent implements OnInit {
   }
 
   Images_ROC_Shown: boolean = false;
-  Images_TFT_Shown: boolean = false; 
-  Images_REF_Shown: boolean = false; 
-  ROCInstall: boolean = false; 
-  TFTInstall: boolean = false; 
-  REFInstall: boolean = false; 
+  Images_TFT_Shown: boolean = false;
+  Images_REF_Shown: boolean = false;
+  ROCInstall: boolean = false;
+  TFTInstall: boolean = false;
+  REFInstall: boolean = false;
   Mode_State: boolean = true;
   BJ_State: number = 1;
   isInteractive: boolean = true;
@@ -253,7 +252,7 @@ export class HomeComponent implements OnInit {
           if (this.forcelang) {
             this.optimize = false;
           }
-          break;     
+          break;
       }
     };
   }
