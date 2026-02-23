@@ -100,60 +100,45 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean) => {
   const controller = new AbortController();
   let response;
-    try {
-      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      if (fs.existsSync(settingsPath)) {
-        const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-        defaultPath = getVersionPath(settings, ver);
-        console.log(`get ${ver} path:`, defaultPath);
-      }
-    } catch (err) {
-      console.error('Failed to load path:', err);
+  try {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    if (fs.existsSync(settingsPath)) {
+      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+      defaultPath = getVersionPath(settings, ver);
+      console.log(`get ${ver} path:`, defaultPath);
     }
-  // Handle folder mode (isMap = false)
-  if (!isMap) {
-    // If default path exists, use it directly
-    if (defaultPath) {
-    } else {
+  } catch (err) {
+    console.error('Failed to load path:', err);
+  }
+  if (defaultPath) {
+    response = defaultPath;
+  } else {
+    if (!isMap) {
       // Show dialog and save selected path as default
       response = dialog.showOpenDialogSync(win, {
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
         properties: ['openDirectory'],
       });
-      // Save the selected path as default if not canceled
-      if (response && response.length > 0) {
-        console.log('set default Path :', response[0]);
-        // Save to settings.json directly in main process
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        let settings: Settings = {};
-        if (fs.existsSync(settingsPath)) {
-          settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-        }
-        settings[`${ver}_PAHT`] = response[0];
-        fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      }
+    } else {
+      response = dialog.showOpenDialogSync(win, {
+        title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
+        properties: ['openFile'],
+        filters: [
+          { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+        ],
+      });
     }
-  } else {
-    // Handle map mode (isMap = true)
-    response = dialog.showOpenDialogSync(win, {
-      title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
-      properties: ['openFile'],
-      filters: [
-        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
-      ],
-      // Use default path if available, otherwise open "documents"
-    });
-    if (response && response.length > 0) {
-      const folderPath = path.dirname(response[0]);
-      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      let settings: Settings = {};
-      if (fs.existsSync(settingsPath)) {
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-      }
-      settings[`${ver}_PAHT`] = folderPath;
-      fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      console.log('Default path updated to:', folderPath);
+  }
+  if (response && response.length > 0) {
+    const folderPath = path.dirname(response[0]);
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    let settings: Settings = {};
+    if (fs.existsSync(settingsPath)) {
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
     }
+    settings[`${ver}_PAHT`] = folderPath;
+    fs.writeFileSync(settingsPath, JSON.stringify(settings));
+    console.log('Default path updated to:', folderPath);
   }
 
   let child;
@@ -259,15 +244,15 @@ const setupFileOperations = () => {
               ROC: settings.ROC_PAHT
             });
             return {
-              TFT_PAHT: settings.TFT_PAHT || null,
               REF_PAHT: settings.REF_PAHT || documentsPath,
+              TFT_PAHT: settings.TFT_PAHT || null,
               ROC_PAHT: settings.ROC_PAHT || null
             };
           }
           console.log('No settings file found, using defaults');
           return {
-            TFT_PAHT: null,
             REF_PAHT: documentsPath,
+            TFT_PAHT: null,
             ROC_PAHT: null
           };
         } catch (err) {
