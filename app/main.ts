@@ -6,12 +6,11 @@ import { InstallModel } from '../commons/models';
 const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
-// Define settings type
 type Settings = {
   TFT_PATH?: string;
   ROC_PATH?: string;
   REF_PATH?: string;
-  [key: string]: any; // Allow other properties
+  [key: string]: any;
 };
 
 let win: BrowserWindow = null;
@@ -85,15 +84,14 @@ const isDev = () => {
   return win;
 }
 
-// 通用路径获取方法
 const getVersionPath = (settings: Settings, ver: string): string | null => {
   switch(ver) {
     case "TFT":
-      return settings.TFT_PATH|| null;
+      return settings.TFT_PATH || null;
     case "ROC":
-      return settings.ROC_PATH|| null;
+      return settings.ROC_PATH || null;
     default:
-      return settings.REF_PATH|| documentsPath;
+      return settings.REF_PATH || documentsPath;
   }
 };
 
@@ -128,17 +126,17 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         ],
       });
     }
-  }
-  if (response && response.length > 0) {
-    const folderPath = path.dirname(response[0]);
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    let settings: Settings = {};
-    if (fs.existsSync(settingsPath)) {
-      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+    if (response && response.length > 0) {
+      const folderPath = path.dirname(response[0]);
+      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+      let settings: Settings = {};
+      if (fs.existsSync(settingsPath)) {
+        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+      }
+      settings[`${pathver}_PATH`] = folderPath;
+      fs.writeFileSync(settingsPath, JSON.stringify(settings));
+      console.log('Default path updated to:', folderPath);
     }
-    settings[`${pathver}_PATH`] = folderPath;
-    fs.writeFileSync(settingsPath, JSON.stringify(settings));
-    console.log('Default path updated to:', folderPath);
   }
 
   let child;
@@ -269,7 +267,7 @@ const setupFileOperations = () => {
             const versionPath = settings[`${ver}_PATH`] || settings.REF_PATH;
             const result = dialog.showOpenDialogSync(win, {
               title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-              defaultPath: versionPath || newpath || documentsPath,
+              defaultPath: versionPath,
               properties: ['openDirectory'],
             });
             return result && result.length > 0 ? result[0] : null;
@@ -279,7 +277,7 @@ const setupFileOperations = () => {
         }
         return dialog.showOpenDialogSync(win, {
           title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-          defaultPath: newpath || documentsPath,
+          defaultPath: documentsPath,
           properties: ['openDirectory'],
         })?.[0] || null;
       }
