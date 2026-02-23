@@ -30,15 +30,15 @@ export class HomeComponent implements OnInit {
   installEvent: string = 'install'
   gamePaths = {
     TFT: { 
-      PAHT: null as string | null,
+      PATH: null as string | null,
       displayText: '--',
     },
     REF: { 
-      PAHT: null as string | null,
+      PATH: null as string | null,
       displayText: '--',
     },
     ROC: { 
-      PAHT: null as string | null,
+      PATH: null as string | null,
       displayText: '--',
     }
   };
@@ -59,16 +59,16 @@ export class HomeComponent implements OnInit {
       }).then((settings: any) => {
         console.log('Loaded settings:', settings);
         if (settings) {
-          this.gamePaths.TFT.PAHT = settings.TFT_PATH|| null;
-          this.gamePaths.REF.PAHT = settings.REF_PATH|| null;
-          this.gamePaths.ROC.PAHT = settings.ROC_PATH|| null;
-          this.gamePaths.TFT.displayText = this.gamePaths.TFT.PAHT ? this.formatPath(this.gamePaths.TFT.PAHT) : '--';
-          this.gamePaths.REF.displayText = this.gamePaths.REF.PAHT ? this.formatPath(this.gamePaths.REF.PAHT) : '--';
-          this.gamePaths.ROC.displayText = this.gamePaths.ROC.PAHT ? this.formatPath(this.gamePaths.ROC.PAHT) : '--';
+          this.gamePaths.TFT.PATH = settings.TFT_PATH|| null;
+          this.gamePaths.REF.PATH = settings.REF_PATH|| null;
+          this.gamePaths.ROC.PATH = settings.ROC_PATH|| null;
+          this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
+          this.gamePaths.REF.displayText = this.gamePaths.REF.PATH ? this.formatPath(this.gamePaths.REF.PATH) : '--';
+          this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
           console.log('Path values after loading:');
-          console.log('TFT:', this.gamePaths.TFT.PAHT, 'Display:', this.gamePaths.TFT.displayText);
-          console.log('REF:', this.gamePaths.REF.PAHT, 'Display:', this.gamePaths.REF.displayText);
-          console.log('ROC:', this.gamePaths.ROC.PAHT, 'Display:', this.gamePaths.ROC.displayText);
+          console.log('TFT:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
+          console.log('REF:', this.gamePaths.REF.PATH, 'Display:', this.gamePaths.REF.displayText);
+          console.log('ROC:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
         }
       }).catch(error => {
         console.error('Error loading paths:', error);
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
           ver: gameVer
         });
         if (result && result.length > 0) {
-          this.gamePaths[gameVer].PAHT = result[0];
+          this.gamePaths[gameVer].PATH = result[0];
           this.gamePaths[gameVer].displayText = this.formatPath(result[0]);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
@@ -105,10 +105,10 @@ export class HomeComponent implements OnInit {
             newpath: result[0]
           });
           console.log(`${gameVer} folder selected:`, result[0]);
-          console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PAHT);
+          console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PATH);
           console.log(`${gameVer} display text:`, this.gamePaths[gameVer].displayText);
           console.log('Paths container visibility:',
-          this.gamePaths.TFT.PAHT || this.gamePaths.REF.PAHT || this.gamePaths.ROC.PAHT);
+          this.gamePaths.TFT.PATH || this.gamePaths.REF.PATH || this.gamePaths.ROC.PATH);
         }
       }
     } catch (error) {
