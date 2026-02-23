@@ -8,9 +8,9 @@ const cp = require('child_process');
 
 // Define settings type
 type Settings = {
-  TFT_PAHT?: string;
-  ROC_PAHT?: string;
-  REF_PAHT?: string;
+  TFT_PATH?: string;
+  ROC_PATH?: string;
+  REF_PATH?: string;
   [key: string]: any; // Allow other properties
 };
 
@@ -136,7 +136,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     if (fs.existsSync(settingsPath)) {
       settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
     }
-    settings[`${pathver}_PAHT`] = folderPath;
+    settings[`${pathver}_PATH`] = folderPath;
     fs.writeFileSync(settingsPath, JSON.stringify(settings));
     console.log('Default path updated to:', folderPath);
   }
@@ -239,21 +239,21 @@ const setupFileOperations = () => {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
             console.log('Loaded paths:', {
-              REF: settings.REF_PAHT,
-              TFT: settings.TFT_PAHT,
-              ROC: settings.ROC_PAHT
+              REF: settings.REF_PATH,
+              TFT: settings.TFT_PATH,
+              ROC: settings.ROC_PATH
             });
             return {
-              REF_PAHT: settings.REF_PATH|| documentsPath,
-              TFT_PAHT: settings.TFT_PATH|| null,
-              ROC_PAHT: settings.ROC_PATH|| null
+              REF_PATH: settings.REF_PATH|| documentsPath,
+              TFT_PATH: settings.TFT_PATH|| null,
+              ROC_PATH: settings.ROC_PATH|| null
             };
           }
           console.log('No settings file found, using defaults');
           return {
-            REF_PAHT: documentsPath,
-            TFT_PAHT: null,
-            ROC_PAHT: null
+            REF_PATH: documentsPath,
+            TFT_PATH: null,
+            ROC_PATH: null
           };
         } catch (err) {
           console.error('Error loading paths:', err);
@@ -266,7 +266,7 @@ const setupFileOperations = () => {
           const settingsPath = path.join(app.getPath('userData'), 'settings.json');
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            const versionPath = settings[`${ver}_PAHT`] || settings.REF_PAHT;
+            const versionPath = settings[`${ver}_PATH`] || settings.REF_PATH;
             const result = dialog.showOpenDialogSync(win, {
               title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
               defaultPath: versionPath || newpath || documentsPath,
@@ -289,7 +289,7 @@ const setupFileOperations = () => {
           let settings: Settings = fs.existsSync(settingsPath)
             ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
             : {};
-          const pathKey = `${ver}_PAHT`;
+          const pathKey = `${ver}_PATH`;
           settings[pathKey] = newpath;
           fs.writeFileSync(settingsPath, JSON.stringify(settings));
           console.log(`Saved path for ${ver}: ${newpath}`);
