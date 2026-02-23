@@ -97,7 +97,7 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
   }
 };
 
-const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver?: string = "REFORGED") => {
+const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
   try {
