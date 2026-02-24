@@ -98,11 +98,11 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
-  let usepath = null;
+  let usepath;
   try {
     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
-      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
       usepath = getVersionPath(settings, pathver);
       console.log(`get ${pathver} path:`, usepath);
     }
@@ -115,13 +115,15 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     console.log(`get ${pathver} defaul path:`, usepath);
   } else {
     if (!isMap) {
+      console.log('Dir mode');
       // Show dialog and save selected path as default
       response = dialog.showOpenDialogSync(win, {
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
         properties: ['openDirectory'],
-        defaultPath : usepath
+        defaultPath: documentsPath
       });
     } else {
+      console.log('Map mode');
       response = dialog.showOpenDialogSync(win, {
         title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
         properties: ['openFile'],
@@ -131,15 +133,16 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       });
     }
     if (response && response.length > 0) {
+      console.log('try updated path');
       const folderPath = path.dirname(response[0]);
       const settingsPath = path.join(app.getPath('userData'), 'settings.json');
       let settings: Settings = {};
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+        settings[`${pathver}_PATH`] = folderPath;
+        fs.writeFileSync(settingsPath, JSON.stringify(settings));
+        console.log('Default path updated to:', folderPath);
       }
-      settings[`${pathver}_PATH`] = folderPath;
-      fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      console.log('Default path updated to:', folderPath);
     }
   }
 
@@ -246,14 +249,14 @@ const setupFileOperations = () => {
               ROC: settings.ROC_PATH
             });
             return {
-              REFORGED_PATH: settings.REFORGED_PATH || documentsPath,
+              REFORGED_PATH: settings.REFORGED_PATH || null,
               TFT_PATH: settings.TFT_PATH || null,
               ROC_PATH: settings.ROC_PATH || null
             };
           }
           console.log('Loading path file failed, using defaults');
           return {
-            REFORGED_PATH: documentsPath,
+            REFORGED_PATH: null,
             TFT_PATH: null,
             ROC_PATH: null
           };
