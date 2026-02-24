@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
       PATH: null as string | null,
       displayText: '--',
     },
-    REF: { 
+    REFORGED: { 
       PATH: null as string | null,
       displayText: '--',
     },
@@ -60,13 +60,13 @@ export class HomeComponent implements OnInit {
         console.log('Loaded settings:', settings);
         if (settings) {
           this.gamePaths.TFT.PATH = settings.TFT_PATH|| null;
-          this.gamePaths.REF.PATH = settings.REF_PATH|| null;
+          this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH|| null;
           this.gamePaths.ROC.PATH = settings.ROC_PATH|| null;
           this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
-          this.gamePaths.REF.displayText = this.gamePaths.REF.PATH ? this.formatPath(this.gamePaths.REF.PATH) : '--';
+          this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
           this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
           console.log('Path values after loading:');
-          console.log('REFORGED:', this.gamePaths.REF.PATH, 'Display:', this.gamePaths.REF.displayText);
+          console.log('REFORGED:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
           console.log('TFT:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
           console.log('ROC:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
         }
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
           console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PATH);
           console.log(`${gameVer} display text:`, this.gamePaths[gameVer].displayText);
           console.log('Paths container visibility:',
-          this.gamePaths.TFT.PATH || this.gamePaths.REF.PATH || this.gamePaths.ROC.PATH);
+          this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
         }
       }
     } catch (error) {
