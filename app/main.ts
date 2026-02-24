@@ -6,8 +6,18 @@ import { InstallModel } from '../commons/models';
 const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
+type Settings = {
+  TFT_PATH?: string;
+  ROC_PATH?: string;
+  REFORGED_PATH?: string;
+  [key: string]: any;
+};
+
 let win: BrowserWindow = null;
-let translations : { [key: string]: string };
+let translations : { [key: string]: string } = {};
+let currentLanguage: string = "English";
+let usepath: string | null;
+const documentsPath = app.getPath('documents');
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
@@ -21,16 +31,17 @@ const isDev = () => {
   return require.main.filename.indexOf('app.asar') === -1;
 }
 
-const createWindow = (): BrowserWindow => {
+  const createWindow = (): BrowserWindow => {
 
   const size = screen.getPrimaryDisplay().workAreaSize;
-
   // Create the browser window.
   win = new BrowserWindow({
     x: 0,
     y: 0,
     width: size.width,
     height: size.height,
+    minWidth: 1280,
+    minHeight: 940,
     webPreferences: {
       devTools: true,
       nodeIntegration: true,
@@ -73,18 +84,72 @@ const createWindow = (): BrowserWindow => {
   return win;
 }
 
-const execInstall = async (signal, commander: boolean = true, isMap: boolean = false, ver: String = "REFORGED") => {
+const getVersionPath = (settings: Settings, ver: string): string | null => {
+  switch(ver) {
+    case "TFT":
+      return settings.TFT_PATH || null;
+    case "ROC":
+      return settings.ROC_PATH || null;
+    default:
+      return settings.REFORGED_PATH || documentsPath;
+  }
+};
+
+const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
-  const response = dialog.showOpenDialogSync(win, {
-    // TODO: add i18n here
-    title : isMap ? translations["PAGES.ELECTRON.OPEN_MAP"]: translations["PAGES.ELECTRON.OPEN_DIR"],
-    // TODO: Change to let multiples selections when is map
-    properties: isMap ? ['openFile'] : ['openDirectory'],
-    // TODO: add i18n here
-    filters: isMap ? [
-      { name: translations["PAGES.ELECTRON.MAPFILE"], extensions: ['w3x', 'w3m'] },
-    ] : null,
-  });
+  let response;
+  let usepath = null;
+  let settingsPath;
+  let settings: Settings = {};
+  try {
+    settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    if (fs.existsSync(settingsPath)) {
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      usepath = getVersionPath(settings, pathver);
+      console.log(`get ${pathver} path:`, usepath);
+    }
+  } catch (err) {
+    console.error('Failed to get path:', err);
+    usepath = null;
+  }
+  if (usepath !== null && usepath !== undefined) {
+    response = usepath;
+    console.log(`get ${pathver} defaul path:`, usepath);
+  } else {
+    if (!isMap) {
+      console.log('Dir mode');
+      // Show dialog and save selected path as default
+      response = dialog.showOpenDialogSync(win, {
+        title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+        properties: ['openDirectory'],
+        defaultPath: documentsPath
+      });
+    } else {
+      console.log('Map mode');
+      response = dialog.showOpenDialogSync(win, {
+        title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
+        properties: ['openFile'],
+        filters: [
+          { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+        ],
+      });
+    }
+    if (response && response.length > 0) {
+      console.log('try updated path');
+      const folderPath = path.dirname(response[0]);
+      settingsPath = path.join(app.getPath('userData'), 'settings.json');
+      if (fs.existsSync(settingsPath)) {
+        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+      }
+      settings[`${pathver}_PATH`] = folderPath;
+      fs.writeFileSync(settingsPath, JSON.stringify(settings));
+      console.log('Default path updated to:', folderPath);
+      win.webContents.send('path-updated', {
+        ver: pathver,
+        path: folderPath
+      });
+    }
+  }
 
   let child;
 
@@ -138,7 +203,6 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
     // win.webContents.send('on-install-message', 'Error: ' + err.message);
   }
 
-
   // init install proccess
   try {
     child = cp.fork(
@@ -148,17 +212,23 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
           `../${currentExecDir}install.js`
         )
       ),
-      [ response[0], commander, ver ],
+      [ response[0], commander, ver, forceLang ? currentLanguage : '-' ],
       { signal },
       (err) => {
         win.webContents.send('on-install-error', err);
       }
     );
 
-
     // send messages to modal on front
     child.on('message', (message) => {
-      win.webContents.send('on-install-message', message);
+      if (typeof message === 'object' && message.type === 'progress') {
+        // Send progress updates via dedicated channel
+        console.log('progress:', message);
+        win.webContents.send('on-install-progress', message);
+      } else {
+        // Send regular messages via standard channel
+        win.webContents.send('on-install-message', message);
+      }
     });
 
     // close modal on process finishes
@@ -170,59 +240,100 @@ const execInstall = async (signal, commander: boolean = true, isMap: boolean = f
   }
 }
 
+const setupFileOperations = () => {
+  ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
+    switch(operation) {
+      case 'load-default-path': {
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        try {
+          if (fs.existsSync(settingsPath)) {
+            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+            console.log('Loaded paths:', {
+              REFORGED: settings.REFORGED_PATH,
+              TFT: settings.TFT_PATH,
+              ROC: settings.ROC_PATH
+            });
+            return {
+              REFORGED_PATH: settings.REFORGED_PATH || null,
+              TFT_PATH: settings.TFT_PATH || null,
+              ROC_PATH: settings.ROC_PATH || null
+            };
+          }
+          console.log('Loading path file failed, using defaults');
+          return {
+            REFORGED_PATH: null,
+            TFT_PATH: null,
+            ROC_PATH: null
+          };
+        } catch (err) {
+          console.error('Error loading paths:', err);
+          return null;
+        }
+      }
+      case 'select-folder': {
+        console.log('Selecting folder for version:', pathver);
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        try {
+          if (fs.existsSync(settingsPath)) {
+            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+            usepath = settings[`${pathver}_PATH`]
+            console.log('Selecting folder for default Path :', usepath);
+          } else {
+            usepath = documentsPath;
+          }
+          const result = dialog.showOpenDialogSync(win, {
+            title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+            properties: ['openDirectory'],
+            defaultPath : usepath
+          });
+          if (result && result.length > 0) {
+            const folderPath = path.dirname(result[0]);
+            console.log('Select folder :', folderPath);
+            return result && result.length > 0 ? folderPath : null;
+          } else {
+            console.log('No select folder ');
+            return null;
+          }
+        } catch (err) {
+          console.error('Error Select folder , use default Path :', err);
+          return null;
+        }
+      }
+      case 'save-default-path': {
+        if (newpath) {
+          const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+          try {
+            let settings: Settings = fs.existsSync(settingsPath)
+              ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
+              : {};
+            settings[`${pathver}_PATH`] = newpath;
+            fs.writeFileSync(settingsPath, JSON.stringify(settings));
+            console.log(`Saved path for ${pathver}: ${newpath}`);
+            return true;
+          } catch (err) {
+            console.error('Failed to save path:', err);
+            return false;
+          }
+        } else {
+          console.log('Failed to save path , no path:');
+          return false;
+        }
+      }
+      default:
+        throw new Error(`unknow: ${operation}`);
+    }
+  });
+}
+
 const installProcess = () => {
   let signal = {};
 
-  ipcMain && ipcMain.on('install-folder', async () => {
-    execInstall(signal);
-  });
-  
-  ipcMain && ipcMain.on('install-folder-noc', async () => {
-    execInstall(signal, false, false);
-  });
-
-  ipcMain && ipcMain.on('install-map', async () => {
-    execInstall(signal, true, true);
-  });
-  
-  ipcMain && ipcMain.on('install-map-noc', async () => {
-    execInstall(signal, false, true);
-  });
-  
-  ipcMain && ipcMain.on('install-folder-TFT', async () => {
-    execInstall(signal, true, false, "TFT");
-  });
-  
-  ipcMain && ipcMain.on('install-folder-noc-TFT', async () => {
-    execInstall(signal, false, false, "TFT");
-  });
-
-  ipcMain && ipcMain.on('install-map-TFT', async () => {
-    execInstall(signal, true, true, "TFT");
-  });
-  
-  ipcMain && ipcMain.on('install-map-noc-TFT', async () => {
-    execInstall(signal, false, true, "TFT");
-  });
-  
-  ipcMain && ipcMain.on('install-folder-ROC', async () => {
-    execInstall(signal, true, false, "ROC");
-  });
-  
-  ipcMain && ipcMain.on('install-folder-noc-ROC', async () => {
-    execInstall(signal, false, false, "ROC");
-  });
-
-  ipcMain && ipcMain.on('install-map-ROC', async () => {
-    execInstall(signal, true, true, "ROC");
-  });
-  
-  ipcMain && ipcMain.on('install-map-noc-ROC', async () => {
-    execInstall(signal, false, true, "ROC");
+  ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
   });
 
   // TODO: stop process with signal
-  ipcMain && ipcMain.on('on-stop-process', async () => {
+  ipcMain?.on('on-stop-process', async () => {
     // stop process here
   });
 }
@@ -264,14 +375,51 @@ const init = () => {
 }
 
 const installTrans = () => {
-  ipcMain?.on('Trans', (_event, data) => {
+  ipcMain?.on('Trans', (_event, currentLang: string, data) => {
+    console.log(`Setting language to:${currentLang}`);
+    switch (currentLang) {
+      case 'en':
+        currentLanguage = "English";
+        break;
+      case 'zh':
+        currentLanguage = "Chinese";
+        break;
+      case 'fr':
+        currentLanguage = "French";
+        break;
+      case 'de':
+        currentLanguage = "Deutsch";
+        break;
+      case 'no':
+        currentLanguage = "Norwegian";
+        break;
+      case 'pt':
+        currentLanguage = "Portuguese";
+        break;
+      case 'ro':
+        currentLanguage = "Romanian";
+        break;
+      case 'ru':
+        currentLanguage = "Russian";
+        break;
+      case 'es':
+        currentLanguage = "Spanish";
+        break;
+      case 'sv':
+        currentLanguage = "Swedish";
+        break;
+      default:
+        currentLanguage = "English";
+        console.log('Current Language: Unknown so change to English');
+    }
     translations = data as { [key: string]: string };
     if (win != null) {
-      win.setTitle(translations['PAGES.HOME.TITLE'])
+      win.setTitle(translations['PAGES.HOME.TITLE'] || '')
     }
   });
 }
 
 init();
 installTrans();
+setupFileOperations();
 installProcess();
