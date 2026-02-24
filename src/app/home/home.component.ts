@@ -88,31 +88,32 @@ export class HomeComponent implements OnInit {
     }
     return `${firstPart}/...${lastPart}`;
   }
-  async selectGameFolder(gameVer: 'REFORGED' | 'TFT' | 'ROC'): Promise<void> {
+  async selectGameFolder(pathver: 'REFORGED' | 'TFT' | 'ROC'): Promise<void> {
     try {
       if (this.electronService.isElectron) {
-        console.log(`Selecting folder for ${gameVer}`);
+        console.log(`Selecting folder for ${pathver}`);
         const result = await this.electronService.ipcRenderer.invoke('file-operations', {
           operation: 'select-folder',
-          ver: gameVer
+          ver: pathver
         });
         if (result && result.length > 0) {
-          this.gamePaths[gameVer].PATH = result.filePaths[0];
-          this.gamePaths[gameVer].displayText = this.formatPath(result[0]);
+          const selectedPath = result.filePaths[0];
+          this.gamePaths[pathver].PATH = selectedPath;
+          this.gamePaths[pathver].displayText = this.formatPath(selectedPath);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
-            ver: gameVer,
-            newpath: result[0]
+            ver: pathver,
+            newpath: selectedPath
           });
-          console.log(`${gameVer} folder selected:`, result[0]);
-          console.log(`${gameVer} path set to:`, this.gamePaths[gameVer].PATH);
-          console.log(`${gameVer} display text:`, this.gamePaths[gameVer].displayText);
+          console.log(`${pathver} folder selected:`, selectedPath);
+          console.log(`${pathver} path set to:`, this.gamePaths[pathver].PATH);
+          console.log(`${pathver} display text:`, this.gamePaths[pathver].displayText);
           console.log('Paths container visibility:',
           this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
         }
       }
     } catch (error) {
-      console.error(`${gameVer} folder selection failed:`, error);
+      console.error(`${pathver} folder selection failed:`, error);
     }
   }
 
