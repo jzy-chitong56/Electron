@@ -232,7 +232,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
 }
 
 const setupFileOperations = () => {
-  ipcMain?.handle('file-operations', async (_, { operation, ver, newpath }) => {
+  ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
     switch(operation) {
       case 'load-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
@@ -262,12 +262,12 @@ const setupFileOperations = () => {
         }
       }
       case 'select-folder': {
-        console.log('Selecting folder for version:', ver);
+        console.log('Selecting folder for version:', pathver);
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            usepath = settings[`${ver}_PATH`]
+            usepath = settings[`${pathver}_PATH`]
             console.log('Selecting folder for default Path :', usepath);
           } else {
             usepath = documentsPath;
@@ -287,7 +287,7 @@ const setupFileOperations = () => {
           }
         } catch (err) {
           console.error('Error Select folder , use default Path :', err);
-          return documentsPath;
+          return null;
         }
       }
       case 'save-default-path': {
@@ -297,17 +297,17 @@ const setupFileOperations = () => {
             let settings: Settings = fs.existsSync(settingsPath)
               ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
               : {};
-            settings[`${ver}_PATH`] = newpath;
+            settings[`${pathver}_PATH`] = newpath;
             fs.writeFileSync(settingsPath, JSON.stringify(settings));
-            console.log(`Saved path for ${ver}: ${newpath}`);
+            console.log(`Saved path for ${pathver}: ${newpath}`);
             return true;
           } catch (err) {
             console.error('Failed to save path:', err);
             return false;
           }
         } else {
-            console.log('Failed to save path , no path:');
-            return false;
+          console.log('Failed to save path , no path:');
+          return false;
         }
       }
       default:
