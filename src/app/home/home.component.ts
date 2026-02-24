@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
           ver: gameVer
         });
         if (result && result.length > 0) {
-          this.gamePaths[gameVer].PATH = result[0];
+          this.gamePaths[gameVer].PATH = result.filePaths[0];
           this.gamePaths[gameVer].displayText = this.formatPath(result[0]);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
