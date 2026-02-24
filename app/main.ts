@@ -139,10 +139,14 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       let settings: Settings = {};
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-        settings[`${pathver}_PATH`] = folderPath;
-        fs.writeFileSync(settingsPath, JSON.stringify(settings));
-        console.log('Default path updated to:', folderPath);
       }
+      settings[`${pathver}_PATH`] = folderPath;
+      fs.writeFileSync(settingsPath, JSON.stringify(settings));
+      console.log('Default path updated to:', folderPath);
+      win.webContents.send('path-updated', {
+        ver: pathver,
+        path: folderPath
+      });
     }
   }
 
@@ -324,8 +328,7 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
-    const pathver = ver;
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver);
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
   });
 
   // TODO: stop process with signal
