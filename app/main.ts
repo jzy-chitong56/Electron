@@ -137,7 +137,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     }
     if (response && response.length > 0) {
       console.log('try updated path');
-      const folderPath = response[0];
+      if (!isMap) {
+        const folderPath = response[0];
+      } else {
+        const folderPath = path.dirname(response[0]);
+      }
       settingsPath = path.join(app.getPath('userData'), 'settings.json');
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
