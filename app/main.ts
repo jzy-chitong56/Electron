@@ -16,7 +16,7 @@ type Settings = {
 let win: BrowserWindow = null;
 let translations : { [key: string]: string } = {};
 let currentLanguage: string = "English";
-let defaultPath: string | null = null;
+let usepath: string | null;
 const documentsPath = app.getPath('documents');
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
@@ -98,24 +98,27 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
+  let usepath = null;
   try {
     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
       const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
-      defaultPath = getVersionPath(settings, pathver);
-      console.log(`get ${pathver} path:`, defaultPath);
+      usepath = getVersionPath(settings, pathver);
+      console.log(`get ${pathver} path:`, usepath);
     }
   } catch (err) {
-    console.error('Failed to load path:', err);
+    console.error('Failed to get path:', err);
   }
-  if (defaultPath) {
-    response = defaultPath;
+  if (usepath) {
+    response = usepath;
+    console.log(`get defaul path:`, usepath);
   } else {
     if (!isMap) {
       // Show dialog and save selected path as default
       response = dialog.showOpenDialogSync(win, {
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
         properties: ['openDirectory'],
+        defaultPath : usepath
       });
     } else {
       response = dialog.showOpenDialogSync(win, {
@@ -247,7 +250,7 @@ const setupFileOperations = () => {
               ROC_PATH: settings.ROC_PATH || null
             };
           }
-          console.log('No settings file found, using defaults');
+          console.log('Loading path file failed, using defaults');
           return {
             REFORGED_PATH: documentsPath,
             TFT_PATH: null,
@@ -261,7 +264,6 @@ const setupFileOperations = () => {
       case 'select-folder': {
         console.log('Selecting folder for version:', ver);
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        let usepath: string | null;
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
@@ -278,7 +280,8 @@ const setupFileOperations = () => {
           console.log('Select folder :', result[0]);
           return result && result.length > 0 ? result[0] : null;
         } catch (err) {
-          console.error('Error loading settings :', err);
+          console.error('Error Select folder , use default Path :', err);
+          return documentsPath;
         }
       }
       case 'save-default-path': {
@@ -288,7 +291,7 @@ const setupFileOperations = () => {
             ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
             : {};
           const pathKey = `${ver}_PATH`;
-          settings[pathKey] = newpath;
+          settings[pathKey] = path.resolve(newpath);
           fs.writeFileSync(settingsPath, JSON.stringify(settings));
           console.log(`Saved path for ${ver}: ${newpath}`);
           return true;
