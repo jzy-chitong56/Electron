@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       this.electronService.ipcRenderer.invoke('file-operations', {
         operation: 'load-default-path'
       }).then((settings: any) => {
-        console.log('Loaded settings:', settings);
+        console.log('Loaded paths settings:', settings);
         if (settings) {
           this.gamePaths.TFT.PATH = settings.TFT_PATH|| null;
           this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH|| null;
@@ -70,10 +70,9 @@ export class HomeComponent implements OnInit {
           this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
           this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
           this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
-          console.log('Path values after loading:');
-          console.log('REFORGED:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
-          console.log('TFT:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
-          console.log('ROC:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
+          console.log('REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
+          console.log('TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
+          console.log('ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
         }
       }).catch(error => {
         console.error('Error loading paths:', error);
@@ -110,10 +109,6 @@ export class HomeComponent implements OnInit {
             operation: 'save-default-path',
             ver: pathver,
             newpath: selectedPath
-          });
-          this.electronService.ipcRenderer.send('path-changed', {
-            type: pathver,
-            path: selectedPath
           });
           console.log(`${pathver} folder selected:`, selectedPath);
           console.log(`${pathver} path set to:`, this.gamePaths[pathver].PATH);
