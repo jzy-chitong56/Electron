@@ -50,11 +50,11 @@
       <input type="checkbox" class="switch-text" id="ForceLang" [checked]="forcelang" #ForceLang (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
     </label>
   </div>
-  <div class="paths-container" *ngIf="gamePaths.TFT.PATH || gamePaths.REF.PATH || gamePaths.ROC.PATH">
+  <div class="paths-container" *ngIf="gamePaths.TFT.PATH || gamePaths.REFORGED.PATH || gamePaths.ROC.PATH">
     <label>{{ 'PAGES.HOME.DEFAULT_PATH' | translate }}</label>
-    <div class="game-path-item" (click)="selectGameFolder('REFORGED')" *ngIf="gamePaths.REF.PATH">
+    <div class="game-path-item" (click)="selectGameFolder('REFORGED')" *ngIf="gamePaths.REFORGED.PATH">
       <span class="game-path-label">REF: </span>
-      <span class="underlined-path" [title]="gamePaths.REF.PATH">{{gamePaths.REF.displayText}}</span>
+      <span class="underlined-path" [title]="gamePaths.REFORGED.PATH">{{gamePaths.REFORGED.displayText}}</span>
     </div>
     <div class="game-path-item" (click)="selectGameFolder('TFT')" *ngIf="gamePaths.TFT.PATH">
       <span class="game-path-label">TFT: </span>
