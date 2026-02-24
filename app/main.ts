@@ -242,9 +242,9 @@ const setupFileOperations = () => {
               ROC: settings.ROC_PATH
             });
             return {
-              REF_PATH: settings.REF_PATH|| documentsPath,
-              TFT_PATH: settings.TFT_PATH|| null,
-              ROC_PATH: settings.ROC_PATH|| null
+              REF_PATH: settings.REF_PATH || documentsPath,
+              TFT_PATH: settings.TFT_PATH || null,
+              ROC_PATH: settings.ROC_PATH || null
             };
           }
           console.log('No settings file found, using defaults');
@@ -260,25 +260,26 @@ const setupFileOperations = () => {
       }
       case 'select-folder': {
         console.log('Selecting folder for version:', ver);
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        let usepath : null;
         try {
-          const settingsPath = path.join(app.getPath('userData'), 'settings.json');
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            const result = dialog.showOpenDialogSync(win, {
-              title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-              defaultPath: settings[`${ver}_PATH`],
-              properties: ['openDirectory'],
-            });
-            return result && result.length > 0 ? result[0] : null;
+            usepath = settings[`${ver}_PATH`]
+            console.log('Selecting folder for default Path :', usepath);
+          } else {
+            usepath = documentsPath;
           }
+          const result = dialog.showOpenDialogSync(win, {
+            title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+            properties: ['openDirectory'],
+            defaultPath : usepath
+          });
+          console.log('Select folder :', result[0]);
+          return result && result.length > 0 ? result[0] : null;
         } catch (err) {
-          console.error('Error loading settings:', err);
+          console.error('Error loading settings :', err);
         }
-        return dialog.showOpenDialogSync(win, {
-          title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-          defaultPath: documentsPath,
-          properties: ['openDirectory'],
-        })?.[0] || null;
       }
       case 'save-default-path': {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
