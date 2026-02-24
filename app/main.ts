@@ -108,6 +108,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     }
   } catch (err) {
     console.error('Failed to get path:', err);
+    usepath = null
   }
   if (usepath) {
     response = usepath;
