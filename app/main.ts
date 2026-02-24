@@ -9,7 +9,7 @@ const cp = require('child_process');
 type Settings = {
   TFT_PATH?: string;
   ROC_PATH?: string;
-  REF_PATH?: string;
+  REFORGED_PATH?: string;
   [key: string]: any;
 };
 
@@ -91,7 +91,7 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
     case "ROC":
       return settings.ROC_PATH || null;
     default:
-      return settings.REF_PATH || documentsPath;
+      return settings.REFORGED_PATH || documentsPath;
   }
 };
 
@@ -237,19 +237,19 @@ const setupFileOperations = () => {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
             console.log('Loaded paths:', {
-              REF: settings.REF_PATH,
+              REFORGED: settings.REFORGED_PATH,
               TFT: settings.TFT_PATH,
               ROC: settings.ROC_PATH
             });
             return {
-              REF_PATH: settings.REF_PATH || documentsPath,
+              REFORGED_PATH: settings.REFORGED_PATH || documentsPath,
               TFT_PATH: settings.TFT_PATH || null,
               ROC_PATH: settings.ROC_PATH || null
             };
           }
           console.log('No settings file found, using defaults');
           return {
-            REF_PATH: documentsPath,
+            REFORGED_PATH: documentsPath,
             TFT_PATH: null,
             ROC_PATH: null
           };
@@ -261,7 +261,7 @@ const setupFileOperations = () => {
       case 'select-folder': {
         console.log('Selecting folder for version:', ver);
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        let usepath : null;
+        let usepath: string | null;
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
