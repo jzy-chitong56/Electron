@@ -98,11 +98,13 @@ const getVersionPath = (settings: Settings, ver: string): string | null => {
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
-  let usepath;
+  let usepath = null;
+  let settingsPath;
+  let settings: Settings = {};
   try {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
-      const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
       usepath = getVersionPath(settings, pathver);
       console.log(`get ${pathver} path:`, usepath);
     }
@@ -135,8 +137,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     if (response && response.length > 0) {
       console.log('try updated path');
       const folderPath = path.dirname(response[0]);
-      const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      let settings: Settings = {};
+      settingsPath = path.join(app.getPath('userData'), 'settings.json');
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
       }
