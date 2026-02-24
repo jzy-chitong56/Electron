@@ -129,6 +129,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       response = dialog.showOpenDialogSync(win, {
         title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
         properties: ['openFile'],
+        defaultPath: documentsPath,
         filters: [
           { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
         ],
@@ -136,7 +137,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     }
     if (response && response.length > 0) {
       console.log('try updated path');
-      const folderPath = path.dirname(response[0]);
+      const folderPath = response[0];
       settingsPath = path.join(app.getPath('userData'), 'settings.json');
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
@@ -281,15 +282,14 @@ const setupFileOperations = () => {
           } else {
             usepath = documentsPath;
           }
-          const result = dialog.showOpenDialogSync(win, {
+          let result = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
             properties: ['openDirectory'],
             defaultPath : usepath
           });
           if (result && result.length > 0) {
-            const folderPath = path.dirname(result[0]);
-            console.log('Select folder :', folderPath);
-            return result && result.length > 0 ? folderPath : null;
+            console.log('Select folder :', result[0]);
+            return result[0];
           } else {
             console.log('No select folder ');
             return null;
