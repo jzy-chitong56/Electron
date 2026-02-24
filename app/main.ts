@@ -111,7 +111,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   }
   if (usepath) {
     response = usepath;
-    console.log(`get defaul path:`, usepath);
+    console.log(`get ${pathver} defaul path:`, usepath);
   } else {
     if (!isMap) {
       // Show dialog and save selected path as default
@@ -277,27 +277,37 @@ const setupFileOperations = () => {
             properties: ['openDirectory'],
             defaultPath : usepath
           });
-          console.log('Select folder :', result[0]);
-          return result && result.length > 0 ? result[0] : null;
+          if (result && result.length > 0) {
+            const folderPath = path.dirname(result[0]);
+            console.log('Select folder :', folderPath);
+            return result && result.length > 0 ? folderPath : null;
+          } else {
+            console.log('No select folder ');
+            return null;
+          }
         } catch (err) {
           console.error('Error Select folder , use default Path :', err);
           return documentsPath;
         }
       }
       case 'save-default-path': {
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        try {
-          let settings: Settings = fs.existsSync(settingsPath)
-            ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
-            : {};
-          const pathKey = `${ver}_PATH`;
-          settings[pathKey] = path.resolve(newpath);
-          fs.writeFileSync(settingsPath, JSON.stringify(settings));
-          console.log(`Saved path for ${ver}: ${newpath}`);
-          return true;
-        } catch (err) {
-          console.error('Failed to save path:', err);
-          return false;
+        if (newpath) {
+          const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+          try {
+            let settings: Settings = fs.existsSync(settingsPath)
+              ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
+              : {};
+            settings[`${ver}_PATH`] = newpath;
+            fs.writeFileSync(settingsPath, JSON.stringify(settings));
+            console.log(`Saved path for ${ver}: ${newpath}`);
+            return true;
+          } catch (err) {
+            console.error('Failed to save path:', err);
+            return false;
+          }
+        } else {
+            console.log('Failed to save path , no path:');
+            return false;
         }
       }
       default:
