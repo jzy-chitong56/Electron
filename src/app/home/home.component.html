@@ -9,18 +9,36 @@
       <img id="ImagesREFDisable" src="assets/REF.Disable.png" alt="REF" [ngStyle]="{'display': !Images_REF_Shown ? 'block' : 'none'}"/>
       <span>2.0.3+</span>
       <span class="reccomendations">{{ 'PAGES.HOME.REF_BEST_GAME_VERSION' | translate }}</span>
+      <div class="game-path-item" (click)="selectGameFolder('REFORGED')"
+        style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="underlined-path" style="font-size: 1.6rem; flex-grow: 1; margin-right: 8px;"
+          [title]="gamePaths.REFORGED.PATH">{{gamePaths.REFORGED.displayText}}</span>
+        <i class="material-icons icon-handle" style="font-size: 1.2rem; cursor: pointer; flex-shrink: 0;">edit</i>
+      </div>
     </div>
     <div id="imageTFT" class="imageContainerTFT" #imageTFT data-action="Tft" (mouseover)="onMouseEnter($event, 'Tft')" (mouseout)="onMouseLeave($event, 'Tft')" (click)="onClick($event, 'Tft')">
       <img id="ImagesTFTEnable" src="assets/TFT.Enable.png" alt="TFTSelected" [ngStyle]="{'display': Images_TFT_Shown ? 'block' : 'none'}"/>
       <img id="ImagesTFTDisable" src="assets/TFT.Disable.png" alt="TFT" [ngStyle]="{'display': !Images_TFT_Shown ? 'block' : 'none'}"/>
       <span>1.24e+</span>
       <span class="reccomendations">{{ 'PAGES.HOME.TFT_BEST_GAME_VERSION' | translate }}</span>
+      <div class="game-path-item" (click)="selectGameFolder('TFT')"
+        style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="underlined-path" style="font-size: 1.6rem; flex-grow: 1; margin-right: 8px;"
+          [title]="gamePaths.TFT.PATH">{{gamePaths.TFT.displayText}}</span>
+        <i class="material-icons icon-handle" style="font-size: 1.2rem; cursor: pointer; flex-shrink: 0;">edit</i>
+      </div>
     </div>
     <div id="imageROC" class="imageContainerROC" #imageROC data-action="Roc" (mouseover)="onMouseEnter($event, 'Roc')" (mouseout)="onMouseLeave($event, 'Roc')" (click)="onClick($event, 'Roc')">
       <img id="ImagesROCEnable" src="assets/ROC.Enable.png" alt="ROCSelected" [ngStyle]="{'display': Images_ROC_Shown ? 'block' : 'none'}"/>
       <img id="ImagesROCDisable" src="assets/ROC.Disable.png" alt="ROC" [ngStyle]="{'display': !Images_ROC_Shown ? 'block' : 'none'}"/>
       <span>1.24e+ ~ 1.31</span>
       <span class="reccomendations">{{ 'PAGES.HOME.ROC_BEST_GAME_VERSION' | translate }}</span>
+      <div class="game-path-item" (click)="selectGameFolder('ROC')"
+        style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="underlined-path" style="font-size: 1.6rem; flex-grow: 1; margin-right: 8px;"
+          [title]="gamePaths.ROC.PATH">{{gamePaths.ROC.displayText}}</span>
+        <i class="material-icons icon-handle" style="font-size: 1.2rem; cursor: pointer; flex-shrink: 0;">edit</i>
+      </div>
     </div>
   </div>
 
@@ -40,7 +58,7 @@
       <label for="BJoptionVsAI" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_VSAI' | translate }}</label>  
       <input type="radio" id="BJoptionOff" name="commander-group" value="BJoptionOff" #BJoptionOff (input)="onInputChange(BJoptionOff.id)" hidden>  
       <label for="BJoptionOff" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_OFF' | translate }}</label>
-    </label> 
+    </label>
   </div>
   <div class="ContainerLattice MoreSettings">
     <label class="checkboxbj">
@@ -49,20 +67,5 @@
     <label class="checkboxbj">
       <input type="checkbox" class="switch-text" id="ForceLang" [checked]="forcelang" #ForceLang (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
     </label>
-  </div>
-  <div class="paths-container" *ngIf="gamePaths.TFT.PATH || gamePaths.REFORGED.PATH || gamePaths.ROC.PATH">
-    <label>{{ 'PAGES.HOME.DEFAULT_PATH' | translate }}</label>
-    <div class="game-path-item" (click)="selectGameFolder('REFORGED')" *ngIf="gamePaths.REFORGED.PATH">
-      <span class="game-path-label">REF: </span>
-      <span class="underlined-path" [title]="gamePaths.REFORGED.PATH">{{gamePaths.REFORGED.displayText}}</span>
-    </div>
-    <div class="game-path-item" (click)="selectGameFolder('TFT')" *ngIf="gamePaths.TFT.PATH">
-      <span class="game-path-label">TFT: </span>
-      <span class="underlined-path" [title]="gamePaths.TFT.PATH">{{gamePaths.TFT.displayText}}</span>
-    </div>
-    <div class="game-path-item" (click)="selectGameFolder('ROC')" *ngIf="gamePaths.ROC.PATH">
-      <span class="game-path-label">ROC: </span>
-      <span class="underlined-path" [title]="gamePaths.ROC.PATH">{{gamePaths.ROC.displayText}}</span>
-    </div>
   </div>
 </div>
