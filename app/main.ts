@@ -264,10 +264,9 @@ const setupFileOperations = () => {
           const settingsPath = path.join(app.getPath('userData'), 'settings.json');
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            const versionPath = settings[`${ver}_PATH`] || settings.REF_PATH;
             const result = dialog.showOpenDialogSync(win, {
               title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-              defaultPath: versionPath,
+              defaultPath: settings[`${ver}_PATH`],
               properties: ['openDirectory'],
             });
             return result && result.length > 0 ? result[0] : null;
