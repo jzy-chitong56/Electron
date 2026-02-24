@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
-import { TranslateService } from "@codeandweb/ngx-translate";
 
 @Injectable({
   providedIn: 'root'
@@ -45,12 +44,18 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private electronService: ElectronService, 
-    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
     this.loadDefaultPath();
+    if (this.electronService.isElectron) {
+      this.electronService.ipcRenderer.on('path-updated', (event, { pathver, path }) => {
+        console.log(`Path updated for ${pathver}:`, path);
+        this.gamePaths[pathver].PATH = path;
+        this.gamePaths[pathver].displayText = this.formatPath(path);
+      });
+    }
   }
   loadDefaultPath(): void {
     if (this.electronService.isElectron) {
@@ -76,7 +81,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private formatPath(path: string, maxLength = 30): string {
+  private formatPath(path: string, maxLength = 20): string {
+    if (!path) return '--';
     if (path.length <= maxLength) return path;
     const parts = path.split(/[\\/]/);
     if (parts.length <= 2) return path;
@@ -104,6 +110,10 @@ export class HomeComponent implements OnInit {
             operation: 'save-default-path',
             ver: pathver,
             newpath: selectedPath
+          });
+          this.electronService.ipcRenderer.send('path-changed', {
+            type: pathver,
+            path: selectedPath
           });
           console.log(`${pathver} folder selected:`, selectedPath);
           console.log(`${pathver} path set to:`, this.gamePaths[pathver].PATH);
