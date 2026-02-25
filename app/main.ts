@@ -7,9 +7,9 @@ const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
 type Settings = {
-  TFT_PATH?: string;
-  ROC_PATH?: string;
-  REFORGED_PATH?: string;
+  TFT_PATH?: string | null;
+  ROC_PATH?: string | null;
+  REFORGED_PATH?: string | null;
   [key: string]: any;
 };
 
@@ -104,7 +104,8 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     if (fs.existsSync(settingsPath)) {
       settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
       usepath = getVersionPath(settings, pathver);
-      console.log(`get path :`, usepath, ' ver path:', settings[`${pathver}_PATH`]);
+      console.log(`get ${pathver} path from settings.json:`, usepath, 
+                 'path:', settings[`${pathver}_PATH`]);
     }
   } catch (err) {
     console.error('Failed to get path:', err);
