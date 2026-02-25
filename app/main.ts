@@ -98,22 +98,26 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   let usepath = null;
   let settingsPath;
   let settings: Settings = {};
+  console.log(`start install`);
   try {
-    console.log(`get defaul path`);
+    console.log(`getting path from settings`);
     settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
       settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+      console.log('Loaded settings : ', settings);
       usepath = getVersionPath(settings, pathver);
-      console.log(`get ${pathver} path from settings.json:`, usepath, 
-                 'path:', settings[`${pathver}_PATH`]);
+      console.log(`get ${pathver} path from settings.json : `, usepath,
+                 'path : ', settings[`${pathver}_PATH`]);
+    } else {
+      console.log('settings.json does not exist');
     }
   } catch (err) {
     console.error('Failed to get path:', err);
     usepath = null;
   }
-  if (usepath !== null && usepath !== undefined) {
+  if (usepath !== null && usepath !== undefined && usepath !== '') {
     response = usepath;
-    console.log(`get ${pathver} defaul path:`, usepath);
+    console.log(`get path : `, usepath);
   } else {
     if (!isMap) {
       console.log('Dir mode');
@@ -151,9 +155,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', finalPath);
       win.webContents.send('path-updated', {
-        ver: pathver,
-        path: finalPath
+        type: pathver,
+        path: finalPath,
+        ver: pathver
       });
+      console.log('Sent path-updated event with:', {type: pathver, path: finalPath, ver: pathver});
     }
   }
 
