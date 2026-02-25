@@ -126,7 +126,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
         properties: ['openDirectory'],
         defaultPath: documentsPath
-      }) || [];
+      });
     } else {
       console.log('Map mode');
       response = dialog.showOpenDialogSync(win, {
@@ -136,7 +136,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         filters: [
           { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
         ],
-      }) || [];
+      });
     }
     if (response && response.length > 0) {
       console.log('try updated path');
@@ -299,9 +299,9 @@ const setupFileOperations = () => {
             title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
             properties: ['openDirectory'],
             defaultPath: usepath
-          }) || [];
-          if (result[0]) {
-            const selectedPath = path.resolve(result[0]);
+          });
+          if (result && result.length > 0) {
+            const selectedPath = result[0];
             console.log('Selected folder:', selectedPath);
             return selectedPath;
           }
