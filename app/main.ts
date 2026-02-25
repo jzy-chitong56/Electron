@@ -85,10 +85,7 @@ const isDev = () => {
 }
 
 const getVersionPath = (settings: Settings, pathver: string): string | null => {
-  const pathValue = 
-    pathver === "TFT" ? settings.TFT_PATH :
-    pathver === "ROC" ? settings.ROC_PATH :
-    settings.REFORGED_PATH || documentsPath;
+  const pathValue = settings[`${pathver}_PATH`];
   return pathValue ? path.resolve(pathValue) : null;
 };
 
@@ -96,24 +93,15 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   const controller = new AbortController();
   let response;
   let usepath = null;
-  let settingsPath;
+  let settingsPath = path.join(app.getPath('userData'), 'settings.json');
   let settings: Settings = {};
-  console.log(`start install`);
-  try {
-    console.log(`getting path from settings`);
-    settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    if (fs.existsSync(settingsPath)) {
-      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-      console.log('Loaded settings : ', settings);
-      usepath = getVersionPath(settings, pathver);
-      console.log(`get ${pathver} path from settings.json : `, usepath,
-                 'path : ', settings[`${pathver}_PATH`]);
-    } else {
-      console.log('settings.json does not exist');
-    }
-  } catch (err) {
-    console.error('Failed to get path:', err);
-    usepath = null;
+  if (fs.existsSync(settingsPath)) {
+    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+    console.log('Loaded settings : ', settings);
+    usepath = getVersionPath(settings, pathver);
+    console.log(`get ${pathver} path from settings.json : `, usepath, 'path : ', settings[`${pathver}_PATH`]);
+  } else {
+    console.log('settings.json does not exist');
   }
   if (usepath !== null && usepath !== undefined) {
     response = usepath;
@@ -146,12 +134,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       const finalPath = folderPath ? path.resolve(folderPath) : '';
       settings[`${pathver}_PATH`] = finalPath;
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      console.log('Default path updated to:', finalPath);
       win.webContents.send('path-updated', {
         path: finalPath,
-        type: pathver,
+        type: pathver
       });
-      console.log('Sent path-updated event with:', {type: pathver, path: finalPath, ver: pathver});
+      console.log('Sent path-updated event with:', {type: pathver, path: finalPath});
     }
   }
 
@@ -334,7 +321,9 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
+    const pathver = ver;
+    console.log(`go install`);
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver);
   });
 
   // TODO: stop process with signal
