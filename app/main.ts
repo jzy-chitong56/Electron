@@ -1,3 +1,4 @@
+
 import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -85,14 +86,11 @@ const isDev = () => {
 }
 
 const getVersionPath = (settings: Settings, ver: string): string | null => {
-  switch(ver) {
-    case "TFT":
-      return settings.TFT_PATH || null;
-    case "ROC":
-      return settings.ROC_PATH || null;
-    default:
-      return settings.REFORGED_PATH || documentsPath;
-  }
+  const pathValue = 
+    ver === "TFT" ? settings.TFT_PATH :
+    ver === "ROC" ? settings.ROC_PATH :
+    settings.REFORGED_PATH || documentsPath;
+  return pathValue ? path.resolve(pathValue) : null;
 };
 
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
@@ -145,9 +143,9 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       }
       settingsPath = path.join(app.getPath('userData'), 'settings.json');
       if (fs.existsSync(settingsPath)) {
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
       }
-      settings[`${pathver}_PATH`] = folderPath;
+      settings[`${pathver}_PATH`] = folderPath ? path.resolve(folderPath) : null;
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', folderPath);
       win.webContents.send('path-updated', {
@@ -279,6 +277,7 @@ const setupFileOperations = () => {
       case 'select-folder': {
         console.log('Selecting folder for version:', pathver);
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        let usepath = null;
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
@@ -309,9 +308,9 @@ const setupFileOperations = () => {
           const settingsPath = path.join(app.getPath('userData'), 'settings.json');
           try {
             let settings: Settings = fs.existsSync(settingsPath)
-              ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
+              ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {}
               : {};
-            settings[`${pathver}_PATH`] = newpath;
+            settings[`${pathver}_PATH`] = newpath ? path.resolve(newpath) : null;
             fs.writeFileSync(settingsPath, JSON.stringify(settings));
             console.log(`Saved path for ${pathver}: ${newpath}`);
             return true;
