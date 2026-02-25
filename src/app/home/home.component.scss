@@ -224,23 +224,13 @@
   .game-path-item {
     margin: 0.8rem auto;
     padding: 0.8rem;
-    width: 90%;
+    width: 100%;
     background-color: #000000;
     border-radius: 4px;
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
-  }
-
-  .game-path-item {
-    margin: 0.8rem auto;
-    padding: 0.8rem;
-    width: 90%;
-    background-color: #000000;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    background-color: transparent;
     position: relative;
   }
 
@@ -307,35 +297,6 @@
     &:hover {
       border-color: #007bff;
       box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
-    }
-  }
-
-  .imageContainerREF,
-  .imageContainerTFT,
-  .imageContainerROC {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    border-bottom: none;
-    cursor: pointer;
-    background-color: transparent;
-
-    &:hover {
-      background-color: #f8f9fa;
-    }
-  }
-
-  .game-path-item {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    border-top: none;
-    cursor: pointer;
-    background-color: transparent;
-    margin: 0;
-
-    &:hover {
-      background-color: #f8f9fa;
     }
   }
 
