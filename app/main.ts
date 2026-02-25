@@ -145,12 +145,13 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       if (fs.existsSync(settingsPath)) {
         settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
       }
-      settings[`${pathver}_PATH`] = folderPath ? path.resolve(folderPath) : null;
+      const finalPath = folderPath ? path.resolve(folderPath) : '';
+      settings[`${pathver}_PATH`] = finalPath;
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      console.log('Default path updated to:', folderPath);
+      console.log('Default path updated to:', finalPath);
       win.webContents.send('path-updated', {
         ver: pathver,
-        path: folderPath
+        path: finalPath
       });
     }
   }
@@ -281,25 +282,26 @@ const setupFileOperations = () => {
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            usepath = settings[`${pathver}_PATH`]
+            usepath = settings[`${pathver}_PATH`];
             console.log('Selecting folder for default Path :', usepath);
           } else {
             usepath = documentsPath;
           }
-          let result = dialog.showOpenDialogSync(win, {
+          
+          const result = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
             properties: ['openDirectory'],
-            defaultPath : usepath
-          });
-          if (result && result.length > 0) {
-            console.log('Select folder :', result[0]);
-            return result[0];
-          } else {
-            console.log('No select folder ');
-            return null;
+            defaultPath: usepath
+          }) || [];
+          if (result[0]) {
+            const selectedPath = path.resolve(result[0]);
+            console.log('Selected folder:', selectedPath);
+            return selectedPath;
           }
+          console.log('Folder selection was cancelled');
+          return null;
         } catch (err) {
-          console.error('Error Select folder , use default Path :', err);
+          console.error('Error selecting folder:', err);
           return null;
         }
       }
