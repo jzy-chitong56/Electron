@@ -289,6 +289,60 @@
     text-overflow: ellipsis;
     display: inline-block;
     position: relative;
+    font-size: 1.6rem;
+    flex-grow: 1;
+    margin-right: 8px;
+  }
+
+  .game-version-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0.5rem;
+
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+    }
+  }
+
+  .imageContainerREF,
+  .imageContainerTFT,
+  .imageContainerROC {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border-bottom: none;
+    cursor: pointer;
+    background-color: transparent;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  .game-path-item {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border-top: none;
+    cursor: pointer;
+    background-color: transparent;
+    margin: 0;
+
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+
+  .icon-handle {
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex-shrink: 0;
   }
 
 }
