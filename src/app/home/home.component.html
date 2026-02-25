@@ -14,7 +14,7 @@
         <span>2.0.3+</span>
         <span class="reccomendations">{{ 'PAGES.HOME.REF_BEST_GAME_VERSION' | translate }}</span>
       </div>
-      <div class="game-path-item" (click)="$event.stopPropagation(); selectGameFolder('REFORGED')">
+      <div class="game-path-item" (click)="selectGameFolder('REFORGED')">
         <span class="underlined-path" [title]="gamePaths.REFORGED.PATH">{{gamePaths.REFORGED.displayText}}</span>
         <i class="material-icons icon-handle">edit</i>
       </div>
@@ -29,7 +29,7 @@
         <span>1.24e+</span>
         <span class="reccomendations">{{ 'PAGES.HOME.TFT_BEST_GAME_VERSION' | translate }}</span>
       </div>
-      <div class="game-path-item" (click)="$event.stopPropagation(); selectGameFolder('TFT')">
+      <div class="game-path-item" (click)="selectGameFolder('TFT')">
         <span class="underlined-path" [title]="gamePaths.TFT.PATH">{{gamePaths.TFT.displayText}}</span>
         <i class="material-icons icon-handle">edit</i>
       </div>
@@ -46,7 +46,7 @@
         <span>1.24e+ ~ 1.31</span>
         <span class="reccomendations">{{ 'PAGES.HOME.ROC_BEST_GAME_VERSION' | translate }}</span>
       </div>
-      <div class="game-path-item" (click)="$event.stopPropagation(); selectGameFolder('ROC')">
+      <div class="game-path-item" (click)="selectGameFolder('ROC')">
         <span class="underlined-path" [title]="gamePaths.ROC.PATH">{{gamePaths.ROC.displayText}}</span>
         <i class="material-icons icon-handle">edit</i>
       </div>
