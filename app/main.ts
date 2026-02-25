@@ -1,4 +1,3 @@
-
 import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -121,7 +120,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
         properties: ['openDirectory'],
         defaultPath: documentsPath
-      });
+      }) || [];
     } else {
       console.log('Map mode');
       response = dialog.showOpenDialogSync(win, {
@@ -131,7 +130,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         filters: [
           { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
         ],
-      });
+      }) || [];
     }
     if (response && response.length > 0) {
       console.log('try updated path');
