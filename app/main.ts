@@ -84,10 +84,10 @@ const isDev = () => {
   return win;
 }
 
-const getVersionPath = (settings: Settings, ver: string): string | null => {
+const getVersionPath = (settings: Settings, pathver: string): string | null => {
   const pathValue = 
-    ver === "TFT" ? settings.TFT_PATH :
-    ver === "ROC" ? settings.ROC_PATH :
+    pathver === "TFT" ? settings.TFT_PATH :
+    pathver === "ROC" ? settings.ROC_PATH :
     settings.REFORGED_PATH || documentsPath;
   return pathValue ? path.resolve(pathValue) : null;
 };
@@ -99,11 +99,12 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   let settingsPath;
   let settings: Settings = {};
   try {
+    console.log(`get defaul path`);
     settingsPath = path.join(app.getPath('userData'), 'settings.json');
     if (fs.existsSync(settingsPath)) {
-      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
       usepath = getVersionPath(settings, pathver);
-      console.log(`get ${pathver} path:`, usepath);
+      console.log(`get path :`, usepath, ' ver path:', settings[`${pathver}_PATH`]);
     }
   } catch (err) {
     console.error('Failed to get path:', err);
@@ -305,7 +306,7 @@ const setupFileOperations = () => {
         }
       }
       case 'save-default-path': {
-        if (newpath) {
+        if (newpath && pathver) {
           const settingsPath = path.join(app.getPath('userData'), 'settings.json');
           try {
             let settings: Settings = fs.existsSync(settingsPath)
@@ -320,7 +321,7 @@ const setupFileOperations = () => {
             return false;
           }
         } else {
-          console.log('Failed to save path , no path:');
+          console.log('Failed to save path , no path');
           return false;
         }
       }
