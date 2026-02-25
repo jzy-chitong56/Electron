@@ -115,29 +115,22 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     console.error('Failed to get path:', err);
     usepath = null;
   }
-  if (usepath !== null && usepath !== undefined && usepath !== '') {
+  if (usepath !== null && usepath !== undefined) {
     response = usepath;
     console.log(`get path : `, usepath);
   } else {
-    if (!isMap) {
-      console.log('Dir mode');
-      // Show dialog and save selected path as default
-      response = dialog.showOpenDialogSync(win, {
-        title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-        properties: ['openDirectory'],
-        defaultPath: documentsPath
-      });
-    } else {
-      console.log('Map mode');
-      response = dialog.showOpenDialogSync(win, {
-        title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
-        properties: ['openFile'],
-        defaultPath: documentsPath,
-        filters: [
-          { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
-        ],
-      });
-    }
+    console.log('Choose path');
+    response = dialog.showOpenDialogSync(win, {
+      // TODO: add i18n here
+      title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+      // TODO: Change to let multiples selections when is map
+      properties: isMap ? ['openFile'] : ['openDirectory'],
+      // TODO: add i18n here
+      filters: isMap ? [
+        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+      ] : null,
+      defaultPath: documentsPath,
+    });
     if (response && response.length > 0) {
       console.log('try updated path');
       let folderPath;
@@ -155,9 +148,8 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       console.log('Default path updated to:', finalPath);
       win.webContents.send('path-updated', {
-        type: pathver,
         path: finalPath,
-        ver: pathver
+        type: pathver,
       });
       console.log('Sent path-updated event with:', {type: pathver, path: finalPath, ver: pathver});
     }
