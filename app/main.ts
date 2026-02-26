@@ -135,8 +135,8 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       settings[`${pathver}_PATH`] = finalPath;
       fs.writeFileSync(settingsPath, JSON.stringify(settings));
       win.webContents.send('path-updated', {
-        path: finalPath,
-        type: pathver
+        type: pathver,
+        path: finalPath
       });
       console.log('Sent path-updated event with:', {type: pathver, path: finalPath});
     }
