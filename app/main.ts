@@ -84,61 +84,33 @@ const isDev = () => {
   return win;
 }
 
-const getVersionPath = (settings: Settings, pathver: string): string | null => {
-  const pathValue = 
-    pathver === "TFT" ? settings.TFT_PATH :
-    pathver === "ROC" ? settings.ROC_PATH :
-    settings.REFORGED_PATH || documentsPath;
-  if (!pathValue) {
-    console.warn(`[${pathver}] no set`);
-    return null;
-  }
-  const normalizedPath = path.normalize(pathValue.toString().trim());
-  return normalizedPath;
-};
-
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
   let usepath = null;
-  let settingsPath;
+  let settingsPath = path.join(app.getPath('userData'), 'settings.json');
   let settings: Settings = {};
-  try {
-    console.log(`get defaul path`);
-    settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    if (fs.existsSync(settingsPath)) {
-      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-      usepath = getVersionPath(settings, pathver);
-      console.log(`get ${pathver} path from settings.json:`, usepath, 
-                 'path:', settings[`${pathver}_PATH`]);
-    }
-  } catch (err) {
-    console.error('Failed to get path:', err);
-    usepath = null;
+  if (fs.existsSync(settingsPath)) {
+    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+    usepath = settings[`${pathver}_PATH`];
+    console.log(`get ${pathver} path : `, usepath, 'path : ', settings[`${pathver}_PATH`]);
   }
   if (usepath !== null && usepath !== undefined) {
     response = usepath;
     console.log(`get ${pathver} defaul path:`, usepath);
   } else {
-    if (!isMap) {
-      console.log('Dir mode');
-      // Show dialog and save selected path as default
-      response = dialog.showOpenDialogSync(win, {
-        title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-        properties: ['openDirectory'],
-        defaultPath: documentsPath
-      }) || [];
-    } else {
-      console.log('Map mode');
-      response = dialog.showOpenDialogSync(win, {
-        title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
-        properties: ['openFile'],
-        defaultPath: documentsPath,
-        filters: [
-          { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
-        ],
-      }) || [];
-    }
+    console.log('Choose path');
+    response = dialog.showOpenDialogSync(win, {
+      // TODO: add i18n here
+      title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+      // TODO: Change to let multiples selections when is map
+      properties: isMap ? ['openFile'] : ['openDirectory'],
+      // TODO: add i18n here
+      filters: isMap ? [
+        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+      ] : null,
+      defaultPath: documentsPath,
+    });
     if (response && response.length > 0) {
       console.log('try updated path');
       let folderPath;
