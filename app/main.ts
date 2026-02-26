@@ -88,11 +88,17 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   const controller = new AbortController();
   let response;
   let usepath = null;
-  let settingsPath = path.join(app.getPath('userData'), 'settings.json');
   let settings: Settings = {};
+  const settingsPath = path.join(app.getPath('userData'), 'settings.json');
   if (fs.existsSync(settingsPath)) {
-    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-    usepath = settings[`${pathver}_PATH`];
+    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+    if (pathver == "REFORGED") {
+      usepath = settings.REFORGED_PATH;
+    } else if (pathver == "TFT") {
+      usepath = settings.TFT_PATH;
+    } else if (pathver == "ROC") {
+      usepath = settings.ROC_PATH;
+    }
     console.log(`get ${pathver} path : `, usepath, 'path : ', settings[`${pathver}_PATH`]);
   }
   if (usepath !== null && usepath !== undefined) {
@@ -111,27 +117,6 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       ] : null,
       defaultPath: documentsPath,
     });
-    if (response && response.length > 0) {
-      console.log('try updated path');
-      let folderPath;
-      if (!isMap) {
-        folderPath = response[0];
-      } else {
-        folderPath = path.dirname(response[0]);
-      }
-      settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      if (fs.existsSync(settingsPath)) {
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-      }
-      const finalPath = folderPath ? path.resolve(folderPath) : '';
-      settings[`${pathver}_PATH`] = finalPath;
-      fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      console.log('Default path updated to:', finalPath);
-      win.webContents.send('path-updated', {
-        ver: pathver,
-        path: finalPath
-      });
-    }
   }
 
   let child;
@@ -168,6 +153,21 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     return;
   }
 
+  if (usepath === null) {
+    if (!isMap) {
+      usepath = response[0];
+    } else {
+      usepath = path.dirname(response[0]);
+    }
+    const finalPath = usepath ? path.resolve(usepath) : null;
+    settings[`${pathver}_PATH`] = finalPath;
+    fs.writeFileSync(settingsPath, JSON.stringify(settings));
+    console.log('Default path updated to:', finalPath);
+    win.webContents.send('path-updated', {
+      ver: pathver,
+      path: finalPath
+    });
+  }
   // open modal on front
   win.webContents.send('on-install-init', <InstallModel>{
     response: response[0],
