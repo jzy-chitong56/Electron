@@ -1,4 +1,4 @@
-import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
+import { app, BrowserWindow, dialog, Menu, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from '@electron/remote/main';
@@ -7,19 +7,19 @@ const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
 type Settings = {
-  TFT_PATH?: string | null;
-  ROC_PATH?: string | null;
-  REFORGED_PATH?: string | null;
-  [key: string]: any;
+    TFT_PATH?: string | null;
+    ROC_PATH?: string | null;
+    REFORGED_PATH?: string | null;
+    [key: string]: any;
 };
 
 let win: BrowserWindow = null;
-let translations : { [key: string]: string } = {};
+let translations: { [key: string]: string } = {};
 let currentLanguage: string = "English";
 let usepath: string | null;
 const documentsPath = app.getPath('documents');
 const args = process.argv.slice(1),
-  serve = args.some(val => val === '--serve');
+    serve = args.some(val => val === '--serve');
 
 // needed to call remote inside app
 remote.initialize();
@@ -28,388 +28,369 @@ remote.initialize();
 Menu.setApplicationMenu(null);
 
 const isDev = () => {
-  return require.main.filename.indexOf('app.asar') === -1;
+    return require.main.filename.indexOf('app.asar') === -1;
 }
 
-  const createWindow = (): BrowserWindow => {
+const createWindow = (): BrowserWindow => {
 
-  const size = screen.getPrimaryDisplay().workAreaSize;
-  // Create the browser window.
-  win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height,
-    minWidth: 1280,
-    minHeight: 940,
-    webPreferences: {
-      devTools: true,
-      nodeIntegration: true,
-      allowRunningInsecureContent: (serve),
-      contextIsolation: false,  // false if you want to run e2e test with Spectron
-    },
-  });
+    const size = screen.getPrimaryDisplay().workAreaSize;
+    // Create the browser window.
+    win = new BrowserWindow({
+        x: 0,
+        y: 0,
+        width: size.width,
+        height: size.height,
+        minWidth: 1280,
+        minHeight: 940,
+        webPreferences: {
+            devTools: true,
+            nodeIntegration: true,
+            allowRunningInsecureContent: (serve),
+            contextIsolation: false,  // false if you want to run e2e test with Spectron
+        },
+    });
 
-  // needed to remote work with electron > 14...
-  remote.enable(win.webContents);
+    // needed to remote work with electron > 14...
+    remote.enable(win.webContents);
 
-  if (serve) {
-    const debug = require('electron-debug');
-    debug();
+    if (serve) {
+        const debug = require('electron-debug');
+        debug();
 
-    // hot reload frontend
-    require('electron-reloader')(module);
-    win.loadURL('http://localhost:4200');
-  } else {
-    // Path when running electron executable
-    let pathIndex = './index.html';
+        // hot reload frontend
+        require('electron-reloader')(module);
+        win.loadURL('http://localhost:4200');
+    } else {
+        // Path when running electron executable
+        let pathIndex = './index.html';
 
-    if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
-       // Path when running electron in local folder
-      pathIndex = '../dist/index.html';
+        if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
+            // Path when running electron in local folder
+            pathIndex = '../dist/index.html';
+        }
+
+        const url = new URL(path.join('file:', __dirname, pathIndex));
+        win.loadURL(url.href);
     }
 
-    const url = new URL(path.join('file:', __dirname, pathIndex));
-    win.loadURL(url.href);
-  }
+    // Emitted when the window is closed.
+    win.on('closed', () => {
+        // Dereference the window object, usually you would store window
+        // in an array if your app supports multi windows, this is the time
+        // when you should delete the corresponding element.
+        win = null;
+    });
 
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store window
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null;
-  });
-
-  return win;
+    return win;
 }
 
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
-  const controller = new AbortController();
-  let response;
-  let usepath = null;
-  let settings: Settings = {};
-  let child;
-  const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-  if (fs.existsSync(settingsPath)) {
-    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-    if (pathver == "REFORGED") {
-      usepath = settings.REFORGED_PATH || null;
-    } else if (pathver == "TFT") {
-      usepath = settings.TFT_PATH || null;
-    } else if (pathver == "ROC") {
-      usepath = settings.ROC_PATH || null;
+    const controller = new AbortController();
+    let response;
+    let usepath = null;
+    let settings: Settings = {};
+    let child;
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    if (fs.existsSync(settingsPath)) {
+        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+        if (pathver == "REFORGED") {
+            usepath = settings.REFORGED_PATH || null;
+        } else if (pathver == "TFT") {
+            usepath = settings.TFT_PATH || null;
+        } else if (pathver == "ROC") {
+            usepath = settings.ROC_PATH || null;
+        }
+        win.webContents.send('on-install-message', `Loaded settings : ${JSON.stringify(settings)}, get ${pathver} path : ${usepath} , settings path : ${settings[`${pathver}_PATH`]}`);
     }
-    win.webContents.send('on-install-message', `Loaded settings : ${JSON.stringify(settings)}, get ${pathver} path : ${usepath} , settings path : ${settings[`${pathver}_PATH`]}`);
-  }
-  if (usepath !== null && usepath !== undefined) {
-    response = usepath;
-    win.webContents.send('on-install-message', `get ${pathver} default path: ${usepath}`);
-  } else {
-    win.webContents.send('on-install-message', 'Choose path');
-    response = dialog.showOpenDialogSync(win, {
-      // TODO: add i18n here
-      title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-      // TODO: Change to let multiples selections when is map
-      properties: isMap ? ['openFile'] : ['openDirectory'],
-      // TODO: add i18n here
-      filters: isMap ? [
-        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
-      ] : null,
-      defaultPath: documentsPath,
-    });
-  }
-
-  // passing reference to external call back
-  signal = controller.signal;
-
-  let currentExecDir = `./AMAI-release/`,
-    currentScriptDir = './AMAI-release/';
-
-  if(!isDev()) {
-    currentExecDir = `./AMAI/`;
-    currentScriptDir = path.join(
-      __dirname,
-      `../${currentExecDir}`
-    );
-  }
-
-  /** uncomment to debbug */
-  // const ls = cp.spawnSync(
-  //   `ls`,
-  //   [`./resources`,],
-  //   { encoding : `utf8` }
-  // );
-  // // process.send(ls.stdout);
-  // win.webContents.send('on-install-message', '__dirname: ' + __dirname);
-  // win.webContents.send('on-install-message', 'ls: ' + ls.stdout);
-  // win.webContents.send('on-install-message', 'isProd: ' + !isDev());
-  // win.webContents.send('on-install-message', 'currentExecDir: ' + currentExecDir);
-  // win.webContents.send('on-install-message', `install js path: ../${currentExecDir}install.js`);
-
-  if(!response || (response?.length === 0)) {
-    win.webContents.send('on-install-empty');
-    return;
-  }
-
-  if (usepath === null) {
-    if (!isMap) {
-      usepath = response[0];
+    if (usepath !== null && usepath !== undefined) {
+        response = usepath;
+        win.webContents.send('on-install-message', `get ${pathver} default path: ${usepath}`);
     } else {
-      usepath = path.dirname(response[0]);
+        win.webContents.send('on-install-message', 'Choose path');
+        response = dialog.showOpenDialogSync(win, {
+            // TODO: add i18n here
+            title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+            // TODO: Change to let multiples selections when is map
+            properties: isMap ? ['openFile'] : ['openDirectory'],
+            // TODO: add i18n here
+            filters: isMap ? [
+                { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+            ] : null,
+            defaultPath: documentsPath,
+        });
     }
-    const finalPath = usepath ? path.resolve(usepath) : null;
-    settings[`${pathver}_PATH`] = finalPath;
-    fs.writeFileSync(settingsPath, JSON.stringify(settings));
-    win.webContents.send('on-install-message', `Default path updated to: ${finalPath}`);
-    win.webContents.send('path-updated', {
-      ver: pathver,
-      path: finalPath
-    });
-  }
-  // open modal on front
-  win.webContents.send('on-install-init', <InstallModel>{
-    response: response[0],
-    commander,
-    isMap
-  });
 
-  // Change the relative path from where the script will be executed
-  // MPQEditor and AddToMPQ only work when files and folders are in same directory
-  try {
-     process.chdir(currentScriptDir);
-  } catch(err) {
-    console.log('error:', err.message);
+    // passing reference to external call back
+    signal = controller.signal;
+
+    let currentExecDir = `./AMAI-release/`,
+        currentScriptDir = './AMAI-release/';
+
+    if (!isDev()) {
+        currentExecDir = `./AMAI/`;
+        currentScriptDir = path.join(
+            __dirname,
+            `../${currentExecDir}`
+        );
+    }
 
     /** uncomment to debbug */
-    // win.webContents.send('on-install-message', 'Error: ' + err.message);
-  }
+    // const ls = cp.spawnSync(
+    //   `ls`,
+    //   [`./resources`,],
+    //   { encoding : `utf8` }
+    // );
+    // // process.send(ls.stdout);
+    // win.webContents.send('on-install-message', '__dirname: ' + __dirname);
+    // win.webContents.send('on-install-message', 'ls: ' + ls.stdout);
+    // win.webContents.send('on-install-message', 'isProd: ' + !isDev());
+    // win.webContents.send('on-install-message', 'currentExecDir: ' + currentExecDir);
+    // win.webContents.send('on-install-message', `install js path: ../${currentExecDir}install.js`);
 
-  // init install proccess
-  try {
-    child = cp.fork(
-      require.resolve(
-        path.join(
-          __dirname,
-          `../${currentExecDir}install.js`
-        )
-      ),
-      [ response[0], commander, ver, forceLang ? currentLanguage : '-' ],
-      { signal },
-      (err) => {
-        win.webContents.send('on-install-error', err);
-      }
-    );
+    if (!response || (response?.length === 0)) {
+        win.webContents.send('on-install-empty');
+        return;
+    }
 
-    // send messages to modal on front
-    child.on('on-install-message', (message) => {
-      if (typeof message === 'object' && message.type === 'progress') {
-        // Send progress updates via dedicated channel
-        console.log('progress:', message);
-        win.webContents.send('on-install-progress', message);
-      } else {
-        // Send regular messages via standard channel
-        win.webContents.send('on-install-message', message);
-      }
+    if (usepath === null) {
+        if (!isMap) {
+            usepath = response[0];
+        } else {
+            usepath = path.dirname(response[0]);
+        }
+        const finalPath = usepath ? path.resolve(usepath) : null;
+        settings[`${pathver}_PATH`] = finalPath;
+        fs.writeFileSync(settingsPath, JSON.stringify(settings));
+        win.webContents.send('on-install-message', `Default path updated to: ${finalPath}`);
+        win.webContents.send('path-updated', {
+            pathver: pathver,
+            path: finalPath
+        });
+    }
+    // open modal on front
+    win.webContents.send('on-install-init', <InstallModel>{
+        response: response[0],
+        commander,
+        isMap
     });
 
-    // close modal on process finishes
-    child.on('exit', () => {
-      win.webContents.send('on-install-exit');
-    });
-  } catch(err) {
-    win.webContents.send('on-install-error', err.message);
-  }
+    // Change the relative path from where the script will be executed
+    // MPQEditor and AddToMPQ only work when files and folders are in same directory
+    try {
+        process.chdir(currentScriptDir);
+    } catch (err) {
+        console.log('error:', err.message);
+
+        /** uncomment to debbug */
+        // win.webContents.send('on-install-message', 'Error: ' + err.message);
+    }
+
+    // init install proccess
+    try {
+        child = cp.fork(
+            require.resolve(
+                path.join(
+                    __dirname,
+                    `../${currentExecDir}install.js`
+                )
+            ),
+            [response[0], commander, ver, forceLang ? currentLanguage : '-'],
+            { signal },
+            (err) => {
+                win.webContents.send('on-install-error', err);
+            }
+        );
+
+        // send messages to modal on front
+        child.on('on-install-message', (message) => {
+            if (typeof message === 'object' && message.type === 'progress') {
+                // Send progress updates via dedicated channel
+                console.log('progress:', message);
+                win.webContents.send('on-install-progress', message);
+            } else {
+                // Send regular messages via standard channel
+                win.webContents.send('on-install-message', message);
+            }
+        });
+
+        // close modal on process finishes
+        child.on('exit', () => {
+            win.webContents.send('on-install-exit');
+        });
+    } catch (err) {
+        win.webContents.send('on-install-error', err.message);
+    }
 }
 
 const setupFileOperations = () => {
-  ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
-    switch(operation) {
-      case 'load-default-path': {
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        try {
-          if (fs.existsSync(settingsPath)) {
-            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-            win.webContents.send('on-install-message', 
-              `Loaded paths:
-              REFORGED: ${settings.REFORGED_PATH},
-              TFT: ${settings.TFT_PATH},
-              ROC: ${settings.ROC_PATH}`);
-            return {
-              REFORGED_PATH: settings.REFORGED_PATH || null,
-              TFT_PATH: settings.TFT_PATH || null,
-              ROC_PATH: settings.ROC_PATH || null
-            };
-          }
-          win.webContents.send('on-install-message',
-            `Loading path file failed, using defaults`);
-          return {
-            REFORGED_PATH: null,
-            TFT_PATH: null,
-            ROC_PATH: null
-          };
-        } catch (err) {
-          win.webContents.send('on-install-message', 
-            `Loaded paths:
-            Error loading paths`);
-          return null;
+    ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
+        switch (operation) {
+            case 'load-default-path': {
+                const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+                if (fs.existsSync(settingsPath)) {
+                    const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+                    win.webContents.send('on-install-message',
+                        `Loaded paths:
+                            REFORGED: ${settings.REFORGED_PATH},
+                            TFT: ${settings.TFT_PATH},
+                            ROC: ${settings.ROC_PATH}`);
+                    return {
+                        REFORGED_PATH: settings.REFORGED_PATH || null,
+                        TFT_PATH: settings.TFT_PATH || null,
+                        ROC_PATH: settings.ROC_PATH || null
+                    };
+                }
+                win.webContents.send('on-install-message',
+                    `Loading path file failed, using defaults`);
+                return {
+                    REFORGED_PATH: null,
+                    TFT_PATH: null,
+                    ROC_PATH: null
+                };
+            }
+            case 'select-folder': {
+                win.webContents.send('on-install-message',
+                    `Selecting folder for version : ${pathver}`);
+                const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+                let usepath = null;
+                if (fs.existsSync(settingsPath)) {
+                    const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+                    usepath = settings[`${pathver}_PATH`];
+                    win.webContents.send('on-install-message',
+                        `Selecting folder for default Path  : ${usepath}`);
+                } else {
+                    usepath = documentsPath;
+                }
+                const result = dialog.showOpenDialogSync(win, {
+                    title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+                    properties: ['openDirectory'],
+                    defaultPath: usepath
+                });
+                if (result[0]) {
+                    const selectedPath = path.resolve(result[0]);
+                    win.webContents.send('on-install-message',
+                        `Selecting folder  : ${selectedPath}`);
+                    return selectedPath;
+                }
+                win.webContents.send('on-install-message',
+                    `Folder selection was cancelled`);
+                return null;
+            }
+            case 'save-default-path': {
+                if (newpath && pathver) {
+                    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+                    let settings: Settings = fs.existsSync(settingsPath)
+                        ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {}
+                        : {};
+                    settings[`${pathver}_PATH`] = newpath ? path.resolve(newpath) : null;
+                    fs.writeFileSync(settingsPath, JSON.stringify(settings));
+                    win.webContents.send('on-install-message',
+                        `Saved path for ${pathver}: ${newpath}`);
+                    return settings[`${pathver}_PATH`] !== null;
+                } else {
+                    win.webContents.send('on-install-message',
+                        `Failed to save path , no path`);
+                    return false;
+                }
+            }
+            default:
+                throw new Error(`unknow: ${operation}`);
         }
-      }
-      case 'select-folder': {
-        win.webContents.send('on-install-message', 
-            `Selecting folder for version : ${pathver}`);
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        let usepath = null;
-        try {
-          if (fs.existsSync(settingsPath)) {
-            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            usepath = settings[`${pathver}_PATH`];
-            win.webContents.send('on-install-message',
-              `Selecting folder for default Path  : ${usepath}`);
-          } else {
-            usepath = documentsPath;
-          }
-          const result = dialog.showOpenDialogSync(win, {
-            title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-            properties: ['openDirectory'],
-            defaultPath: usepath
-          });
-          if (result[0]) {
-            const selectedPath = path.resolve(result[0]);
-            win.webContents.send('on-install-message',
-              `Selecting folder  : ${selectedPath}`);
-            return selectedPath;
-          }
-          win.webContents.send('on-install-message',
-            `Folder selection was cancelled`);
-          return null;
-        } catch (err) {
-          win.webContents.send('on-install-message',
-            `Error selecting folder`);
-          return null;
-        }
-      }
-      case 'save-default-path': {
-        if (newpath && pathver) {
-          const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-          try {
-            let settings: Settings = fs.existsSync(settingsPath)
-              ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {}
-              : {};
-            settings[`${pathver}_PATH`] = newpath ? path.resolve(newpath) : null;
-            fs.writeFileSync(settingsPath, JSON.stringify(settings));
-            win.webContents.send('on-install-message',
-              `Saved path for ${pathver}: ${newpath}`);
-            return true;
-          } catch (err) {
-            win.webContents.send('on-install-message',
-              `Failed to save path`);
-            return false;
-          }
-        } else {
-          win.webContents.send('on-install-message',
-            `Failed to save path , no path`);
-          return false;
-        }
-      }
-      default:
-        throw new Error(`unknow: ${operation}`);
-    }
-  });
+    });
 }
 
 const installProcess = () => {
-  let signal = {};
+    let signal = {};
 
-  ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
-  });
+    ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean) => {
+        execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
+    });
 
-  // TODO: stop process with signal
-  ipcMain?.on('on-stop-process', async () => {
-    // stop process here
-  });
+    // TODO: stop process with signal
+    ipcMain?.on('on-stop-process', async () => {
+        // stop process here
+    });
 }
 
 const init = () => {
-  try {
-    // This method will be called when Electron has finished
-    // initialization and is ready to create browser windows.
-    // Some APIs can only be used after this event occurs.
-    // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
-    app.on('ready', () => {
-      setTimeout(() => {
-        createWindow();
-      }, 400)
-    });
+    try {
+        // This method will be called when Electron has finished
+        // initialization and is ready to create browser windows.
+        // Some APIs can only be used after this event occurs.
+        // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
+        app.on('ready', () => {
+            setTimeout(() => {
+                createWindow();
+            }, 400)
+        });
 
 
-    // Quit when all windows are closed.
-    app.on('window-all-closed', () => {
-      // On OS X it is common for applications and their menu bar
-      // to stay active until the user quits explicitly with Cmd + Q
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
-    });
+        // Quit when all windows are closed.
+        app.on('window-all-closed', () => {
+            // On OS X it is common for applications and their menu bar
+            // to stay active until the user quits explicitly with Cmd + Q
+            if (process.platform !== 'darwin') {
+                app.quit();
+            }
+        });
 
-    app.on('activate', () => {
-      // On OS X it's common to re-create a window in the app when the
-      // dock icon is clicked and there are no other windows open.
-      if (win === null) {
-        createWindow();
-      }
-    });
+        app.on('activate', () => {
+            // On OS X it's common to re-create a window in the app when the
+            // dock icon is clicked and there are no other windows open.
+            if (win === null) {
+                createWindow();
+            }
+        });
 
-  } catch (e) {
-    // Catch Error
-    // throw e;
-  }
+    } catch (e) {
+        // Catch Error
+        // throw e;
+    }
 }
 
 const installTrans = () => {
-  ipcMain?.on('Trans', (_event, currentLang: string, data) => {
-    console.log(`Setting language to:${currentLang}`);
-    switch (currentLang) {
-      case 'en':
-        currentLanguage = "English";
-        break;
-      case 'zh':
-        currentLanguage = "Chinese";
-        break;
-      case 'fr':
-        currentLanguage = "French";
-        break;
-      case 'de':
-        currentLanguage = "Deutsch";
-        break;
-      case 'no':
-        currentLanguage = "Norwegian";
-        break;
-      case 'pt':
-        currentLanguage = "Portuguese";
-        break;
-      case 'ro':
-        currentLanguage = "Romanian";
-        break;
-      case 'ru':
-        currentLanguage = "Russian";
-        break;
-      case 'es':
-        currentLanguage = "Spanish";
-        break;
-      case 'sv':
-        currentLanguage = "Swedish";
-        break;
-      default:
-        currentLanguage = "English";
-        console.log('Current Language: Unknown so change to English');
-    }
-    translations = data as { [key: string]: string };
-    if (win != null) {
-      win.setTitle(translations['PAGES.HOME.TITLE'] || '')
-    }
-  });
+    ipcMain?.on('Trans', (_event, currentLang: string, data) => {
+        console.log(`Setting language to:${currentLang}`);
+        switch (currentLang) {
+            case 'en':
+                currentLanguage = "English";
+                break;
+            case 'zh':
+                currentLanguage = "Chinese";
+                break;
+            case 'fr':
+                currentLanguage = "French";
+                break;
+            case 'de':
+                currentLanguage = "Deutsch";
+                break;
+            case 'no':
+                currentLanguage = "Norwegian";
+                break;
+            case 'pt':
+                currentLanguage = "Portuguese";
+                break;
+            case 'ro':
+                currentLanguage = "Romanian";
+                break;
+            case 'ru':
+                currentLanguage = "Russian";
+                break;
+            case 'es':
+                currentLanguage = "Spanish";
+                break;
+            case 'sv':
+                currentLanguage = "Swedish";
+                break;
+            default:
+                currentLanguage = "English";
+                console.log('Current Language: Unknown so change to English');
+        }
+        translations = data as { [key: string]: string };
+        if (win != null) {
+            win.setTitle(translations['PAGES.HOME.TITLE'] || '')
+        }
+    });
 }
 
 init();
