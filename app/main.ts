@@ -92,20 +92,27 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   const settingsPath = path.join(app.getPath('userData'), 'settings.json');
   if (fs.existsSync(settingsPath)) {
     settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+    win.webContents.send('message', `Loaded settings: ${JSON.stringify(settings)}`);
+
+    const getValidPath = (path: string | null | undefined) => {
+      return path && path.trim() !== '' ? path : null;
+    };
+
     if (pathver == "REFORGED") {
-      usepath = settings.REFORGED_PATH;
+      usepath = getValidPath(settings.REFORGED_PATH);
     } else if (pathver == "TFT") {
-      usepath = settings.TFT_PATH;
+      usepath = getValidPath(settings.TFT_PATH);
     } else if (pathver == "ROC") {
-      usepath = settings.ROC_PATH;
+      usepath = getValidPath(settings.ROC_PATH);
     }
-    console.log(`get ${pathver} path : `, usepath, 'path : ', settings[`${pathver}_PATH`]);
+
+    win.webContents.send('message', `get ${pathver} path : ${usepath} | settings path : ${settings[`${pathver}_PATH`]}`);
   }
   if (usepath !== null && usepath !== undefined) {
     response = usepath;
-    console.log(`get ${pathver} defaul path:`, usepath);
+    win.webContents.send('message', `get ${pathver} default path: ${usepath}`);
   } else {
-    console.log('Choose path');
+    win.webContents.send('message', 'Choose path');
     response = dialog.showOpenDialogSync(win, {
       // TODO: add i18n here
       title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
@@ -161,12 +168,18 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     }
     const finalPath = usepath ? path.resolve(usepath) : null;
     settings[`${pathver}_PATH`] = finalPath;
-    fs.writeFileSync(settingsPath, JSON.stringify(settings));
-    console.log('Default path updated to:', finalPath);
-    win.webContents.send('path-updated', {
-      ver: pathver,
-      path: finalPath
-    });
+    try {
+      fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+      win.webContents.send('message', `Default path updated to: ${finalPath}`);
+      win.webContents.send('path-updated', {
+        ver: pathver,
+        path: finalPath
+      });
+    } catch (err) {
+      const errorMsg = `Failed to save settings: ${err.message}`;
+      console.error(errorMsg);
+      win.webContents.send('message', errorMsg);
+    }
   }
   // open modal on front
   win.webContents.send('on-install-init', <InstallModel>{
