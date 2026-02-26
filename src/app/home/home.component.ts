@@ -62,7 +62,9 @@ export class HomeComponent implements OnInit {
   loadDefaultPath(): void {
     if (this.electronService.isElectron) {
       this.electronService.ipcRenderer.invoke('file-operations', {
-        operation: 'load-default-path'
+        operation: 'load-default-path',
+        pathver: null,
+        newpath: null
       }).then((settings: any) => {
         console.log('Loaded paths settings:', settings);
         if (settings) {
@@ -101,7 +103,8 @@ export class HomeComponent implements OnInit {
         console.log(`Selecting folder for ${pathver}`);
         const result = await this.electronService.ipcRenderer.invoke('file-operations', {
           operation: 'select-folder',
-          ver: pathver
+          pathver: pathver,
+          newpath: null
         });
         if (result) {
           const selectedPath = result;
@@ -109,7 +112,7 @@ export class HomeComponent implements OnInit {
           this.gamePaths[pathver].displayText = this.formatPath(selectedPath);
           await this.electronService.ipcRenderer.invoke('file-operations', {
             operation: 'save-default-path',
-            ver: pathver,
+            pathver: pathver,
             newpath: selectedPath
           });
           console.log(`${pathver} folder selected:`, selectedPath);
