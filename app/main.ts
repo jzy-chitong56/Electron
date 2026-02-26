@@ -89,6 +89,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   let response;
   let usepath = null;
   let settings: Settings = {};
+  let child;
   const settingsPath = path.join(app.getPath('userData'), 'settings.json');
   if (fs.existsSync(settingsPath)) {
     settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
@@ -118,8 +119,6 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       defaultPath: documentsPath,
     });
   }
-
-  let child;
 
   // passing reference to external call back
   signal = controller.signal;
@@ -161,7 +160,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     }
     const finalPath = usepath ? path.resolve(usepath) : null;
     settings[`${pathver}_PATH`] = finalPath;
-    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+    fs.writeFileSync(settingsPath, JSON.stringify(settings));
     win.webContents.send('on-install-message', `Default path updated to: ${finalPath}`);
     win.webContents.send('path-updated', {
       ver: pathver,
@@ -231,55 +230,62 @@ const setupFileOperations = () => {
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-            console.log('Loaded paths:', {
-              REFORGED: settings.REFORGED_PATH,
-              TFT: settings.TFT_PATH,
-              ROC: settings.ROC_PATH
-            });
+            win.webContents.send('on-install-message', 
+              `Loaded paths:
+              REFORGED: ${settings.REFORGED_PATH},
+              TFT: ${settings.TFT_PATH},
+              ROC: ${settings.ROC_PATH}`);
             return {
               REFORGED_PATH: settings.REFORGED_PATH || null,
               TFT_PATH: settings.TFT_PATH || null,
               ROC_PATH: settings.ROC_PATH || null
             };
           }
-          console.log('Loading path file failed, using defaults');
+          win.webContents.send('on-install-message',
+            `Loading path file failed, using defaults`);
           return {
             REFORGED_PATH: null,
             TFT_PATH: null,
             ROC_PATH: null
           };
         } catch (err) {
-          console.error('Error loading paths:', err);
+          win.webContents.send('on-install-message', 
+            `Loaded paths:
+            Error loading paths`);
           return null;
         }
       }
       case 'select-folder': {
-        console.log('Selecting folder for version:', pathver);
+        win.webContents.send('on-install-message', 
+            `Selecting folder for version : ${pathver}`);
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let usepath = null;
         try {
           if (fs.existsSync(settingsPath)) {
             const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
             usepath = settings[`${pathver}_PATH`];
-            console.log('Selecting folder for default Path :', usepath);
+            win.webContents.send('on-install-message',
+              `Selecting folder for default Path  : ${usepath}`);
           } else {
             usepath = documentsPath;
           }
-          
           const result = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
             properties: ['openDirectory'],
             defaultPath: usepath
-          }) || [];
+          });
           if (result[0]) {
             const selectedPath = path.resolve(result[0]);
-            console.log('Selected folder:', selectedPath);
+            win.webContents.send('on-install-message',
+              `Selecting folder  : ${selectedPath}`);
             return selectedPath;
           }
-          console.log('Folder selection was cancelled');
+          win.webContents.send('on-install-message',
+            `Folder selection was cancelled`);
           return null;
         } catch (err) {
-          console.error('Error selecting folder:', err);
+          win.webContents.send('on-install-message',
+            `Error selecting folder`);
           return null;
         }
       }
@@ -292,14 +298,17 @@ const setupFileOperations = () => {
               : {};
             settings[`${pathver}_PATH`] = newpath ? path.resolve(newpath) : null;
             fs.writeFileSync(settingsPath, JSON.stringify(settings));
-            console.log(`Saved path for ${pathver}: ${newpath}`);
+            win.webContents.send('on-install-message',
+              `Saved path for ${pathver}: ${newpath}`);
             return true;
           } catch (err) {
-            console.error('Failed to save path:', err);
+            win.webContents.send('on-install-message',
+              `Failed to save path`);
             return false;
           }
         } else {
-          console.log('Failed to save path , no path');
+          win.webContents.send('on-install-message',
+            `Failed to save path , no path`);
           return false;
         }
       }
