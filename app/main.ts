@@ -257,7 +257,7 @@ const setupFileOperations = () => {
                     const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
                     usepath = settings[`${pathver}_PATH`];
                     win.webContents.send('on-install-message',
-                        `Selecting folder for default Path  : ${usepath}`);
+                        `Selecting folder for default Path : ${usepath}`);
                 } else {
                     usepath = documentsPath;
                 }
@@ -269,7 +269,7 @@ const setupFileOperations = () => {
                 if (result[0]) {
                     const selectedPath = path.resolve(result[0]);
                     win.webContents.send('on-install-message',
-                        `Selecting folder  : ${selectedPath}`);
+                        `Selecting folder : ${selectedPath}`);
                     return selectedPath;
                 }
                 win.webContents.send('on-install-message',
@@ -303,7 +303,8 @@ const installProcess = () => {
     let signal = {};
 
     ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean) => {
-        execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
+        const pathver = ver;
+        execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver);
     });
 
     // TODO: stop process with signal
