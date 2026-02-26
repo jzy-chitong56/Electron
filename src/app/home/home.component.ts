@@ -66,9 +66,9 @@ export class HomeComponent implements OnInit {
       }).then((settings: any) => {
         console.log('Loaded paths settings:', settings);
         if (settings) {
-          this.gamePaths.TFT.PATH = settings?.TFT_PATH || null;
-          this.gamePaths.REFORGED.PATH = settings?.REFORGED_PATH || null;
-          this.gamePaths.ROC.PATH = settings?.ROC_PATH || null;
+          this.gamePaths.TFT.PATH = settings.TFT_PATH;
+          this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH;
+          this.gamePaths.ROC.PATH = settings.ROC_PATH;
           this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
           this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
           this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
           operation: 'select-folder',
           ver: pathver
         });
-        if (result && typeof result === 'string') {
+        if (result) {
           const selectedPath = result;
           this.gamePaths[pathver].PATH = selectedPath;
           this.gamePaths[pathver].displayText = this.formatPath(selectedPath);
