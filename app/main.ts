@@ -100,10 +100,10 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         } else if (pathver == "ROC") {
             usepath = settings.ROC_PATH || null;
         }
-        win.webContents.send('on-install-message', `Loaded settings : ${JSON.stringify(settings)}, get ${pathver} path : ${usepath} , settings path : ${settings[`${pathver}_PATH`]}`);
+        win.webContents.send('on-install-console', `Loaded settings : ${JSON.stringify(settings)}, get ${pathver} path : ${usepath} , settings path : ${settings[`${pathver}_PATH`]}`);
     }
     if (usepath !== null && usepath !== undefined) {
-        win.webContents.send('on-install-message', `get ${pathver} default path: ${usepath}`);
+        win.webContents.send('on-install-console', `get ${pathver} default path: ${usepath}`);
         if (isMap) {
           response = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
@@ -113,12 +113,14 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
             ],
             defaultPath: usepath,
           });
-          usepath = response[0]; // updata , maybe selected other path
+          if (response && (response?.length > 0)) {
+            usepath = null; // wait updata path , maybe selected other path
+          }
         } else {
           response = usepath;
         }
     } else {
-        win.webContents.send('on-install-message', 'Choose path');
+        win.webContents.send('on-install-console', 'Choose path');
         response = dialog.showOpenDialogSync(win, {
             // TODO: add i18n here
             title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
@@ -173,7 +175,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         const finalPath = usepath ? path.resolve(usepath) : null;
         settings[`${pathver}_PATH`] = finalPath;
         fs.writeFileSync(settingsPath, JSON.stringify(settings));
-        win.webContents.send('on-install-message', `Default path updated to: ${finalPath}`);
+        win.webContents.send('on-install-console', `Default path updated to: ${finalPath}`);
         win.webContents.send('path-updated', {
             pathver: pathver,
             path: finalPath
@@ -241,7 +243,7 @@ const setupFileOperations = () => {
                 const settingsPath = path.join(app.getPath('userData'), 'settings.json');
                 if (fs.existsSync(settingsPath)) {
                     const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-                    win.webContents.send('on-install-message',
+                    win.webContents.send('on-install-console',
                         `Loaded paths:
                             REFORGED: ${settings.REFORGED_PATH},
                             TFT: ${settings.TFT_PATH},
@@ -252,7 +254,7 @@ const setupFileOperations = () => {
                         ROC_PATH: settings.ROC_PATH || null
                     };
                 }
-                win.webContents.send('on-install-message',
+                win.webContents.send('on-install-console',
                     `Loading path file failed, using defaults`);
                 return {
                     REFORGED_PATH: null,
@@ -261,17 +263,17 @@ const setupFileOperations = () => {
                 };
             }
             case 'select-folder': {
-                win.webContents.send('on-install-message',
+                win.webContents.send('on-install-console',
                     `Selecting folder for version : ${pathver}`);
                 const settingsPath = path.join(app.getPath('userData'), 'settings.json');
                 let usepath = null;
                 if (fs.existsSync(settingsPath)) {
                     const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
                     usepath = settings[`${pathver}_PATH`];
-                    win.webContents.send('on-install-message',
+                    win.webContents.send('on-install-console',
                         `Selecting folder for default Path : ${usepath}`);
                     if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
-                        usepath = documentsPath;  
+                        usepath = documentsPath;
                     }  
                 } else {
                     usepath = documentsPath;
@@ -281,13 +283,13 @@ const setupFileOperations = () => {
                     properties: ['openDirectory'],
                     defaultPath: usepath
                 });
-                if (result[0]) {
+                if (result && (result?.length > 0)) {
                     const selectedPath = path.resolve(result[0]);
-                    win.webContents.send('on-install-message',
+                    win.webContents.send('on-install-console',
                         `Selecting folder : ${selectedPath}`);
                     return selectedPath;
                 }
-                win.webContents.send('on-install-message',
+                win.webContents.send('on-install-console',
                     `Folder selection was cancelled`);
                 return null;
             }
@@ -295,15 +297,14 @@ const setupFileOperations = () => {
                 if (newpath && pathver) {
                     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
                     let settings: Settings = fs.existsSync(settingsPath)
-                        ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {}
-                        : {};
+                        ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) : {};
                     settings[`${pathver}_PATH`] = newpath ? path.resolve(newpath) : null;
                     fs.writeFileSync(settingsPath, JSON.stringify(settings));
-                    win.webContents.send('on-install-message',
+                    win.webContents.send('on-install-console',
                         `Saved path for ${pathver}: ${newpath}`);
                     return settings[`${pathver}_PATH`] !== null;
                 } else {
-                    win.webContents.send('on-install-message',
+                    win.webContents.send('on-install-console',
                         `Failed to save path , no path`);
                     return false;
                 }
