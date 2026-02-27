@@ -84,26 +84,30 @@ const createWindow = (): BrowserWindow => {
     return win;
 }
 
+const getversionpath = (pathver : string, settings : Settings): string => {
+    win.webContents.send('on-install-console', `get version path : ${JSON.stringify(settings)}, settings path : ${settings[`${pathver}_PATH`]}`);
+    if (pathver == "REFORGED") {
+        return settings.REFORGED_PATH || null;
+    } else if (pathver == "TFT") {
+        return settings.TFT_PATH || null;
+    } else if (pathver == "ROC") {
+        return settings.ROC_PATH || null;
+    }
+    return null;
+}
+
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
     const controller = new AbortController();
     let response;
-    let usepath = null;
-    let settings: Settings = {};
-    let child;
     const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    let settings: Settings = {};
+    let usepath = null;
     if (fs.existsSync(settingsPath)) {
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-        if (pathver == "REFORGED") {
-            usepath = settings.REFORGED_PATH || null;
-        } else if (pathver == "TFT") {
-            usepath = settings.TFT_PATH || null;
-        } else if (pathver == "ROC") {
-            usepath = settings.ROC_PATH || null;
-        }
-        win.webContents.send('on-install-console', `Loaded settings : ${JSON.stringify(settings)}, get ${pathver} path : ${usepath} , settings path : ${settings[`${pathver}_PATH`]}`);
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      usepath = getversionpath(pathver, settings);
+      win.webContents.send('on-install-console', `${pathver} default path: ${usepath}`);
     }
     if (usepath !== null && usepath !== undefined) {
-        win.webContents.send('on-install-console', `get ${pathver} default path: ${usepath}`);
         if (isMap) {
           response = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
@@ -133,6 +137,8 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
             defaultPath: documentsPath,
         });
     }
+
+    let child;
 
     // passing reference to external call back
     signal = controller.signal;
@@ -266,17 +272,13 @@ const setupFileOperations = () => {
                 win.webContents.send('on-install-console',
                     `Selecting folder for version : ${pathver}`);
                 const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-                let usepath = null;
+                let usepath = documentsPath;
                 if (fs.existsSync(settingsPath)) {
                     const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-                    usepath = settings[`${pathver}_PATH`];
-                    win.webContents.send('on-install-console',
-                        `Selecting folder for default Path : ${usepath}`);
+                    usepath = getversionpath(pathver, settings);
                     if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
                         usepath = documentsPath;
-                    }  
-                } else {
-                    usepath = documentsPath;
+                    }
                 }
                 const result = dialog.showOpenDialogSync(win, {
                     title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
