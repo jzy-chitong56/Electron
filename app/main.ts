@@ -16,7 +16,6 @@ type Settings = {
 let win: BrowserWindow = null;
 let translations: { [key: string]: string } = {};
 let currentLanguage: string = "English";
-let usepath: string | null;
 const documentsPath = app.getPath('documents');
 const args = process.argv.slice(1),
     serve = args.some(val => val === '--serve');
@@ -105,7 +104,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     if (fs.existsSync(settingsPath)) {
       settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
       usepath = getversionpath(pathver, settings);
-      win.webContents.send('on-install-console', `${pathver} default path: ${usepath}`);
+      win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
     }
     if (usepath !== null && usepath !== undefined) {
         if (isMap) {
@@ -244,37 +243,23 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
 
 const setupFileOperations = () => {
     ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
+        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+        let settings: Settings = {};
         switch (operation) {
             case 'load-default-path': {
-                const settingsPath = path.join(app.getPath('userData'), 'settings.json');
                 if (fs.existsSync(settingsPath)) {
-                    const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-                    win.webContents.send('on-install-console',
-                        `Loaded paths:
-                            REFORGED: ${settings.REFORGED_PATH},
-                            TFT: ${settings.TFT_PATH},
-                            ROC: ${settings.ROC_PATH}`);
-                    return {
-                        REFORGED_PATH: settings.REFORGED_PATH || null,
-                        TFT_PATH: settings.TFT_PATH || null,
-                        ROC_PATH: settings.ROC_PATH || null
-                    };
+                    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+                    win.webContents.send('on-install-console',`Loaded paths : REFORGED : ${settings.REFORGED_PATH} , TFT : ${settings.TFT_PATH} , ROC : ${settings.ROC_PATH}`);
+                    return { REFORGED_PATH: settings.REFORGED_PATH || null, TFT_PATH: settings.TFT_PATH || null, ROC_PATH: settings.ROC_PATH || null };
                 }
-                win.webContents.send('on-install-console',
-                    `Loading path file failed, using defaults`);
-                return {
-                    REFORGED_PATH: null,
-                    TFT_PATH: null,
-                    ROC_PATH: null
-                };
+                win.webContents.send('on-install-console', `Loading path file failed , using defaults`);
+                return { REFORGED_PATH: null, TFT_PATH: null, ROC_PATH: null };
             }
             case 'select-folder': {
-                win.webContents.send('on-install-console',
-                    `Selecting folder for version : ${pathver}`);
-                const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+                win.webContents.send('on-install-console', `Selecting folder for version : ${pathver}`);
                 let usepath = documentsPath;
                 if (fs.existsSync(settingsPath)) {
-                    const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+                    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
                     usepath = getversionpath(pathver, settings);
                     if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
                         usepath = documentsPath;
@@ -287,32 +272,27 @@ const setupFileOperations = () => {
                 });
                 if (result && (result?.length > 0)) {
                     const selectedPath = path.resolve(result[0]);
-                    win.webContents.send('on-install-console',
-                        `Selecting folder : ${selectedPath}`);
+                    win.webContents.send('on-install-console', `Selecting folder : ${selectedPath}`);
                     return selectedPath;
                 }
-                win.webContents.send('on-install-console',
-                    `Folder selection was cancelled`);
+                win.webContents.send('on-install-console', `Folder selection was cancelled`);
                 return null;
             }
             case 'save-default-path': {
                 if (newpath && pathver) {
-                    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-                    let settings: Settings = fs.existsSync(settingsPath)
-                        ? JSON.parse(fs.readFileSync(settingsPath, 'utf8')) : {};
-                    settings[`${pathver}_PATH`] = newpath ? path.resolve(newpath) : null;
-                    fs.writeFileSync(settingsPath, JSON.stringify(settings));
-                    win.webContents.send('on-install-console',
-                        `Saved path for ${pathver}: ${newpath}`);
+                    if (fs.existsSync(settingsPath)) {
+                        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+                        settings[`${pathver}_PATH`] = newpath ? newpath : null;
+                        fs.writeFileSync(settingsPath, JSON.stringify(settings));
+                        win.webContents.send('on-install-console', `Saved path for ${pathver} : ${newpath}`);
+                    }
                     return settings[`${pathver}_PATH`] !== null;
                 } else {
-                    win.webContents.send('on-install-console',
-                        `Failed to save path , no path`);
+                    win.webContents.send('on-install-console', `Failed to save path , no path`);
                     return false;
                 }
             }
-            default:
-                throw new Error(`unknow: ${operation}`);
+            default: throw new Error(`unknow: ${operation}`);
         }
     });
 }
