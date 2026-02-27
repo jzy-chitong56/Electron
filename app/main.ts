@@ -242,11 +242,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
 }
 
 const setupFileOperations = () => {
-    ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
+    ipcMain?.on('path-operations', async (_event, operation, pathver, newpath ) => {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings: Settings = {};
         switch (operation) {
-            case 'load-default-path': {
+            case 'load-default-path': 
                 if (fs.existsSync(settingsPath)) {
                     settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
                     win.webContents.send('on-install-console',`Loaded paths : REFORGED : ${settings.REFORGED_PATH} , TFT : ${settings.TFT_PATH} , ROC : ${settings.ROC_PATH}`);
@@ -254,45 +254,40 @@ const setupFileOperations = () => {
                 }
                 win.webContents.send('on-install-console', `Loading path file failed , using defaults`);
                 return { REFORGED_PATH: null, TFT_PATH: null, ROC_PATH: null };
-            }
-            case 'select-folder': {
-                win.webContents.send('on-install-console', `Selecting folder for version : ${pathver}`);
+           case'select-folder':
                 let usepath = documentsPath;
                 if (fs.existsSync(settingsPath)) {
-                    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
+                    win.webContents.send('on-install-console', `Get default path for version : ${pathver}`);
+                    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
                     usepath = getversionpath(pathver, settings);
                     if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
                         usepath = documentsPath;
                     }
                 }
-                const result = dialog.showOpenDialogSync(win, {
+                win.webContents.send('on-install-console', `Selecting folder for version : ${pathver}`);
+                const result = await dialog.showOpenDialogSync(win, {
                     title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
                     properties: ['openDirectory'],
                     defaultPath: usepath
                 });
                 if (result && (result?.length > 0)) {
                     const selectedPath = path.resolve(result[0]);
-                    win.webContents.send('on-install-console', `Selecting folder : ${selectedPath}`);
+                    win.webContents.send('on-install-console', `Selected folder : ${selectedPath}`);
                     return selectedPath;
                 }
                 win.webContents.send('on-install-console', `Folder selection was cancelled`);
                 return null;
-            }
-            case 'save-default-path': {
-                if (newpath && pathver) {
-                    if (fs.existsSync(settingsPath)) {
-                        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-                        settings[`${pathver}_PATH`] = newpath ? newpath : null;
-                        fs.writeFileSync(settingsPath, JSON.stringify(settings));
-                        win.webContents.send('on-install-console', `Saved path for ${pathver} : ${newpath}`);
-                    }
-                    return settings[`${pathver}_PATH`] !== null;
-                } else {
-                    win.webContents.send('on-install-console', `Failed to save path , no path`);
-                    return false;
+            case 'save-default-path':
+                if (newpath && pathver && fs.existsSync(settingsPath)) {
+                    win.webContents.send('on-install-console', `Saved path for ${pathver} : ${newpath}`);
+                    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+                    settings[`${pathver}_PATH`] = newpath ? newpath : null;
+                    fs.writeFileSync(settingsPath, JSON.stringify(settings));
                 }
-            }
-            default: throw new Error(`unknow: ${operation}`);
+                break;
+            default:
+                win.webContents.send('on-install-console', `Unknown operation: ${operation}`);
+                return null;
         }
     });
 }
