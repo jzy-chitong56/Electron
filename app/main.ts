@@ -242,7 +242,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
 }
 
 const setupFileOperations = () => {
-    ipcMain?.on('path-operations', async (_event, operation, pathver, newpath ) => {
+    ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings: Settings = {};
         switch (operation) {
