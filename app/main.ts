@@ -103,8 +103,20 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         win.webContents.send('on-install-message', `Loaded settings : ${JSON.stringify(settings)}, get ${pathver} path : ${usepath} , settings path : ${settings[`${pathver}_PATH`]}`);
     }
     if (usepath !== null && usepath !== undefined) {
-        response = usepath;
         win.webContents.send('on-install-message', `get ${pathver} default path: ${usepath}`);
+        if (isMap) {
+          response = dialog.showOpenDialogSync(win, {
+            title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
+            properties: ['openFile'] ,
+            filters:  [
+                { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+            ],
+            defaultPath: usepath,
+          });
+          usepath = response[0]; // updata , maybe selected other path
+        } else {
+          response = usepath;
+        }
     } else {
         win.webContents.send('on-install-message', 'Choose path');
         response = dialog.showOpenDialogSync(win, {
@@ -258,6 +270,9 @@ const setupFileOperations = () => {
                     usepath = settings[`${pathver}_PATH`];
                     win.webContents.send('on-install-message',
                         `Selecting folder for default Path : ${usepath}`);
+                    if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
+                        usepath = documentsPath;  
+                    }  
                 } else {
                     usepath = documentsPath;
                 }
