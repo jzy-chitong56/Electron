@@ -119,6 +119,11 @@ export class AppComponent implements AfterViewChecked {
         this.cdr.detectChanges();
       });
 
+      this.electronService.ipcRenderer.on('on-install-console', (_, args) => {
+        console.log('args-install-console', args);  // just console
+        this.cdr.detectChanges();
+      });
+
       // TODO: add 'push notification'/'notification'
       this.electronService.ipcRenderer.on('on-install-error', (_, args) => {
         console.log('args-install-error', args);
