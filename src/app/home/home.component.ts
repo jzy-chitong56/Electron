@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
+import { Component, OnInit, OnDestroy , ViewChild, ElementRef, HostListener, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from '../core/services/electron/electron.service';
 
@@ -12,6 +12,7 @@ import { ElectronService } from '../core/services/electron/electron.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  private pathUpdateListener: any;
   Images_ROC_Shown: boolean = false;
   Images_TFT_Shown: boolean = false;
   Images_REF_Shown: boolean = false;
@@ -48,39 +49,42 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('HomeComponent INIT');
-    this.loadDefaultPath();
-    if (this.electronService.isElectron) {
-      this.electronService.ipcRenderer.on('path-updated', (event, { pathver, path = '' }) => {
-        console.log(`Path updated for ${pathver}:`, path);
-        if (pathver in this.gamePaths) {
-          this.gamePaths[pathver].PATH = path || null;
-          this.gamePaths[pathver].displayText = this.formatPath(path);
-        }
-      });
+    void this.loadDefaultPath();
+    this.UpdateDefaultPath();
+  }
+
+  ngOnDestroy(): void {
+    if (this.pathUpdateListener) {
+      this.electronService.ipcRenderer.removeListener('path-updated', this.pathUpdateListener);
     }
   }
-  loadDefaultPath(): void {
-    if (this.electronService.isElectron) {
-      this.electronService.ipcRenderer.invoke('file-operations', {
-        operation: 'load-default-path',
-        pathver: null,
-        newpath: null
-      }).then((settings: any) => {
-        console.log('Loaded paths settings:', settings);
-        if (settings) {
-          this.gamePaths.TFT.PATH = settings.TFT_PATH;
-          this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH;
-          this.gamePaths.ROC.PATH = settings.ROC_PATH;
-          this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
-          this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
-          this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
-          console.log('REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
-          console.log('TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
-          console.log('ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
-        }
-      }).catch(error => {
-        console.error('Error loading paths:', error);
-      });
+
+  private UpdateDefaultPath(): void {
+    this.pathUpdateListener = (event: any, { pathver, path = '' }) => {
+      console.log(`Path updated for ${pathver}:`, path);
+      if (pathver in this.gamePaths) {
+        this.gamePaths[pathver].PATH = path || null;
+        this.gamePaths[pathver].displayText = this.formatPath(path);
+      }
+    };
+    this.electronService.ipcRenderer.on('path-updated', this.pathUpdateListener);
+  }
+
+  private async loadDefaultPath(): Promise<void> {
+    const settings = await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'load-default-path' });
+    if (settings) {
+      console.log('Loaded paths settings:', settings);
+      this.gamePaths.TFT.PATH = settings.TFT_PATH;
+      this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH;
+      this.gamePaths.ROC.PATH = settings.ROC_PATH;
+      this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
+      this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
+      this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
+      console.log('REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
+      console.log('TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
+      console.log('ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
+    } else {
+      console.error('Error loading paths:', settings);
     }
   }
 
@@ -97,33 +101,26 @@ export class HomeComponent implements OnInit {
     }
     return `${firstPart}/...${lastPart}`;
   }
+
   async selectGameFolder(pathver: 'REFORGED' | 'TFT' | 'ROC'): Promise<void> {
-    try {
-      if (this.electronService.isElectron) {
-        console.log(`Selecting folder for ${pathver}`);
-        const result = await this.electronService.ipcRenderer.invoke('file-operations', {
+    if (this.isInteractive) {
+      console.log(`Selecting folder for ${pathver}`);
+      try {
+        const result = await this.electronService.ipcRenderer.invoke('path-operations', {
           operation: 'select-folder',
-          pathver: pathver,
-          newpath: null
+          pathver: pathver
         });
-        if (result) {
+        if (result && result !== null) {
           const selectedPath = result;
           this.gamePaths[pathver].PATH = selectedPath;
           this.gamePaths[pathver].displayText = this.formatPath(selectedPath);
-          await this.electronService.ipcRenderer.invoke('file-operations', {
-            operation: 'save-default-path',
-            pathver: pathver,
-            newpath: selectedPath
-          });
-          console.log(`${pathver} folder selected:`, selectedPath);
-          console.log(`${pathver} path set to:`, this.gamePaths[pathver].PATH);
-          console.log(`${pathver} display text:`, this.gamePaths[pathver].displayText);
-          console.log('Paths container visibility:',
-          this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
+          this.electronService.ipcRenderer.send('path-operations', 'save-default-path', pathver, selectedPath);
+          console.log(`${pathver} folder selected : ${selectedPath}, display text : ${this.gamePaths[pathver].displayText}`);
+          console.log('Paths container visibility : ', this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
         }
+      } catch (error) {
+        console.error('Folder selection failed:', error);
       }
-    } catch (error) {
-      console.error(`${pathver} folder selection failed:`, error);
     }
   }
 
