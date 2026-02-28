@@ -279,11 +279,15 @@ const setupFileOperations = () => {
                 win.webContents.send('on-install-console', `Folder selection was cancelled`);
                 return null;
             case 'save-default-path':
-                if (newpath && pathver && fs.existsSync(settingsPath)) {
+                if (newpath && pathver) {
                     win.webContents.send('on-install-console', `Saved path for ${pathver} : ${newpath}`);
                     settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
                     settings[`${pathver}_PATH`] = newpath ? newpath : null;
                     fs.writeFileSync(settingsPath, JSON.stringify(settings));
+                    win.webContents.send('path-updated', {
+                        pathver: pathver,
+                        path: settings[`${pathver}_PATH`]
+                    });
                 }
                 break;
             default:
