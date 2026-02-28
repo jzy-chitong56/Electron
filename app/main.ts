@@ -87,13 +87,13 @@ const createWindow = (): BrowserWindow => {
 const getversionpath = (pathver : string, settings : Settings): string => {
     win.webContents.send('on-install-console', `get version path : ${JSON.stringify(settings)}, settings path : ${settings[`${pathver}_PATH`]}`);
     if (pathver == "REFORGED") {
-        return settings.REFORGED_PATH || null;
+        return settings.REFORGED_PATH || '';
     } else if (pathver == "TFT") {
-        return settings.TFT_PATH || null;
+        return settings.TFT_PATH || '';
     } else if (pathver == "ROC") {
-        return settings.ROC_PATH || null;
+        return settings.ROC_PATH || '';
     }
-    return null;
+    return '';
 }
 
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
@@ -107,7 +107,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       usepath = getversionpath(pathver, settings);
       win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
     }
-    if (usepath !== null && usepath !== undefined) {
+    if (usepath !== null && usepath !== undefined && usepath !== '') {
         if (isMap) {
           response = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
@@ -378,7 +378,11 @@ const installTrans = () => {
         }
         translations = data as { [key: string]: string };
         if (win != null) {
-            win.setTitle(translations['PAGES.HOME.TITLE'] || '')
+            let rawVersion = __APP_VERSION__ || '';
+            let version = rawVersion ? `v${rawVersion}` : '';
+            let appName = translations['PAGES.HOME.TITLE'] || '';
+            let WinTitle = `${appName}  ${version}`;
+            win.setTitle(WinTitle)
         }
     });
 }
