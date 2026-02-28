@@ -61,10 +61,11 @@ export class HomeComponent implements OnInit {
 
   private UpdateDefaultPath(): void {
     this.pathUpdateListener = (event: any, { pathver, path = '' }) => {
-      console.log(`Path updated for ${pathver}:`, path);
+      console.log(`Path updated for ${pathver} : `, path);
       if (pathver in this.gamePaths) {
         this.gamePaths[pathver].PATH = path || null;
         this.gamePaths[pathver].displayText = this.formatPath(path);
+        console.log('updated ver Path to : ', this.gamePaths[pathver].PATH, 'Display:', this.gamePaths[pathver].displayText);
       }
     };
     this.electronService.ipcRenderer.on('path-updated', this.pathUpdateListener);
@@ -109,11 +110,8 @@ export class HomeComponent implements OnInit {
         const result = await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'select-folder', pathver: pathver });
         if (result && result !== null) {
           const selectedPath = result;
-          this.gamePaths[pathver].PATH = selectedPath;
-          this.gamePaths[pathver].displayText = this.formatPath(selectedPath);
           await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'save-default-path', pathver: pathver, newpath: selectedPath });
           console.log(`${pathver} folder selected : ${selectedPath}, display text : ${this.gamePaths[pathver].displayText}`);
-          console.log('Paths container : ', this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
         }
       } catch (error) {
         console.error('Folder selection failed:', error);
