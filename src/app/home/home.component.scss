@@ -3,14 +3,6 @@
     --switch-width: 300px; /* 最大宽度 */
   }
 
-  .center-container {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    max-width: 100%;
-  }
-
   .container {
     color: white;
   }
@@ -21,14 +13,6 @@
     font-weight: bold;
   }
 
-  .subtitle-text {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-top: 4rem;
-  }
-
-
   .ContainerLattice {
     display: flex;
     text-align: center;
@@ -37,16 +21,23 @@
     max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
     width: 100%;
     gap: 10px;
-    margin-top: 2rem;
+    margin-top: 1.8rem;
   }
 
-  .AdvancedSettings,
-  .MoreSettings {
-    background-color: black;
-  }
+  .game-version-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 512px;
+    min-width: 200px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 
-  .MoreSettings {
-    margin-top: 1rem;
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+    }
   }
 
   .imageContainerROC,
@@ -75,36 +66,59 @@
     color: gold;
   }
 
-  /* 当屏幕宽度小于等于800px时，减小字体大小 */
-  @media (max-width: 800px) {
-    .headtitle-text, .subtitle-text {
-      font-size: 1rem;
-    }
-
-    .imageContainerROC span,
-    .imageContainerTFT span,
-    .imageContainerREF span {
-      font-size: 1rem;
-    }
-
-    .reccomendations {
-      font-size: 10pt;
-    }
-
-    .underlined-path {
-      font-size: 10pt;
-    }
-
-    .icon-handle {
-      font-size: 10pt;
-    }
-
+  .game-path-item {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    justify-content: space-between; /* 两端对齐 */
+    padding: 0.6rem;
+    width: 100%;
+    min-width: 180px;
+    max-width: 500px;
+    height: 60px;
+    background-color: black;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
   }
 
-  @media (max-width: 1600px) {
-    .ContainerLattice img {
-      width: 100%;
-    }
+  .game-path-item:hover {
+    background-color: rgb(33, 4, 251);
+  }
+
+  .underlined-path {
+    text-decoration: underline;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    position: relative;
+    font-size: 14pt;
+    flex-grow: 1;
+    margin-right: 8px;
+  }
+
+  .icon-handle {
+    font-size: 14pt;
+    cursor: pointer;
+  }
+
+  .subtitle-text {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 4rem;
+  }
+
+  .ContainerLattice-AdvancedSettings {
+    background-color: black;
+  }
+
+  .ContainerLattice-MoreSettings {
+    margin-top: 1.2rem;
+    background-color: black;
   }
 
   .commander-group {
@@ -156,10 +170,9 @@
     max-width: 100%; /* 最大宽度 */
   }
 
-  /* 鼠标悬停样式 */
   .radio-btn:hover {
-    color: #FFFFFF; /* 悬停时文字颜色 */
-    background-color: #47A4F9; /* 悬停时背景色 */
+    color: #FFFFFF; /* 鼠标悬停时文字颜色 */
+    background-color: #47A4F9; /* 鼠标悬停时背景色 */
   }
 
   input[type="radio"]:checked + .radio-btn {
@@ -193,7 +206,6 @@
     border-radius: 26px;
     -webkit-transition: .4s;
     transition: .4s;
-
     color: #ffffff;
     font-size: 1rem;
     font-weight: bold;
@@ -207,7 +219,6 @@
     display: flex; /* 将其转换为弹性布局容器 */
     align-items: center;
     justify-content: center;
-    content: "";
     white-space: nowrap;
     left: 1px;
     height: 100%;
@@ -230,58 +241,36 @@
      margin-left: -1px;
   }
 
-  .game-path-item {
-    display: flex;
-    align-items: center;  /* 垂直居中 */
-    justify-content: space-between;  /* 两端对齐 */
-    padding: 0.6rem;
-    width: 100%;
-    min-width: 200px;
-    max-width: 512px;
-    height: 60px;
-    background-color: black;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-  }
+  /* 当屏幕宽度小于等于800px时，减小字体大小 */
+  @media (max-width: 800px) {
+    .headtitle-text,
+    .subtitle-text {
+      font-size: 1rem;
+    }
 
-  .game-path-item:hover {
-    background-color: rgb(33, 4, 251);
-  }
+    .imageContainerROC span,
+    .imageContainerTFT span,
+    .imageContainerREF span {
+      font-size: 1rem;
+    }
 
-  .underlined-path {
-    text-decoration: underline;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    position: relative;
-    font-size: 14pt;
-    flex-grow: 1;
-    margin-right: 8px;
-  }
+    .reccomendations {
+      font-size: 10pt;
+    }
 
-  .game-version-container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    max-width: 512px;
-    min-width: 200px;
-    justify-content: center; 
-    align-items: center;
-    overflow: hidden;
-    &:hover {
-      border-color: #007bff;
-      box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+    .underlined-path {
+      font-size: 10pt;
+    }
+
+    .icon-handle {
+      font-size: 10pt;
     }
   }
 
-  .icon-handle {
-    font-size: 14pt;
-    cursor: pointer;
+  @media (max-width: 1600px) {
+    .ContainerLattice img {
+      width: 100%;
+    }
   }
 
 }
