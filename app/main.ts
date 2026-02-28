@@ -276,16 +276,17 @@ const SetDefaultPath = () => {
             defaultPath: usepath
         });
         if (result && (result?.length > 0)) {
-            settings[`${pathver}_PATH`] = result[0] ? result[0] : null;
-            win.webContents.send('on-install-console', `Selected folder : ${result[0]}`);
             settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+            settings[`${pathver}_PATH`] = result[0];
+            win.webContents.send('on-install-console', `Selected folder : ${result[0]}`);
             fs.writeFileSync(settingsPath, JSON.stringify(settings));
             win.webContents.send('path-updated', {
                 pathver: pathver,
                 path: result[0]
             });
+        } else {
+            win.webContents.send('on-install-console', `Folder selection was cancelled`);
         }
-        win.webContents.send('on-install-console', `Folder selection was cancelled`);
     });
 }
 
