@@ -182,10 +182,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         settings[`${pathver}_PATH`] = finalPath;
         fs.writeFileSync(settingsPath, JSON.stringify(settings));
         win.webContents.send('on-install-console', `Default path updated to: ${finalPath}`);
-        win.webContents.send('path-updated', {
-            pathver: pathver,
-            path: finalPath
-        });
+        win.webContents.send('path-updated', { pathver: pathver, path: finalPath });
     }
     // open modal on front
     win.webContents.send('on-install-init', <InstallModel>{
@@ -261,29 +258,30 @@ const SetDefaultPath = () => {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings: Settings = {};
         let usepath = documentsPath;
+        win.webContents.send('on-install-console', `Selecting folder , version : ${pathver}`);
         if (fs.existsSync(settingsPath)) {
-            win.webContents.send('on-install-console', `Get default path for version : ${pathver}`);
+            win.webContents.send('on-install-console', `Get default path`);
             settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
             usepath = getversionpath(pathver, settings);
             if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
                 usepath = documentsPath;
             }
         }
-        win.webContents.send('on-install-console', `Selecting folder for version : ${pathver}`);
         const result = dialog.showOpenDialogSync(win, {
             title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
             properties: ['openDirectory'],
             defaultPath: usepath
         });
         if (result && (result?.length > 0)) {
-            settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-            settings[`${pathver}_PATH`] = result[0];
-            win.webContents.send('on-install-console', `Selected folder : ${result[0]}`);
-            fs.writeFileSync(settingsPath, JSON.stringify(settings));
-            win.webContents.send('path-updated', {
-                pathver: pathver,
-                path: result[0]
-            });
+            usepath = result[0] ? path.resolve(result[0]) : null;
+            settings[`${pathver}_PATH`] = usepath;
+            win.webContents.send('on-install-console', `Set path : ${usepath}`);
+            try {
+                fs.writeFileSync(settingsPath, JSON.stringify(settings));
+                win.webContents.send('path-updated', { pathver: pathver, path: usepath });
+            } catch (err) {
+                win.webContents.send('on-install-console', `Set path failed: ${err.message}`);
+            }
         } else {
             win.webContents.send('on-install-console', `Folder selection was cancelled`);
         }
