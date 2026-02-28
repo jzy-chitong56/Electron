@@ -106,17 +106,14 @@ export class HomeComponent implements OnInit {
     if (this.isInteractive) {
       console.log(`Selecting folder for ${pathver}`);
       try {
-        const result = await this.electronService.ipcRenderer.invoke('path-operations', {
-          operation: 'select-folder',
-          pathver: pathver
-        });
+        const result = await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'select-folder', pathver: pathver });
         if (result && result !== null) {
           const selectedPath = result;
           this.gamePaths[pathver].PATH = selectedPath;
           this.gamePaths[pathver].displayText = this.formatPath(selectedPath);
-          this.electronService.ipcRenderer.send('path-operations', 'save-default-path', pathver, selectedPath);
+          await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'save-default-path', pathver: pathver, newpath: selectedPath });
           console.log(`${pathver} folder selected : ${selectedPath}, display text : ${this.gamePaths[pathver].displayText}`);
-          console.log('Paths container visibility : ', this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
+          console.log('Paths container : ', this.gamePaths.TFT.PATH || this.gamePaths.REFORGED.PATH || this.gamePaths.ROC.PATH);
         }
       } catch (error) {
         console.error('Folder selection failed:', error);
