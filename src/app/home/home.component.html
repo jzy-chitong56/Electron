@@ -54,7 +54,7 @@
   </div>
 
   <div class="subtitle-text">{{ 'PAGES.HOME.ADVANCED_SETTING' | translate }}</div>
-  <div class="ContainerLattice AdvancedSettings">
+  <div class="ContainerLattice-AdvancedSettings">
     <label class="switch">
       <input type="checkbox" class="hidden-checkbox" checked id="ModeSwitch" #ModeSwitch (input)="onInputChange(ModeSwitch.id)">
       <div class="slider">
@@ -71,7 +71,7 @@
       <label for="BJoptionOff" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_OFF' | translate }}</label>
     </label>
   </div>
-  <div class="ContainerLattice MoreSettings">
+  <div class="ContainerLattice-MoreSettings">
     <label class="checkboxbj">
       <input type="checkbox" class="switch-text" id="Optimise" [checked]="optimize" checked #Optimise (input)="onInputChange(Optimise.id)">{{ 'PAGES.HOME.OPTIMISE' | translate }}
     </label>
