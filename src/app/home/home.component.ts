@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   private async loadDefaultPath(): Promise<void> {
-    const settings = await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'load-default-path' });
+    const settings = await this.electronService.ipcRenderer.invoke('load-path');
     if (settings) {
       console.log('Loaded paths settings:', settings);
       this.gamePaths.TFT.PATH = settings.TFT_PATH;
@@ -103,19 +103,10 @@ export class HomeComponent implements OnInit {
     return `${firstPart}/...${lastPart}`;
   }
 
-  async selectGameFolder(pathver: 'REFORGED' | 'TFT' | 'ROC'): Promise<void> {
+  async selectGameFolder(pathver: 'REFORGED' | 'TFT' | 'ROC') {
     if (this.isInteractive) {
       console.log(`Selecting folder for ${pathver}`);
-      try {
-        const result = await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'select-folder', pathver: pathver });
-        if (result && result !== null) {
-          const selectedPath = result;
-          await this.electronService.ipcRenderer.invoke('path-operations', { operation: 'save-default-path', pathver: pathver, newpath: selectedPath });
-          console.log(`${pathver} folder selected : ${selectedPath}, display text : ${this.gamePaths[pathver].displayText}`);
-        }
-      } catch (error) {
-        console.error('Folder selection failed:', error);
-      }
+      this.electronService.ipcRenderer.send('set-path', pathver);
     }
   }
 
