@@ -92,11 +92,11 @@
     }
 
     .underlined-path {
-      font-size: 8pt;
+      font-size: 10pt;
     }
 
     .icon-handle {
-      font-size: 8pt;
+      font-size: 10pt;
     }
 
   }
@@ -238,7 +238,7 @@
     width: 100%;
     min-width: 200px;
     max-width: 512px;
-    height: 72px;
+    height: 60px;
     background-color: black;
     border-radius: 4px;
     color: white;
@@ -259,7 +259,7 @@
     text-overflow: ellipsis;
     display: inline-block;
     position: relative;
-    font-size: 12pt;
+    font-size: 14pt;
     flex-grow: 1;
     margin-right: 8px;
   }
@@ -270,7 +270,6 @@
     flex: 1;
     max-width: 512px;
     min-width: 200px;
-    min-height: 220px;
     justify-content: center; 
     align-items: center;
     overflow: hidden;
@@ -281,7 +280,7 @@
   }
 
   .icon-handle {
-    font-size: 12pt;
+    font-size: 14pt;
     cursor: pointer;
   }
 
