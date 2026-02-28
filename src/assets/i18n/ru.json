@@ -14,9 +14,7 @@
       "FORCELANG": "Скачать язык разговора",
       "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
       "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.31.x",
-      "CAN_NOT_GET_DEFAULT_PATH":"Не удается получить путь по умолчанию",
-      "DEFAULT_PATH":"Nути по умолчанию: "
+      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.31.x"
     },
     "DETAIL": {
       "TITLE": "Подробность!",

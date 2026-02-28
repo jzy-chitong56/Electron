@@ -14,9 +14,7 @@
       "FORCELANG": "Substituir a linguagem de conversação AI",
       "REF_BEST_GAME_VERSION": "Optimal: Últimas notícias",
       "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x",
-      "CAN_NOT_GET_DEFAULT_PATH":"Can not get caminho padrão",
-      "DEFAULT_PATH":"caminho padrão: "
+      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x"
     },
     "DETAIL": {
       "TITLE": "Detalhe!",
