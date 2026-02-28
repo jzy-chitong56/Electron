@@ -33,6 +33,7 @@ const isDev = () => {
 const createWindow = (): BrowserWindow => {
 
     const size = screen.getPrimaryDisplay().workAreaSize;
+
     // Create the browser window.
     win = new BrowserWindow({
         x: 0,
@@ -120,13 +121,13 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
             usepath = null; // wait updata path , maybe selected other path
           }
         } else {
-          response = usepath;
+          response = [usepath];
         }
     } else {
         win.webContents.send('on-install-console', 'Choose path');
         response = dialog.showOpenDialogSync(win, {
             // TODO: add i18n here
-            title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '' : translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+            title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '': translations["PAGES.ELECTRON.OPEN_DIR"] || '',
             // TODO: Change to let multiples selections when is map
             properties: isMap ? ['openFile'] : ['openDirectory'],
             // TODO: add i18n here
@@ -213,7 +214,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
                     `../${currentExecDir}install.js`
                 )
             ),
-            [response[0], commander, ver, forceLang ? currentLanguage : '-'],
+            [ response[0], commander, ver, forceLang ? currentLanguage : '-' ],
             { signal },
             (err) => {
                 win.webContents.send('on-install-error', err);
@@ -221,7 +222,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
         );
 
         // send messages to modal on front
-        child.on('on-install-message', (message) => {
+        child.on('message', (message) => {
             if (typeof message === 'object' && message.type === 'progress') {
                 // Send progress updates via dedicated channel
                 console.log('progress:', message);
@@ -242,7 +243,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
 }
 
 const setupFileOperations = () => {
-    ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
+    ipcMain?.handle('path-operations', async (_, { operation, pathver, newpath }) => {
         const settingsPath = path.join(app.getPath('userData'), 'settings.json');
         let settings: Settings = {};
         switch (operation) {
