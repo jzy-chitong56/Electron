@@ -89,11 +89,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private formatPath(path: string, maxLength = 20): string {
+  private formatPath(path: string, maxLength = 50): string {
     if (!path) return '--';
     if (path.length <= maxLength) return path;
     const parts = path.split(/[\\/]/);
-    if (parts.length <= 2) return path;
+    if (parts.length <= 30) return path;
     const firstPart = parts[0];
     const lastPart = parts[parts.length - 1];
     const middleLength = maxLength - (firstPart.length + lastPart.length + 5);
