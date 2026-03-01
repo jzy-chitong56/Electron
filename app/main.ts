@@ -1,4 +1,4 @@
-import {app, BrowserWindow, dialog, Menu, screen } from 'electron';
+import { app, BrowserWindow, dialog, Menu, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from '@electron/remote/main';
@@ -7,16 +7,15 @@ const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
 type Settings = {
-  TFT_PATH?: string;
-  ROC_PATH?: string;
-  REFORGED_PATH?: string;
+  TFT_PATH?: string | null;
+  ROC_PATH?: string | null;
+  REFORGED_PATH?: string | null;
   [key: string]: any;
 };
 
 let win: BrowserWindow = null;
-let translations : { [key: string]: string } = {};
+let translations: { [key: string]: string } = {};
 let currentLanguage: string = "English";
-let usepath: string | null;
 const documentsPath = app.getPath('documents');
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
@@ -31,8 +30,7 @@ const isDev = () => {
   return require.main.filename.indexOf('app.asar') === -1;
 }
 
-  const createWindow = (): BrowserWindow => {
-
+const createWindow = (): BrowserWindow => {
   const size = screen.getPrimaryDisplay().workAreaSize;
   // Create the browser window.
   win = new BrowserWindow({
@@ -65,7 +63,7 @@ const isDev = () => {
     let pathIndex = './index.html';
 
     if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
-       // Path when running electron in local folder
+      // Path when running electron in local folder
       pathIndex = '../dist/index.html';
     }
 
@@ -84,71 +82,58 @@ const isDev = () => {
   return win;
 }
 
-const getVersionPath = (settings: Settings, ver: string): string | null => {
-  switch(ver) {
-    case "TFT":
-      return settings.TFT_PATH || null;
-    case "ROC":
-      return settings.ROC_PATH || null;
-    default:
-      return settings.REFORGED_PATH || documentsPath;
+const getversionpath = (pathver: string, settings: Settings): string => {
+  win.webContents.send('on-install-console', `get version path : ${JSON.stringify(settings)}, settings path : ${settings[`${pathver}_PATH`]}`);
+  if (pathver == "REFORGED") {
+    return settings.REFORGED_PATH || '';
+  } else if (pathver == "TFT") {
+    return settings.TFT_PATH || '';
+  } else if (pathver == "ROC") {
+    return settings.ROC_PATH || '';
   }
-};
+  return '';
+}
 
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
-  let usepath = null;
-  let settingsPath;
+  const settingsPath = path.join(app.getPath('userData'), 'settings.json');
   let settings: Settings = {};
-  try {
-    settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    if (fs.existsSync(settingsPath)) {
-      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-      usepath = getVersionPath(settings, pathver);
-      console.log(`get ${pathver} path:`, usepath);
-    }
-  } catch (err) {
-    console.error('Failed to get path:', err);
-    usepath = null;
+  let usepath = null;
+  if (fs.existsSync(settingsPath)) {
+    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+    usepath = getversionpath(pathver, settings);
+    win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
   }
-  if (usepath !== null && usepath !== undefined) {
-    response = usepath;
-    console.log(`get ${pathver} defaul path:`, usepath);
-  } else {
-    if (!isMap) {
-      console.log('Dir mode');
-      // Show dialog and save selected path as default
+  if (usepath !== null && usepath !== undefined && usepath !== '') {
+    if (isMap) {
       response = dialog.showOpenDialogSync(win, {
-        title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-        properties: ['openDirectory'],
-        defaultPath: documentsPath
+      title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
+      properties: ['openFile'] ,
+      filters:  [
+        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+      ],
+      defaultPath: usepath,
       });
-    } else {
-      console.log('Map mode');
-      response = dialog.showOpenDialogSync(win, {
-        title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
-        properties: ['openFile'],
-        filters: [
-          { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
-        ],
-      });
-    }
-    if (response && response.length > 0) {
-      console.log('try updated path');
-      const folderPath = path.dirname(response[0]);
-      settingsPath = path.join(app.getPath('userData'), 'settings.json');
-      if (fs.existsSync(settingsPath)) {
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) as Settings;
+      if (response && (response?.length > 0)) {
+      usepath = null; // wait updata path , maybe selected other path
       }
-      settings[`${pathver}_PATH`] = folderPath;
-      fs.writeFileSync(settingsPath, JSON.stringify(settings));
-      console.log('Default path updated to:', folderPath);
-      win.webContents.send('path-updated', {
-        ver: pathver,
-        path: folderPath
-      });
+    } else {
+      response = [usepath];
     }
+  } else {
+    win.webContents.send('on-install-console', 'Choose path');
+    response = dialog.showOpenDialogSync(win, {
+      // TODO: add i18n here
+      title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '': translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+      // TODO: Change to let multiples selections when is map
+      properties: isMap ? ['openFile'] : ['openDirectory'],
+      // TODO: add i18n here
+      filters: isMap ? [
+        { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
+      ] : null,
+      defaultPath: documentsPath,
+    });
   }
 
   let child;
@@ -159,7 +144,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   let currentExecDir = `./AMAI-release/`,
     currentScriptDir = './AMAI-release/';
 
-  if(!isDev()) {
+  if (!isDev()) {
     currentExecDir = `./AMAI/`;
     currentScriptDir = path.join(
       __dirname,
@@ -180,11 +165,23 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   // win.webContents.send('on-install-message', 'currentExecDir: ' + currentExecDir);
   // win.webContents.send('on-install-message', `install js path: ../${currentExecDir}install.js`);
 
-  if(!response || (response?.length === 0)) {
+  if (!response || (response?.length === 0)) {
     win.webContents.send('on-install-empty');
     return;
   }
 
+  if (usepath === null) {
+    if (!isMap) {
+      usepath = response[0];
+    } else {
+      usepath = path.dirname(response[0]);
+    }
+    const finalPath = usepath ? path.resolve(usepath) : null;
+    settings[`${pathver}_PATH`] = finalPath;
+    fs.writeFileSync(settingsPath, JSON.stringify(settings));
+    win.webContents.send('on-install-console', `Default path updated to: ${finalPath}`);
+    win.webContents.send('path-updated', { pathver: pathver, path: finalPath });
+  }
   // open modal on front
   win.webContents.send('on-install-init', <InstallModel>{
     response: response[0],
@@ -195,8 +192,8 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   // Change the relative path from where the script will be executed
   // MPQEditor and AddToMPQ only work when files and folders are in same directory
   try {
-     process.chdir(currentScriptDir);
-  } catch(err) {
+    process.chdir(currentScriptDir);
+  } catch (err) {
     console.log('error:', err.message);
 
     /** uncomment to debbug */
@@ -235,92 +232,56 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     child.on('exit', () => {
       win.webContents.send('on-install-exit');
     });
-  } catch(err) {
+  } catch (err) {
     win.webContents.send('on-install-error', err.message);
   }
 }
 
-const setupFileOperations = () => {
-  ipcMain?.handle('file-operations', async (_, { operation, pathver, newpath }) => {
-    switch(operation) {
-      case 'load-default-path': {
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        try {
-          if (fs.existsSync(settingsPath)) {
-            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-            console.log('Loaded paths:', {
-              REFORGED: settings.REFORGED_PATH,
-              TFT: settings.TFT_PATH,
-              ROC: settings.ROC_PATH
-            });
-            return {
-              REFORGED_PATH: settings.REFORGED_PATH || null,
-              TFT_PATH: settings.TFT_PATH || null,
-              ROC_PATH: settings.ROC_PATH || null
-            };
-          }
-          console.log('Loading path file failed, using defaults');
-          return {
-            REFORGED_PATH: null,
-            TFT_PATH: null,
-            ROC_PATH: null
-          };
-        } catch (err) {
-          console.error('Error loading paths:', err);
-          return null;
-        }
+const GetDefaultPath = () => {
+  ipcMain?.handle('load-path', async (_) => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    let settings: Settings = {};
+    if (fs.existsSync(settingsPath)) {
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      win.webContents.send('on-install-console',`Loaded paths : REFORGED : ${settings.REFORGED_PATH} , TFT : ${settings.TFT_PATH} , ROC : ${settings.ROC_PATH}`);
+      return { REFORGED_PATH: settings.REFORGED_PATH || null, TFT_PATH: settings.TFT_PATH || null, ROC_PATH: settings.ROC_PATH || null };
+    }
+    win.webContents.send('on-install-console', `Loading path file failed , using defaults`);
+    return { REFORGED_PATH: null, TFT_PATH: null, ROC_PATH: null };
+  });
+}
+
+const SetDefaultPath = () => {
+  ipcMain?.on('set-path', async (_event, pathver ) => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    let settings: Settings = {};
+    let usepath = documentsPath;
+    win.webContents.send('on-install-console', `Selecting folder , version : ${pathver}`);
+    if (fs.existsSync(settingsPath)) {
+      win.webContents.send('on-install-console', `Get default path`);
+      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+      usepath = getversionpath(pathver, settings);
+      if (!usepath ||  usepath === '' ||  usepath === null || !fs.existsSync(usepath)) {
+        usepath = documentsPath;
       }
-      case 'select-folder': {
-        console.log('Selecting folder for version:', pathver);
-        const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-        try {
-          if (fs.existsSync(settingsPath)) {
-            const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8')) || {};
-            usepath = settings[`${pathver}_PATH`]
-            console.log('Selecting folder for default Path :', usepath);
-          } else {
-            usepath = documentsPath;
-          }
-          const result = dialog.showOpenDialogSync(win, {
-            title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
-            properties: ['openDirectory'],
-            defaultPath : usepath
-          });
-          if (result && result.length > 0) {
-            const folderPath = path.dirname(result[0]);
-            console.log('Select folder :', folderPath);
-            return result && result.length > 0 ? folderPath : null;
-          } else {
-            console.log('No select folder ');
-            return null;
-          }
-        } catch (err) {
-          console.error('Error Select folder , use default Path :', err);
-          return null;
-        }
+    }
+    const result = dialog.showOpenDialogSync(win, {
+      title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+      properties: ['openDirectory'],
+      defaultPath: usepath
+    });
+    if (result && (result?.length > 0)) {
+      usepath = result[0] ? path.resolve(result[0]) : null;
+      settings[`${pathver}_PATH`] = usepath;
+      win.webContents.send('on-install-console', `Set path : ${usepath}`);
+      try {
+        fs.writeFileSync(settingsPath, JSON.stringify(settings));
+        win.webContents.send('path-updated', { pathver: pathver, path: usepath });
+      } catch (err) {
+        win.webContents.send('on-install-console', `Set path failed: ${err.message}`);
       }
-      case 'save-default-path': {
-        if (newpath) {
-          const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-          try {
-            let settings: Settings = fs.existsSync(settingsPath)
-              ? JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
-              : {};
-            settings[`${pathver}_PATH`] = newpath;
-            fs.writeFileSync(settingsPath, JSON.stringify(settings));
-            console.log(`Saved path for ${pathver}: ${newpath}`);
-            return true;
-          } catch (err) {
-            console.error('Failed to save path:', err);
-            return false;
-          }
-        } else {
-          console.log('Failed to save path , no path:');
-          return false;
-        }
-      }
-      default:
-        throw new Error(`unknow: ${operation}`);
+    } else {
+      win.webContents.send('on-install-console', `Folder selection was cancelled`);
     }
   });
 }
@@ -328,8 +289,9 @@ const setupFileOperations = () => {
 const installProcess = () => {
   let signal = {};
 
-  ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang : boolean) => {
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, ver);
+  ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean) => {
+    const pathver = ver;
+    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver);
   });
 
   // TODO: stop process with signal
@@ -414,12 +376,17 @@ const installTrans = () => {
     }
     translations = data as { [key: string]: string };
     if (win != null) {
-      win.setTitle(translations['PAGES.HOME.TITLE'] || '')
+      let rawVersion = __APP_VERSION__ || '';
+      let version = rawVersion ? `v${rawVersion}` : '';
+      let appName = translations['PAGES.HOME.TITLE'] || '';
+      let WinTitle = `${appName}  ${version}`;
+      win.setTitle(WinTitle)
     }
   });
 }
 
 init();
 installTrans();
-setupFileOperations();
 installProcess();
+GetDefaultPath();
+SetDefaultPath();
