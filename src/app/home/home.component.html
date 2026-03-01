@@ -71,15 +71,15 @@
         (input)="onInputChange(BJoptionOff.id)" hidden>
       <label for="BJoptionOff" class="radio-btn">{{ 'PAGES.HOME.INCLUDE_COMMANDER_OFF' | translate }}</label>
     </label>
-    <div class="ContainerLattice-MoreSettings">
-      <label class="checkboxbj">
-        <input type="checkbox" id="Optimise" [checked]="optimize" checked #Optimise
-          (input)="onInputChange(Optimise.id)">{{ 'PAGES.HOME.OPTIMISE' | translate }}
-      </label>
-      <label class="checkboxbj">
-        <input type="checkbox" id="ForceLang" [checked]="forcelang" #ForceLang
-          (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
-      </label>
-    </div>
+  </div>
+  <div class="ContainerLattice-MoreSettings">
+    <label class="checkboxbj">
+      <input type="checkbox" id="Optimise" [checked]="optimize" checked #Optimise
+        (input)="onInputChange(Optimise.id)">{{ 'PAGES.HOME.OPTIMISE' | translate }}
+    </label>
+    <label class="checkboxbj">
+      <input type="checkbox" id="ForceLang" [checked]="forcelang" #ForceLang
+        (input)="onInputChange(ForceLang.id)">{{ 'PAGES.HOME.FORCELANG' | translate }}
+    </label>
   </div>
 </div>
