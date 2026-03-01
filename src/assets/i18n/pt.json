@@ -12,9 +12,7 @@
       "INCLUDE_COMMANDER_OFF": "Sem Comandante",
       "OPTIMISE": "Usar scripts otimizados", 
       "FORCELANG": "Substituir a linguagem de conversação AI",
-      "REF_BEST_GAME_VERSION": "Optimal: Últimas notícias",
-      "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x"
+      "BEST_GAME_VERSION": "Optimal"
     },
     "DETAIL": {
       "TITLE": "Detalhe!",

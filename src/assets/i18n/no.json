@@ -12,9 +12,7 @@
       "INCLUDE_COMMANDER_OFF": "Ingen Kommandant",
       "OPTIMISE": "Bruk optimaliserte skript", 
       "FORCELANG": "Overskriv AI-samtalespråk",
-      "REF_BEST_GAME_VERSION": "Optimal: Siste",
-      "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x"
+      "BEST_GAME_VERSION": "Optimal"
     },
     "DETAIL": {
       "TITLE": "Detalj!",

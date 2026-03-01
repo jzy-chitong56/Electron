@@ -12,9 +12,7 @@
       "INCLUDE_COMMANDER_OFF": "Без командира",
       "OPTIMISE": "Использовать оптимизированные скрипты",
       "FORCELANG": "Скачать язык разговора",
-      "REF_BEST_GAME_VERSION": "Оптимальный: Последний",
-      "TFT_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Оптимальный: 1.24e~1.31.x"
+      "BEST_GAME_VERSION": "Оптимальный"
     },
     "DETAIL": {
       "TITLE": "Подробность!",

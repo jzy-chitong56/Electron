@@ -12,9 +12,7 @@
       "INCLUDE_COMMANDER_OFF": "Kein Kommandant",
       "OPTIMISE": "Optimierte Skripte verwenden", 
       "FORCELANG": "AI Chat Sprache überschreiben",
-      "REF_BEST_GAME_VERSION": "Optimal: Aktuelles",
-      "TFT_BEST_GAME_VERSION": "Optimal: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimal: 1.24e~1.31.x"
+      "BEST_GAME_VERSION": "Optimal"
     },
     "DETAIL": {
       "TITLE": "Detail!",

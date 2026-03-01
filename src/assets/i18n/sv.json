@@ -12,9 +12,7 @@
       "INCLUDE_COMMANDER_OFF": "Ingen befälhavare",
       "OPTIMISE": "Använd optimerade skript", 
       "FORCELANG": "Skriv över AI-chattspråk",
-      "REF_BEST_GAME_VERSION": "Optimalt: Senaste",
-      "TFT_BEST_GAME_VERSION": "Optimalt: 1.24e~1.28.x",
-      "ROC_BEST_GAME_VERSION": "Optimalt: 1.24e~1.31.x"
+      "BEST_GAME_VERSION": "Optimalt"
     },
     "DETAIL": {
       "TITLE": "Detalj!",
