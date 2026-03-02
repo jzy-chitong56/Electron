@@ -89,11 +89,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private formatPath(path: string, maxLength = 50): string {
+  private formatPath(path: string, maxLength = 20): string {
     if (!path) return '--';
     if (path.length <= maxLength) return path;
     const parts = path.split(/[\\/]/);
-    if (parts.length <= 30) return path;
+    if (parts.length <= 2) return path;
     const firstPart = parts[0];
     const lastPart = parts[parts.length - 1];
     const middleLength = maxLength - (firstPart.length + lastPart.length + 5);
@@ -103,10 +103,10 @@ export class HomeComponent implements OnInit {
     return `${firstPart}/...${lastPart}`;
   }
 
-  async selectGameFolder(pathver: 'REFORGED' | 'TFT' | 'ROC') {
+  async selectPathAndInstall(pathver: 'REFORGED' | 'TFT' | 'ROC') {
     if (this.isInteractive) {
-      console.log(`Selecting folder for ${pathver}`);
-      this.electronService.ipcRenderer.send('set-path', pathver);
+      console.log(`Selecting path and install for ${pathver}`);
+      this.electronService.ipcRenderer.send('set-path-and-install', this.Mode_State, this.BJ_State, this.optimize, this.forcelang, pathver);
     }
   }
 
@@ -170,7 +170,7 @@ export class HomeComponent implements OnInit {
             this.REFInstall = false;
             this.ROCInstall = !this.ROCInstall;
             this.electronService.ipcRenderer.send(this.installEvent, 'ROC', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
-            console.log('message',this.message);
+            console.log('message', this.message);
           }
           break;
         case 'Tft':
@@ -183,7 +183,7 @@ export class HomeComponent implements OnInit {
             this.REFInstall = false;
             this.TFTInstall = !this.TFTInstall;
             this.electronService.ipcRenderer.send(this.installEvent, 'TFT', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
-            console.log('message',this.message);
+            console.log('message', this.message);
           }
           break;
         case 'Ref':
@@ -196,7 +196,7 @@ export class HomeComponent implements OnInit {
             this.TFTInstall = false;
             this.REFInstall = !this.REFInstall;
             this.electronService.ipcRenderer.send(this.installEvent, 'REFORGED', this.Mode_State, this.BJ_State, this.optimize, this.forcelang);
-            console.log('message',this.message);
+            console.log('message', this.message);
           }
           break;
       }
@@ -215,22 +215,22 @@ export class HomeComponent implements OnInit {
         case 'ModeSwitch':
           this.Mode_State = !this.Mode_State;
           this.modeState = this.Mode_State ? '-folder' : '-map';
-          console.log('mode',this.modeState,this.Mode_State);
+          console.log('mode', this.modeState, this.Mode_State);
           break;
         case 'BJoptionOn':
           this.bjState = '';
           this.BJ_State = 1;
-          console.log('BJ',this.bjState);
+          console.log('BJ', this.bjState);
           break;
         case 'BJoptionVsAI':
           this.bjState = '-vai';
           this.BJ_State = 2;
-          console.log('BJ',this.bjState);
+          console.log('BJ', this.bjState);
           break;
         case 'BJoptionOff':
           this.bjState = '-noc';
           this.BJ_State = 0;
-          console.log('BJ',this.bjState);
+          console.log('BJ', this.bjState);
           break;
         case 'Optimise':
           this.optimize = !this.optimize;

@@ -30,11 +30,9 @@
 
   .ContainerLattice {
     display: flex;
-    text-align: center;  
+    text-align: center;
     justify-content: space-around;
     align-items: center;
-    max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
-    width: 100%;
     gap: 10px;
     margin-top: 1.8rem;
   }
@@ -56,9 +54,45 @@
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
-    overflow: hidden;
-    box-sizing: border-box; /* 确保padding不影响总宽度 */ 
+    overflow: visible;
+    box-sizing: border-box; /* 确保padding不影响总宽度 */
   }
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  margin-top: 8px;
+  border: 3px solid #5c5c5c;
+  min-width: 200px;
+  max-width: 512px;
+  text-align: center;
+  word-break: break-word; /* 确保长单词也能换行 */
+  line-height: 1.4; /* 增加行高提高可读性 */
+}
+
+.game-path-item:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  }
+
+  .game-path-item:hover {
+    background-color: rgb(33, 4, 251);
+  }
+
 
   .imageContainerROC,
   .imageContainerTFT,
@@ -81,10 +115,6 @@
     font-size: 14pt;
     display: block;
     color: gold;
-  }
-
-  .game-path-item:hover {
-    background-color: rgb(33, 4, 251);
   }
 
   .underlined-path {
@@ -114,7 +144,6 @@
     align-items: center; /* 垂直居中 */
     height: 48px;
     margin-top: 1.4rem;
-    max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
     width: 100%;
   }
 
@@ -126,7 +155,6 @@
     align-items: center;
     height: 48px;
     margin-top: 1.8rem;
-    max-width: inherit; /* 继承父元素（.center-container）的最大宽度 */
     width: 100%;
   }
 
