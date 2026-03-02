@@ -12,7 +12,8 @@
         "INCLUDE_COMMANDER_OFF": "No Commander",
         "OPTIMISE": "Use Optimised Scripts",
         "FORCELANG": "Override AI Chat Language",
-        "BEST_GAME_VERSION": "Optimal"
+        "BEST_GAME_VERSION": "Optimal",
+        "SELECT_PATH": "Change default path and install"
       },
       "DETAIL": {
         "TITLE": "Detail!",

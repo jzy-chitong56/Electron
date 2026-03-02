@@ -12,7 +12,8 @@
       "INCLUDE_COMMANDER_OFF": "Fără comandant",
       "OPTIMISE": "Utilizați scripturi optimizate",
       "FORCELANG": "Suprascrie limbajul de chat AI",
-      "BEST_GAME_VERSION": "Optim"
+      "BEST_GAME_VERSION": "Optim",
+      "SELECT_PATH": "Schimbă calea implicită și instalează"
     },
     "DETAIL": {
       "TITLE": "Amănunt!",
