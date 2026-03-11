@@ -1,0 +1,93 @@
+// 加入到MAIN.TS中
+// 获取更新，比较本地版本--本地没有版本时创建
+// 有更新时下载并自动解压放到指定目录，成功时更新本地版本
+// 没有更新时提示已经是最新版本了
+
+
+// 配置文件路径
+const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
+
+function Updates() {
+  // UPMOD 版本更新检查
+  ipcMain.on('UPMOD', async (event) => {
+    console.log('收到 UPMOD 信号，开始检查更新...');
+    const result = await checkForUpdates();
+    console.log('更新检查结果:', result);
+  });
+}
+
+// 写入本地配置文件
+function writeLocalConfig(version: string): void {
+    try {
+        const configDir = path.dirname(CONFIG_PATH);
+        if (!fs.existsSync(configDir)) {
+            fs.mkdirSync(configDir, { recursive: true });
+        }
+        fs.writeFileSync(CONFIG_PATH, JSON.stringify({ version }, null, 2), 'utf-8');
+    } catch (error) {
+        console.error('写入配置文件失败:', error);
+    }
+}
+
+// 从 GitHub 获取最新版本号
+async function getLatestVersionFromGitHub(): Promise<string | null> {
+    try {
+        const url = `https://api.github.com/repos/SMUnlimited/AMAI/releases/latest`;
+        const response = await axios.get(url, {
+            headers: {
+                'User-Agent': 'AMAI'
+            }
+        });
+        return response.data.tag_name || response.data.name || null;
+    } catch (error) {
+        console.error('Get GitHub latest version fail:', error);
+        return null;
+    }
+}
+
+// 版本号比较函数
+function compareVersions(localVersion: string, remoteVersion: string): number {
+    const localParts = localVersion.replace(/^v/, '').split('.').map(Number);
+    const remoteParts = remoteVersion.replace(/^v/, '').split('.').map(Number);
+    
+    for (let i = 0; i < Math.max(localParts.length, remoteParts.length); i++) {
+        const local = localParts[i] || 0;
+        const remote = remoteParts[i] || 0;
+        if (local !== remote) {
+            return remote - local;
+        }
+    }
+    return 0;
+}
+
+// 检查更新
+async function checkForUpdates(): Promise<{ hasUpdate: boolean; localVersion: string | null; remoteVersion: string | null }> {
+    let localConfig = null;
+    try {
+        if (fs.existsSync(CONFIG_PATH)) {
+            const data = fs.readFileSync(CONFIG_PATH, 'utf-8');
+            localConfig = JSON.parse(data);
+        }
+    } catch (error) {
+        console.error('读取配置文件失败:', error);
+    }
+
+    const localVersion = localConfig?.version || null;
+    const remoteVersion = await getLatestVersionFromGitHub();
+    
+    if (!remoteVersion) {
+        return { hasUpdate: false, localVersion, remoteVersion: null };
+    }
+    
+    if (!localVersion) {
+        writeLocalConfig(remoteVersion);
+        return { hasUpdate: false, localVersion: remoteVersion, remoteVersion };
+    }
+    
+    const hasUpdate = compareVersions(localVersion, remoteVersion) > 0;
+    if (hasUpdate) {
+        writeLocalConfig(remoteVersion);
+    }
+    
+    return { hasUpdate, localVersion, remoteVersion };
+}
