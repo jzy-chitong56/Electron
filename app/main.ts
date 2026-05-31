@@ -127,7 +127,7 @@ const loadSet = (): AppConfig => {
       win.webContents.send('on-install-console', 'Config file not found, using defaults');
       // 自动创建默认配置文件
       try {
-        const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\ncommander=0\noptimize=true\nforceLang=false`;
+        const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\ncommander=1\noptimize=true\nforceLang=false`;
         fs.writeFileSync(configPath, defaultContent, 'utf8');
         win.webContents.send('on-install-console', 'Created default config file');
       } catch (createErr: any) {
