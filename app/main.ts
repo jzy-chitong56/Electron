@@ -13,6 +13,19 @@ type Settings = {
   [key: string]: any;
 };
 
+type AppConfig = {
+  paths: {
+    REFORGED_PATH?: string;
+    TFT_PATH?: string;
+    ROC_PATH?: string;
+  };
+  settings: {
+    commander?: number;
+    optimize?: boolean;
+    forceLang?: boolean;
+  };
+};
+
 let win: BrowserWindow = null;
 let translations: { [key: string]: string } = {};
 let currentLanguage: string = "English";
@@ -94,17 +107,212 @@ const getversionpath = (pathver: string, settings: Settings): string => {
   return '';
 }
 
+const loadSet = (): AppConfig => {
+  const configPath = path.join(app.getPath('userData'), 'config.json');
+  const defaultConfig: AppConfig = {
+    paths: {
+      REFORGED_PATH: undefined,
+      TFT_PATH: undefined,
+      ROC_PATH: undefined
+    },
+    settings: {
+      commander: 0,
+      optimize: false,
+      forceLang: false
+    }
+  };
+
+  try {
+    if (!fs.existsSync(configPath)) {
+      win.webContents.send('on-install-console', 'Config file not found, using defaults');
+      // 自动创建默认配置文件
+      try {
+        const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\ncommander=0\noptimize=true\nforceLang=false`;
+        fs.writeFileSync(configPath, defaultContent, 'utf8');
+        win.webContents.send('on-install-console', 'Created default config file');
+      } catch (createErr: any) {
+        win.webContents.send('on-install-console', `Failed to create config file: ${createErr.message}`);
+      }
+      return defaultConfig;
+    }
+
+    const content = fs.readFileSync(configPath, 'utf8');
+
+    // 尝试解析 JSON 格式（向后兼容）
+    try {
+      const jsonConfig = JSON.parse(content);
+      win.webContents.send('on-install-console', 'Loaded config in JSON format');
+
+      return {
+        paths: {
+          REFORGED_PATH: jsonConfig.REFORGED_PATH || undefined,
+          TFT_PATH: jsonConfig.TFT_PATH || undefined,
+          ROC_PATH: jsonConfig.ROC_PATH || undefined
+        },
+        settings: {
+          commander: jsonConfig.commander !== undefined ? jsonConfig.commander : 0,
+          optimize: jsonConfig.optimize !== undefined ? jsonConfig.optimize : true,
+          forceLang: jsonConfig.forceLang || false
+        }
+      };
+    } catch (jsonError) {
+      // JSON 解析失败，尝试按行解析文本格式
+      win.webContents.send('on-install-console', 'Loading config in line-by-line format');
+
+      try {
+        const lines = content.split('\n').map((line: string) => line.trim()).filter((line: string) => line && !line.startsWith('#'));
+
+        const config: AppConfig = {
+          paths: {},
+          settings: {}
+        };
+
+        for (const line of lines) {
+          const [key, ...valueParts] = line.split('=');
+          if (key && valueParts.length > 0) {
+            const trimmedKey = key.trim();
+            const value = valueParts.join('=').trim();
+
+            if (trimmedKey.endsWith('_PATH')) {
+              (config.paths as any)[trimmedKey] = value || undefined;
+            } else {
+              if (value === 'true') {
+                config.settings.[trimmedKey] = true;
+              } else if (value === 'false') {
+                config.settings.[trimmedKey] = false;
+              } else {
+                config.settings.[trimmedKey] = value;
+              }
+            }
+          }
+        }
+
+        return {
+          paths: {
+            ...defaultConfig.paths,
+            ...config.paths
+          },
+          settings: {
+            ...defaultConfig.settings,
+            ...config.settings
+          }
+        };
+      } catch (parseErr: any) {
+        // 文本格式也解析失败，返回默认配置
+        win.webContents.send('on-install-console', `Failed to parse config file: ${parseErr.message}, using defaults`);
+        return defaultConfig;
+      }
+    }
+  } catch (err: any) {
+    win.webContents.send('on-install-console', `Error loading config: ${err.message}, using defaults`);
+    return defaultConfig;
+  }
+};
+
+const getSingleConfigValue = (key: string): string | boolean | null => {
+  const configPath = path.join(app.getPath('userData'), 'config.json');
+
+  try {
+    if (!fs.existsSync(configPath)) {
+      return null;
+    }
+
+    const content = fs.readFileSync(configPath, 'utf8');
+    const lines = content.split('\n');
+
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+
+      // 跳过空行和注释
+      if (!trimmedLine || trimmedLine.startsWith('#')) {
+        continue;
+      }
+
+      // 查找匹配的配置项
+      const [configKey, ...valueParts] = trimmedLine.split('=');
+      if (configKey && configKey.trim() === key) {
+        const value = valueParts.join('=').trim();
+
+        // 自动转换布尔值
+        if (value === 'true') return true;
+        if (value === 'false') return false;
+
+        return value || null;
+      }
+    }
+
+    return null;
+  } catch (err: any) {
+    win.webContents.send('on-install-console', `Error reading config key ${key}: ${err.message}`);
+    return null;
+  }
+};
+
+const updateSingleConfigValue = (key: string, value: string | boolean | null): void => {
+  const configPath = path.join(app.getPath('userData'), 'config.json');
+
+  try {
+    // 如果文件不存在，创建新文件
+    if (!fs.existsSync(configPath)) {
+      const valueStr = value === null ? '' : (typeof value === 'boolean' ? value.toString() : value);
+      const content = valueStr ? `${key}=${valueStr}` : '';
+      fs.writeFileSync(configPath, content, 'utf8');
+      win.webContents.send('on-install-console', `Created new config file with ${key}`);
+      return;
+    }
+
+    // 读取现有文件内容
+    const content = fs.readFileSync(configPath, 'utf8');
+    const lines = content.split('\n');
+    let found = false;
+    const updatedLines: string[] = [];
+
+    // 遍历每一行，查找并更新目标配置项
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+
+      // 跳过空行和注释
+      if (!trimmedLine || trimmedLine.startsWith('#')) {
+        updatedLines.push(line);
+        continue;
+      }
+
+      // 检查是否是目标配置项
+      const [configKey, ...valueParts] = trimmedLine.split('=');
+      if (configKey && configKey.trim() === key) {
+        found = true;
+        // 如果值为 null，则删除该行；否则更新
+        if (value !== null) {
+          const valueStr = typeof value === 'boolean' ? value.toString() : value;
+          updatedLines.push(`${key}=${valueStr}`);
+        }
+        // 如果 value 为 null，则不添加该行（相当于删除）
+      } else {
+        updatedLines.push(line);
+      }
+    }
+
+    // 如果没找到该配置项且值不为空，则添加新行
+    if (!found && value !== null) {
+      const valueStr = typeof value === 'boolean' ? value.toString() : value;
+      updatedLines.push(`${key}=${valueStr}`);
+    }
+
+    // 写回文件
+    fs.writeFileSync(configPath, updatedLines.join('\n'), 'utf8');
+    win.webContents.send('on-install-console', `Updated ${key} to: ${value === null ? '(removed)' : value}`);
+  } catch (err: any) {
+    win.webContents.send('on-install-console', `Error updating config: ${err.message}`);
+    throw err;
+  }
+};
+
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
-  const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-  let settings: Settings = {};
-  let usepath = null;
-  if (fs.existsSync(settingsPath)) {
-    settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-    usepath = getversionpath(pathver, settings);
-    win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
-  }
+  const pathKey = `${pathver}_PATH`;
+  let usepath = getSingleConfigValue(pathKey) as string | null;
+  win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
   if (usepath !== null && usepath !== undefined && usepath !== '') {
     if (isMap) {
       response = dialog.showOpenDialogSync(win, {
@@ -177,8 +385,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       usepath = path.dirname(response[0]);
     }
     const finalPath = usepath ? path.resolve(usepath) : null;
-    settings[`${pathver}_PATH`] = finalPath;
-    fs.writeFileSync(settingsPath, JSON.stringify(settings));
+    updateSingleConfigValue(pathKey, finalPath);
     win.webContents.send('on-install-console', `Default path updated to: ${finalPath}`);
     win.webContents.send('path-updated', { pathver: pathver, path: finalPath });
   }
@@ -188,7 +395,9 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     commander,
     isMap
   });
-
+  updateSingleConfigValue(`commander`, commander.toString());
+  updateSingleConfigValue(`optimize`, isMap);
+  updateSingleConfigValue(`forceLang`, forceLang);
   // Change the relative path from where the script will be executed
   // MPQEditor and AddToMPQ only work when files and folders are in same directory
   try {
@@ -237,36 +446,35 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   }
 }
 
-const GetDefaultPath = () => {
-  ipcMain?.handle('load-path', async (_) => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    let settings: Settings = {};
-    if (fs.existsSync(settingsPath)) {
-      settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-      win.webContents.send('on-install-console',`Loaded paths : REFORGED : ${settings.REFORGED_PATH} , TFT : ${settings.TFT_PATH} , ROC : ${settings.ROC_PATH}`);
-      return { REFORGED_PATH: settings.REFORGED_PATH || null, TFT_PATH: settings.TFT_PATH || null, ROC_PATH: settings.ROC_PATH || null };
-    }
-    win.webContents.send('on-install-console', `Loading path file failed , using defaults`);
-    return { REFORGED_PATH: null, TFT_PATH: null, ROC_PATH: null };
+const GetDefaultSet = () => {
+  ipcMain?.handle('load-config', async (_) => {
+    const config = loadSet();
+    win.webContents.send('on-install-console',
+      `Config Set : REFORGED : ${config.paths.REFORGED_PATH} , TFT : ${config.paths.TFT_PATH} , ROC : ${config.paths.ROC_PATH};
+      COMMANDER : ${config.settings.commander} , OPTIMIZE : ${config.settings.optimize} , FORCE LANG : ${config.settings.forceLang}` );
+    return {
+      REFORGED_PATH: config.paths.REFORGED_PATH || null,
+      TFT_PATH: config.paths.TFT_PATH || null,
+      ROC_PATH: config.paths.ROC_PATH || null,
+      commander: config.settings.commander || 0,
+      optimize: config.settings.optimize || true,
+      forceLang: config.settings.forceLang || false
+    };
   });
 }
 
 const SetDefaultPath = () => {
   ipcMain?.on('set-path-and-install', async (_event, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean, pathver: string = "REFORGED") => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    let settings: Settings = {};
     let usepath = documentsPath;
     let result;
     let signal = {};
     win.webContents.send('on-install-console', `Selecting path and install , version : ${pathver}`);
     if (toFolder) {
-      if (fs.existsSync(settingsPath)) {
+      const pathKey = `${pathver}_PATH`;
+      const currentPath = getSingleConfigValue(pathKey) as string | null;
+      if (currentPath && fs.existsSync(currentPath)) {
         win.webContents.send('on-install-console', `Get default path`);
-        settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-        usepath = getversionpath(pathver, settings);
-        if (!usepath || usepath === '' || usepath === null || !fs.existsSync(usepath)) {
-          usepath = documentsPath;
-        }
+        usepath = currentPath;
       }
       result = dialog.showOpenDialogSync(win, {
         title: translations["PAGES.ELECTRON.OPEN_DIR"] || '',
@@ -275,10 +483,10 @@ const SetDefaultPath = () => {
       });
       if (result && (result?.length > 0)) {
         usepath = result[0] ? path.resolve(result[0]) : documentsPath;
-        settings[`${pathver}_PATH`] = usepath;
         win.webContents.send('on-install-console', `Set path : ${usepath}`);
         try {
-          fs.writeFileSync(settingsPath, JSON.stringify(settings));
+          const pathKey = `${pathver}_PATH`;
+          updateSingleConfigValue(pathKey, usepath);
           win.webContents.send('path-updated', { pathver: pathver, path: usepath });
           execInstall(signal, commander, !toFolder, optimize ? `OPT${pathver}` : pathver, forceLang, pathver);
         } catch (err) {
@@ -395,5 +603,5 @@ const installTrans = () => {
 init();
 installTrans();
 installProcess();
-GetDefaultPath();
+GetDefaultSet();
 SetDefaultPath();
