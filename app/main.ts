@@ -177,11 +177,11 @@ const loadSet = (): AppConfig => {
               (config.paths as any)[trimmedKey] = value || undefined;
             } else {
               if (value === 'true') {
-                config.settings.[trimmedKey] = true;
+                (config.settings as any)[trimmedKey] = true;
               } else if (value === 'false') {
-                config.settings.[trimmedKey] = false;
+                (config.settings as any)[trimmedKey] = false;
               } else {
-                config.settings.[trimmedKey] = value;
+                (config.settings as any)[trimmedKey] = value;
               }
             }
           }
