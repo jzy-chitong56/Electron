@@ -13,7 +13,8 @@
       "OPTIMISE": "Usar scripts otimizados",
       "FORCELANG": "Substituir a linguagem de conversação AI",
       "BEST_GAME_VERSION": "Optimal",
-      "SELECT_PATH": "Alterar o caminho padrão e instalar"
+      "SELECT_PATH_INSTALL": "Alterar o caminho padrão e instalar",
+      "SELECT_PATH": "Alterar o caminho padrão"
     },
     "DETAIL": {
       "TITLE": "Detalhe!",

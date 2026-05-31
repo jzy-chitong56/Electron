@@ -13,7 +13,8 @@
       "OPTIMISE": "使用优化脚本", 
       "FORCELANG": "覆盖默认AI语言",
       "BEST_GAME_VERSION": "最佳版本",
-      "SELECT_PATH": "变更默认路径并安装"
+      "SELECT_PATH_INSTALL": "变更默认路径并安装",
+      "SELECT_PATH": "变更默认路径"
     },
     "DETAIL": {
       "TITLE": "详情页!",

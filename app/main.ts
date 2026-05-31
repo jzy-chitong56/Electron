@@ -116,7 +116,7 @@ const loadSet = (): AppConfig => {
       ROC_PATH: undefined
     },
     settings: {
-      commander: 0,
+      commander: 1,
       optimize: false,
       forceLang: false
     }
@@ -150,7 +150,7 @@ const loadSet = (): AppConfig => {
           ROC_PATH: jsonConfig.ROC_PATH || undefined
         },
         settings: {
-          commander: jsonConfig.commander !== undefined ? jsonConfig.commander : 0,
+          commander: jsonConfig.commander !== undefined ? jsonConfig.commander : 1,
           optimize: jsonConfig.optimize !== undefined ? jsonConfig.optimize : true,
           forceLang: jsonConfig.forceLang || false
         }
@@ -307,6 +307,19 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
   }
 };
 
+const setConfig_BJ = () => {
+  ipcMain?.on('set-config-bj', async (_event, commander: number) => {
+    updateSingleConfigValue(`commander`, commander.toString());
+  });
+};
+
+const setConfig_optimize = () => {
+  ipcMain?.on('set-config-optimize', async (_event, optimize: boolean, forceLang: boolean) => {
+    updateSingleConfigValue(`optimize`, optimize);
+    updateSingleConfigValue(`forceLang`, forceLang);
+  });
+};
+
 const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
@@ -456,7 +469,7 @@ const GetDefaultSet = () => {
       REFORGED_PATH: config.paths.REFORGED_PATH || null,
       TFT_PATH: config.paths.TFT_PATH || null,
       ROC_PATH: config.paths.ROC_PATH || null,
-      commander: config.settings.commander || 0,
+      commander: config.settings.commander || 1,
       optimize: config.settings.optimize || true,
       forceLang: config.settings.forceLang || false
     };
@@ -464,12 +477,15 @@ const GetDefaultSet = () => {
 }
 
 const SetDefaultPath = () => {
-  ipcMain?.on('set-path-and-install', async (_event, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean, pathver: string = "REFORGED") => {
-    let usepath = documentsPath;
-    let result;
-    let signal = {};
-    win.webContents.send('on-install-console', `Selecting path and install , version : ${pathver}`);
-    if (toFolder) {
+  ipcMain?.on('set-path-and-install', async (_event, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean, pathver: string = "REFORGED", install: boolean) => {
+    win.webContents.send('on-install-console', `Selecting path , install : ${install}, version : ${pathver}`);
+    if (install) {
+      win.webContents.send('on-install-console', `Let install change path`)
+      let signal = {};
+      execInstall(signal, commander, !toFolder, optimize ? `OPT${pathver}` : pathver, forceLang, pathver);
+    } else {
+      let usepath = documentsPath;
+      let result;
       const pathKey = `${pathver}_PATH`;
       const currentPath = getSingleConfigValue(pathKey) as string | null;
       if (currentPath && fs.existsSync(currentPath)) {
@@ -488,15 +504,12 @@ const SetDefaultPath = () => {
           const pathKey = `${pathver}_PATH`;
           updateSingleConfigValue(pathKey, usepath);
           win.webContents.send('path-updated', { pathver: pathver, path: usepath });
-          execInstall(signal, commander, !toFolder, optimize ? `OPT${pathver}` : pathver, forceLang, pathver);
         } catch (err) {
           win.webContents.send('on-install-console', `Set path failed: ${err.message}`);
         }
       } else {
         win.webContents.send('on-install-console', `Path selection was cancelled`);
       }
-    } else {
-      execInstall(signal, commander, !toFolder, optimize ? `OPT${pathver}` : pathver, forceLang, pathver);
     }
   });
 }
@@ -605,3 +618,5 @@ installTrans();
 installProcess();
 GetDefaultSet();
 SetDefaultPath();
+setConfig_optimize();
+setConfig_BJ();

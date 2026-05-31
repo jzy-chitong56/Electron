@@ -13,7 +13,8 @@
       "OPTIMISE": "Utiliser des scripts optimisés",
       "FORCELANG": "Couvrir le langage de chat ai",
       "BEST_GAME_VERSION": "Optimal",
-      "SELECT_PATH": "Modifier le chemin par défaut et installer"
+      "SELECT_PATH_INSTALL": "Modifier le chemin par défaut et installer",
+      "SELECT_PATH": "Modifier le chemin par défaut"
     },
     "DETAIL": {
       "TITLE": "Détail!",

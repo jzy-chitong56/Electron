@@ -13,7 +13,8 @@
         "OPTIMISE": "Use Optimised Scripts",
         "FORCELANG": "Override AI Chat Language",
         "BEST_GAME_VERSION": "Optimal",
-        "SELECT_PATH": "Change default path and install"
+        "SELECT_PATH_INSTALL": "Change default path and install",
+        "SELECT_PATH": "Change default path"
       },
       "DETAIL": {
         "TITLE": "Detail!",

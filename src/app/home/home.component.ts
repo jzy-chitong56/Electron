@@ -112,7 +112,14 @@ export class HomeComponent implements OnInit {
   async selectPathAndInstall(pathver: 'REFORGED' | 'TFT' | 'ROC') {
     if (this.isInteractive) {
       console.log(`Selecting path and install for ${pathver}`);
-      this.electronService.ipcRenderer.send('set-path-and-install', this.Mode_State, this.BJ_State, this.optimize, this.forcelang, pathver);
+      this.electronService.ipcRenderer.send('set-path-and-install', this.Mode_State, this.BJ_State, this.optimize, this.forcelang, pathver, true);
+    }
+  }
+
+  async selectPath(pathver: 'REFORGED' | 'TFT' | 'ROC') {
+    if (this.isInteractive) {
+      console.log(`Selecting path for ${pathver}`);
+      this.electronService.ipcRenderer.send('set-path-and-install', this.Mode_State, this.BJ_State, this.optimize, this.forcelang, pathver, false);
     }
   }
 
@@ -226,16 +233,19 @@ export class HomeComponent implements OnInit {
         case 'BJoptionOn':
           this.bjState = '';
           this.BJ_State = 1;
+          this.electronService.ipcRenderer.send('set-config-bj', this.BJ_State);
           console.log('BJ', this.bjState);
           break;
         case 'BJoptionVsAI':
           this.bjState = '-vai';
           this.BJ_State = 2;
+          this.electronService.ipcRenderer.send('set-config-bj', this.BJ_State);
           console.log('BJ', this.bjState);
           break;
         case 'BJoptionOff':
           this.bjState = '-noc';
           this.BJ_State = 0;
+          this.electronService.ipcRenderer.send('set-config-bj', this.BJ_State);
           console.log('BJ', this.bjState);
           break;
         case 'Optimise':
@@ -243,12 +253,14 @@ export class HomeComponent implements OnInit {
           if (this.optimize) {
             this.forcelang = false;
           }
+          this.electronService.ipcRenderer.send('set-config-optimize', this.optimize, this.forcelang);
           break;
         case 'ForceLang':
           this.forcelang = !this.forcelang;
           if (this.forcelang) {
             this.optimize = false;
           }
+          this.electronService.ipcRenderer.send('set-config-optimize', this.optimize, this.forcelang);
           break;
       }
     };

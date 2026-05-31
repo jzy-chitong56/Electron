@@ -14,11 +14,14 @@
         <span>2.0.3+</span>
         <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}: 2.0.4+</span>
       </div>
-      <div class="game-path-item" (click)="selectPathAndInstall('REFORGED')">
-        <span class="underlined-path" [title]="gamePaths.REFORGED.PATH">{{gamePaths.REFORGED.displayText}}</span>
-        <i class="material-icons icon-handle">edit</i>
+      <div class="game-path-item">
+        <span class="underlined-path" [title]="gamePaths.REFORGED.PATH" (click)="selectPathAndInstall('REFORGED')">{{gamePaths.REFORGED.displayText}}</span>
+          <div class="tooltip">
+            {{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}<br>{{ gamePaths.REFORGED.displayText }}
+          </div>
+        <i class="material-icons icon-handle" (click)="selectPath('REFORGED')">edit</i>
         <div class="tooltip">
-          {{ 'PAGES.HOME.SELECT_PATH' | translate }}<br>{{ gamePaths.REFORGED.displayText }}
+          {{ 'PAGES.HOME.SELECT_PATH' | translate }}
         </div>
       </div>
     </div>
@@ -32,11 +35,14 @@
         <span>1.24e+</span>
         <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}: 1.24e ~ 1.28</span>
       </div>
-      <div class="game-path-item" (click)="selectPathAndInstall('TFT')">
-        <span class="underlined-path" [title]="gamePaths.TFT.PATH">{{gamePaths.TFT.displayText}}</span>
-        <i class="material-icons icon-handle">edit</i>
+      <div class="game-path-item">
+        <span class="underlined-path" [title]="gamePaths.TFT.PATH" (click)="selectPathAndInstall('TFT')">{{gamePaths.TFT.displayText}}</span>
           <div class="tooltip">
-            {{ 'PAGES.HOME.SELECT_PATH' | translate }}<br>{{ gamePaths.TFT.displayText }}
+            {{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}<br>{{ gamePaths.TFT.displayText }}
+          </div>
+        <i class="material-icons icon-handle" (click)="selectPath('TFT')">edit</i>
+          <div class="tooltip">
+            {{ 'PAGES.HOME.SELECT_PATH' | translate }}
           </div>
       </div>
     </div>
@@ -50,11 +56,14 @@
         <span>1.24e+ ~ 1.31</span>
         <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}: 1.24e ~ 1.31</span>
       </div>
-      <div class="game-path-item" (click)="selectPathAndInstall('ROC')">
-        <span class="underlined-path" [title]="gamePaths.ROC.PATH">{{gamePaths.ROC.displayText}}</span>
-        <i class="material-icons icon-handle">edit</i>
+      <div class="game-path-item">
+        <span class="underlined-path" [title]="gamePaths.ROC.PATH" (click)="selectPathAndInstall('ROC')">{{gamePaths.ROC.displayText}}</span>
+          <div class="tooltip">
+            {{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}<br>{{ gamePaths.ROC.displayText }}
+          </div>
+        <i class="material-icons icon-handle" (click)="selectPath('ROC')">edit</i>
         <div class="tooltip">
-          {{ 'PAGES.HOME.SELECT_PATH' | translate }}<br>{{ gamePaths.ROC.displayText }}
+          {{ 'PAGES.HOME.SELECT_PATH' | translate }}
         </div>
       </div>
     </div>

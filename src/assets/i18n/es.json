@@ -13,7 +13,8 @@
       "OPTIMISE": "Usar scripts optimizados", 
       "FORCELANG": "Cubrir el lenguaje de chat de Ia",
       "BEST_GAME_VERSION": "Óptimo",
-      "SELECT_PATH": "Cambiar la ruta predeterminada e instalar"
+      "SELECT_PATH_INSTALL": "Cambiar la ruta predeterminada e instalar",
+      "SELECT_PATH": "Cambiar la ruta predeterminada"
     },
     "DETAIL": {
       "TITLE": "Detalle!",

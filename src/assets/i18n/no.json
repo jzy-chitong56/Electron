@@ -13,7 +13,8 @@
       "OPTIMISE": "Bruk optimaliserte skript",
       "FORCELANG": "Overskriv AI-samtalespråk",
       "BEST_GAME_VERSION": "Optimal",
-      "SELECT_PATH": "Endre default sti og installer"
+      "SELECT_PATH_INSTALL": "Endre standardsti og installer",
+      "SELECT_PATH": "Endre default sti"
     },
     "DETAIL": {
       "TITLE": "Detalj!",

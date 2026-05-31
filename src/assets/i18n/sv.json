@@ -13,7 +13,8 @@
       "OPTIMISE": "Använd optimerade skript",
       "FORCELANG": "Skriv över AI-chattspråk",
       "BEST_GAME_VERSION": "Optimalt",
-      "SELECT_PATH": "Ändra standardsökväg och installera"
+      "SELECT_PATH_INSTALL": "Ändra standardsökväg och installera",
+      "SELECT_PATH": "Ändra standardsökväg"
     },
     "DETAIL": {
       "TITLE": "Detalj!",
