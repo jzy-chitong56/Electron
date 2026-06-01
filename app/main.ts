@@ -252,7 +252,7 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
   const configPath = path.join(app.getPath('userData'), 'config.json');
 
   try {
-    // 如果文件不存在，创建新文件
+    // Created file
     if (!fs.existsSync(configPath)) {
       const valueStr = value === null ? '' : (typeof value === 'boolean' ? value.toString() : value);
       const content = valueStr ? `${key}=${valueStr}` : '';
@@ -261,7 +261,7 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
       return;
     }
 
-    // 读取现有文件内容
+    // real file
     const content = fs.readFileSync(configPath, 'utf8');
     const lines = content.split('\n');
     let found = false;
@@ -298,7 +298,7 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
       updatedLines.push(`${key}=${valueStr}`);
     }
 
-    // 写回文件
+    // write back to file
     fs.writeFileSync(configPath, updatedLines.join('\n'), 'utf8');
     win.webContents.send('on-install-console', `Updated ${key} to: ${value === null ? '(removed)' : value}`);
   } catch (err: any) {

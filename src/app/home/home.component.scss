@@ -70,7 +70,20 @@
   .path-click-area {
     position: relative;
     cursor: pointer;
+  }
+
+  // 路径文本区域占据大部分空间
+  .underlined-path.path-click-area {
     flex: 1;
+    min-width: 0; /* 允许在flex容器中缩小 */
+    overflow: hidden;
+  }
+
+  // 编辑按钮固定小宽度
+  .icon-handle.path-click-area {
+    flex: 0 0 auto;
+    width: 24px;
+    text-align: center;
   }
 
   .path-divider {
@@ -87,9 +100,8 @@
     transform: translateX(-50%);
     background-color: #1a1a1a;
     color: #ffffff;
-    padding: 6px 12px;
+    padding: 8px 12px;
     border-radius: 6px;
-    white-space: nowrap;
     font-size: 12px;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -99,11 +111,28 @@
     transition: opacity 0.2s ease;
     margin-top: 8px;
     border: 3px solid #5c5c5c;
-    min-width: 200px;
-    max-width: 512px;
-    text-align: center;
-    word-break: break-word; /* 确保长单词也能换行 */
-    line-height: 1.4; /* 增加行高提高可读性 */
+    min-width: 250px;
+    max-width: 600px;
+    text-align: left;
+    word-break: break-all;
+    line-height: 1.5;
+  }
+
+  .tooltip-path {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 11px;
+    color: #4fc3f7;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+
+  .tooltip-text {
+    font-size: 12px;
+    color: #ffffff;
+    line-height: 1.4;
   }
 
   .game-path-item:hover .tooltip {
@@ -146,15 +175,15 @@
     display: inline-block;
     position: relative;
     font-size: 14pt;
-    flex-grow: 1;
     box-sizing: border-box;
-    min-width: 0; /* 允许在flex容器中缩小 */
+    width: 100%; /* 占据全部可用宽度 */
   }
 
   .icon-handle {
     font-size: 14pt;
     cursor: pointer;
     margin-right: 0.4rem;
+    flex-shrink: 0; /* 防止按钮被压缩 */
   }
 
   .ContainerLattice-AdvancedSettings {
@@ -332,5 +361,4 @@
     background-color: black;
     color: #FFFFFF;
   }
-
 }
