@@ -117,7 +117,7 @@ const loadSet = (): AppConfig => {
     },
     settings: {
       commander: 1,
-      optimize: false,
+      optimize: true,
       forceLang: false
     }
   };
@@ -125,7 +125,7 @@ const loadSet = (): AppConfig => {
   try {
     if (!fs.existsSync(configPath)) {
       win.webContents.send('on-install-console', 'Config file not found, using defaults');
-      // 自动创建默认配置文件
+      // Automatically create default configuration file
       try {
         const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\ncommander=1\noptimize=true\nforceLang=false`;
         fs.writeFileSync(configPath, defaultContent, 'utf8');
@@ -138,7 +138,7 @@ const loadSet = (): AppConfig => {
 
     const content = fs.readFileSync(configPath, 'utf8');
 
-    // 尝试解析 JSON 格式（向后兼容）
+    // Try to parse JSON format (backward compatibility)
     try {
       const jsonConfig = JSON.parse(content);
       win.webContents.send('on-install-console', 'Loaded config in JSON format');
@@ -156,7 +156,7 @@ const loadSet = (): AppConfig => {
         }
       };
     } catch (jsonError) {
-      // JSON 解析失败，尝试按行解析文本格式
+      // JSON parsing failed, try to parse line-by-line text format
       win.webContents.send('on-install-console', 'Loading config in line-by-line format');
 
       try {
@@ -198,7 +198,7 @@ const loadSet = (): AppConfig => {
           }
         };
       } catch (parseErr: any) {
-        // 文本格式也解析失败，返回默认配置
+        // Text format also failed to parse, return default configuration
         win.webContents.send('on-install-console', `Failed to parse config file: ${parseErr.message}, using defaults`);
         return defaultConfig;
       }
@@ -223,17 +223,17 @@ const getSingleConfigValue = (key: string): string | boolean | null => {
     for (const line of lines) {
       const trimmedLine = line.trim();
 
-      // 跳过空行和注释
+      // Skip empty lines and comments
       if (!trimmedLine || trimmedLine.startsWith('#')) {
         continue;
       }
 
-      // 查找匹配的配置项
+      // Find matching config item
       const [configKey, ...valueParts] = trimmedLine.split('=');
       if (configKey && configKey.trim() === key) {
         const value = valueParts.join('=').trim();
 
-        // 自动转换布尔值
+        // Automatically convert booleans
         if (value === 'true') return true;
         if (value === 'false') return false;
 
@@ -252,7 +252,7 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
   const configPath = path.join(app.getPath('userData'), 'config.json');
 
   try {
-    // Created file
+    // Create file if it doesn't exist
     if (!fs.existsSync(configPath)) {
       const valueStr = value === null ? '' : (typeof value === 'boolean' ? value.toString() : value);
       const content = valueStr ? `${key}=${valueStr}` : '';
@@ -261,44 +261,44 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
       return;
     }
 
-    // real file
+    // Read existing file
     const content = fs.readFileSync(configPath, 'utf8');
     const lines = content.split('\n');
     let found = false;
     const updatedLines: string[] = [];
 
-    // 遍历每一行，查找并更新目标配置项
+    // Iterate through each line to find and update the target configuration item
     for (const line of lines) {
       const trimmedLine = line.trim();
 
-      // 跳过空行和注释
+      // Skip empty lines and comments
       if (!trimmedLine || trimmedLine.startsWith('#')) {
         updatedLines.push(line);
         continue;
       }
 
-      // 检查是否是目标配置项
+      // Check if this is the target configuration item
       const [configKey, ...valueParts] = trimmedLine.split('=');
       if (configKey && configKey.trim() === key) {
         found = true;
-        // 如果值为 null，则删除该行；否则更新
+        // If value is null, delete the line; otherwise update it
         if (value !== null) {
           const valueStr = typeof value === 'boolean' ? value.toString() : value;
           updatedLines.push(`${key}=${valueStr}`);
         }
-        // 如果 value 为 null，则不添加该行（相当于删除）
+        // If value is null, don't add the line (equivalent to deletion)
       } else {
         updatedLines.push(line);
       }
     }
 
-    // 如果没找到该配置项且值不为空，则添加新行
+    // If the configuration item was not found and value is not empty, add a new line
     if (!found && value !== null) {
       const valueStr = typeof value === 'boolean' ? value.toString() : value;
       updatedLines.push(`${key}=${valueStr}`);
     }
 
-    // write back to file
+    // Write back to file
     fs.writeFileSync(configPath, updatedLines.join('\n'), 'utf8');
     win.webContents.send('on-install-console', `Updated ${key} to: ${value === null ? '(removed)' : value}`);
   } catch (err: any) {
@@ -373,7 +373,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     );
   }
 
-  /** uncomment to debbug */
+  /** uncomment to debug */
   // const ls = cp.spawnSync(
   //   `ls`,
   //   [`./resources`,],
@@ -418,11 +418,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   } catch (err) {
     console.log('error:', err.message);
 
-    /** uncomment to debbug */
+    /** uncomment to debug */
     // win.webContents.send('on-install-message', 'Error: ' + err.message);
   }
 
-  // init install proccess
+  // Initialize installation process
   try {
     child = cp.fork(
       require.resolve(
@@ -438,7 +438,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       }
     );
 
-    // send messages to modal on front
+    // Send messages to modal on front
     child.on('message', (message) => {
       if (typeof message === 'object' && message.type === 'progress') {
         // Send progress updates via dedicated channel
@@ -450,7 +450,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
       }
     });
 
-    // close modal on process finishes
+    // Close modal when process finishes
     child.on('exit', () => {
       win.webContents.send('on-install-exit');
     });
@@ -524,7 +524,7 @@ const installProcess = () => {
 
   // TODO: stop process with signal
   ipcMain?.on('on-stop-process', async () => {
-    // stop process here
+    // Stop process here
   });
 }
 
@@ -533,7 +533,7 @@ const init = () => {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
+    // Added 400 ms to fix the black background issue while using transparent window. More details at https://github.com/electron/electron/issues/15947
     app.on('ready', () => {
       setTimeout(() => {
         createWindow();

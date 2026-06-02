@@ -53,7 +53,7 @@
     background-color: black;
     border-radius: 4px;
     color: white;
-    cursor: pointer;
+    cursor: default;
     transition: all 0.2s ease;
     position: relative;
     overflow: visible;
@@ -70,6 +70,9 @@
   .path-click-area {
     position: relative;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+    padding: 4px 8px;
   }
 
   // 路径文本区域占据大部分空间
@@ -79,11 +82,19 @@
     overflow: hidden;
   }
 
+  .underlined-path.path-click-area:hover {
+    background-color: rgb(33, 4, 251);
+  }
+
   // 编辑按钮固定小宽度
   .icon-handle.path-click-area {
     flex: 0 0 auto;
     width: 24px;
     text-align: center;
+  }
+
+  .icon-handle.path-click-area:hover {
+    background-color: rgb(33, 4, 251);
   }
 
   .path-divider {
@@ -135,7 +146,7 @@
     line-height: 1.4;
   }
 
-  .game-path-item:hover .tooltip {
+  .path-click-area:hover .tooltip {
     opacity: 1;
     visibility: visible;
   }

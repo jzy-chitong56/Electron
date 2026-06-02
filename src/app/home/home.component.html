@@ -19,7 +19,7 @@
           <span class="underlined-path path-click-area" [title]="gamePaths.REFORGED.PATH" (click)="selectPathAndInstall('REFORGED')">
             {{gamePaths.REFORGED.displayText}}
             <div class="tooltip">
-              <div class="tooltip-path">{{ gamePaths.REFORGED.PATH }}</div>
+              <div *ngIf="gamePaths.REFORGED.PATH" class="tooltip-path">{{ gamePaths.REFORGED.PATH }}</div>
               <div class="tooltip-text">{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
             </div>
           </span>
@@ -43,7 +43,7 @@
           <span class="underlined-path path-click-area" [title]="gamePaths.TFT.PATH" (click)="selectPathAndInstall('TFT')">
             {{gamePaths.TFT.displayText}}
             <div class="tooltip">
-              <div class="tooltip-path">{{ gamePaths.TFT.PATH }}</div>
+              <div *ngIf="gamePaths.TFT.PATH" class="tooltip-path">{{ gamePaths.TFT.PATH }}</div>
               <div class="tooltip-text">{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
             </div>
           </span>
@@ -67,7 +67,7 @@
           <span class="underlined-path path-click-area" [title]="gamePaths.ROC.PATH" (click)="selectPathAndInstall('ROC')">
             {{gamePaths.ROC.displayText}}
             <div class="tooltip">
-              <div class="tooltip-path">{{ gamePaths.ROC.PATH }}</div>
+              <div *ngIf="gamePaths.ROC.PATH" class="tooltip-path">{{ gamePaths.ROC.PATH }}</div>
               <div class="tooltip-text">{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
             </div>
           </span>
