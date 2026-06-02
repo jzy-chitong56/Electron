@@ -81,12 +81,14 @@ export class HomeComponent implements OnInit {
       this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
       this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
       this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
+      this.Mode_State = settings.isfolder;
       this.BJ_State = settings.commander;
       this.optimize = settings.optimize;
       this.forcelang = settings.forceLang;
       console.log('REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
       console.log('TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
       console.log('ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
+      console.log('Is Folder:', this.Mode_State);
       console.log('BJ State:', this.BJ_State);
       console.log('optimize:', this.optimize);
       console.log('force lang:', this.forcelang);
@@ -229,6 +231,7 @@ export class HomeComponent implements OnInit {
           this.Mode_State = !this.Mode_State;
           this.modeState = this.Mode_State ? '-folder' : '-map';
           console.log('mode', this.modeState, this.Mode_State);
+          this.electronService.ipcRenderer.send('set-config-optimize', this.Mode_State, this.optimize, this.forcelang);
           break;
         case 'BJoptionOn':
           this.bjState = '';
@@ -253,14 +256,14 @@ export class HomeComponent implements OnInit {
           if (this.optimize) {
             this.forcelang = false;
           }
-          this.electronService.ipcRenderer.send('set-config-optimize', this.optimize, this.forcelang);
+          this.electronService.ipcRenderer.send('set-config-optimize', this.Mode_State, this.optimize, this.forcelang);
           break;
         case 'ForceLang':
           this.forcelang = !this.forcelang;
           if (this.forcelang) {
             this.optimize = false;
           }
-          this.electronService.ipcRenderer.send('set-config-optimize', this.optimize, this.forcelang);
+          this.electronService.ipcRenderer.send('set-config-optimize', this.Mode_State, this.optimize, this.forcelang);
           break;
       }
     };

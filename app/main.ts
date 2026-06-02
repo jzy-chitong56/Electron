@@ -20,6 +20,7 @@ type AppConfig = {
     ROC_PATH?: string;
   };
   settings: {
+    isfolder?: boolean;
     commander?: number;
     optimize?: boolean;
     forceLang?: boolean;
@@ -116,6 +117,7 @@ const loadSet = (): AppConfig => {
       ROC_PATH: undefined
     },
     settings: {
+      isfolder: true,
       commander: 1,
       optimize: true,
       forceLang: false
@@ -127,7 +129,7 @@ const loadSet = (): AppConfig => {
       win.webContents.send('on-install-console', 'Config file not found, using defaults');
       // Automatically create default configuration file
       try {
-        const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\ncommander=1\noptimize=true\nforceLang=false`;
+        const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\nisfolder=true\ncommander=1\noptimize=true\nforceLang=false`;
         fs.writeFileSync(configPath, defaultContent, 'utf8');
         win.webContents.send('on-install-console', 'Created default config file');
       } catch (createErr: any) {
@@ -150,6 +152,7 @@ const loadSet = (): AppConfig => {
           ROC_PATH: jsonConfig.ROC_PATH || undefined
         },
         settings: {
+          isfolder: jsonConfig.isfolder !== undefined ? jsonConfig.isfolder : true,
           commander: jsonConfig.commander !== undefined ? jsonConfig.commander : 1,
           optimize: jsonConfig.optimize !== undefined ? jsonConfig.optimize : true,
           forceLang: jsonConfig.forceLang || false
@@ -314,20 +317,22 @@ const setConfig_BJ = () => {
 };
 
 const setConfig_optimize = () => {
-  ipcMain?.on('set-config-optimize', async (_event, optimize: boolean, forceLang: boolean) => {
+  ipcMain?.on('set-config-optimize', async (_event, isfolder: boolean,optimize: boolean, forceLang: boolean) => {
+    updateSingleConfigValue(`isfolder`, isfolder);
     updateSingleConfigValue(`optimize`, optimize);
     updateSingleConfigValue(`forceLang`, forceLang);
   });
 };
 
-const execInstall = async (signal, commander: number = 1, isMap: boolean = false, ver: string = "REFORGED", forceLang: boolean, pathver: string = "REFORGED") => {
+const execInstall = async (signal, commander: number = 1, isFolder: boolean = true, optimize: boolean = false, forceLang: boolean = false, ver: string = "REFORGED") => {
   const controller = new AbortController();
   let response;
+  const pathver = optimize ? `OPT${ver}` : ver;
   const pathKey = `${pathver}_PATH`;
   let usepath = getSingleConfigValue(pathKey) as string | null;
   win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
   if (usepath !== null && usepath !== undefined && usepath !== '') {
-    if (isMap) {
+    if (!isFolder) {
       response = dialog.showOpenDialogSync(win, {
       title: translations["PAGES.ELECTRON.OPEN_MAP"] || '',
       properties: ['openFile'] ,
@@ -346,11 +351,11 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     win.webContents.send('on-install-console', 'Choose path');
     response = dialog.showOpenDialogSync(win, {
       // TODO: add i18n here
-      title: isMap ? translations["PAGES.ELECTRON.OPEN_MAP"] || '': translations["PAGES.ELECTRON.OPEN_DIR"] || '',
+      title: !isFolder ? translations["PAGES.ELECTRON.OPEN_MAP"] || '': translations["PAGES.ELECTRON.OPEN_DIR"] || '',
       // TODO: Change to let multiples selections when is map
-      properties: isMap ? ['openFile'] : ['openDirectory'],
+      properties: !isFolder ? ['openFile'] : ['openDirectory'],
       // TODO: add i18n here
-      filters: isMap ? [
+      filters: !isFolder ? [
         { name: translations["PAGES.ELECTRON.MAPFILE"] || '', extensions: ['w3x', 'w3m'] },
       ] : null,
       defaultPath: documentsPath,
@@ -392,7 +397,7 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
   }
 
   if (usepath !== null && usepath !== undefined && usepath !== '') {
-    if (!isMap) {
+    if (isFolder) {
       usepath = response[0];
     } else {
       usepath = path.dirname(response[0]);
@@ -403,13 +408,15 @@ const execInstall = async (signal, commander: number = 1, isMap: boolean = false
     win.webContents.send('path-updated', { pathver: pathver, path: finalPath });
   }
   // open modal on front
+  let isMap = !isFolder;
   win.webContents.send('on-install-init', <InstallModel>{
     response: response[0],
     commander,
     isMap
   });
+  updateSingleConfigValue(`isfolder`, isFolder);
   updateSingleConfigValue(`commander`, commander.toString());
-  updateSingleConfigValue(`optimize`, isMap);
+  updateSingleConfigValue(`optimize`, optimize);
   updateSingleConfigValue(`forceLang`, forceLang);
   // Change the relative path from where the script will be executed
   // MPQEditor and AddToMPQ only work when files and folders are in same directory
@@ -464,11 +471,12 @@ const GetDefaultSet = () => {
     const config = loadSet();
     win.webContents.send('on-install-console',
       `Config Set : REFORGED : ${config.paths.REFORGED_PATH} , TFT : ${config.paths.TFT_PATH} , ROC : ${config.paths.ROC_PATH};
-      COMMANDER : ${config.settings.commander} , OPTIMIZE : ${config.settings.optimize} , FORCE LANG : ${config.settings.forceLang}` );
+      Is Folder : ${config.settings.isfolder} , COMMANDER : ${config.settings.commander} , OPTIMIZE : ${config.settings.optimize} , FORCE LANG : ${config.settings.forceLang}` );
     return {
       REFORGED_PATH: config.paths.REFORGED_PATH || null,
       TFT_PATH: config.paths.TFT_PATH || null,
       ROC_PATH: config.paths.ROC_PATH || null,
+      isfolder: config.settings.isfolder || false,
       commander: config.settings.commander || 1,
       optimize: config.settings.optimize || true,
       forceLang: config.settings.forceLang || false
@@ -482,7 +490,7 @@ const SetDefaultPath = () => {
     if (install) {
       win.webContents.send('on-install-console', `Let install change path`)
       let signal = {};
-      execInstall(signal, commander, !toFolder, optimize ? `OPT${pathver}` : pathver, forceLang, pathver);
+      execInstall(signal, commander, !toFolder, optimize, forceLang, pathver);
     } else {
       let usepath = documentsPath;
       let result;
@@ -518,8 +526,7 @@ const installProcess = () => {
   let signal = {};
 
   ipcMain?.on('install', async (_event, ver: string, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean) => {
-    const pathver = ver;
-    execInstall(signal, commander, !toFolder, optimize ? `OPT${ver}` : ver, forceLang, pathver);
+    execInstall(signal, commander, !toFolder, optimize, forceLang, ver);
   });
 
   // TODO: stop process with signal

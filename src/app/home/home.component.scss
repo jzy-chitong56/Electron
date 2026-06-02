@@ -58,14 +58,16 @@
     position: relative;
     overflow: visible;
     box-sizing: border-box; /* 确保padding不影响总宽度 */
-  }
-
-  .path-action-group {
-    display: flex;
-    align-items: center;
     width: 100%;
     gap: 8px;
   }
+
+  // .path-action-group {
+  //   display: flex;
+  //   align-items: center;
+  //   width: 100%;
+  //   gap: 8px;
+  // }
 
   .path-click-area {
     position: relative;
@@ -149,10 +151,6 @@
   .path-click-area:hover .tooltip {
     opacity: 1;
     visibility: visible;
-  }
-
-  .game-path-item:hover {
-    background-color: rgb(33, 4, 251);
   }
 
   .imageContainerROC,
