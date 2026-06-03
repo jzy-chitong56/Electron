@@ -6,13 +6,6 @@ import { InstallModel } from '../commons/models';
 const ipcMain = require('electron').ipcMain;
 const cp = require('child_process');
 
-type Settings = {
-  TFT_PATH?: string | null;
-  ROC_PATH?: string | null;
-  REFORGED_PATH?: string | null;
-  [key: string]: any;
-};
-
 type AppConfig = {
   paths: {
     REFORGED_PATH?: string;
@@ -94,18 +87,6 @@ const createWindow = (): BrowserWindow => {
   });
 
   return win;
-}
-
-const getversionpath = (pathver: string, settings: Settings): string => {
-  win.webContents.send('on-install-console', `get version path : ${JSON.stringify(settings)}, settings path : ${settings[`${pathver}_PATH`]}`);
-  if (pathver == "REFORGED") {
-    return settings.REFORGED_PATH || '';
-  } else if (pathver == "TFT") {
-    return settings.TFT_PATH || '';
-  } else if (pathver == "ROC") {
-    return settings.ROC_PATH || '';
-  }
-  return '';
 }
 
 const loadSet = (): AppConfig => {
@@ -466,17 +447,20 @@ const execInstall = async (signal, commander: number = 1, isFolder: boolean = tr
   }
 }
 
-const GetDefaultSet = () => {
+const loadConfig = () => {
   ipcMain?.handle('load-config', async (_) => {
     const config = loadSet();
+
+    // Log configuration to console
     win.webContents.send('on-install-console',
       `Config Set : REFORGED : ${config.paths.REFORGED_PATH} , TFT : ${config.paths.TFT_PATH} , ROC : ${config.paths.ROC_PATH};
       Is Folder : ${config.settings.isfolder} , COMMANDER : ${config.settings.commander} , OPTIMIZE : ${config.settings.optimize} , FORCE LANG : ${config.settings.forceLang}` );
+
     return {
       REFORGED_PATH: config.paths.REFORGED_PATH || null,
       TFT_PATH: config.paths.TFT_PATH || null,
       ROC_PATH: config.paths.ROC_PATH || null,
-      isfolder: config.settings.isfolder || false,
+      isfolder: config.settings.isfolder || true,
       commander: config.settings.commander || 1,
       optimize: config.settings.optimize || true,
       forceLang: config.settings.forceLang || false
@@ -484,7 +468,7 @@ const GetDefaultSet = () => {
   });
 }
 
-const SetDefaultPath = () => {
+const setConfig_Path = () => {
   ipcMain?.on('set-path-and-install', async (_event, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean, pathver: string = "REFORGED", install: boolean) => {
     win.webContents.send('on-install-console', `Selecting path , install : ${install}, version : ${pathver}`);
     if (install) {
@@ -623,7 +607,7 @@ const installTrans = () => {
 init();
 installTrans();
 installProcess();
-GetDefaultSet();
-SetDefaultPath();
+loadConfig();
+setConfig_Path();
 setConfig_optimize();
 setConfig_BJ();

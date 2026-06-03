@@ -15,16 +15,12 @@
         <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}: 2.0.4+</span>
       </div>
       <div class="game-path-item">
-        <!-- <div class="path-action-group"> -->
-          <span class="underlined-path path-click-area" [title]="gamePaths.REFORGED.PATH" (click)="selectPathAndInstall('REFORGED')">
-            {{gamePaths.REFORGED.displayText}}
-            <div class="tooltip">
-              <div class="tooltip-path">{{ gamePaths.REFORGED.PATH }}<br>{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
-            </div>
-          </span>
-          <div class="path-divider"></div>
-            <i class="material-icons icon-handle path-click-area" (click)="selectPath('REFORGED')" title="{{ 'PAGES.HOME.SELECT_PATH' | translate }}">edit</i>
-        <!-- </div> -->
+        <span class="underlined-path path-click-area" [title]="gamePaths.REFORGED.PATH" (click)="selectPathAndInstall('REFORGED')">
+          {{gamePaths.REFORGED.displayText}}
+          <div class="tooltip">{{ gamePaths.REFORGED.PATH }}<br>{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
+        </span>
+        <div class="path-divider"></div>
+        <i class="material-icons icon-handle path-click-area" (click)="selectPath('REFORGED')" title="{{ 'PAGES.HOME.SELECT_PATH' | translate }}">edit</i>
       </div>
     </div>
     <div class="game-version-container">
@@ -38,16 +34,12 @@
         <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}: 1.24e ~ 1.28</span>
       </div>
       <div class="game-path-item">
-        <!-- <div class="path-action-group"> -->
-          <span class="underlined-path path-click-area" [title]="gamePaths.TFT.PATH" (click)="selectPathAndInstall('TFT')">
-            {{gamePaths.TFT.displayText}}
-            <div class="tooltip">
-              <div class="tooltip-path">{{ gamePaths.TFT.PATH }}<br>{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
-            </div>
-          </span>
-          <div class="path-divider"></div>
-            <i class="material-icons icon-handle path-click-area" (click)="selectPath('TFT')" title="{{ 'PAGES.HOME.SELECT_PATH' | translate }}">edit</i>
-        <!-- </div> -->
+        <span class="underlined-path path-click-area" [title]="gamePaths.TFT.PATH" (click)="selectPathAndInstall('TFT')">
+          {{gamePaths.TFT.displayText}}
+          <div class="tooltip">{{ gamePaths.TFT.PATH }}<br>{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
+        </span>
+        <div class="path-divider"></div>
+        <i class="material-icons icon-handle path-click-area" (click)="selectPath('TFT')" title="{{ 'PAGES.HOME.SELECT_PATH' | translate }}">edit</i>
       </div>
     </div>
     <div class="game-version-container">
@@ -61,16 +53,12 @@
         <span class="reccomendations">{{ 'PAGES.HOME.BEST_GAME_VERSION' | translate }}: 1.24e ~ 1.31</span>
       </div>
       <div class="game-path-item">
-        <!-- <div class="path-action-group"> -->
-          <span class="underlined-path path-click-area" [title]="gamePaths.ROC.PATH" (click)="selectPathAndInstall('ROC')">
-            {{gamePaths.ROC.displayText}}
-            <div class="tooltip">
-              <div class="tooltip-path">{{ gamePaths.ROC.PATH }}<br>{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
-            </div>
-          </span>
-          <div class="path-divider"></div>
-            <i class="material-icons icon-handle path-click-area" (click)="selectPath('ROC')" title="{{ 'PAGES.HOME.SELECT_PATH' | translate }}">edit</i>
-        <!-- </div> -->
+        <span class="underlined-path path-click-area" [title]="gamePaths.ROC.PATH" (click)="selectPathAndInstall('ROC')">
+          {{gamePaths.ROC.displayText}}
+          <div class="tooltip">{{ gamePaths.ROC.PATH }}<br>{{ 'PAGES.HOME.SELECT_PATH_INSTALL' | translate }}</div>
+        </span>
+        <div class="path-divider"></div>
+        <i class="material-icons icon-handle path-click-area" (click)="selectPath('ROC')" title="{{ 'PAGES.HOME.SELECT_PATH' | translate }}">edit</i>
       </div>
     </div>
   </div>
