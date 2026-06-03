@@ -107,7 +107,7 @@ const loadSet = (): AppConfig => {
 
   try {
     if (!fs.existsSync(configPath)) {
-      win.webContents.send('on-install-console', 'Config file not found, using defaults');
+      win.webContents.send('on-install-console', 'Config file not found, try create');
       // Automatically create default configuration file
       try {
         const defaultContent = `REFORGED_PATH=\nTFT_PATH=\nROC_PATH=\nisfolder=true\ncommander=1\noptimize=true\nforceLang=false`;
@@ -284,7 +284,7 @@ const updateSingleConfigValue = (key: string, value: string | boolean | null): v
 
     // Write back to file
     fs.writeFileSync(configPath, updatedLines.join('\n'), 'utf8');
-    win.webContents.send('on-install-console', `Updated ${key} to: ${value === null ? '(removed)' : value}`);
+    win.webContents.send('on-install-console', `Updated config : ${key} to ${value === null ? 'removed ' : value}`);
   } catch (err: any) {
     win.webContents.send('on-install-console', `Error updating config: ${err.message}`);
     throw err;
@@ -311,7 +311,7 @@ const execInstall = async (signal, commander: number = 1, isFolder: boolean = tr
   const pathver = optimize ? `OPT${ver}` : ver;
   const pathKey = `${pathver}_PATH`;
   let usepath = getSingleConfigValue(pathKey) as string | null;
-  win.webContents.send('on-install-console', `${pathver} default path : ${usepath}`);
+  win.webContents.send('on-install-console', `install : ${pathver} default path : ${usepath}`);
   if (usepath !== null && usepath !== undefined && usepath !== '') {
     if (!isFolder) {
       response = dialog.showOpenDialogSync(win, {
@@ -329,7 +329,7 @@ const execInstall = async (signal, commander: number = 1, isFolder: boolean = tr
       response = [usepath];
     }
   } else {
-    win.webContents.send('on-install-console', 'Choose path');
+    win.webContents.send('on-install-console', 'install : Choose path');
     response = dialog.showOpenDialogSync(win, {
       // TODO: add i18n here
       title: !isFolder ? translations["PAGES.ELECTRON.OPEN_MAP"] || '': translations["PAGES.ELECTRON.OPEN_DIR"] || '',
@@ -385,7 +385,7 @@ const execInstall = async (signal, commander: number = 1, isFolder: boolean = tr
     }
     const finalPath = usepath ? path.resolve(usepath) : null;
     updateSingleConfigValue(pathKey, finalPath);
-    win.webContents.send('on-install-console', `Default path updated to: ${finalPath}`);
+    win.webContents.send('on-install-console', `install : Default path updated to: ${finalPath}`);
     win.webContents.send('path-updated', { pathver: pathver, path: finalPath });
   }
   // open modal on front
@@ -451,20 +451,22 @@ const loadConfig = () => {
   ipcMain?.handle('load-config', async (_) => {
     const config = loadSet();
 
-    // Log configuration to console
-    win.webContents.send('on-install-console',
-      `Config Set : REFORGED : ${config.paths.REFORGED_PATH} , TFT : ${config.paths.TFT_PATH} , ROC : ${config.paths.ROC_PATH};
-      Is Folder : ${config.settings.isfolder} , COMMANDER : ${config.settings.commander} , OPTIMIZE : ${config.settings.optimize} , FORCE LANG : ${config.settings.forceLang}` );
-
-    return {
-      REFORGED_PATH: config.paths.REFORGED_PATH || null,
-      TFT_PATH: config.paths.TFT_PATH || null,
-      ROC_PATH: config.paths.ROC_PATH || null,
-      isfolder: config.settings.isfolder || true,
-      commander: config.settings.commander || 1,
-      optimize: config.settings.optimize || true,
-      forceLang: config.settings.forceLang || false
+    // Convert to frontend-friendly format (undefined -> null)
+    const result = {
+      REFORGED_PATH: config.paths.REFORGED_PATH ?? null,
+      TFT_PATH: config.paths.TFT_PATH ?? null,
+      ROC_PATH: config.paths.ROC_PATH ?? null,
+      isfolder: config.settings.isfolder ?? true,
+      commander: config.settings.commander ?? 1,
+      optimize: config.settings.optimize ?? true,
+      forceLang: config.settings.forceLang ?? false
     };
+
+    // Log configuration after conversion (synchronous with return)
+    win.webContents.send('on-install-console',
+      `Loaded Config - REFORGED: ${result.REFORGED_PATH}, TFT: ${result.TFT_PATH}, ROC: ${result.ROC_PATH}; IsFolder: ${result.isfolder}, Commander: ${result.commander}, Optimize: ${result.optimize}, ForceLang: ${result.forceLang}`);
+
+    return result;
   });
 }
 
@@ -472,7 +474,7 @@ const setConfig_Path = () => {
   ipcMain?.on('set-path-and-install', async (_event, toFolder: boolean, commander: number, optimize: boolean, forceLang: boolean, pathver: string = "REFORGED", install: boolean) => {
     win.webContents.send('on-install-console', `Selecting path , install : ${install}, version : ${pathver}`);
     if (install) {
-      win.webContents.send('on-install-console', `Let install change path`)
+      win.webContents.send('on-install-console', `Selecting path , Let install change path`)
       let signal = {};
       execInstall(signal, commander, !toFolder, optimize, forceLang, pathver);
     } else {
@@ -481,7 +483,7 @@ const setConfig_Path = () => {
       const pathKey = `${pathver}_PATH`;
       const currentPath = getSingleConfigValue(pathKey) as string | null;
       if (currentPath && fs.existsSync(currentPath)) {
-        win.webContents.send('on-install-console', `Get default path`);
+        win.webContents.send('on-install-console', `Selecting path , Get default path`);
         usepath = currentPath;
       }
       result = dialog.showOpenDialogSync(win, {
@@ -491,16 +493,16 @@ const setConfig_Path = () => {
       });
       if (result && (result?.length > 0)) {
         usepath = result[0] ? path.resolve(result[0]) : documentsPath;
-        win.webContents.send('on-install-console', `Set path : ${usepath}`);
+        win.webContents.send('on-install-console', `Selecting path , Set path : ${usepath}`);
         try {
           const pathKey = `${pathver}_PATH`;
           updateSingleConfigValue(pathKey, usepath);
           win.webContents.send('path-updated', { pathver: pathver, path: usepath });
         } catch (err) {
-          win.webContents.send('on-install-console', `Set path failed: ${err.message}`);
+          win.webContents.send('on-install-console', `Selecting path , Set path failed: ${err.message}`);
         }
       } else {
-        win.webContents.send('on-install-console', `Path selection was cancelled`);
+        win.webContents.send('on-install-console', `Selecting path , Path selection was cancelled`);
       }
     }
   });
@@ -531,7 +533,6 @@ const init = () => {
       }, 400)
     });
 
-
     // Quit when all windows are closed.
     app.on('window-all-closed', () => {
       // On OS X it is common for applications and their menu bar
@@ -557,7 +558,7 @@ const init = () => {
 
 const installTrans = () => {
   ipcMain?.on('Trans', (_event, currentLang: string, data) => {
-    console.log(`Setting language to:${currentLang}`);
+    console.log(`Setting language to : ${currentLang}`);
     switch (currentLang) {
       case 'en':
         currentLanguage = "English";

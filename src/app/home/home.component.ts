@@ -72,28 +72,31 @@ export class HomeComponent implements OnInit {
   }
 
   private async loadDefaultConfig(): Promise<void> {
-    const settings = await this.electronService.ipcRenderer.invoke('load-config');
-    if (settings) {
-      console.log('Loaded paths settings:', settings);
-      this.gamePaths.TFT.PATH = settings.TFT_PATH;
-      this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH;
-      this.gamePaths.ROC.PATH = settings.ROC_PATH;
-      this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
-      this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
-      this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
-      this.Mode_State = settings.isfolder;
-      this.BJ_State = settings.commander;
-      this.optimize = settings.optimize;
-      this.forcelang = settings.forceLang;
-      console.log('REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
-      console.log('TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
-      console.log('ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
-      console.log('Is Folder:', this.Mode_State);
-      console.log('BJ State:', this.BJ_State);
-      console.log('optimize:', this.optimize);
-      console.log('force lang:', this.forcelang);
-    } else {
-      console.error('Error loading paths:', settings);
+    try {
+      const settings = await this.electronService.ipcRenderer.invoke('load-config');
+      if (settings) {
+        this.gamePaths.TFT.PATH = settings.TFT_PATH;
+        this.gamePaths.REFORGED.PATH = settings.REFORGED_PATH;
+        this.gamePaths.ROC.PATH = settings.ROC_PATH;
+        this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
+        this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
+        this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
+        this.Mode_State = settings.isfolder;
+        this.BJ_State = settings.commander;
+        this.optimize = settings.optimize;
+        this.forcelang = settings.forceLang;
+        console.log('Load REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
+        console.log('Load TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
+        console.log('Load ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
+        console.log('Load Is Folder:', this.Mode_State);
+        console.log('Load BJ State:', this.BJ_State);
+        console.log('Load optimize:', this.optimize);
+        console.log('Load force lang:', this.forcelang);
+      } else {
+        console.warn('Load failed, Settings is null or undefined');
+      }
+    } catch (error) {
+      console.error('Error loading config:', error);
     }
   }
 
