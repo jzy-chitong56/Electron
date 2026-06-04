@@ -165,7 +165,9 @@ const loadSet = (): AppConfig => {
               } else if (value === 'false') {
                 (config.settings as any)[trimmedKey] = false;
               } else {
-                (config.settings as any)[trimmedKey] = value;
+                // Try to convert to number first (supports integers, decimals, fractions)
+                const numValue = Number(value);
+                (config.settings as any)[trimmedKey] = isNaN(numValue) ? value : numValue;
               }
             }
           }
