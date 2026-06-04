@@ -120,12 +120,10 @@ const loadSet = (): AppConfig => {
     }
 
     const content = fs.readFileSync(configPath, 'utf8');
-
     // Try to parse JSON format (backward compatibility)
     try {
       const jsonConfig = JSON.parse(content);
       win.webContents.send('on-install-console', 'Loaded config in JSON format');
-
       return {
         paths: {
           REFORGED_PATH: jsonConfig.REFORGED_PATH || undefined,
@@ -142,10 +140,8 @@ const loadSet = (): AppConfig => {
     } catch (jsonError) {
       // JSON parsing failed, try to parse line-by-line text format
       win.webContents.send('on-install-console', 'Loading config in line-by-line format');
-
       try {
         const lines = content.split('\n').map((line: string) => line.trim()).filter((line: string) => line && !line.startsWith('#'));
-
         const config: AppConfig = {
           paths: {},
           settings: {}
@@ -156,7 +152,6 @@ const loadSet = (): AppConfig => {
           if (key && valueParts.length > 0) {
             const trimmedKey = key.trim();
             const value = valueParts.join('=').trim();
-
             if (trimmedKey.endsWith('_PATH')) {
               (config.paths as any)[trimmedKey] = value || undefined;
             } else {
@@ -172,7 +167,6 @@ const loadSet = (): AppConfig => {
             }
           }
         }
-
         return {
           paths: {
             ...defaultConfig.paths,

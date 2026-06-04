@@ -81,17 +81,17 @@ export class HomeComponent implements OnInit {
         this.gamePaths.TFT.displayText = this.gamePaths.TFT.PATH ? this.formatPath(this.gamePaths.TFT.PATH) : '--';
         this.gamePaths.REFORGED.displayText = this.gamePaths.REFORGED.PATH ? this.formatPath(this.gamePaths.REFORGED.PATH) : '--';
         this.gamePaths.ROC.displayText = this.gamePaths.ROC.PATH ? this.formatPath(this.gamePaths.ROC.PATH) : '--';
-        this.Mode_State = settings.isfolder;
-        this.BJ_State = settings.commander;
-        this.optimize = settings.optimize;
-        this.forcelang = settings.forceLang;
-        console.log('Load REFORGED Path:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
-        console.log('Load TFT Path:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
-        console.log('Load ROC Path:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
-        console.log('Load Is Folder:', this.Mode_State);
-        console.log('Load BJ State:', this.BJ_State);
-        console.log('Load optimize:', this.optimize);
-        console.log('Load force lang:', this.forcelang);
+        this.Mode_State = Boolean(settings.isfolder);
+        this.BJ_State = Number(settings.commander);
+        this.optimize = Boolean(settings.optimize);
+        this.forcelang = Boolean(settings.forceLang);
+        console.log('Load REFORGED Path:', settings.REFORGED_PATH, 'set:', this.gamePaths.REFORGED.PATH, 'Display:', this.gamePaths.REFORGED.displayText);
+        console.log('Load TFT Path:', settings.TFT_PATH, 'set:', this.gamePaths.TFT.PATH, 'Display:', this.gamePaths.TFT.displayText);
+        console.log('Load ROC Path:', settings.ROC_PATH, 'set:', this.gamePaths.ROC.PATH, 'Display:', this.gamePaths.ROC.displayText);
+        console.log('Load Is Folder:', settings.isfolder, 'set:', this.Mode_State);
+        console.log('Load BJ State:', settings.commander, 'set:', this.BJ_State);
+        console.log('Load optimize:', settings.optimize, 'set:', this.optimize);
+        console.log('Load force lang:', settings.forceLang, 'set:', this.forcelang);
       } else {
         console.warn('Load failed, Settings is null or undefined');
       }
