@@ -14,16 +14,35 @@ let currentFileIndex = 0;
 // );
 // process.send(ls.stdout);
 
+const isMapFile = (file) => {
+  const ext = path.extname(file).toLowerCase();
+  return ext === '.w3m' || ext === '.w3x';
+};
+
 const getAllFiles = (dirPath, arrayOfFiles) => {
-  const files = fs.readdirSync(dirPath);
+  let files;
+  try {
+    files = fs.readdirSync(dirPath);
+  } catch (e) {
+    process.send(`WARN: Unable to read directory ${dirPath}: ${e.message}`);
+    return arrayOfFiles;
+  }
 
   arrayOfFiles = arrayOfFiles || [];
 
   files.forEach(function(file) {
-    if (fs.statSync(dirPath + "\\" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + "\\" + file, arrayOfFiles);
+    const filePath = path.join(dirPath, file);
+    let stat;
+    try {
+      stat = fs.statSync(filePath);
+    } catch (e) {
+      process.send(`WARN: Unable to access ${filePath}: ${e.message}`);
+      return;
+    }
+    if (stat.isDirectory()) {
+      arrayOfFiles = getAllFiles(filePath, arrayOfFiles);
     } else {
-      arrayOfFiles.push(path.join(dirPath, "\\", file));
+      arrayOfFiles.push(filePath);
     }
   })
 
@@ -83,15 +102,12 @@ const installOnDirectory = async () => {
   }
 
   if(arrayOfFiles) {
-    totalFiles = arrayOfFiles.length;
-    //process.send({ type: 'progress', current: currentFileIndex, total: totalFiles });
+    totalFiles = arrayOfFiles.filter(isMapFile).length;
     for (const file of arrayOfFiles) {
       /** uncomment to debbug */
       // process.send(`path.extname(file): ${path.extname(file)}`);
 
-      const ext = path.extname(file).toLowerCase();
-
-       if(ext.indexOf(`w3m`) >= 0 || ext.indexOf(`w3x`) >= 0) {
+      if(isMapFile(file)) {
          currentFileIndex++;
          // Send complete progress data including both current and total
          if (process.send) {
